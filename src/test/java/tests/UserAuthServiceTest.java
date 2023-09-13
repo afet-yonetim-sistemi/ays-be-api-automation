@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import payload.Token;
 import payload.UserCredentials;
+import utility.ConfigurationReader;
 
 public class UserAuthServiceTest {
     Token token=new Token();
@@ -12,8 +13,8 @@ public class UserAuthServiceTest {
     private String refreshToken;
     @Test(priority = 0)
     public void validUserGetToken(){
-        userCredentials.setUsername("232180");
-        userCredentials.setPassword("367894");
+        userCredentials.setUsername(ConfigurationReader.getProperty("user1name"));
+        userCredentials.setPassword(ConfigurationReader.getProperty("user1password"));
         Response response= UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .statusCode(200)
