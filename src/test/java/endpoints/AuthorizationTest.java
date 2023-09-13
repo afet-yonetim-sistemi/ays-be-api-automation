@@ -3,6 +3,8 @@ package endpoints;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import payload.AdminCredentials;
+import utility.ConfigurationReader;
 
 import java.util.Date;
 
@@ -12,15 +14,17 @@ public class AuthorizationTest {
     protected static String accessToken;
     protected static String refreshToken;
     protected static Date tokenGeneratedTime;
+    AdminCredentials adminCredentials=new AdminCredentials();
 
     @BeforeClass
     public void authenticateAndSetTokens() {
-        String requestBody = String.format("{\"username\": \"ays-admin-2\", \"password\": \"A123y456S.\"}");
+        adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
+        adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
 
         /**authentication request*/
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(requestBody)
+                .body(adminCredentials)
                 .when()
                 .post(Routes.base_url + getTokenURL())
                 .then()

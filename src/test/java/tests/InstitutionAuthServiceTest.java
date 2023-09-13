@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import payload.AdminCredentials;
 import payload.Token;
+import utility.ConfigurationReader;
 
 public class InstitutionAuthServiceTest {
     Token token = new Token();
@@ -12,6 +13,8 @@ public class InstitutionAuthServiceTest {
 
     @Test(priority = 0)
     public void getTokenForValidAdmin() {
+        adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
+        adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .log().body()

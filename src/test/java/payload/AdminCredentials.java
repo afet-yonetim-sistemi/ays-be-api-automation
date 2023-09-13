@@ -1,8 +1,8 @@
 package payload;
 
 public class AdminCredentials {
-    private String username= "ays-admin-1";
-    private String password="A123y456S.";
+    private String username;
+    private String password;
 
     public String getUsername() {
         return username;

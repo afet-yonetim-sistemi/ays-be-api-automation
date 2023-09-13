@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="utility.ExtentReportManager"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true"
+          name="AYS API Test Suite">
+        <classes>
+            <class name="tests.UserManagementServiceTest"></class>
+            <class name="tests.InstitutionManagementServiceTest"></class>
+            <class name="tests.InstitutionAuthServiceTest"></class>
+            <class name="tests.UserAuthServiceTest"></class>
+        </classes>
+
+
+    </test>
+</suite>
