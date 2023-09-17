@@ -81,6 +81,7 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
      */
     @Test(priority = 2)
     public void getUser() {
+        System.out.println("get user test userID:" + userId);
         Response response = InstitutionEndpoints.getUser(this.userId);
         response.then()
                 .statusCode(200);
@@ -117,6 +118,7 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
      */
     @Test(priority = 5)
     public void deleteUser() {
+
         Response response = InstitutionEndpoints.deleteUser(userId);
         response.then()
                 .statusCode(200)
@@ -128,7 +130,8 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
      */
     @Test(priority = 6)
     public void getUserAfterDelete() {
-        Response response = InstitutionEndpoints.deleteUser(userId);
+        System.out.println("after delete get user test userID:" + userId);
+        Response response = InstitutionEndpoints.getUser(userId);
         response.then()
                 .statusCode(200)
                 .body("response.status", equalTo("DELETED"));

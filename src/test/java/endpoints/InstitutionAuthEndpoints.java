@@ -35,7 +35,7 @@ public class InstitutionAuthEndpoints {
                         "    \"refreshToken\": \""+refreshToken+"\"\n" +
                         "}")
                 .when()
-                .post(Routes.authUserTokenInvalidate);
+                .post(Routes.authAdminTokenInvalidate);
     }
 
 }

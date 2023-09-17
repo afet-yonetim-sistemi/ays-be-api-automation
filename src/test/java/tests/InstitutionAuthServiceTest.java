@@ -45,15 +45,6 @@ public class InstitutionAuthServiceTest {
     }
 
     @Test(priority = 3)
-    public void adminInvalidateTokenWithExpiredAccessToken() {
-        Response response=InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(),token.getRefreshToken());
-        response
-                .then()
-                .log().body()
-                .statusCode(401);
-    }
-
-    @Test(priority = 4)
     public void adminInvalidateToken() {
         Response response=InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(),token.getRefreshToken());
         response

@@ -5,9 +5,9 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 public class InstitutionManagementServiceTest extends InstitutionEndpoints {
-    @Test(priority = 0)
+    @Test()
     public void listAdmins() {
-        int currentPage = 1;
+        int currentPage = 2;
         String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":10}}";
         Response response=InstitutionEndpoints.listAdmins(pagination);
         response.then()
