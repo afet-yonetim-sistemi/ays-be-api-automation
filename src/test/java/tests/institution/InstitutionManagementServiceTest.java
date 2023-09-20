@@ -1,4 +1,4 @@
-package tests;
+package tests.institution;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
@@ -11,9 +11,9 @@ public class InstitutionManagementServiceTest extends InstitutionEndpoints {
     public void listAdmins() {
         int currentPage = 1;
         String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":10}}";
-        Response response=InstitutionEndpoints.listAdmins(pagination);
+        Response response = InstitutionEndpoints.listAdmins(pagination);
         response.then()
-                    .statusCode(200);
+                .statusCode(200);
         response.then().contentType("application/json");
         response.then().body("response.content", hasSize(greaterThan(0)));
 

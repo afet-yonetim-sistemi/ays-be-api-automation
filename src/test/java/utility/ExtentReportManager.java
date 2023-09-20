@@ -17,13 +17,12 @@ public class ExtentReportManager implements ITestListener {
     public ExtentReports extent;
     public ExtentTest test;
     String repName;
-
     public void onStart(ITestContext testContext) {
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()); //time stamp
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         repName = "Test-Report-" + timeStamp + " .html";
-        sparkReporter = new ExtentSparkReporter("src/test/reports/" + repName); //specify location of the report
-        sparkReporter.config().setDocumentTitle("API Test"); // Title of report
-        sparkReporter.config().setReportName("api"); // name of the report
+        sparkReporter = new ExtentSparkReporter("src/test/reports/" + repName);
+        sparkReporter.config().setDocumentTitle("API Test");
+        sparkReporter.config().setReportName("api");
         sparkReporter.config().setTheme(Theme.DARK);
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);

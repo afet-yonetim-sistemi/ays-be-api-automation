@@ -21,18 +21,15 @@ public class AuthorizationTest {
         adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
         adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
 
-        /**authentication request*/
         Response response = given()
                 .contentType(ContentType.JSON)
                 .body(adminCredentials)
                 .when()
                 .post(Routes.base_url + getTokenURL())
                 .then()
-                .log().body()
                 .extract()
                 .response();
 
-        /**Verify credentials*/
         if (response.jsonPath().getBoolean("isSuccess")) {
             accessToken = response.jsonPath().getString("response.accessToken");
             refreshToken = response.jsonPath().getString("response.refreshToken");
@@ -43,7 +40,6 @@ public class AuthorizationTest {
     }
 
     private String getTokenURL() {
-        /**I need to optimize this part in oder to send different userType from different environment */
         String userType = "ADMIN";
 
         if ("ADMIN".equals(userType) || "SUPER_ADMIN".equals(userType)) {

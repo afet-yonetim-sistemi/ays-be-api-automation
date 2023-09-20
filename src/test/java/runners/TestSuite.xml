@@ -7,10 +7,10 @@
     <test verbose="2" preserve-order="true"
           name="AYS API Test Suite">
         <classes>
-            <class name="tests.UserManagementServiceTest"></class>
-            <class name="tests.InstitutionManagementServiceTest"></class>
-            <class name="tests.InstitutionAuthServiceTest"></class>
-            <class name="tests.UserAuthServiceTest"></class>
+            <class name="tests.institution.UserManagementServiceTest"></class>
+            <class name="tests.auth.InstitutionAuthServiceTest"></class>
+            <class name="tests.auth.UserAuthServiceTest"></class>
+            <class name="tests.institution.InstitutionManagementServiceTest"></class>
         </classes>
 
 
