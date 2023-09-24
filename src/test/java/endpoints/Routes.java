@@ -21,8 +21,17 @@ public class Routes {
     public static String putUpdateUser=base_url+"/api/v1/user/{id}";
     public static String deleteUser=base_url+"/api/v1/user/{id}";
 
-    //AYS APIS USER (not ready yet)
+    //AYS APIS USER
     public static String putUpdateUserStatus=base_url+"/api/v1/user-self/status/support";
     public static String postUserLocation=base_url+"/api/v1/user/location";
+    public static String postAssignmentSearch=base_url+"/api/v1/assignment/search";
+
+    //AYS APIS INSTITUTION
+    public static String postListAssignments=base_url+"/api/v1/assignments";
+    public static String getAssignment=base_url+"/api/v1/assignment/{id}";
+    public static String postCreateAssignment=base_url+"/api/v1/assignment";
+    public static String putUpdateAssignment=base_url+"/api/v1/assignment/{id}";
+    public static String deleteAssignment=base_url+"/api/v1/assignment/{id}";
+
 
 }

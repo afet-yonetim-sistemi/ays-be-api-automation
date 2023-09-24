@@ -2,6 +2,7 @@ package endpoints;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import payload.RequestBodyAssignments;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
@@ -61,6 +62,14 @@ public class InstitutionEndpoints extends AuthorizationTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .delete(Routes.deleteUser);
+    }
+    public static Response listAssignments(RequestBodyAssignments bodyAssignments){
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(bodyAssignments)
+                .when()
+                .post(Routes.postListAssignments);
     }
 
 
