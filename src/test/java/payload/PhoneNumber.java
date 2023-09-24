@@ -1,7 +1,7 @@
 package payload;
 
 public class PhoneNumber {
-    private String countryCode="90";
+    private String countryCode;
     private String lineNumber;
 
     public String getCountryCode() {
