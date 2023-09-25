@@ -2,13 +2,14 @@ package endpoints;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import payload.Assignment;
 import payload.RequestBodyAssignments;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
 
 public class InstitutionEndpoints extends AuthorizationTest {
-    public static Response listAdmins(String pagination){
+    public static Response listAdmins(String pagination) {
         return given()
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(ContentType.JSON)
@@ -16,6 +17,7 @@ public class InstitutionEndpoints extends AuthorizationTest {
                 .when()
                 .post(Routes.postAdmins);
     }
+
     public static Response createAUser(User userPayload) {
         return given()
                 .header("Authorization", "Bearer " + accessToken)
@@ -28,11 +30,11 @@ public class InstitutionEndpoints extends AuthorizationTest {
 
     public static Response listUsers(String pagination) {
         return given()
-                        .header("Authorization", "Bearer " + accessToken)
-                        .contentType(ContentType.JSON)
-                        .body(pagination)
-                        .when()
-                        .post(Routes.postUsers);
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(pagination)
+                .when()
+                .post(Routes.postUsers);
     }
 
     public static Response getUser(String userId) {
@@ -63,13 +65,52 @@ public class InstitutionEndpoints extends AuthorizationTest {
                 .when()
                 .delete(Routes.deleteUser);
     }
-    public static Response listAssignments(RequestBodyAssignments bodyAssignments){
+
+    public static Response listAssignments(RequestBodyAssignments bodyAssignments) {
         return given()
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(ContentType.JSON)
                 .body(bodyAssignments)
                 .when()
                 .post(Routes.postListAssignments);
+    }
+
+    public static Response createAnAssignment(Assignment assignment) {
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(assignment)
+                .when()
+                .post(Routes.postCreateAssignment);
+    }
+
+    public static Response getAssignment(String assignmentId) {
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id", assignmentId)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(Routes.getAssignment);
+
+    }
+
+    public static Response updateAssignment(String assignmentId, Assignment assignment) {
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id", assignmentId)
+                .contentType(ContentType.JSON)
+                .body(assignment)
+                .when()
+                .put(Routes.putUpdateAssignment);
+    }
+
+    public static Response deleteAssignment(String assignmentId) {
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id", assignmentId)
+                .contentType(ContentType.JSON)
+                .when()
+                .delete(Routes.deleteAssignment);
     }
 
 
