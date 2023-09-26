@@ -1,43 +1,28 @@
----
-name: Bug Report
-about: Create a report to help us improve
+### API Test Issue Template
 
----
+**Description:**
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+[Provide a brief description of the issue or the API test scenario.]
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Steps to Reproduce:**
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. [List the steps to reproduce the issue or execute the API test.]
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Expected Behavior:**
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+[Explain what you expected to happen when running the API test.]
 
-**Environment (please complete the following information):**
- - OS: [e.g., Windows 10]
- - Java Version: [e.g., Java 8]
- - Rest Assured Version: [e.g., 4.4.0]
- - Additional context: [e.g., any other relevant information]
+**Actual Behavior:**
 
-**Additional Information**
-Add any other context about the problem here.
+[Explain what actually happened when running the API test.]
 
-**Possible Solution**
-If you have a possible solution or workaround for the issue, please describe it.
+**API Details:**
 
-**Suggested Labels**
-- [ ] bug
-- [ ] help wanted
-- [ ] needs investigation
+- API Endpoint: [Provide the API endpoint being tested.]
+- HTTP Method: [Specify the HTTP method used (GET, POST, PUT, DELETE, etc.).]
+- Request Payload (if applicable):
 
-**Suggested Assignees**
-[Assign the issue to a team member if applicable]
-
+```json
+{
+  "key": "value"
+}
