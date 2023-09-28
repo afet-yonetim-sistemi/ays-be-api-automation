@@ -1,12 +1,44 @@
 package payload;
 
 public class Institution {
+    private String createdUser;
+    private String createdAt;
+    private String updatedUser;
+    private String updatedAt;
     private String id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String status;
-    private InstitutionDetail institution;
+    private String name;
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedUser() {
+        return updatedUser;
+    }
+
+    public void setUpdatedUser(String updatedUser) {
+        this.updatedUser = updatedUser;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public String getId() {
         return id;
@@ -16,43 +48,11 @@ public class Institution {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public InstitutionDetail getInstitution() {
-        return institution;
-    }
-
-    public void setInstitution(InstitutionDetail institution) {
-        this.institution = institution;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,7 +1,7 @@
 package endpoints;
 
 public class Routes {
-    public static String base_url="http://ec2-18-159-211-214.eu-central-1.compute.amazonaws.com";
+    public static String base_url="https://test-servis.afetyonetimsistemi.com";
     //AYS APIS AUTH ADMIN
     public static String authAdminRegister=base_url+"/api/v1/authentication/admin/register";
     public static String authAdminToken=base_url+"/api/v1/authentication/admin/token";
@@ -22,7 +22,7 @@ public class Routes {
     public static String deleteUser=base_url+"/api/v1/user/{id}";
 
     //AYS APIS USER
-    public static String putUpdateUserStatus=base_url+"/api/v1/user-self/status/support";
+    public static String putUpdateUserSupportStatus=base_url+"/api/v1/user-self/status/support";
     public static String postUserLocation=base_url+"/api/v1/user/location";
     public static String postAssignmentSearch=base_url+"/api/v1/assignment/search";
 

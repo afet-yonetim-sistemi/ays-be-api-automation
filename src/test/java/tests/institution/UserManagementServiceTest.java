@@ -30,6 +30,7 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
         userPayload.setFirstName(faker.name().firstName());
         userPayload.setLastName(faker.name().lastName());
         phoneNumber.setLineNumber(generateLineNumber());
+        phoneNumber.setCountryCode("90");
         userPayload.setPhoneNumber(phoneNumber);
     }
 
@@ -46,7 +47,7 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
                 .body("response.password", notNullValue());
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, dependsOnMethods = "createAUser")
     public void listUsers() {
         int currentPage = 1;
         int totalPageCount = Integer.MAX_VALUE;
@@ -86,7 +87,7 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
         }
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, dependsOnMethods = {"listUsers", "createAUser"})
     public void getUser() {
         Response response = InstitutionEndpoints.getUser(userId);
         response.then()
@@ -108,7 +109,9 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
                 .body("response.institution.updatedUser", anyOf(equalTo(null), equalTo(String.class)))
                 .body("response.institution.updatedAt", anyOf(equalTo(null), equalTo(String.class)))
                 .body("response.institution.id", notNullValue())
-                .body("response.institution.name", notNullValue());
+                .body("response.institution.name", notNullValue())
+                .extract().jsonPath().getObject("response", User.class);
+
     }
 
     @Test(priority = 3)
