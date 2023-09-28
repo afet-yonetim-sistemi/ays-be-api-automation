@@ -7,8 +7,7 @@ import payload.RequestBodyAssignments;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
-
-public class InstitutionEndpoints extends AuthorizationTest {
+public class InstitutionEndpoints extends InstitutionAuthorizationTest {
     public static Response listAdmins(String pagination) {
         return given()
                 .header("Authorization", "Bearer " + accessToken)

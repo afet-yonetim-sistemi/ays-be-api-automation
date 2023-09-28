@@ -10,11 +10,11 @@ import java.util.Date;
 
 import static io.restassured.RestAssured.given;
 
-public class AuthorizationTest {
+public class InstitutionAuthorizationTest {
     protected static String accessToken;
     protected static String refreshToken;
     protected static Date tokenGeneratedTime;
-    AdminCredentials adminCredentials=new AdminCredentials();
+    AdminCredentials adminCredentials = new AdminCredentials();
 
     @BeforeClass
     public void authenticateAndSetTokens() {
