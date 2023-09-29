@@ -25,6 +25,10 @@ public class Routes {
     public static String putUpdateUserSupportStatus=base_url+"/api/v1/user-self/status/support";
     public static String postUserLocation=base_url+"/api/v1/user/location";
     public static String postAssignmentSearch=base_url+"/api/v1/assignment/search";
+    public static String postAssignmentApprove=base_url+"/api/v1/assignment/approve";
+    public static String postAssignmentReject=base_url+"/api/v1/assignment/reject";
+    public static String postAssignmentStart=base_url+ "/api/v1/assignment/start";
+    public static String postAssignmentComplete=base_url+"/api/v1/assignment/complete";
 
     //AYS APIS INSTITUTION
     public static String postListAssignments=base_url+"/api/v1/assignments";

@@ -22,7 +22,7 @@ public class UserEndpoints extends UserAuthorizationTest {
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .when()
-                .put(Routes.postUserLocation);
+                .post(Routes.postUserLocation);
     }
     public static Response searchAssignment(String payload){
         return given()
@@ -30,7 +30,35 @@ public class UserEndpoints extends UserAuthorizationTest {
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .when()
-                .put(Routes.postAssignmentSearch);
+                .post(Routes.postAssignmentSearch);
+    }
+    public static Response approveAssignment(){
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .when()
+                .post(Routes.postAssignmentApprove);
+    }
+    public static Response rejectAssignment(){
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .when()
+                .post(Routes.postAssignmentReject);
+    }
+    public static Response startAssignment(){
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .when()
+                .post(Routes.postAssignmentStart);
+    }
+    public static Response completeAssignment(){
+        return given()
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .when()
+                .post(Routes.postAssignmentComplete);
     }
 
 
