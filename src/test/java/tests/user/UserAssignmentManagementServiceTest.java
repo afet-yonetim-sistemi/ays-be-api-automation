@@ -2,20 +2,23 @@ package tests.user;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utility.DatabaseUtility;
 
 import static org.hamcrest.Matchers.*;
+
 public class UserAssignmentManagementServiceTest extends UserEndpoints {
-    DatabaseUtility databaseUtility=new DatabaseUtility();
-    @AfterClass()
-    public void afterClass(){
+    DatabaseUtility databaseUtility = new DatabaseUtility();
+
+    @BeforeClass()
+    public void beforeClass() {
         databaseUtility.connect();
         databaseUtility.updateUserStatus("READY");
         databaseUtility.updateAssignments();
         databaseUtility.disconnect();
     }
+
     @Test(priority = 1)
     public void assignmentSearch() {
         String payload = "{\n" +
