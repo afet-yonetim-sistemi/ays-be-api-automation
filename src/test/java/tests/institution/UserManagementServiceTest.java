@@ -45,6 +45,9 @@ public class UserManagementServiceTest extends InstitutionEndpoints {
                 .body("response", notNullValue())
                 .body("response.username", notNullValue())
                 .body("response.password", notNullValue());
+        System.out.println(userCredentials.getUsername());
+        System.out.println(userCredentials.getPassword());
+
     }
 
     @Test(priority = 1, dependsOnMethods = "createAUser")
