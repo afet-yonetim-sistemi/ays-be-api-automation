@@ -5,8 +5,8 @@ public class Assignment {
     private String firstName;
     private String lastName;
     private PhoneNumber phoneNumber;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 
     public String getDescription() {
         return description;
@@ -44,7 +44,7 @@ public class Assignment {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -52,7 +52,7 @@ public class Assignment {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }
