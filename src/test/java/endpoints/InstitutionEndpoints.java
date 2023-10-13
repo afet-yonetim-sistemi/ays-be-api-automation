@@ -7,10 +7,10 @@ import payload.RequestBodyAssignments;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
-public class InstitutionEndpoints extends InstitutionAuthorizationTest {
+public class InstitutionEndpoints {
     public static Response listAdmins(String pagination) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
                 .body(pagination)
                 .when()
@@ -19,7 +19,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response createAUser(User userPayload) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
                 .body(userPayload)
                 .when()
@@ -29,7 +29,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response listUsers(String pagination) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
                 .body(pagination)
                 .when()
@@ -38,7 +38,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response getUser(String userId) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", userId)
                 .contentType(ContentType.JSON)
                 .when()
@@ -48,7 +48,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response updateUser(String userId, User userPayload) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", userId)
                 .contentType(ContentType.JSON)
                 .body(userPayload)
@@ -58,7 +58,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response deleteUser(String userId) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", userId)
                 .contentType(ContentType.JSON)
                 .when()
@@ -67,7 +67,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response listAssignments(RequestBodyAssignments bodyAssignments) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
                 .body(bodyAssignments)
                 .when()
@@ -76,7 +76,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response createAnAssignment(Assignment assignment) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
                 .body(assignment)
                 .when()
@@ -85,7 +85,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response getAssignment(String assignmentId) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", assignmentId)
                 .contentType(ContentType.JSON)
                 .when()
@@ -95,7 +95,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response updateAssignment(String assignmentId, Assignment assignment) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", assignmentId)
                 .contentType(ContentType.JSON)
                 .body(assignment)
@@ -105,7 +105,7 @@ public class InstitutionEndpoints extends InstitutionAuthorizationTest {
 
     public static Response deleteAssignment(String assignmentId) {
         return given()
-                .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .pathParam("id", assignmentId)
                 .contentType(ContentType.JSON)
                 .when()
