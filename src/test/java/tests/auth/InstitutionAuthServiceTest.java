@@ -2,6 +2,9 @@ package tests.auth;
 
 import endpoints.InstitutionAuthEndpoints;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import payload.AdminCredentials;
 import payload.Token;
@@ -13,9 +16,16 @@ import static org.hamcrest.Matchers.notNullValue;
 public class InstitutionAuthServiceTest {
     Token token = new Token();
     AdminCredentials adminCredentials = new AdminCredentials();
+    public Logger logger;
+    @BeforeClass
+    public void setup(){
+        logger= LogManager.getLogger(this.getClass());
+    }
+
 
     @Test(priority = 0)
     public void getTokenForValidAdmin() {
+        logger.info("Test case IAS_01 is running");
         adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
         adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
@@ -30,6 +40,7 @@ public class InstitutionAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
         token.setAccessToken(response.jsonPath().getString("response.accessToken"));
         token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
+        logger.info("Test case IAS_01 is done");
 
     }
 
