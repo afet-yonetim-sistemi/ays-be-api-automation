@@ -1,8 +1,15 @@
 package tests.user;
 
+import com.github.javafaker.Faker;
+import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import payload.Helper;
+import payload.PhoneNumber;
+import payload.User;
+import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -10,12 +17,32 @@ import static org.hamcrest.Matchers.notNullValue;
 public class UserSelfManagementServiceTest extends UserEndpoints {
     String supportStatus;
     String payload;
+    Faker faker;
+    User userPayload;
+    PhoneNumber phoneNumber;
+    UserCredentials userCredentials;
+
+    @BeforeClass
+    public void setup() {
+        faker = new Faker();
+        userPayload = new User();
+        phoneNumber = new PhoneNumber();
+        userPayload.setFirstName(faker.name().firstName());
+        userPayload.setLastName(faker.name().lastName());
+        phoneNumber.setLineNumber(Helper.generateLineNumber());
+        phoneNumber.setCountryCode("90");
+        userPayload.setPhoneNumber(phoneNumber);
+        Response response = InstitutionEndpoints.createAUser(userPayload);
+        userCredentials = response.then()
+                .statusCode(200)
+                .extract().jsonPath().getObject("response", UserCredentials.class);
+    }
 
     @Test(priority = 1)
     public void updateSupportStatusFromIdleToReady() {
         supportStatus = "READY";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -29,7 +56,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromReadyToIdle() {
         supportStatus = "IDLE";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -42,7 +69,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromIdleToBusy() {
         supportStatus = "BUSY";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -56,7 +83,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromBusyToReady() {
         supportStatus = "READY";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -69,7 +96,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromReadyToBusy() {
         supportStatus = "BUSY";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -82,7 +109,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromReadyToOnRoad() {
         supportStatus = "ON_ROAD";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(400)
                 .body("time", notNullValue())
@@ -99,7 +126,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusFromBusyToOnRoad() {
         supportStatus = "ON_ROAD";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(400)
                 .body("time", notNullValue())
@@ -116,7 +143,7 @@ public class UserSelfManagementServiceTest extends UserEndpoints {
     public void updateSupportStatusAfterClass() {
         supportStatus = "READY";
         payload = createPayloadWithSupportStatus(supportStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload);
+        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)

@@ -25,16 +25,17 @@ public class PostAssignmentsTest extends InstitutionEndpoints {
     @DataProvider(name = "filterScenarios")
     public Object[][] filterScenarios() {
         return new Object[][]{
-                {"AVAILABLE", "90", "1234567890"}, //all filters
-                {null, "90", "1234567890"}, //without status
-                {"AVAILABLE", null, "1234567890"}, //without country code
-                {"AVAILABLE", "90", null}, //without lineNumber
-                {null, null, "1234567890"}, //without status and country code
-                {"AVAILABLE,IN_PROGRESS", "90", "1234567890"}, //with multiple status
-                {"DONE", "90", "1234567890"}, //with done status
-                {null, null, null}, //without filters
+                {"AVAILABLE", "90", "1234567890"},
+                {null, "90", "1234567890"},
+                {"AVAILABLE", null, "1234567890"},
+                {"AVAILABLE", "90", null},
+                {null, null, "1234567890"},
+                {"AVAILABLE,IN_PROGRESS", "90", "1234567890"},
+                {"DONE", "90", "1234567890"},
+                {null, null, null},
         };
     }
+
     @Test(dataProvider = "filterScenarios")
     public void listAssignmentsWithFilters(String statuses, String countryCode, String lineNumber) {
         requestBodyAssignments.setFilter(createFilter(statuses, countryCode, lineNumber));
@@ -72,6 +73,7 @@ public class PostAssignmentsTest extends InstitutionEndpoints {
                     .body("response.filteredBy.phoneNumber.lineNumber", nullValue());
         }
     }
+
     private FiltersForAssignments createFilter(String statuses, String countryCode, String lineNumber) {
         FiltersForAssignments filter = new FiltersForAssignments();
         if (statuses != null) {

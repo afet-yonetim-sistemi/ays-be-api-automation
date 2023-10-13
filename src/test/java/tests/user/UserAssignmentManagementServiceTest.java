@@ -1,22 +1,39 @@
 package tests.user;
 
+import com.github.javafaker.Faker;
+import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import utility.DatabaseUtility;
+import payload.Helper;
+import payload.PhoneNumber;
+import payload.User;
+import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
 
 public class UserAssignmentManagementServiceTest extends UserEndpoints {
-    DatabaseUtility databaseUtility = new DatabaseUtility();
 
-    @BeforeClass()
-    public void beforeClass() {
-        databaseUtility.connect();
-        databaseUtility.updateUserStatus("READY");
-        databaseUtility.updateAssignments();
-        databaseUtility.disconnect();
+    Faker faker;
+    User userPayload;
+    PhoneNumber phoneNumber;
+    UserCredentials userCredentials;
+
+    @BeforeClass
+    public void setup() {
+        faker = new Faker();
+        userPayload = new User();
+        phoneNumber = new PhoneNumber();
+        userPayload.setFirstName(faker.name().firstName());
+        userPayload.setLastName(faker.name().lastName());
+        phoneNumber.setLineNumber(Helper.generateLineNumber());
+        phoneNumber.setCountryCode("90");
+        userPayload.setPhoneNumber(phoneNumber);
+        Response response = InstitutionEndpoints.createAUser(userPayload);
+        userCredentials = response.then()
+                .statusCode(200)
+                .extract().jsonPath().getObject("response", UserCredentials.class);
     }
 
     @Test(priority = 1)
@@ -25,7 +42,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
                 "    \"latitude\": 37.991739,\n" +
                 "    \"longitude\": 27.024168\n" +
                 "}";
-        Response response = UserEndpoints.searchAssignment(payload);
+        Response response = UserEndpoints.searchAssignment(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -42,7 +59,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
 
     @Test(priority = 2)
     public void assignmentApprove() {
-        Response response = UserEndpoints.approveAssignment();
+        Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -52,7 +69,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
 
     @Test(priority = 3)
     public void assignmentReject() {
-        Response response = UserEndpoints.approveAssignment();
+        Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
                 .body("time", notNullValue())
@@ -68,7 +85,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
                 "    \"latitude\": 35.991739,\n" +
                 "    \"longitude\": 29.024168\n" +
                 "}";
-        Response response = UserEndpoints.updateLocation(payload);
+        Response response = UserEndpoints.updateLocation(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(500)
                 .body("time", notNullValue())
@@ -80,7 +97,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
 
     @Test(priority = 5)
     public void assignmentStart() {
-        Response response = UserEndpoints.startAssignment();
+        Response response = UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -94,7 +111,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
                 "    \"latitude\": 35.991739,\n" +
                 "    \"longitude\": 29.024168\n" +
                 "}";
-        Response response = UserEndpoints.updateLocation(payload);
+        Response response = UserEndpoints.updateLocation(payload, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -104,7 +121,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
 
     @Test(priority = 7)
     public void assignmentComplete() {
-        Response response = UserEndpoints.completeAssignment();
+        Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -114,7 +131,7 @@ public class UserAssignmentManagementServiceTest extends UserEndpoints {
 
     @Test(priority = 8)
     public void assignmentCompleteNegative() {
-        Response response = UserEndpoints.completeAssignment();
+        Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
                 .body("time", notNullValue())

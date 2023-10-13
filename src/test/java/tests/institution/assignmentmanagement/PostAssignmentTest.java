@@ -10,15 +10,12 @@ import payload.PhoneNumber;
 import java.util.Random;
 import static org.hamcrest.Matchers.*;
 public class PostAssignmentTest extends InstitutionEndpoints {
+    Random random = new Random();
     Faker faker;
     Assignment assignment;
     PhoneNumber phoneNumber;
     @BeforeMethod
     public void setupData() {
-        int MIN_LATITUDE = 35;
-        int MAX_LATITUDE = 42;
-        int MIN_LONGITUDE = 26;
-        int MAX_LONGITUDE = 45;
         faker = new Faker();
         assignment = new Assignment();
         phoneNumber = new PhoneNumber();
@@ -28,15 +25,15 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         phoneNumber.setCountryCode("90");
         assignment.setPhoneNumber(phoneNumber);
         assignment.setDescription(faker.commerce().productName());
-        assignment.setLatitude(faker.number().randomDouble(6, MIN_LATITUDE, MAX_LATITUDE));
-        assignment.setLongitude(faker.number().randomDouble(6, MIN_LONGITUDE, MAX_LONGITUDE));
+        assignment.setLatitude(generateRandomCoordinate(38, 40));
+        assignment.setLongitude(generateRandomCoordinate(28, 43));
+
     }
     @Test
     public void createAnAssignmentPositive() {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(200)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
@@ -220,5 +217,8 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         }
         return phoneNumberBuilder.toString();
 
+    }
+    private double generateRandomCoordinate(int min, int max) {
+        return min + (max - min) * random.nextDouble();
     }
 }
