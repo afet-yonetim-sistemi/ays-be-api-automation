@@ -1,2 +1,7 @@
-02:06:23.019 [main] INFO  tests.auth.InstitutionAuthServiceTest - Test case IAS_01 is running
-02:06:27.017 [main] INFO  tests.auth.InstitutionAuthServiceTest - Test case IAS_01 is done
+00:22:30.566 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_01 is running
+00:22:31.295 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_05 is running
+00:22:31.904 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_06 is running
+00:22:32.494 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_02 is running
+00:22:33.170 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_03 is running
+00:22:33.688 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_07 is running
+00:22:34.306 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_08 is running

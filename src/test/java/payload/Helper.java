@@ -1,13 +1,16 @@
 package payload;
 
 import com.github.javafaker.Faker;
+import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class Helper {
+
     public static Assignment createRandomAssignment() {
         int MIN_LATITUDE = 35;
         int MAX_LATITUDE = 42;
@@ -29,6 +32,35 @@ public class Helper {
         assignment.setLongitude(faker.number().randomDouble(6, MIN_LONGITUDE, MAX_LONGITUDE));
 
         return assignment;
+    }
+
+    public static UserCredentials createNewUser() {
+        Faker faker;
+        User userPayload;
+        PhoneNumber phoneNumber;
+        faker = new Faker();
+        userPayload = new User();
+        phoneNumber = new PhoneNumber();
+        userPayload.setFirstName(faker.name().firstName());
+        userPayload.setLastName(faker.name().lastName());
+        phoneNumber.setLineNumber(generateLineNumber());
+        phoneNumber.setCountryCode("90");
+        userPayload.setPhoneNumber(phoneNumber);
+        Response response = InstitutionEndpoints.createAUser(userPayload);
+
+        if (response.getStatusCode() == 200) {
+            return response.then()
+                    .extract().jsonPath().getObject("response", UserCredentials.class);
+        } else {
+            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
+    public static Map<String, String> createLoginPayload(String username, String password) {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("username", username);
+        payload.put("password", password);
+        return payload;
     }
 
     public static RequestBodyAssignments createRequestBodyAssignments() {
