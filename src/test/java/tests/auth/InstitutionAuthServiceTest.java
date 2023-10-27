@@ -40,12 +40,13 @@ public class InstitutionAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
         token.setAccessToken(response.jsonPath().getString("response.accessToken"));
         token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
-        logger.info("Test case IAS_01 is done");
+
 
     }
 
     @Test(priority = 1)
     public void getTokenForInvalidAdmin() {
+        logger.info("Test case IAS_02 is running");
         adminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
@@ -59,6 +60,7 @@ public class InstitutionAuthServiceTest {
 
     @Test(priority = 2)
     public void adminTokenRefresh() {
+        logger.info("Test case IAS_05 is running");
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(token.getRefreshToken());
         response.then()
                 .statusCode(200)
@@ -75,6 +77,7 @@ public class InstitutionAuthServiceTest {
 
     @Test(priority = 3)
     public void adminInvalidateToken() {
+        logger.info("Test case IAS_06 is running");
         Response response=InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(),token.getRefreshToken());
         response.then()
                 .statusCode(200)
