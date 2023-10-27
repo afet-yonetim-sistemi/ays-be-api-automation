@@ -5,3 +5,10 @@
 00:22:33.170 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_03 is running
 00:22:33.688 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_07 is running
 00:22:34.306 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_08 is running
+23:03:45.490 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_01 is running
+23:03:46.202 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_05 is running
+23:03:46.781 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_06 is running
+23:03:47.246 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_02 is running
+23:03:47.790 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_03 is running
+23:03:48.219 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_07 is running
+23:03:48.843 [main] INFO  tests.auth.UserAuthServiceTest - Test case UAS_08 is running
