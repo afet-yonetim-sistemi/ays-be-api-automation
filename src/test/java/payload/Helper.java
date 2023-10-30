@@ -2,6 +2,7 @@ package payload;
 
 import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
+import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -95,5 +96,23 @@ public class Helper {
             }
         }
         return id;
+    }
+    public static Location generateLocation(double minLat, double maxLat, double minLon, double maxLon){
+        Random rand = new Random();
+        double latitude = minLat + (maxLat - minLat) * rand.nextDouble();
+        double longitude = minLon + (maxLon - minLon) * rand.nextDouble();
+        Location location = new Location();
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        return location;
+    }
+    public static void setSupportStatus(String status,String username, String password){
+        String payload = createPayloadWithSupportStatus(status);
+        UserEndpoints.updateSupportStatus(payload, username, password);
+    }
+    public static String createPayloadWithSupportStatus(String supportStatus) {
+        return "{\n" +
+                "    \"supportStatus\": \"" + supportStatus + "\"\n" +
+                "}";
     }
 }
