@@ -2,6 +2,7 @@ package endpoints;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import payload.Location;
 
 import static io.restassured.RestAssured.given;
 
@@ -16,20 +17,20 @@ public class UserEndpoints {
                 .put(Routes.putUpdateUserSupportStatus);
     }
 
-    public static Response updateLocation(String payload, String username, String password) {
+    public static Response updateLocation(Location location, String username, String password) {
         return given()
                 .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
                 .contentType(ContentType.JSON)
-                .body(payload)
+                .body(location)
                 .when()
                 .post(Routes.postUserLocation);
     }
 
-    public static Response searchAssignment(String payload, String username, String password) {
+    public static Response searchAssignment(Location location, String username, String password) {
         return given()
                 .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
                 .contentType(ContentType.JSON)
-                .body(payload)
+                .body(location)
                 .when()
                 .post(Routes.postAssignmentSearch);
     }
