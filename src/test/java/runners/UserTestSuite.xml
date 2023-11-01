@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="/Users/nebahatozcan/Desktop/JavaDemos/ays-be-api-automation">
+        <classes>
+            <class name="tests.auth.UserAuthServiceTest">
+                <methods>
+                    <include name="getTokenForValidUser"/>
+                    <include name="getTokenInvalidPassword"/>
+                    <include name="getTokenInvalidUsername"/>
+                    <include name="getTokenMissingUsername"/>
+                    <include name="getTokenMissingPassword"/>
+                    <include name="userTokenRefresh"/>
+                    <include name="userInvalidateToken"/>
+                </methods>
+            </class>
+            <class name="tests.user.UserAssignmentManagementServiceTest">
+                <methods>
+                    <include name="assignmentSearchNegative"/>
+                    <include name="assignmentSearchPositive"/>
+                    <include name="updateSupportStatusAfterReserveAnAssignment"/>
+                    <include name="updateLocationWithReservedAssignmentBeforeStart"/>
+                    <include name="rejectAssignmentAfterSearch"/>
+                    <include name="assignmentApprove"/>
+                    <include name="updateLocationWithAssignedAssignmentBeforeStart"/>
+                    <include name="startAssignment"/>
+                    <include name="updateLocationAfterStart"/>
+                    <include name="assignmentComplete"/>
+                    <include name="assignmentCompleteNegative"/>
+                </methods>
+            </class>
+            <class name="tests.user.UserLocationManagementServiceTest">
+                <methods>
+                    <include name="assignmentSearchAsSupportStatusIDLE"/>
+                </methods>
+            </class>
+            <class name="tests.user.UserSelfManagementServiceTest">
+                <methods>
+                    <include name="updateSupportStatus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
