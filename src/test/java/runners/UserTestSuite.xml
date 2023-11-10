@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="/Users/nebahatozcan/Desktop/JavaDemos/ays-be-api-automation">
+    <test verbose="2" preserve-order="true" name="User Suite">
         <classes>
-            <class name="tests.auth.UserAuthServiceTest">
-                <methods>
-                    <include name="getTokenForValidUser"/>
-                    <include name="getTokenInvalidPassword"/>
-                    <include name="getTokenInvalidUsername"/>
-                    <include name="getTokenMissingUsername"/>
-                    <include name="getTokenMissingPassword"/>
-                    <include name="userTokenRefresh"/>
-                    <include name="userInvalidateToken"/>
-                </methods>
-            </class>
+            <class name="tests.auth.UserAuthServiceTest"></class>
             <class name="tests.user.UserAssignmentManagementServiceTest">
                 <methods>
                     <include name="assignmentSearchNegative"/>

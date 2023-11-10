@@ -34,6 +34,21 @@ public class Helper {
 
         return assignment;
     }
+    public static User getUser(String userID){
+        Response response = InstitutionEndpoints.getUser(userID);
+        if (response.getStatusCode() == 200) {
+            if (response.jsonPath().get("response") != null) {
+                return response.then()
+                        .extract()
+                        .jsonPath()
+                        .getObject("response", User.class);
+            } else {
+                throw new RuntimeException("User data not found for userID: " + userID);
+            }
+        } else {
+            throw new RuntimeException("Failed to retrieve user with status code: " + response.getStatusCode());
+        }
+    }
 
     public static UserCredentials createNewUser() {
         Faker faker;
@@ -76,8 +91,8 @@ public class Helper {
     public static String generateLineNumber() {
         Random random = new Random();
         StringBuilder phoneNumberBuilder = new StringBuilder();
-        phoneNumberBuilder.append("5");
-        for (int i = 0; i < 9; i++) {
+        phoneNumberBuilder.append("535");
+        for (int i = 0; i < 7; i++) {
             int digit = random.nextInt(10);
             phoneNumberBuilder.append(digit);
         }
@@ -97,7 +112,44 @@ public class Helper {
         }
         return id;
     }
-    public static Location generateLocation(double minLat, double maxLat, double minLon, double maxLon){
+
+    public static String getUserID(String username) {
+        String pagination = "{\"pagination\":{\"page\":1,\"pageSize\":10}}";
+        int currentPage = 1;
+
+        while (true) {
+            Response response = InstitutionEndpoints.listUsers(pagination);
+            String userID = extractUserIdFromTheUserList(response, username);
+
+            if (userID != null) {
+                return userID;
+            }
+
+            int currentPageNumber = response.jsonPath().getInt("response.pageNumber");
+            int totalPageCount = response.jsonPath().getInt("response.totalPageCount");
+
+            if (currentPageNumber >= totalPageCount) {
+                break;
+            }
+            pagination = "{\"pagination\":{\"page\":" + (currentPage + 1) + ",\"pageSize\":10}}";
+            currentPage++;
+        }
+
+        return null;
+    }
+
+    private static String extractUserIdFromTheUserList(Response response, String username) {
+        List<Map<String, Object>> userList = response.jsonPath().getList("response.content");
+        for (Map<String, Object> user : userList) {
+            String userUsername = (String) user.get("username");
+            if (username.equals(userUsername)) {
+                return (String) user.get("id");
+            }
+        }
+        return null;
+    }
+
+    public static Location generateLocation(double minLat, double maxLat, double minLon, double maxLon) {
         Random rand = new Random();
         double latitude = minLat + (maxLat - minLat) * rand.nextDouble();
         double longitude = minLon + (maxLon - minLon) * rand.nextDouble();
@@ -106,13 +158,16 @@ public class Helper {
         location.setLongitude(longitude);
         return location;
     }
-    public static void setSupportStatus(String status,String username, String password){
+
+    public static void setSupportStatus(String status, String username, String password) {
         String payload = createPayloadWithSupportStatus(status);
         UserEndpoints.updateSupportStatus(payload, username, password);
     }
+
     public static String createPayloadWithSupportStatus(String supportStatus) {
         return "{\n" +
                 "    \"supportStatus\": \"" + supportStatus + "\"\n" +
                 "}";
     }
 }
+
