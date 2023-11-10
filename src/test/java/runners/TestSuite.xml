@@ -7,14 +7,18 @@
     <test verbose="2" preserve-order="true"
           name="AYS API Test Suite">
         <classes>
-            <class name="tests.institution.UserManagementServiceTest"></class>
+            <class name="tests.institution.usermanagement.PostUserServiceTest"></class>
             <class name="tests.auth.InstitutionAuthServiceTest"></class>
             <class name="tests.auth.UserAuthServiceTest"></class>
             <class name="tests.institution.InstitutionManagementServiceTest"></class>
             <class name="tests.institution.assignmentmanagement.PostAssignmentsTest"></class>
             <class name="tests.institution.assignmentmanagement.PostAssignmentTest"></class>
             <class name="tests.institution.assignmentmanagement.GetUpdateDeleteAssignmentTest"></class>
-            <class name="tests.user.UserSelfManagementServiceTest"></class>
+            <class name="tests.institution.usermanagement.DeleteUserServiceTest"></class>
+            <class name="tests.institution.usermanagement.GetUserServiceTest"></class>
+            <class name="tests.institution.usermanagement.PostUserServiceTest"></class>
+            <class name="tests.institution.usermanagement.PostUsersServiceTest"></class>
+            <class name="tests.institution.usermanagement.UpdateUserServiceTest"></class>
 
         </classes>
 
