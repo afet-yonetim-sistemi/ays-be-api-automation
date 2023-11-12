@@ -79,11 +79,17 @@ public class Helper {
         return payload;
     }
 
-    public static RequestBodyAssignments createRequestBodyAssignments() {
+    public static RequestBodyAssignments createRequestBodyAssignments(String page,String pageSize) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
         Pagination pagination = new Pagination();
-        pagination.setPage(1);
-        pagination.setPageSize(10);
+        pagination.setPage(page);
+        pagination.setPageSize(pageSize);
+        requestBodyAssignments.setPagination(pagination);
+        return requestBodyAssignments;
+    }
+    public static RequestBodyAssignments createRequestBodyAssignmentsMissingPagination() {
+        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
+        Pagination pagination = new Pagination();
         requestBodyAssignments.setPagination(pagination);
         return requestBodyAssignments;
     }
