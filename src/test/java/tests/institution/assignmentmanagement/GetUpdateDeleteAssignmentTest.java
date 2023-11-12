@@ -17,7 +17,7 @@ public class GetUpdateDeleteAssignmentTest extends InstitutionEndpoints {
     @BeforeClass
     public void setupData() {
         assignment = Helper.createRandomAssignment();
-        requestBodyAssignments = Helper.createRequestBodyAssignments();
+        requestBodyAssignments = Helper.createRequestBodyAssignments("1","10");
     }
 
     @Test(priority = 1)

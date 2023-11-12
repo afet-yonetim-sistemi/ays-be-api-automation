@@ -2,7 +2,8 @@ package tests.institution.assignmentmanagement;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import payload.FiltersForAssignments;
@@ -14,30 +15,14 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
 
-public class PostAssignmentsTest extends InstitutionEndpoints {
+public class PostAssignmentsTest {
     RequestBodyAssignments requestBodyAssignments;
-
-    @BeforeMethod
-    public void setUp() {
-        requestBodyAssignments = Helper.createRequestBodyAssignments();
-    }
-
-    @DataProvider(name = "filterScenarios")
-    public Object[][] filterScenarios() {
-        return new Object[][]{
-                {"AVAILABLE", "90", "1234567890"},
-                {null, "90", "1234567890"},
-                {"AVAILABLE", null, "1234567890"},
-                {"AVAILABLE", "90", null},
-                {null, null, "1234567890"},
-                {"AVAILABLE,IN_PROGRESS", "90", "1234567890"},
-                {"DONE", "90", "1234567890"},
-                {null, null, null},
-        };
-    }
+    Logger logger = LogManager.getLogger(this.getClass());
 
     @Test(dataProvider = "filterScenarios")
     public void listAssignmentsWithFilters(String statuses, String countryCode, String lineNumber) {
+        logger.info("Test case IAMS_01-06 is running.. ");
+        requestBodyAssignments = Helper.createRequestBodyAssignments("1", "10");
         requestBodyAssignments.setFilter(createFilter(statuses, countryCode, lineNumber));
 
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
@@ -74,6 +59,37 @@ public class PostAssignmentsTest extends InstitutionEndpoints {
         }
     }
 
+    @Test(dataProvider = "paginationScenarios")
+    public void postAssignmentsPagination(String page, String pageSize) {
+        logger.info("Test case IAMS_08-12 is running..");
+        requestBodyAssignments = Helper.createRequestBodyAssignments(page, pageSize);
+        Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
+        response.then()
+                .statusCode(400)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("VALIDATION ERROR"));
+
+
+    }
+
+    @Test()
+    public void postAssignmentsMissingPagination() {
+        logger.info("Test case IAMS_07 is running..");
+        requestBodyAssignments = Helper.createRequestBodyAssignmentsMissingPagination();
+        Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
+        response.then()
+                .statusCode(400)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("VALIDATION ERROR"));
+
+
+    }
+
+
     private FiltersForAssignments createFilter(String statuses, String countryCode, String lineNumber) {
         FiltersForAssignments filter = new FiltersForAssignments();
         if (statuses != null) {
@@ -85,5 +101,28 @@ public class PostAssignmentsTest extends InstitutionEndpoints {
         filter.setPhoneNumber(phoneNumber);
 
         return filter;
+    }
+
+    @DataProvider(name = "filterScenarios")
+    public Object[][] filterScenarios() {
+        return new Object[][]{
+                {"AVAILABLE", "90", "1234567890"}, //IAMS_06
+                {null, "90", "1234567890"}, //IAMS_02
+                {"AVAILABLE", null, "1234567890"}, //IAMS_04
+                {"AVAILABLE", "90", null}, //IAMS_03
+                {null, null, null}, // IAMS_01
+        };
+    }
+
+    @DataProvider(name = "paginationScenarios")
+    public Object[][] paginationScenarios() {
+        return new Object[][]{
+                {null, "10"}, // IAMS_08
+                {"", "10"}, // IAMS_10
+                {"1", null}, // IAMS_11
+                {"1", ""}, // IAMS_12
+                {"0", "10"}, // IAMS_09
+                {"1", "20"} //
+        };
     }
 }

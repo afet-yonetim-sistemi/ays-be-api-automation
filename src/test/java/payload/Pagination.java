@@ -1,22 +1,22 @@
 package payload;
 
 public class Pagination {
-    private int page;
-    private int pageSize;
+    private String page;
+    private String pageSize;
 
-    public int getPage() {
+    public String getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(String page) {
         this.page = page;
     }
 
-    public int getPageSize() {
+    public String getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
     }
 }
