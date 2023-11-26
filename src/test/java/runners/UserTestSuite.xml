@@ -4,31 +4,9 @@
     <test verbose="2" preserve-order="true" name="User Suite">
         <classes>
             <class name="tests.auth.UserAuthServiceTest"></class>
-            <class name="tests.user.UserAssignmentManagementServiceTest">
-                <methods>
-                    <include name="assignmentSearchNegative"/>
-                    <include name="assignmentSearchPositive"/>
-                    <include name="updateSupportStatusAfterReserveAnAssignment"/>
-                    <include name="updateLocationWithReservedAssignmentBeforeStart"/>
-                    <include name="rejectAssignmentAfterSearch"/>
-                    <include name="assignmentApprove"/>
-                    <include name="updateLocationWithAssignedAssignmentBeforeStart"/>
-                    <include name="startAssignment"/>
-                    <include name="updateLocationAfterStart"/>
-                    <include name="assignmentComplete"/>
-                    <include name="assignmentCompleteNegative"/>
-                </methods>
-            </class>
-            <class name="tests.user.UserLocationManagementServiceTest">
-                <methods>
-                    <include name="assignmentSearchAsSupportStatusIDLE"/>
-                </methods>
-            </class>
-            <class name="tests.user.UserSelfManagementServiceTest">
-                <methods>
-                    <include name="updateSupportStatus"/>
-                </methods>
-            </class>
+            <class name="tests.user.UserAssignmentManagementServiceTest"></class>
+            <class name="tests.user.UserLocationManagementServiceTest"></class>
+            <class name="tests.user.UserSelfManagementServiceTest"></class>
         </classes>
     </test>
 </suite>

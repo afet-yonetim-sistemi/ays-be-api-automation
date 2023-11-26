@@ -66,6 +66,28 @@ public class UserEndpoints {
                 .when()
                 .post(Routes.postAssignmentComplete);
     }
+    public static Response getUserSelfInfo(String username, String password){
+        return given()
+                .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
+                .contentType(ContentType.JSON)
+                .when()
+                .get(Routes.getUserSelfInfo);
+    }
+    public static Response getAssignmentUser(String username, String password){
+        return given()
+                .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
+                .contentType(ContentType.JSON)
+                .when()
+                .get(Routes.getAssignmentUser);
+    }
+    public static Response getAssignmentSummaryUser(String username, String password){
+        return given()
+                .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
+                .contentType(ContentType.JSON)
+                .when()
+                .get(Routes.getAssignmentSummaryUser);
+    }
+
 
 
 }
