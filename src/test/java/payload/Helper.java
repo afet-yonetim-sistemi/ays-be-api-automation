@@ -87,6 +87,27 @@ public class Helper {
         requestBodyAssignments.setPagination(pagination);
         return requestBodyAssignments;
     }
+    public static Assignment createANewAssignment(){
+        Faker faker=new Faker();
+        Assignment assignment=new Assignment();
+        assignment.setFirstName(faker.name().firstName());
+        assignment.setLastName(faker.name().lastName());
+        assignment.setPhoneNumber(createPhoneNumber());
+        assignment.setDescription(faker.commerce().productName());
+        assignment.setLatitude(generateRandomCoordinate(38, 40));
+        assignment.setLongitude(generateRandomCoordinate(28, 43));
+        InstitutionEndpoints.createAnAssignment(assignment);
+        return assignment;
+    }
+    public static PhoneNumber createPhoneNumber(){
+        PhoneNumber phoneNumber=new PhoneNumber();
+        phoneNumber.setLineNumber(generateLineNumber());
+        phoneNumber.setCountryCode("90");
+        return phoneNumber;
+
+
+    }
+
     public static RequestBodyAssignments createRequestBodyAssignmentsMissingPagination() {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
         Pagination pagination = new Pagination();
@@ -174,6 +195,10 @@ public class Helper {
         return "{\n" +
                 "    \"supportStatus\": \"" + supportStatus + "\"\n" +
                 "}";
+    }
+    private static double generateRandomCoordinate(int min, int max) {
+        Random random = new Random();
+        return min + (max - min) * random.nextDouble();
     }
 }
 
