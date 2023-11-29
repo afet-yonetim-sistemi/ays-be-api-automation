@@ -6,11 +6,33 @@ This repository contains automated API tests using the REST Assured framework. T
 ![Framework Flowchart](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/blob/main/Flowcharts.jpeg?raw=true)
 
 
-endpoints: Contains classes responsible for making HTTP requests to API endpoints.
+*endpoints*: 
+This Java classes serves as a utility for handling various API requests related to actions in the application. It offers methods to interact with the API endpoints, utilizing RestAssured library.These methods simplify making API requests by handling headers, content types, and endpoints, allowing for easier integration into test classes or other parts of your application.
 
-tests: Houses the actual test cases that use endpoints from the `endpoints` package.
+Please ensure that the *Routes* class contains the appropriate endpoint URLs. Also, consider providing details about the *Authorization* class, which handles authorization for API requests.
 
-payload: Stores payload data used in API requests.
+*tests*: 
+Each test method performs specific scenarios, sends requests to the API using related enpoints which defined in *endpoints* class, validates the response received, and performs assertions to ensure the expected behavior.
+
+The logging statements within each test method (logger.info) indicate the test case currently being executed.
+
+This class helps ensure that user update functionalities work correctly, handle various scenarios gracefully, and properly validate error responses.
+
+*payload*: 
+In this framework, payload classes serve as structured data models utilized during the process of making requests to APIs and handling the subsequent responses. These classes, also known as POJOs (Plain Old Java Objects), play a role in representing and organizing data entities.
+
+__Handling Requests__:
+
+*Request Payload Representation*: When initiating API requests, these payload classes define the structure and content of the data to be sent. Attributes within the payload classes correspond to the data fields required in the request body.
+
+*Request Construction*: Instances of payload classes are created and populated with relevant information before being used as the request payload. They facilitate clear and organized representation of data intended for API endpoints.
+
+__Managing Responses__:
+
+*Response Data Organization*: Upon receiving responses from API calls, these same payload classes are initialized to extract and structure the response data. This approach allows for the organized handling and manipulation of data retrieved from API responses.
+
+*Verification and Validation*: Using payload classes for responses enables straightforward verification and assertion processes. Attributes within these classes are compared against the received response data, facilitating validation checks and assertions to ensure expected outcomes.
+
 
 utility: Contains utility classes that assist in various testing tasks.
 
