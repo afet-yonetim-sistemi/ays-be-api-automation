@@ -6,19 +6,19 @@ This repository contains automated API tests using the REST Assured framework. T
 ![Framework Flowchart](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/blob/main/Flowcharts.jpeg?raw=true)
 
 
-*endpoints*: 
+*__endpoints__*: 
 This Java classes serves as a utility for handling various API requests related to actions in the application. It offers methods to interact with the API endpoints, utilizing RestAssured library.These methods simplify making API requests by handling headers, content types, and endpoints, allowing for easier integration into test classes or other parts of your application.
 
 Please ensure that the *Routes* class contains the appropriate endpoint URLs. Also, consider providing details about the *Authorization* class, which handles authorization for API requests.
 
-*tests*: 
+*__tests__*: 
 Each test method performs specific scenarios, sends requests to the API using related enpoints which defined in *endpoints* class, validates the response received, and performs assertions to ensure the expected behavior.
 
 The logging statements within each test method (logger.info) indicate the test case currently being executed.
 
 This class helps ensure that user update functionalities work correctly, handle various scenarios gracefully, and properly validate error responses.
 
-*payload*: 
+*__payload__*: 
 In this framework, payload classes serve as structured data models utilized during the process of making requests to APIs and handling the subsequent responses. These classes, also known as POJOs (Plain Old Java Objects), play a role in representing and organizing data entities.
 
 __Handling Requests__:
@@ -34,13 +34,13 @@ __Managing Responses__:
 *Verification and Validation*: Using payload classes for responses enables straightforward verification and assertion processes. Attributes within these classes are compared against the received response data, facilitating validation checks and assertions to ensure expected outcomes.
 
 
-utility: Contains utility classes that assist in various testing tasks.
+*__utility__*: Contains utility classes that assist in various testing tasks.
 
-reports: Holds generated test reports.
+*__reports__*: Holds generated test reports.
 
-pom.xml: Maven project configuration file specifying dependencies.
+*__pom.xml__*: Maven project configuration file specifying dependencies.
 
-runners: TestNG configuration file for managing test suites.
+*__runners__*: TestNG configuration file for managing test suites.
 
 
 ## Contributing
@@ -69,5 +69,17 @@ You can run specific test suites by modifying the testng.xml file under the runn
 
 Test execution reports can be found in the ‘reports’ directory. You can open the HTML report in a web browser to view test results.
 
+## Using the Configuration File
 
+The project leverages a configuration file (configuration.properties) to securely manage sensitive or environment-specific data. 
 
+To effectively utilize this configuration file, follow these steps:
+
+1.Create a Configuration File: Duplicate the sample_configuration.properties file provided in the framework, renaming it as configuration.properties. Input your sensitive data in the form of key-value pairs within this file.
+
+2.Accessing Configuration Data: To access the stored data, use the ConfigurationReader.getProperty("your key") method available under the utility package. This method retrieves the values associated with specific keys from the configuration.properties file.
+
+3.Example Usage - HowToUseConfigurationFile Class:
+Review the HowToUseConfigurationFile class located in the utility package. This class demonstrates practical usage by showcasing examples of calling the ConfigurationReader.getProperty("your key") method to retrieve configuration values.
+
+By following these steps, you can securely manage sensitive information and easily access it within the project using the ConfigurationReader utility.
