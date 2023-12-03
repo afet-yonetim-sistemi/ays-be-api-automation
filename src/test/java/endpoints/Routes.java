@@ -3,7 +3,6 @@ package endpoints;
 import utility.ConfigurationReader;
 
 public class Routes {
-   // public static String base_url = "https://test-servis.afetyonetimsistemi.com";
     public static String base_url = ConfigurationReader.getProperty("base_url");
     //AYS APIS AUTH ADMIN
     public static String authAdminRegister = base_url + "/api/v1/authentication/admin/register";
@@ -35,6 +34,7 @@ public class Routes {
     public static String getUserSelfInfo = base_url + "/api/v1/user-self";
     public static String getAssignmentUser = base_url + "/api/v1/assignment";
     public static String getAssignmentSummaryUser = base_url + "/api/v1/assignment/summary";
+    public static String postAssignmentCancel = base_url + "/api/v1/assignment/cancel";
 
     //AYS APIS INSTITUTION
     public static String postListAssignments = base_url + "/api/v1/assignments";

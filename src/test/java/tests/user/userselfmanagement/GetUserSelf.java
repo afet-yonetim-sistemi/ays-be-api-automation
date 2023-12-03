@@ -1,4 +1,4 @@
-package tests.user;
+package tests.user.userselfmanagement;
 
 import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
@@ -6,8 +6,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matchers;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
 import payload.User;
@@ -16,53 +15,25 @@ import payload.UserCredentials;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UserSelfManagementServiceTest {
+public class GetUserSelf {
     UserCredentials userCredentials;
     User user;
     String userID;
     Logger logger = LogManager.getLogger(this.getClass());
-
-    @BeforeClass
+    @BeforeMethod
     public void setup() {
-        userCredentials = Helper.createNewUser();
-        userID = Helper.getUserID(userCredentials.getUsername());
+        user=Helper.createUserPayload();
+        userCredentials = Helper.createNewUser(user);
+        userID = Helper.getUserIDByFirstName(user.getFirstName());
+        System.out.println(user.getFirstName());
         user = Helper.getUser(userID);
     }
 
-    @Test(dataProvider = "statusTransitions",priority = 0)
-    public void updateSupportStatus(String fromStatus, String toStatus) {
-        logger.info("Test case UMS_01 is running");
-        String payload = createPayloadWithSupportStatus(toStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
-        response.then()
-                .contentType("application/json")
-                .statusCode(200)
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
-                .body("time", notNullValue());
-    }
 
-    private String createPayloadWithSupportStatus(String supportStatus) {
-        return "{\n" +
-                "    \"supportStatus\": \"" + supportStatus + "\"\n" +
-                "}";
-    }
-    @DataProvider(name = "statusTransitions")
-    public Object[][] statusTransitions() {
-        return new Object[][]{
-                {"IDLE", "READY"},
-                {"READY", "IDLE"},
-                {"IDLE", "BUSY"},
-                {"BUSY", "IDLE"},
-                {"IDLE", "READY"},
-                {"READY", "BUSY"},
-                {"BUSY", "READY"}
-        };
-    }
-    @Test(priority = 1)
+    @Test()
     public void getSelfInfoPositive(){
         logger.info("Test case UMS_14 is running");
-        Response response=UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response= UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -80,11 +51,12 @@ public class UserSelfManagementServiceTest {
                 .body("response.institution", notNullValue());
 
     }
-    @Test(priority = 2)
+    @Test()
     public void getSelfInfoNegative(){
         logger.info("Test case UMS_15 is running");
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
+        System.out.println(userID);
         InstitutionEndpoints.updateUser(userID,user);
         Response response=UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -94,8 +66,6 @@ public class UserSelfManagementServiceTest {
                 .body("httpStatus", equalTo("UNAUTHORIZED"))
                 .body("header", equalTo("AUTH ERROR"))
                 .body("isSuccess", equalTo(false));
-
-        user.setStatus("ACTIVE");
 
     }
 

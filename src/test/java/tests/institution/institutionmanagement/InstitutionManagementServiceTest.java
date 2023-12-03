@@ -1,4 +1,4 @@
-package tests.institution;
+package tests.institution.institutionmanagement;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;

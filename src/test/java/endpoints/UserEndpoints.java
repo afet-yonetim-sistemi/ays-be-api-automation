@@ -3,6 +3,7 @@ package endpoints;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import payload.Location;
+import payload.Reason;
 
 import static io.restassured.RestAssured.given;
 
@@ -86,6 +87,14 @@ public class UserEndpoints {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(Routes.getAssignmentSummaryUser);
+    }
+    public static Response cancelAssignment(Reason reason, String username, String password) {
+        return given()
+                .header("Authorization", "Bearer " + Authorization.userAuthorization(username, password))
+                .contentType(ContentType.JSON)
+                .body(reason)
+                .when()
+                .post(Routes.postAssignmentCancel);
     }
 
 

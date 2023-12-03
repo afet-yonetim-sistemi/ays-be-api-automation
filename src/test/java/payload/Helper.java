@@ -71,6 +71,31 @@ public class Helper {
             throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
         }
     }
+    public static UserCredentials createNewUser(User userPayload) {
+        Response response = InstitutionEndpoints.createAUser(userPayload);
+
+        if (response.getStatusCode() == 200) {
+            return response.then()
+                    .extract().jsonPath().getObject("response", UserCredentials.class);
+        } else {
+            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
+        }
+    }
+    public static User createUserPayload(){
+        Faker faker;
+        User userPayload;
+        PhoneNumber phoneNumber;
+        faker = new Faker();
+        userPayload = new User();
+        phoneNumber = new PhoneNumber();
+        userPayload.setFirstName(faker.name().firstName());
+        userPayload.setLastName(faker.name().lastName());
+        phoneNumber.setLineNumber(generateLineNumber());
+        phoneNumber.setCountryCode("90");
+        userPayload.setPhoneNumber(phoneNumber);
+        return userPayload;
+
+    }
 
     public static Map<String, String> createLoginPayload(String username, String password) {
         Map<String, String> payload = new HashMap<>();
@@ -164,6 +189,30 @@ public class Helper {
 
         return null;
     }
+    public static String getUserIDByFirstName(String firstname) {
+        String pagination = "{\"pagination\":{\"page\":1,\"pageSize\":10}}";
+        int currentPage = 1;
+
+        while (true) {
+            Response response = InstitutionEndpoints.listUsers(pagination);
+            String userID = extractUserIdFromTheUserListByFirstname(response, firstname);
+
+            if (userID != null) {
+                return userID;
+            }
+
+            int currentPageNumber = response.jsonPath().getInt("response.pageNumber");
+            int totalPageCount = response.jsonPath().getInt("response.totalPageCount");
+
+            if (currentPageNumber >= totalPageCount) {
+                break;
+            }
+            pagination = "{\"pagination\":{\"page\":" + (currentPage + 1) + ",\"pageSize\":10}}";
+            currentPage++;
+        }
+
+        return null;
+    }
 
     private static String extractUserIdFromTheUserList(Response response, String username) {
         List<Map<String, Object>> userList = response.jsonPath().getList("response.content");
@@ -175,11 +224,30 @@ public class Helper {
         }
         return null;
     }
+    private static String extractUserIdFromTheUserListByFirstname(Response response, String firstname) {
+        List<Map<String, Object>> userList = response.jsonPath().getList("response.content");
+        for (Map<String, Object> user : userList) {
+            String userFirstName = (String) user.get("firstName");
+            if (firstname.equals(userFirstName)) {
+                return (String) user.get("id");
+            }
+        }
+        return null;
+    }
 
     public static Location generateLocation(double minLat, double maxLat, double minLon, double maxLon) {
         Random rand = new Random();
         double latitude = minLat + (maxLat - minLat) * rand.nextDouble();
         double longitude = minLon + (maxLon - minLon) * rand.nextDouble();
+        Location location = new Location();
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        return location;
+    }
+    public static Location generateLocationTR() {
+        Random rand = new Random();
+        double latitude = 38 + (40 - 38) * rand.nextDouble();
+        double longitude = 28 + (43 - 28) * rand.nextDouble();
         Location location = new Location();
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -199,6 +267,19 @@ public class Helper {
     private static double generateRandomCoordinate(int min, int max) {
         Random random = new Random();
         return min + (max - min) * random.nextDouble();
+    }
+    public static String generateString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/";
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            builder.append(randomChar);
+        }
+
+        return builder.toString();
     }
 }
 
