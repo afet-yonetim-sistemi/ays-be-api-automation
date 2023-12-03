@@ -1,4 +1,4 @@
-package tests.user;
+package tests.user.userassignmentmanagement;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;

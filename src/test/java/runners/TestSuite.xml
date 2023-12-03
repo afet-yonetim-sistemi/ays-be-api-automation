@@ -10,7 +10,7 @@
             <class name="tests.institution.usermanagement.PostUserServiceTest"></class>
             <class name="tests.auth.InstitutionAuthServiceTest"></class>
             <class name="tests.auth.UserAuthServiceTest"></class>
-            <class name="tests.institution.InstitutionManagementServiceTest"></class>
+            <class name="tests.institution.institutionmanagement.InstitutionManagementServiceTest"></class>
             <class name="tests.institution.assignmentmanagement.PostAssignmentsTest"></class>
             <class name="tests.institution.assignmentmanagement.PostAssignmentTest"></class>
             <class name="tests.institution.assignmentmanagement.GetUpdateDeleteAssignmentTest"></class>

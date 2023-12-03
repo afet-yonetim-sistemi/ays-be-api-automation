@@ -1,4 +1,4 @@
-package tests.user;
+package tests.user.userlocationmanagement;
 
 import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
