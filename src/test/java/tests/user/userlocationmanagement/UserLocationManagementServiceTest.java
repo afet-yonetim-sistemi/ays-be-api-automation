@@ -2,7 +2,6 @@ package tests.user.userlocationmanagement;
 
 import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
-import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -11,9 +10,7 @@ import payload.PhoneNumber;
 import payload.User;
 import payload.UserCredentials;
 
-import static org.hamcrest.Matchers.*;
-
-public class UserLocationManagementServiceTest extends UserEndpoints {
+public class UserLocationManagementServiceTest{
     Faker faker;
     User userPayload;
     PhoneNumber phoneNumber;

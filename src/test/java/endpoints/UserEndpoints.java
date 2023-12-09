@@ -7,7 +7,6 @@ import payload.Reason;
 
 import static io.restassured.RestAssured.given;
 
-
 public class UserEndpoints {
     public static Response updateSupportStatus(String payload, String username, String password) {
         return given()

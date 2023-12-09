@@ -15,7 +15,7 @@ import payload.UserCredentials;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GetUserSelf {
+public class GetUserSelfTest {
     UserCredentials userCredentials;
     User user;
     String userID;

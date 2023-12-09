@@ -13,7 +13,7 @@ import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
 
-public class UserAssignmentManagementServiceTest extends UserEndpoints {
+public class UserAssignmentManagementServiceTest {
     UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
     Location location;
