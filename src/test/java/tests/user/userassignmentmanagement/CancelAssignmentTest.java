@@ -1,5 +1,6 @@
 package tests.user.userassignmentmanagement;
 
+
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,7 @@ import payload.*;
 
 import static org.hamcrest.Matchers.*;
 
-public class CancelAssignment {
+public class CancelAssignmentTest {
     Assignment assignment;
     UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
@@ -131,7 +132,12 @@ public class CancelAssignment {
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
-                .log().body();
+                .statusCode(400)
+                .contentType("application/json")
+                .body("time", notNullValue())
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("header",equalTo("VALIDATION ERROR"))
+                .body("isSuccess", equalTo(false));
     }
     @DataProvider(name = "reasonsProvider")
     public Object[][] reasonDataProvider() {

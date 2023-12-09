@@ -5,8 +5,8 @@
         <classes>
             <class name="tests.auth.UserAuthServiceTest"></class>
             <class name="tests.user.userassignmentmanagement.UserAssignmentManagementServiceTest"></class>
+            <class name="tests.user.userassignmentmanagement.CancelAssignmentTest"></class>
             <class name="tests.user.userlocationmanagement.UserLocationManagementServiceTest"></class>
-            <class name="tests.user.UserSelfManagementServiceTest"></class>
         </classes>
     </test>
 </suite>
