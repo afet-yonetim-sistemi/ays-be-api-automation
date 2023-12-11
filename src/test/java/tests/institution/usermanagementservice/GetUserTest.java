@@ -1,4 +1,4 @@
-package tests.institution.usermanagement;
+package tests.institution.usermanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
@@ -10,7 +10,7 @@ import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
 
-public class GetUserServiceTest {
+public class GetUserTest {
     UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
 

@@ -1,4 +1,4 @@
-package tests.institution.assignmentmanagement;
+package tests.institution.assignmentmanagementservice;
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;

@@ -4,9 +4,9 @@
     <test verbose="2" preserve-order="true" name="User Suite">
         <classes>
             <class name="tests.auth.UserAuthServiceTest"></class>
-            <class name="tests.user.userassignmentmanagement.UserAssignmentManagementServiceTest"></class>
-            <class name="tests.user.userassignmentmanagement.CancelAssignmentTest"></class>
-            <class name="tests.user.userlocationmanagement.UserLocationManagementServiceTest"></class>
+            <class name="tests.user.userassignmentmanagementservice.UserAssignmentManagementServiceTest"></class>
+            <class name="tests.user.userassignmentmanagementservice.PostAssignmentCancelTest"></class>
+            <class name="tests.user.userlocationmanagementservice.UserLocationManagementServiceTest"></class>
         </classes>
     </test>
 </suite>

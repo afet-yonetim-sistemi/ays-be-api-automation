@@ -1,4 +1,4 @@
-package tests.institution.usermanagement;
+package tests.institution.usermanagementservice;
 
 import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
@@ -16,7 +16,7 @@ import payload.UserCredentials;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class PostUserServiceTest {
+public class PostUserTest {
     Faker faker;
     User userPayload;
     PhoneNumber phoneNumber;

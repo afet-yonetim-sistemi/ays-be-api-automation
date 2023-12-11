@@ -1,4 +1,4 @@
-package tests.user.userassignmentmanagement;
+package tests.user.userassignmentmanagementservice;
 
 
 import endpoints.UserEndpoints;
@@ -12,7 +12,7 @@ import payload.*;
 
 import static org.hamcrest.Matchers.*;
 
-public class CancelAssignmentTest {
+public class PostAssignmentCancelTest {
     Assignment assignment;
     UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());

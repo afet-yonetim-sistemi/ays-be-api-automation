@@ -1,4 +1,4 @@
-package tests.institution.usermanagement;
+package tests.institution.usermanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
@@ -13,7 +13,7 @@ import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class UpdateUserServiceTest {
+public class PutUserTest {
     User user;
     String userID;
     UserCredentials userCredentials;

@@ -1,4 +1,4 @@
-package tests.institution.assignmentmanagement;
+package tests.institution.assignmentmanagementservice;
 
 import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;

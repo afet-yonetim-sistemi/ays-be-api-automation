@@ -7,18 +7,18 @@
     <test verbose="2" preserve-order="true"
           name="AYS API Test Suite">
         <classes>
-            <class name="tests.institution.usermanagement.PostUserServiceTest"></class>
+            <class name="tests.institution.usermanagementservice.PostUserTest"></class>
             <class name="tests.auth.InstitutionAuthServiceTest"></class>
             <class name="tests.auth.UserAuthServiceTest"></class>
-            <class name="tests.institution.institutionmanagement.InstitutionManagementServiceTest"></class>
-            <class name="tests.institution.assignmentmanagement.PostAssignmentsTest"></class>
-            <class name="tests.institution.assignmentmanagement.PostAssignmentTest"></class>
-            <class name="tests.institution.assignmentmanagement.GetUpdateDeleteAssignmentTest"></class>
-            <class name="tests.institution.usermanagement.DeleteUserServiceTest"></class>
-            <class name="tests.institution.usermanagement.GetUserServiceTest"></class>
-            <class name="tests.institution.usermanagement.PostUserServiceTest"></class>
-            <class name="tests.institution.usermanagement.PostUsersServiceTest"></class>
-            <class name="tests.institution.usermanagement.UpdateUserServiceTest"></class>
+            <class name="tests.institution.adminmanagementservice.InstitutionManagementTest"></class>
+            <class name="tests.institution.assignmentmanagementservice.PostAssignmentsServiceTest"></class>
+            <class name="tests.institution.assignmentmanagementservice.PostAssignmentTest"></class>
+            <class name="tests.institution.assignmentmanagementservice.GetUpdateDeleteAssignmentTest"></class>
+            <class name="tests.institution.usermanagementservice.DeleteUserTest"></class>
+            <class name="tests.institution.usermanagementservice.GetUserTest"></class>
+            <class name="tests.institution.usermanagementservice.PostUserTest"></class>
+            <class name="tests.institution.usermanagementservice.PostUsersTest"></class>
+            <class name="tests.institution.usermanagementservice.PutUserTest"></class>
 
         </classes>
 

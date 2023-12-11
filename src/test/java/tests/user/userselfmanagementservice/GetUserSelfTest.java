@@ -1,4 +1,4 @@
-package tests.user.userselfmanagement;
+package tests.user.userselfmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
