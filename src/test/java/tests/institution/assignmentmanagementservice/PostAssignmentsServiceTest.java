@@ -1,4 +1,4 @@
-package tests.institution.assignmentmanagement;
+package tests.institution.assignmentmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
 
-public class PostAssignmentsTest {
+public class PostAssignmentsServiceTest {
     RequestBodyAssignments requestBodyAssignments;
     Logger logger = LogManager.getLogger(this.getClass());
 

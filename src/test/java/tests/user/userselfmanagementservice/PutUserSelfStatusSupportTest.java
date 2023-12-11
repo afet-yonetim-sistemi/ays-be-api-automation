@@ -1,4 +1,4 @@
-package tests.user.userselfmanagement;
+package tests.user.userselfmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
@@ -7,25 +7,21 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import payload.Helper;
-import payload.User;
-import payload.UserCredentials;
+import payload.*;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static payload.Helper.createPayloadWithSupportStatus;
 
-public class PutUserSelfSupportStatus {
+public class PutUserSelfStatusSupportTest {
     UserCredentials userCredentials;
-    User user;
-    String userID;
     Logger logger = LogManager.getLogger(this.getClass());
+    Location location;
+    Assignment assignment;
     @BeforeMethod
     public void setup() {
-        user=Helper.createUserPayload();
-        userCredentials = Helper.createNewUser(user);
-        userID = Helper.getUserIDByFirstName(user.getFirstName());
-        user = Helper.getUser(userID);
+        userCredentials = Helper.createNewUser();
+        location = new Location();
+        assignment=Helper.createANewAssignment();
     }
     @Test(dataProvider = "statusTransitions",priority = 0)
     public void updateSupportStatus(String fromStatus, String toStatus) {
@@ -50,6 +46,22 @@ public class PutUserSelfSupportStatus {
                 {"READY", "BUSY"},
                 {"BUSY", "READY"}
         };
+    }
+    @Test()
+    public void updateSupportStatusAfterReserveAnAssignment() {
+        logger.info("Test case UMS_04 is running");
+        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
+        String status = Helper.createPayloadWithSupportStatus("IDLE");
+        Response response = UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+        response.then()
+                .statusCode(409)
+                .body("time", notNullValue())
+                .body("httpStatus", equalTo("CONFLICT"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("ALREADY EXIST"))
+                .body("message", containsString("USER CANNOT UPDATE SUPPORT STATUS BECAUSE USER HAS ASSIGNMENT!"));
+
     }
 
 }

@@ -1,4 +1,4 @@
-package tests.institution.institutionmanagement;
+package tests.institution.adminmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.*;
 
-public class InstitutionManagementServiceTest {
+public class InstitutionManagementTest {
     Logger logger = LogManager.getLogger(this.getClass());
     String currentPage;
     String pageSize;

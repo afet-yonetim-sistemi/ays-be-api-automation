@@ -81,6 +81,7 @@ public class Helper {
             throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
         }
     }
+
     public static User createUserPayload(){
         Faker faker;
         User userPayload;
