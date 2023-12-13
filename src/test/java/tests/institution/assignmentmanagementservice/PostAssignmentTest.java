@@ -6,28 +6,16 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Assignment;
+import payload.Helper;
 import payload.PhoneNumber;
 import java.util.Random;
 import static org.hamcrest.Matchers.*;
 public class PostAssignmentTest extends InstitutionEndpoints {
     Random random = new Random();
-    Faker faker;
     Assignment assignment;
-    PhoneNumber phoneNumber;
     @BeforeMethod
     public void setupData() {
-        faker = new Faker();
-        assignment = new Assignment();
-        phoneNumber = new PhoneNumber();
-        assignment.setFirstName(faker.name().firstName());
-        assignment.setLastName(faker.name().lastName());
-        phoneNumber.setLineNumber(generateLineNumber());
-        phoneNumber.setCountryCode("90");
-        assignment.setPhoneNumber(phoneNumber);
-        assignment.setDescription(faker.commerce().productName());
-        assignment.setLatitude(generateRandomCoordinate(38, 40));
-        assignment.setLongitude(generateRandomCoordinate(28, 43));
-
+        assignment= Helper.createANewAssignment();
     }
     @Test
     public void createAnAssignmentPositive() {

@@ -1,4 +1,4 @@
-package tests.user.userassignmentmanagementservice;
+package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
@@ -44,7 +44,8 @@ public class PostAssignmentApproveTest {
     @Test()
     public void assignmentApprove() {
         logger.info("Test case UMS_07 is running");
-        location = Helper.generateLocation(38, 40, 28, 43);
+        location = Helper.generateLocationTR();
+        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()

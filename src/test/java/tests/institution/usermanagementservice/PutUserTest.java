@@ -5,34 +5,33 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
 import payload.User;
-import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class PutUserTest {
-    User user;
+    User user = new User();
     String userID;
-    UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
 
-    @BeforeClass
+    @BeforeMethod
     public void setup() {
-        userCredentials = Helper.createNewUser();
-        userID = Helper.getUserID(userCredentials.getUsername());
-        user = Helper.getUser(userID);
+        user = Helper.createUserPayload();
+        Helper.createNewUser(user);
+        userID = Helper.getUserIDByFirstName(user.getFirstName());
     }
 
-    @Test(priority = 0)
+    @Test()
     public void updateUserAsPassive() {
         logger.info("Test case UMS_29 is running");
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
+                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("httpStatus", equalTo("OK"))
@@ -41,13 +40,16 @@ public class PutUserTest {
 
     }
 
-    @Test(priority = 1)
+    @Test()
     public void updateUserAsActive() {
         logger.info("Test case UMS_35 is running");
         user.setRole("VOLUNTEER");
+        user.setStatus("PASSIVE");
+        InstitutionEndpoints.updateUser(userID, user);
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
+                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("httpStatus", equalTo("OK"))
@@ -82,6 +84,7 @@ public class PutUserTest {
                 .body("header", equalTo("VALIDATION ERROR"))
                 .body("isSuccess", equalTo(false));
     }
+
     @Test()
     public void updateUserWithBlankStatus() {
         logger.info("Test case UMS_34 is running");

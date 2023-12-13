@@ -1,4 +1,4 @@
-package tests.user.userassignmentmanagementservice;
+package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
@@ -14,7 +14,7 @@ import payload.UserCredentials;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.containsString;
 
-public class PostAssignmentCompleteTest {
+public class PostAssignmentStartTest {
     UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
     Location location;
@@ -29,30 +29,13 @@ public class PostAssignmentCompleteTest {
 
     }
     @Test()
-    public void assignmentCompleteWhenUserHasReservedAssignment() {
-        location=Helper.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
-        Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
-        response.then()
-                .statusCode(404)
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("NOT_FOUND"))
-                .body("header", equalTo("NOT EXIST"))
-                .body("message", allOf(
-                        containsString("ASSIGNMENT NOT EXIST!"),
-                        containsString("assignmentStatus:IN_PROGRESS")))
-                .body("isSuccess", equalTo(false));
-    }
-    @Test()
-    public void assignmentComplete() {
-        logger.info("Test case UMS_13 is running");
+    public void startAssignedAssignment() {
+        logger.info("Test case UMS_09 is running");
         location=Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
-        Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response = UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)
                 .body("time", notNullValue())
@@ -60,15 +43,13 @@ public class PostAssignmentCompleteTest {
                 .body("isSuccess", equalTo(true));
     }
     @Test()
-    public void assignmentCompleteNegative() {
-        logger.info("Test case UMS_13 is running");
+    public void startInProgressAssignment() {
         location=Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
-        Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response = UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
                 .body("time", notNullValue())
@@ -76,7 +57,7 @@ public class PostAssignmentCompleteTest {
                 .body("header", equalTo("NOT EXIST"))
                 .body("message", allOf(
                         containsString("ASSIGNMENT NOT EXIST!"),
-                        containsString("assignmentStatus:IN_PROGRESS")))
+                        containsString("assignmentStatus:ASSIGNED")))
                 .body("isSuccess", equalTo(false));
     }
 }

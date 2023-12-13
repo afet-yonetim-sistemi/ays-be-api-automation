@@ -1,4 +1,4 @@
-package tests.user.userselfmanagementservice;
+package tests.user.selfmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserSelfTest {
     UserCredentials userCredentials;
-    User user;
+    User user=new User();
     String userID;
     Logger logger = LogManager.getLogger(this.getClass());
     @BeforeMethod
@@ -25,8 +25,7 @@ public class GetUserSelfTest {
         user=Helper.createUserPayload();
         userCredentials = Helper.createNewUser(user);
         userID = Helper.getUserIDByFirstName(user.getFirstName());
-        System.out.println(user.getFirstName());
-        user = Helper.getUser(userID);
+
     }
 
 
@@ -56,8 +55,9 @@ public class GetUserSelfTest {
         logger.info("Test case UMS_15 is running");
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
-        System.out.println(userID);
         InstitutionEndpoints.updateUser(userID,user);
+        System.out.println(user.getRole());
+        System.out.println(user.getStatus());
         Response response=UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(401)

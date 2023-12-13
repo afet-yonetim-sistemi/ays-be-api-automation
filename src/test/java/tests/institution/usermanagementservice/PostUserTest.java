@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import payload.Helper;
@@ -17,27 +18,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PostUserTest {
-    Faker faker;
     User userPayload;
-    PhoneNumber phoneNumber;
-    String userId;
     UserCredentials userCredentials;
 
     Logger logger = LogManager.getLogger(this.getClass());
 
-    @BeforeClass
+    @BeforeMethod
     public void setupData() {
-        faker = new Faker();
-        userPayload = new User();
-        phoneNumber = new PhoneNumber();
-        userPayload.setFirstName(faker.name().firstName());
-        userPayload.setLastName(faker.name().lastName());
-        phoneNumber.setLineNumber(Helper.generateLineNumber());
-        phoneNumber.setCountryCode("90");
-        userPayload.setPhoneNumber(phoneNumber);
+        userPayload=Helper.createUserPayload();
     }
 
-    @Test(priority = 0)
+    @Test()
     public void createAUser() {
         logger.info("Test case UMS_01 is running");
         Response response = InstitutionEndpoints.createAUser(userPayload);
@@ -53,16 +44,15 @@ public class PostUserTest {
 
     @Test(dataProvider = "userData")
     public void createUserNegative(String firstName, String lastName, String countryCode, String lineNumber) {
-        logger.info("Test case UMS_02-25 are running");
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        PhoneNumber phoneNumber = new PhoneNumber();
+        User user=new User();
+        PhoneNumber phoneNumber=new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setPhoneNumber(phoneNumber);
-
-        Response response = InstitutionEndpoints.createAUser(user);
+        logger.info("Test case UMS_02-25 are running");
+        Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
                 .contentType("application/json")
                 .statusCode(400)
@@ -71,7 +61,7 @@ public class PostUserTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @DataProvider(name = "createUserNegative")
+    @DataProvider(name = "userData")
     public Object[][] userData() {
         return new Object[][]{
                 {"", "Mehmet", "90", "1334567811"},  // UMS_02
