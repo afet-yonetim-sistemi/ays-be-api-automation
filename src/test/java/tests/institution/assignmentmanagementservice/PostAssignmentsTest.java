@@ -15,14 +15,14 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
 
-public class PostAssignmentsServiceTest {
+public class PostAssignmentsTest {
     RequestBodyAssignments requestBodyAssignments;
     Logger logger = LogManager.getLogger(this.getClass());
 
     @Test(dataProvider = "filterScenarios")
     public void listAssignmentsWithFilters(String statuses, String countryCode, String lineNumber) {
         logger.info("Test case IAMS_01-06 is running.. ");
-        requestBodyAssignments = Helper.createRequestBodyAssignments("1", "10");
+        requestBodyAssignments = Helper.createRequestBodyAssignments(1, 10);
         requestBodyAssignments.setFilter(createFilter(statuses, countryCode, lineNumber));
 
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
@@ -60,7 +60,7 @@ public class PostAssignmentsServiceTest {
     }
 
     @Test(dataProvider = "paginationScenarios")
-    public void postAssignmentsPagination(String page, String pageSize) {
+    public void postAssignmentsPagination(int page, int pageSize) {
         logger.info("Test case IAMS_08-12 is running..");
         requestBodyAssignments = Helper.createRequestBodyAssignments(page, pageSize);
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);

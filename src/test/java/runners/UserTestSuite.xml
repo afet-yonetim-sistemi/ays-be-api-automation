@@ -4,9 +4,18 @@
     <test verbose="2" preserve-order="true" name="User Suite">
         <classes>
             <class name="tests.auth.UserAuthServiceTest"></class>
-            <class name="tests.user.userassignmentmanagementservice.UserAssignmentManagementServiceTest"></class>
-            <class name="tests.user.userassignmentmanagementservice.PostAssignmentCancelTest"></class>
-            <class name="tests.user.userlocationmanagementservice.UserLocationManagementServiceTest"></class>
+            <class name="tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"></class>
+            <class name="tests.user.assignmentmanagementservice.GetAssignmentTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentApproveTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentCancelTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentCompleteTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentRejectTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentSearchTest"></class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentStartTest"></class>
+            <class name="tests.user.locationmanagementservice.PostUserLocationTest"></class>
+            <class name="tests.user.selfmanagementservice.GetUserSelfTest"></class>
+            <class name="tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"></class>
+
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package tests.user.userselfmanagementservice;
+package tests.user.selfmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;

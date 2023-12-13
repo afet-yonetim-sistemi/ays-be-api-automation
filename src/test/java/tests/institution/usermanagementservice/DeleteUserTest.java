@@ -16,17 +16,16 @@ import static org.hamcrest.Matchers.equalTo;
 public class DeleteUserTest {
     User user;
     String userID;
-    UserCredentials userCredentials;
     Logger logger = LogManager.getLogger(this.getClass());
 
     @BeforeClass
     public void setup() {
-        userCredentials = Helper.createNewUser();
-        userID = Helper.getUserID(userCredentials.getUsername());
-        user = Helper.getUser(userID);
+        user=Helper.createUserPayload();
+        Helper.createNewUser(user);
+        userID=Helper.getUserIDByFirstName(user.getFirstName());
     }
 
-    @Test(priority = 0)
+    @Test()
     public void deleteUser() {
         logger.info("Test case UMS_36 is running");
         Response deleteResponse = InstitutionEndpoints.deleteUser(userID);
@@ -45,7 +44,7 @@ public class DeleteUserTest {
     }
 
 
-    @Test(priority = 1)
+    @Test()
     public void deleteUserNegative() {
         logger.info("Test case UMS_37 is running");
         Response response = InstitutionEndpoints.deleteUser(userID);

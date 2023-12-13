@@ -7,6 +7,7 @@ import payload.RequestBodyAssignments;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
+
 public class InstitutionEndpoints {
     public static Response listAdmins(String pagination) {
         return given()
@@ -27,11 +28,11 @@ public class InstitutionEndpoints {
 
     }
 
-    public static Response listUsers(String pagination) {
+    public static Response listUsers(RequestBodyAssignments requestBodyAssignments) {
         return given()
                 .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
-                .body(pagination)
+                .body(requestBodyAssignments)
                 .when()
                 .post(Routes.postUsers);
     }

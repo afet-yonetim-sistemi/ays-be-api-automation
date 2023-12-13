@@ -1,4 +1,4 @@
-package tests.user.userassignmentmanagementservice;
+package tests.user.assignmentmanagementservice;
 
 
 import endpoints.UserEndpoints;
