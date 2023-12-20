@@ -49,10 +49,8 @@ public class Helper {
     }
 
     public static User createUserPayload() {
-        Faker faker;
-        User userPayload;
-        faker = new Faker();
-        userPayload = new User();
+        Faker faker = new Faker();
+        User userPayload = new User();
         userPayload.setFirstName(faker.name().firstName());
         userPayload.setLastName(faker.name().lastName());
         userPayload.setPhoneNumber(createPhoneNumber());
@@ -75,6 +73,18 @@ public class Helper {
         return requestBodyAssignments;
     }
 
+    public static RequestBodyAssignments createRequestBodyAssignmentsWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
+        Pagination pagination = new Pagination();
+        pagination.setPage(1);
+        pagination.setPageSize(10);
+        requestBodyAssignments.setPagination(pagination);
+        FiltersForAssignments filters = new FiltersForAssignments();
+        filters.setPhoneNumber(phoneNumber);
+        requestBodyAssignments.setFilter(filters);
+        return requestBodyAssignments;
+    }
+
     public static Assignment createANewAssignment() {
         Faker faker = new Faker();
         Assignment assignment = new Assignment();
@@ -84,8 +94,12 @@ public class Helper {
         assignment.setDescription(faker.commerce().productName());
         assignment.setLatitude(generateRandomCoordinate(38, 40));
         assignment.setLongitude(generateRandomCoordinate(28, 43));
-        InstitutionEndpoints.createAnAssignment(assignment);
-        return assignment;
+        Response response = InstitutionEndpoints.createAnAssignment(assignment);
+        if (response.getStatusCode() == 200) {
+            return assignment;
+        } else {
+            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
+        }
     }
 
     public static PhoneNumber createPhoneNumber() {
@@ -115,80 +129,17 @@ public class Helper {
         return phoneNumberBuilder.toString();
     }
 
-    public static String extractIdFromListAssignments(Response response) {
-        String id = null;
-        String latestCreatedAt = "";
-        List<Map<String, Object>> content = response.jsonPath().getList("response.content");
-        for (Map<String, Object> assignment : content) {
-            String createdAt = (String) assignment.get("createdAt");
-            if (createdAt != null && createdAt.compareTo(latestCreatedAt) > 0) {
-                latestCreatedAt = createdAt;
-                id = (String) assignment.get("id");
-            }
-        }
-        return id;
+    public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {
+        Response response = InstitutionEndpoints.listAssignments(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
+        return response.jsonPath().getString("response.content[0].id");
+
     }
 
-    public static String extractUserIdByDescriptionAndName(String description, String firstName, String lastName) {
-        int currentPage = 1;
-        int totalPageCount = Integer.MAX_VALUE;
-
-        while (currentPage <= totalPageCount) {
-            Response assignmentResponse = InstitutionEndpoints.listAssignments(createRequestBodyAssignments(currentPage, 10));
-            totalPageCount = assignmentResponse.jsonPath().getInt("response.totalPageCount");
-
-            String assignmentId = findAssignmentIdInContent(assignmentResponse, description, firstName, lastName);
-            if (assignmentId != null) {
-                return assignmentId;
-            }
-
-            currentPage++;
-            if (currentPage > totalPageCount) {
-                break;
-            }
-        }
-        return null;
+    public static String extractUserIdByPhoneNumber(PhoneNumber phoneNumber) {
+        Response response = InstitutionEndpoints.listUsers(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
+        return response.jsonPath().getString("response.content[0].id");
     }
 
-    private static String findAssignmentIdInContent(Response response, String description, String firstName, String lastName) {
-        List<Map<String, Object>> content = response.jsonPath().getList("response.content");
-
-        for (Map<String, Object> entry : content) {
-            String desc = (String) entry.get("description");
-            String fName = (String) entry.get("firstName");
-            String lName = (String) entry.get("lastName");
-
-            if (desc != null && desc.equals(description) && fName != null && fName.equals(firstName) && lName != null && lName.equals(lastName)) {
-                return (String) entry.get("id");
-            }
-        }
-        return null;
-    }
-
-
-    public static String getUserID(String username) {
-        int currentPage = 1;
-
-        while (true) {
-            Pagination pagination = setPagination(currentPage, 10);
-            RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
-            requestBodyAssignments.setPagination(pagination);
-            Response response = InstitutionEndpoints.listUsers(requestBodyAssignments);
-            response.then().log().body();
-            String userID = extractUserIdFromTheUserList(response, username);
-            if (userID != null) {
-                return userID;
-            }
-            int currentPageNumber = response.jsonPath().getInt("response.pageNumber");
-            int totalPageCount = response.jsonPath().getInt("response.totalPageCount");
-            if (currentPageNumber >= totalPageCount) {
-                break;
-            }
-            currentPage++;
-        }
-
-        return null;
-    }
 
     public static String getUserIDByFirstName(String firstName) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
@@ -219,17 +170,6 @@ public class Helper {
         pagination.setPageSize(pageSize);
         pagination.setPage(page);
         return pagination;
-    }
-
-    private static String extractUserIdFromTheUserList(Response response, String username) {
-        List<Map<String, Object>> userList = response.jsonPath().getList("response.content");
-        for (Map<String, Object> user : userList) {
-            String userUsername = (String) user.get("username");
-            if (username.equals(userUsername)) {
-                return (String) user.get("id");
-            }
-        }
-        return null;
     }
 
     private static String extractUserIdFromTheUserListByFirstname(Response response, String firstname) {
