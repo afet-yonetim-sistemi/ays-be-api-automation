@@ -4,26 +4,30 @@ import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
 import payload.User;
-import payload.UserCredentials;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserTest {
     Logger logger = LogManager.getLogger(this.getClass());
-    User user=new User();
+    String userID;
+
+    @BeforeMethod
+    public void setup() {
+        User user = Helper.createUserPayload();
+        InstitutionEndpoints.createAUser(user);
+        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
+    }
 
     @Test()
     public void getUser() {
         logger.info("Test case UMS_26 is running");
-        user=Helper.createUserPayload();
-        Helper.createNewUser(user);
-        String userID;
-        userID=Helper.getUserIDByFirstName(user.getFirstName());
         Response response = InstitutionEndpoints.getUser(userID);
         response.then()
+                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("response.createdUser", notNullValue())

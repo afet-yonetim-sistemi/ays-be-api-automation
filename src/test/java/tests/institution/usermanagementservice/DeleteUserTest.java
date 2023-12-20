@@ -4,25 +4,23 @@ import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
 import payload.User;
-import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 public class DeleteUserTest {
-    User user;
     String userID;
     Logger logger = LogManager.getLogger(this.getClass());
 
-    @BeforeClass
+    @BeforeMethod
     public void setup() {
-        user=Helper.createUserPayload();
-        Helper.createNewUser(user);
-        userID=Helper.getUserIDByFirstName(user.getFirstName());
+        User user = Helper.createUserPayload();
+        InstitutionEndpoints.createAUser(user);
+        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }
 
     @Test()
@@ -47,6 +45,7 @@ public class DeleteUserTest {
     @Test()
     public void deleteUserNegative() {
         logger.info("Test case UMS_37 is running");
+        InstitutionEndpoints.deleteUser(userID);
         Response response = InstitutionEndpoints.deleteUser(userID);
         response.then()
                 .statusCode(409)

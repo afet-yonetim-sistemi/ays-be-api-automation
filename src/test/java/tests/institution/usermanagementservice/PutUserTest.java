@@ -13,15 +13,15 @@ import payload.User;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PutUserTest {
-    User user = new User();
+    User user=new User();
     String userID;
     Logger logger = LogManager.getLogger(this.getClass());
 
     @BeforeMethod
     public void setup() {
         user = Helper.createUserPayload();
-        Helper.createNewUser(user);
-        userID = Helper.getUserIDByFirstName(user.getFirstName());
+        InstitutionEndpoints.createAUser(user);
+        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }
 
     @Test()
@@ -31,7 +31,6 @@ public class PutUserTest {
         user.setRole("VOLUNTEER");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("httpStatus", equalTo("OK"))

@@ -18,7 +18,7 @@ public class GetAssignmentTest {
     @BeforeMethod
     public void setup(){
         assignment= Helper.createANewAssignment();
-        assignmentId = Helper.extractUserIdByDescriptionAndName(assignment.getDescription(),assignment.getFirstName(),assignment.getLastName());
+        assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 
     @Test()
@@ -26,6 +26,7 @@ public class GetAssignmentTest {
         logger.info("IAMS_42 is running");
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()
+                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("time", notNullValue())

@@ -20,7 +20,7 @@ public class DeleteAssignmentTest {
     @BeforeMethod
     public void setup(){
         assignment= Helper.createANewAssignment();
-        assignmentId = Helper.extractUserIdByDescriptionAndName(assignment.getDescription(),assignment.getFirstName(),assignment.getLastName());
+        assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
     @Test()
     public void deleteAssignment() {
