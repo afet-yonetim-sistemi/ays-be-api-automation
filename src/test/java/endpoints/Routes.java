@@ -43,5 +43,8 @@ public class Routes {
     public static String putUpdateAssignment = base_url + "/api/v1/assignment/{id}";
     public static String deleteAssignment = base_url + "/api/v1/assignment/{id}";
 
+    //AYS APIS SUPER_ADMIN ARMS
+    public static String postRegistrationApplications = base_url + "/api/v1/admin/registration-applications";
+
 
 }

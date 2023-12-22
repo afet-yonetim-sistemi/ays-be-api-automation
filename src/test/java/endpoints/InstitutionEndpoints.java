@@ -4,6 +4,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import payload.Assignment;
 import payload.RequestBodyAssignments;
+import payload.RequestBodyInstitution;
 import payload.User;
 
 import static io.restassured.RestAssured.given;
@@ -112,6 +113,25 @@ public class InstitutionEndpoints {
                 .when()
                 .delete(Routes.deleteAssignment);
     }
+
+    public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution){
+        return given()
+                .header("Authorization" , "Bearer " + Authorization.superAdminAuthorization())
+                .contentType(ContentType.JSON)
+                .body(requestBodyInstitution)
+                .when()
+                .post(Routes.postRegistrationApplications);
+    }
+
+    public static Response listAdmins(RequestBodyInstitution requestBodyInstitution) {
+        return given()
+                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
+                .contentType(ContentType.JSON)
+                .body(requestBodyInstitution)
+                .when()
+                .post(Routes.postRegistrationApplications);
+    }
+
 
 
 }
