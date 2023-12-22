@@ -3,6 +3,7 @@ package endpoints;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import payload.AdminCredentials;
+import payload.SuperAdminCredentials;
 import payload.UserCredentials;
 import utility.ConfigurationReader;
 
@@ -16,6 +17,7 @@ public class Authorization {
     protected static Date tokenGeneratedTime;
     public static AdminCredentials adminCredentials = new AdminCredentials();
     public static UserCredentials userCredentials = new UserCredentials();
+    public static SuperAdminCredentials superAdminCredentials = new SuperAdminCredentials();
 
     public static String institutionAuthorization() {
         adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
@@ -63,11 +65,36 @@ public class Authorization {
         return accessToken;
     }
 
+    public static String superAdminAuthorization(){
+        superAdminCredentials.setUsername(ConfigurationReader.getProperty("superAdmin_username"));
+        superAdminCredentials.setPassword(ConfigurationReader.getProperty("superAdmin_password"));
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body(superAdminCredentials)
+                .when()
+                .post(Routes.base_url + getTokenURL("SUPER_ADMIN"))
+                .then()
+                .extract()
+                .response();
+
+        if (response.jsonPath().getBoolean("isSuccess")) {
+            accessToken = response.jsonPath().getString("response.accessToken");
+            refreshToken = response.jsonPath().getString("response.refreshToken");
+            tokenGeneratedTime = new Date();
+        } else {
+            System.out.println(response.jsonPath().prettify());
+        }
+        return accessToken;
+    }
+
     private static String getTokenURL(String userType) {
         if ("ADMIN".equals(userType) || "SUPER_ADMIN".equals(userType)) {
             return "/api/v1/authentication/admin/token";
         }
         return "/api/v1/authentication/token";
     }
+
+
 
 }
