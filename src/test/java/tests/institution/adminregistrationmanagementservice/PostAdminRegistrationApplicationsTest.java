@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.*;
 
@@ -17,12 +18,18 @@ import static org.hamcrest.Matchers.*;
 
 public class PostAdminRegistrationApplicationsTest {
 
-    RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
-    Pagination pagination = new Pagination();
-    FilterForInstitution filter = new FilterForInstitution();
-    Sort sort = new Sort();
     Logger logger = LogManager.getLogger(this.getClass());
-
+    RequestBodyInstitution requestBodyInstitution;
+    Pagination pagination;
+    FilterForInstitution filter;
+    Sort sort;
+    @BeforeMethod
+    public void setup(){
+        requestBodyInstitution = new RequestBodyInstitution();
+        pagination = new Pagination();
+        filter = new FilterForInstitution();
+        sort = new Sort();
+    }
     @Test()
     @DisplayName("Pagination with valid role")
     public void postRegistrationWithPagination() {
@@ -49,7 +56,6 @@ public class PostAdminRegistrationApplicationsTest {
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
-
 
         Response response = InstitutionEndpoints.listAdmins(requestBodyInstitution);
         response.then()
@@ -164,14 +170,13 @@ public class PostAdminRegistrationApplicationsTest {
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
-
         List<String> statuses = new ArrayList<>();
         statuses.add("WAIT");
         filter.setStatuses(statuses);
         requestBodyInstitution.setFilterForInstitution(filter);
-
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
+                .log().body()
                 .statusCode(400)
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
@@ -195,6 +200,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
+                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("httpStatus", equalTo("OK"))
