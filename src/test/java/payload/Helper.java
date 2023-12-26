@@ -86,6 +86,15 @@ public class Helper {
     }
 
     public static Assignment createANewAssignment() {
+        Assignment assignment=createAssignmentPayload();
+        Response response = InstitutionEndpoints.createAnAssignment(assignment);
+        if (response.getStatusCode() == 200) {
+            return assignment;
+        } else {
+            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
+        }
+    }
+    public static Assignment createAssignmentPayload(){
         Faker faker = new Faker();
         Assignment assignment = new Assignment();
         assignment.setFirstName(faker.name().firstName());
@@ -94,12 +103,7 @@ public class Helper {
         assignment.setDescription(faker.commerce().productName());
         assignment.setLatitude(generateRandomCoordinate(38, 40));
         assignment.setLongitude(generateRandomCoordinate(28, 43));
-        Response response = InstitutionEndpoints.createAnAssignment(assignment);
-        if (response.getStatusCode() == 200) {
-            return assignment;
-        } else {
-            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
-        }
+        return assignment;
     }
 
     public static PhoneNumber createPhoneNumber() {
@@ -232,5 +236,32 @@ public class Helper {
 
         return builder.toString();
     }
+    public static String generateInvalidLineNumber() {
+        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488};
+        Random random = new Random();
+        String phoneNumber;
+        do {int firstThreeDigits = random.nextInt(900) + 100;
+            phoneNumber = String.valueOf(firstThreeDigits) + generateRandomDigits(7);
+        } while (isPrefixInArray(Integer.parseInt(phoneNumber.substring(0, 3)), prefixesArray));
+        return phoneNumber;
+    }
+
+    public static String generateRandomDigits(int length) {
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            stringBuilder.append(random.nextInt(10));
+        }
+        return stringBuilder.toString();
+    }
+    public static boolean isPrefixInArray(int prefix, int[] prefixesArray) {
+        for (int i : prefixesArray) {
+            if (i == prefix) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
