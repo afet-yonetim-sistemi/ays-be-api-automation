@@ -1,22 +1,23 @@
 package tests.institution.assignmentmanagementservice;
 
-import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import payload.Assignment;
 import payload.Helper;
-import payload.PhoneNumber;
-import java.util.Random;
+
 import static org.hamcrest.Matchers.*;
+
 public class PostAssignmentTest extends InstitutionEndpoints {
-    Random random = new Random();
     Assignment assignment;
+
     @BeforeMethod
     public void setupData() {
-        assignment= Helper.createANewAssignment();
+        assignment = Helper.createAssignmentPayload();
     }
+
     @Test
     public void createAnAssignmentPositive() {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
@@ -28,30 +29,78 @@ public class PostAssignmentTest extends InstitutionEndpoints {
 
     }
 
-    @Test
-    public void createAssignmentWithInvalidCountryCode() {
-        assignment.getPhoneNumber().setCountryCode("12345678");
+    @Test(dataProvider = "countryCodeData")
+    public void createAssignmentWithInvalidCountryCode(String countryCode) {
+        assignment.getPhoneNumber().setCountryCode(countryCode);
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
+                .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("isSuccess", equalTo(false))
-                .body("subErrors[0].message", equalTo("MUST BE VALID"))
-                .body("subErrors[0].field", equalTo("phoneNumber"))
-                .body("subErrors[0].type", equalTo("AysPhoneNumber"));
+                .body("header", equalTo("VALIDATION ERROR"))
+                .body("time", notNullValue())
+                .body("isSuccess", equalTo(false));
+        if (countryCode == null || countryCode.equals("   ") || countryCode.equals("")) {
+            response.then()
+                    .body("subErrors[0].message", equalTo("must not be blank"))
+                    .body("subErrors[0].field", equalTo("countryCode"))
+                    .body("subErrors[0].type", equalTo("String"))
+                    .body("subErrors[0].value", equalTo(countryCode));
+        } else {
+            response.then()
+                    .body("subErrors[0].message", equalTo("MUST BE VALID"))
+                    .body("subErrors[0].field", equalTo("phoneNumber"))
+                    .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"))
+                    .body("subErrors[0].value", notNullValue());
+        }
+    }
+    @DataProvider(name = "countryCodeData")
+    public Object[][] countryCodeData() {
+        return new Object[][]{
+                {null},
+                {""},
+                {"   "},
+                {"090"},
+                {"A90"},
+                {"+90"}
+        };
     }
 
-    @Test
-    public void createAssignmentWithInvalidPhoneNumber() {
-        assignment.getPhoneNumber().setLineNumber("1");
+    @Test(dataProvider = "lineNumberData")
+    public void createAssignmentWithInvalidLineNumber(String lineNumber) {
+        assignment.getPhoneNumber().setLineNumber(lineNumber);
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
-                .body("httpStatus", not(equalTo("OK")))
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("header", equalTo("VALIDATION ERROR"))
+                .body("time", notNullValue())
                 .body("isSuccess", equalTo(false));
+        if (lineNumber == null || lineNumber.equals("          ") || lineNumber.equals("")) {
+            response.then()
+                    .body("subErrors[0].message", equalTo("must not be blank"))
+                    .body("subErrors[0].field", equalTo("lineNumber"))
+                    .body("subErrors[0].type", equalTo("String"))
+                    .body("subErrors[0].value", equalTo(lineNumber));
+        } else {
+            response.then()
+                    .body("subErrors[0].message", equalTo("MUST BE VALID"))
+                    .body("subErrors[0].field", equalTo("phoneNumber"))
+                    .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"))
+                    .body("subErrors[0].value", notNullValue());
+        }
+    }
+    @DataProvider(name = "lineNumberData")
+    public Object[][] lineNumberData() {
+        return new Object[][]{
+                {Helper.generateInvalidLineNumber()},
+                {Helper.generateLineNumber() + "*"},
+                {""}, {"          "},
+                {null},
+                {Helper.generateLineNumber() + "a"}
+        };
+
     }
 
     @Test
@@ -143,7 +192,7 @@ public class PostAssignmentTest extends InstitutionEndpoints {
                 .body("isSuccess", equalTo(false))
                 .body("subErrors[0].message", equalTo("must not be null"))
                 .body("subErrors[0].field", equalTo("phoneNumber"))
-                .body("subErrors[0].type", equalTo("AysPhoneNumber"));
+                .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"));
     }
 
     @Test
@@ -191,22 +240,7 @@ public class PostAssignmentTest extends InstitutionEndpoints {
                 .body("isSuccess", equalTo(false))
                 .body("subErrors.message", hasItems("must not be null", "must not be blank"))
                 .body("subErrors.field", hasItems("phoneNumber", "firstName"))
-                .body("subErrors.type", hasItems("AysPhoneNumber", "String"));
+                .body("subErrors.type", hasItems("AysPhoneNumberRequest", "String"));
 
-    }
-
-    public static String generateLineNumber() {
-        Random random = new Random();
-        StringBuilder phoneNumberBuilder = new StringBuilder();
-        phoneNumberBuilder.append("5");
-        for (int i = 0; i < 9; i++) {
-            int digit = random.nextInt(10);
-            phoneNumberBuilder.append(digit);
-        }
-        return phoneNumberBuilder.toString();
-
-    }
-    private double generateRandomCoordinate(int min, int max) {
-        return min + (max - min) * random.nextDouble();
     }
 }
