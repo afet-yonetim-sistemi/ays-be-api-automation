@@ -196,6 +196,13 @@ public class Helper {
         location.setLongitude(longitude);
         return location;
     }
+    public static Location generateLocation(Double longitude, Double latitude) {
+        Location location = new Location();
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        return location;
+    }
+
 
     public static Location generateLocationTR() {
         Random rand = new Random();
