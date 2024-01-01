@@ -103,36 +103,59 @@ public class PostAssignmentTest extends InstitutionEndpoints {
 
     }
 
-    @Test
-    public void createAssignmentWithInvalidLongitude() {
-        assignment.setLongitude(2000.0);
+    @Test(dataProvider = "invalidLongitudeValues")
+    public void createAssignmentWithInvalidLongitude(Double invalidLongitude, String errorMessage) {
+        assignment.setLongitude(invalidLongitude);
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
-                .body("subErrors[0].message", equalTo("must be less than or equal to 180"))
+                .body("subErrors[0].message", equalTo(errorMessage))
                 .body("subErrors[0].field", equalTo("longitude"))
                 .body("subErrors[0].type", equalTo("Double"))
-                .body("subErrors[0].value", equalTo("2000.0"));
+                .body("subErrors[0].value", equalTo(String.valueOf(invalidLongitude)));
+    }
+    @DataProvider(name = "invalidLongitudeValues")
+    public Object[][] invalidLongitudeValues() {
+        return new Object[][]{
+                {180.000000001,"must be less than or equal to 180"},
+                {-180.000000001,"must be greater than or equal to -180"},
+                {-200.0,"must be greater than or equal to -180"},
+                {-270.0,"must be greater than or equal to -180"},
+                {200.0,"must be less than or equal to 180"},
+                {270.0,"must be less than or equal to 180"},
+                {180.000000001234,"must be less than or equal to 180"},
+                {-180.000000001234,"must be greater than or equal to -180"},
+        };
     }
 
-    @Test
-    public void createAssignmentWithInvalidLatitude() {
-        assignment.setLatitude(100.0);
+    @Test(dataProvider = "invalidLatitudeValues")
+    public void createAssignmentWithInvalidLatitude(Double invalidLatitude, String errorMessage ) {
+        assignment.setLatitude(invalidLatitude);
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
-                .body("subErrors[0].message", equalTo("must be less than or equal to 90"))
+                .body("subErrors[0].message", equalTo(errorMessage))
                 .body("subErrors[0].field", equalTo("latitude"))
                 .body("subErrors[0].type", equalTo("Double"))
-                .body("subErrors[0].value", equalTo("100.0"));
+                .body("subErrors[0].value", equalTo(String.valueOf(invalidLatitude)));
+    }
+    @DataProvider(name = "invalidLatitudeValues")
+    public Object[][] invalidLatitudeValues() {
+        return new Object[][]{
+                {100.0,"must be less than or equal to 90"},
+                {-100.0,"must be greater than or equal to -90"},
+                {90.000000001,"must be less than or equal to 90"},
+                {-90.000000001,"must be greater than or equal to -90"},
+                {-200.0,"must be greater than or equal to -90"},
+                {200.0,"must be less than or equal to 90"},
+
+        };
     }
 
     @Test
@@ -141,7 +164,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -156,7 +178,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -171,7 +192,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -186,7 +206,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -201,7 +220,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -217,7 +235,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
@@ -234,7 +251,6 @@ public class PostAssignmentTest extends InstitutionEndpoints {
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         response.then()
                 .statusCode(400)
-                .log().body()
                 .contentType("application/json")
                 .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
