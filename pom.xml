@@ -33,7 +33,7 @@
         <mysql-connector-java.version>8.0.32</mysql-connector-java.version>
         <log4j-core.version>2.20.0</log4j-core.version>
         <log4j-api.version>2.20.0</log4j-api.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.9</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
