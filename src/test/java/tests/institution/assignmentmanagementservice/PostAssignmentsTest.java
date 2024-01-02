@@ -106,8 +106,8 @@ public class PostAssignmentsTest {
     @DataProvider(name = "filterScenarios")
     public Object[][] filterScenarios() {
         return new Object[][]{
-                {"AVAILABLE", "90", "1234567890"}, //IAMS_06
-                {null, "90", "1234567890"}, //IAMS_02
+                {"AVAILABLE", "90", "5054567890"}, //IAMS_06
+                {null, "90", "5054567890"}, //IAMS_02
                 {"AVAILABLE", null, "1234567890"}, //IAMS_04
                 {"AVAILABLE", "90", null}, //IAMS_03
                 {null, null, null}, // IAMS_01
@@ -124,5 +124,23 @@ public class PostAssignmentsTest {
                 {"0", "10"}, // IAMS_09
                 {"1", "20"} //
         };
+    }
+
+    @Test()
+    public void postAssignmentsWithStatus() {
+        logger.info("Test case IAMS_08-12 is running..");
+        requestBodyAssignments = Helper.createRequestBodyAssignments(1, 10);
+        FiltersForAssignments filter = new FiltersForAssignments();
+        filter.setStatuses(Arrays.asList("ASSIGNED"));
+        requestBodyAssignments.setFilter(filter);
+        Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
+        response.then()
+                .statusCode(200)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("OK"))
+                .body("isSuccess", equalTo(true))
+                .body("response.filteredBy.statuses", hasItem("ASSIGNED"));
+
+
     }
 }
