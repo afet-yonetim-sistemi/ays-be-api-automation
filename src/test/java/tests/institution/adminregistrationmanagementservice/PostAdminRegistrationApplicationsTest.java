@@ -13,7 +13,6 @@ import payload.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 
@@ -22,14 +21,14 @@ public class PostAdminRegistrationApplicationsTest {
     Logger logger = LogManager.getLogger(this.getClass());
     RequestBodyInstitution requestBodyInstitution;
     Pagination pagination;
-    FilterForInstitution filter;
+    Filter filter;
     Sort sort;
 
     @BeforeMethod
     public void setup() {
         requestBodyInstitution = new RequestBodyInstitution();
         pagination = new Pagination();
-        filter = new FilterForInstitution();
+        filter = new Filter();
         sort = new Sort();
     }
 
@@ -81,11 +80,12 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
         response.then()
-                .statusCode(500)
+                .statusCode(400)
                 .contentType("application/json")
-                .body("httpStatus", equalTo("INTERNAL_SERVER_ERROR"))
+                .body("httpStatus", equalTo("BAD_REQUEST"))
                 .body("isSuccess", equalTo(false))
-                .body("header", equalTo("PROCESS ERROR"));
+                .body("header", equalTo("VALIDATION ERROR"))
+                .body("subErrors[0].message",containsString("must be between 1 and 99999999"));
     }
 
     @Test()
@@ -99,7 +99,7 @@ public class PostAdminRegistrationApplicationsTest {
         List<String> newStatuses = new ArrayList<>();
         newStatuses.add("WAITING");
         filter.setStatuses(newStatuses);
-        requestBodyInstitution.setFilterForInstitution(filter);
+        requestBodyInstitution.setFilter(filter);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
         response.then()
@@ -122,7 +122,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         List<String> newStatuses = Arrays.asList("WAITING");
         filter.setStatuses(newStatuses);
-        requestBodyInstitution.setFilterForInstitution(filter);
+        requestBodyInstitution.setFilter(filter);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
         response.then()
@@ -143,7 +143,7 @@ public class PostAdminRegistrationApplicationsTest {
         List<String> statuses = new ArrayList<>();
         statuses.add("WAIT");
         filter.setStatuses(statuses);
-        requestBodyInstitution.setFilterForInstitution(filter);
+        requestBodyInstitution.setFilter(filter);
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
         response.then()
                 .log().body()
@@ -203,11 +203,34 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("isSuccess", equalTo(false))
                 .body("header", equalTo("AUTH ERROR"));
     }
+    @Test()
+    @DisplayName("Pagination and invalid sort value with Authorization")
+    public void postRegistrationWithPaginationAndInvalidSort() {
+        logger.info("Test case ARMS_011 is running.. ");
+        pagination.setPage(1);
+        pagination.setPageSize(10);
+        requestBodyInstitution.setPagination(pagination);
+
+        sort.setProperty("created");
+        sort.setDirection("ASC");
+        List<Sort> newSort = new ArrayList<>();
+        newSort.add(sort);
+        requestBodyInstitution.setSort(newSort);
+
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        response.then()
+                .log().body()
+                .statusCode(400)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("VALIDATION ERROR"));
+    }
 
     @Test()
     @DisplayName("Pagination,sort and filter with Authorization")
     public void postRegistrationWithPaginationSortFilter() {
-        logger.info("Test case ARMS_011 is running.. ");
+        logger.info("Test case ARMS_0112 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
@@ -215,7 +238,7 @@ public class PostAdminRegistrationApplicationsTest {
         List<String> statuses = new ArrayList<>();
         statuses.add("WAITING");
         filter.setStatuses(statuses);
-        requestBodyInstitution.setFilterForInstitution(filter);
+        requestBodyInstitution.setFilter(filter);
 
         sort.setProperty("createdAt");
         sort.setDirection("ASC");
@@ -231,7 +254,8 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true))
                 .body("response.content", notNullValue())
-                .body("response.sortedBy", notNullValue());
+                .body("response.sortedBy", notNullValue())
+                .body("response.filteredBy",notNullValue());
     }
 
     @DataProvider(name = "paginationScenarios") //ARMS_03, ARMS_04, ARMS_05
@@ -239,7 +263,6 @@ public class PostAdminRegistrationApplicationsTest {
         return new Object[][]{
                 {0, 10},
                 {1, 0},
-                {1, 100},
                 {-1, 10},
                 {1, -1},
                 {-1, -1}
