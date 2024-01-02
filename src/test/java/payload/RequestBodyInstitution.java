@@ -6,13 +6,13 @@ public class RequestBodyInstitution {
 
     private Pagination pagination;
     private List<Sort> sort;
-    private FilterForInstitution filterForInstitution;
+    private Filter filter;
 
-    public FilterForInstitution getFilterForInstitution() {
-        return filterForInstitution;
+    public Filter getFilter() {
+        return filter;
     }
-    public void setFilterForInstitution(FilterForInstitution filterForInstitution) {
-        this.filterForInstitution = filterForInstitution;
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }public Pagination getPagination() {
         return pagination;
     }
