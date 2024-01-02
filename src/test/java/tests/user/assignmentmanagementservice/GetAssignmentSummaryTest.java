@@ -79,7 +79,7 @@ public class GetAssignmentSummaryTest {
                 .body("response.location", hasKey("latitude"));
 
     }
-    @Test(priority = 15)
+    @Test()
     public void getInProgressAssignmentSummary() {
         logger.info("Test case UMS_21 is running");
         location=Helper.generateLocationTR();
