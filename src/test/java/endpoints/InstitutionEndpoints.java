@@ -81,14 +81,6 @@ public class InstitutionEndpoints {
                 .when()
                 .post(Routes.postCreateAssignment);
     }
-    public static Response createAnInstitution(Institution institution) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .contentType(ContentType.JSON)
-                .body(institution)
-                .when()
-                .post(Routes.postRegistrationApplications);
-    }
 
     public static Response getAssignment(String assignmentId) {
         return given()
@@ -137,11 +129,11 @@ public class InstitutionEndpoints {
 
     }
 
-    public static Response getRegistrationApplicationsId(String institutionID) {
+    public static Response getRegistrationApplicationsId(String adminID) {
 
         return given()
                 .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", institutionID)
+                .pathParam("id", adminID)
                 .contentType(ContentType.JSON)
                 .when()
                 .get(Routes.getRegistrationApplicationsWithId);

@@ -14,14 +14,14 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAdminRegistrationApplicationIDTest {
     Logger logger = LogManager.getLogger(this.getClass());
-    String institutionID;
+    String adminID;
 
 
     @Test()
     public void getInstitutionPositive() {
         logger.info("ARMS_17 is running");
-        institutionID = "3cfeb994-88f4-48d0-b105-309f42f91412";
-        Response response = InstitutionEndpoints.getRegistrationApplicationsId(institutionID);
+        adminID = "3cfeb994-88f4-48d0-b105-309f42f91412";
+        Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
         response.then()
                 .log().body()
                 .statusCode(200)
@@ -42,8 +42,8 @@ public class GetAdminRegistrationApplicationIDTest {
     @Test()
     public void getInstitutionInvalidId() {
         logger.info("ARMS_18 is running");
-        institutionID = "invalid-id";
-        Response response = InstitutionEndpoints.getRegistrationApplicationsId(institutionID);
+        adminID = "invalid-id";
+        Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
         response.then()
                 .log().body()
                 .statusCode(400)
