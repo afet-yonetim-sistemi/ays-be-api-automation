@@ -50,6 +50,7 @@
                     <include name="createAnAssignmentPositive"/>
                     <include name="createAssignmentWithInvalidCountryCode"/>
                     <include name="createAssignmentWithInvalidPhoneNumber"/>
+                    <include name="createAssignmentWithInvalidLineNumber"/>
                     <include name="createAssignmentWithInvalidLongitude"/>
                     <include name="createAssignmentWithInvalidLatitude"/>
                     <include name="createAssignmentWithMissingFirstName"/>
@@ -87,7 +88,9 @@
             <class name="tests.institution.usermanagementservice.PostUserTest">
                 <methods>
                     <include name="createAUser"/>
-                    <include name="createUserNegative"/>
+                    <include name="createUserWithInvalidCountryCode"/>
+                    <include name="createUserWithInvalidLineNumber"/>
+                    <include name="createUserWithInvalidFirstnameAndLastname"/>
                 </methods>
             </class>
             <class name="tests.institution.usermanagementservice.PostUsersTest">
@@ -183,6 +186,8 @@
                     <include name="updateSupportStatusAfterReserveAnAssignment"/>
                 </methods>
             </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"></class>
+            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest"></class>
         </classes>
     </test>
 </suite>
