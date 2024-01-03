@@ -40,6 +40,7 @@
         <guava.version>33.0.0-jre</guava.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <allure.version>2.24.0</allure.version>
     </properties>
 
     <dependencies>
@@ -233,6 +234,11 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
         </dependency>
 
     </dependencies>
