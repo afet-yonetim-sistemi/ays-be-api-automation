@@ -206,7 +206,7 @@ public class PostAdminRegistrationApplicationsTest {
     @Test()
     @DisplayName("Pagination and invalid sort value with Authorization")
     public void postRegistrationWithPaginationAndInvalidSort() {
-        logger.info("Test case ARMS_011 is running.. ");
+        logger.info("Test case ARMS_11 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
@@ -230,7 +230,7 @@ public class PostAdminRegistrationApplicationsTest {
     @Test()
     @DisplayName("Pagination,sort and filter with Authorization")
     public void postRegistrationWithPaginationSortFilter() {
-        logger.info("Test case ARMS_0112 is running.. ");
+        logger.info("Test case ARMS_12 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
@@ -257,6 +257,64 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.sortedBy", notNullValue())
                 .body("response.filteredBy",notNullValue());
     }
+
+    @Test()
+    @DisplayName("Pagination,sort and filter with Unauthorization")
+    public void postRegistrationWithPaginationSortFilter2() {
+        logger.info("Test case ARMS_13 is running.. ");
+        pagination.setPage(1);
+        pagination.setPageSize(10);
+        requestBodyInstitution.setPagination(pagination);
+
+        List<String> statuses = new ArrayList<>();
+        statuses.add("WAITING");
+        filter.setStatuses(statuses);
+        requestBodyInstitution.setFilter(filter);
+
+        sort.setProperty("createdAt");
+        sort.setDirection("ASC");
+        List<Sort> newSort = new ArrayList<>();
+        newSort.add(sort);
+        requestBodyInstitution.setSort(newSort);
+
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
+        response.then()
+                .log().body()
+                .statusCode(403)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("FORBIDDEN"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("AUTH ERROR"));
+    }
+    @Test()
+    @DisplayName("Pagination,invalid sort and invalid filter with Authorization")
+    public void postRegistrationWithPaginationInvalidSortInvalidFilter() {
+        logger.info("Test case ARMS_14 is running.. ");
+        pagination.setPage(1);
+        pagination.setPageSize(10);
+        requestBodyInstitution.setPagination(pagination);
+
+        List<String> statuses = new ArrayList<>();
+        statuses.add("WAIT");
+        filter.setStatuses(statuses);
+        requestBodyInstitution.setFilter(filter);
+
+        sort.setProperty("");
+        sort.setDirection("ASC");
+        List<Sort> newSort = new ArrayList<>();
+        newSort.add(sort);
+        requestBodyInstitution.setSort(newSort);
+
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        response.then()
+                .log().body()
+                .statusCode(400)
+                .contentType("application/json")
+                .body("httpStatus", equalTo("BAD_REQUEST"))
+                .body("isSuccess", equalTo(false))
+                .body("header", equalTo("VALIDATION ERROR"));
+    }
+
 
     @DataProvider(name = "paginationScenarios") //ARMS_03, ARMS_04, ARMS_05
     public Object[][] paginationScenarios() {
