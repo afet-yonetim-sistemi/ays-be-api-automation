@@ -5,3 +5,4 @@ out
 /target
 configuration.properties
 /src/test/logs
+/allure-results
