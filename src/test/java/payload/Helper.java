@@ -5,10 +5,7 @@ import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Helper {
     public static User getUser(String userID) {
@@ -72,21 +69,17 @@ public class Helper {
         requestBodyAssignments.setPagination(pagination);
         return requestBodyAssignments;
     }
-
-    public static RequestBodyAssignments createRequestBodyAssignmentsWithPhoneNumberFilter(PhoneNumber phoneNumber) {
-        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
+    public static RequestBodyUsers createRequestBodyUsers(int page, int pageSize) {
+        RequestBodyUsers requestBodyUsers=new RequestBodyUsers();
         Pagination pagination = new Pagination();
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyAssignments.setPagination(pagination);
-        FiltersForAssignments filters = new FiltersForAssignments();
-        filters.setPhoneNumber(phoneNumber);
-        requestBodyAssignments.setFilter(filters);
-        return requestBodyAssignments;
+        pagination.setPage(page);
+        pagination.setPageSize(pageSize);
+        requestBodyUsers.setPagination(pagination);
+        return requestBodyUsers;
     }
 
     public static Assignment createANewAssignment() {
-        Assignment assignment=createAssignmentPayload();
+        Assignment assignment = createAssignmentPayload();
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         if (response.getStatusCode() == 200) {
             return assignment;
@@ -94,7 +87,8 @@ public class Helper {
             throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
         }
     }
-    public static Assignment createAssignmentPayload(){
+
+    public static Assignment createAssignmentPayload() {
         Faker faker = new Faker();
         Assignment assignment = new Assignment();
         assignment.setFirstName(faker.name().firstName());
@@ -140,18 +134,43 @@ public class Helper {
     }
 
     public static String extractUserIdByPhoneNumber(PhoneNumber phoneNumber) {
-        Response response = InstitutionEndpoints.listUsers(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
+        Response response = InstitutionEndpoints.listUsers(createRequestBodyUsersWithPhoneNumberFilter(phoneNumber));
         return response.jsonPath().getString("response.content[0].id");
+    }
+
+    public static RequestBodyUsers createRequestBodyUsersWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
+        requestBodyUsers.setPagination(createPagination());
+        FiltersForUsers filters = new FiltersForUsers();
+        filters.setPhoneNumber(phoneNumber);
+        requestBodyUsers.setFilter(filters);
+        return requestBodyUsers;
+    }
+
+    public static RequestBodyAssignments createRequestBodyAssignmentsWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
+
+        requestBodyAssignments.setPagination(createPagination());
+        FiltersForAssignments filters = new FiltersForAssignments();
+        filters.setPhoneNumber(phoneNumber);
+        requestBodyAssignments.setFilter(filters);
+        return requestBodyAssignments;
+    }
+    public static Pagination createPagination(){
+        Pagination pagination = new Pagination();
+        pagination.setPage(1);
+        pagination.setPageSize(10);
+        return pagination;
     }
 
 
     public static String getUserIDByFirstName(String firstName) {
-        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         Pagination pagination = setPagination(1, 10);
-        requestBodyAssignments.setPagination(setPagination(1, 10));
+        requestBodyUsers.setPagination(setPagination(1, 10));
         int currentPage = 1;
         while (true) {
-            Response response = InstitutionEndpoints.listUsers(requestBodyAssignments);
+            Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
             String userID = extractUserIdFromTheUserListByFirstname(response, firstName);
             if (userID != null) {
                 return userID;
@@ -162,7 +181,7 @@ public class Helper {
                 break;
             }
             pagination.setPage(currentPage + 1);
-            requestBodyAssignments.setPagination(pagination);
+            requestBodyUsers.setPagination(pagination);
             currentPage++;
         }
 
@@ -196,6 +215,7 @@ public class Helper {
         location.setLongitude(longitude);
         return location;
     }
+
     public static Location generateLocation(Double longitude, Double latitude) {
         Location location = new Location();
         location.setLatitude(latitude);
@@ -243,11 +263,13 @@ public class Helper {
 
         return builder.toString();
     }
+
     public static String generateInvalidLineNumber() {
         int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488};
         Random random = new Random();
         String phoneNumber;
-        do {int firstThreeDigits = random.nextInt(900) + 100;
+        do {
+            int firstThreeDigits = random.nextInt(900) + 100;
             phoneNumber = String.valueOf(firstThreeDigits) + generateRandomDigits(7);
         } while (isPrefixInArray(Integer.parseInt(phoneNumber.substring(0, 3)), prefixesArray));
         return phoneNumber;
@@ -261,6 +283,7 @@ public class Helper {
         }
         return stringBuilder.toString();
     }
+
     public static boolean isPrefixInArray(int prefix, int[] prefixesArray) {
         for (int i : prefixesArray) {
             if (i == prefix) {
@@ -268,6 +291,47 @@ public class Helper {
             }
         }
         return false;
+    }
+    public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname){
+        FiltersForUsers filters = new FiltersForUsers();
+        filters.setFirstName(firstname);
+        filters.setLastName(lastname);
+        return filters;
+    }
+    public static FiltersForUsers createFilterWithUserStatus(String status){
+        FiltersForUsers filters = new FiltersForUsers();
+        List<String> statuses = Arrays.asList(status);
+        filters.setStatuses(statuses);
+        return filters;
+    }
+    public static FiltersForUsers createFilterWithUserSupportStatus(String supportStatus){
+        FiltersForUsers filters = new FiltersForUsers();
+        List<String> statuses = Arrays.asList(supportStatus);
+        filters.setSupportStatuses(statuses);
+        return filters;
+    }
+    public static FiltersForUsers createFilterWithUserPhoneNumber(PhoneNumber phoneNumber){
+        FiltersForUsers filters = new FiltersForUsers();
+        filters.setPhoneNumber(phoneNumber);
+        return filters;
+    }
+    public static FiltersForUsers createFilterWithAllUserFilters(PhoneNumber phoneNumber,String firstname,String lastname,String status, String supportStatus){
+        FiltersForUsers filters = new FiltersForUsers();
+        filters.setPhoneNumber(phoneNumber);
+        filters.setFirstName(firstname);
+        filters.setLastName(lastname);
+        List<String> statuses = Arrays.asList(status);
+        filters.setStatuses(statuses);
+        List<String> supportStatuses = Arrays.asList(supportStatus);
+        filters.setSupportStatuses(supportStatuses);
+        return filters;
+    }
+    public static List<Sort> createSortBody(String property,String direction){
+        Sort sort = new Sort();
+        sort.setDirection(direction);
+        sort.setProperty(property);
+        List<Sort> sortList = Arrays.asList(sort);
+        return sortList;
     }
 
 }

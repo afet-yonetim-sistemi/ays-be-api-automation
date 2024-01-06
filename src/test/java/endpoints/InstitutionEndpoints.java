@@ -26,11 +26,11 @@ public class InstitutionEndpoints {
 
     }
 
-    public static Response listUsers(RequestBodyAssignments requestBodyAssignments) {
+    public static Response listUsers(RequestBodyUsers requestBodyUsers) {
         return given()
                 .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
                 .contentType(ContentType.JSON)
-                .body(requestBodyAssignments)
+                .body(requestBodyUsers)
                 .when()
                 .post(Routes.postUsers);
     }
