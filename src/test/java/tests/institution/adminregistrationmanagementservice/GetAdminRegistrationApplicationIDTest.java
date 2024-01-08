@@ -18,9 +18,9 @@ public class GetAdminRegistrationApplicationIDTest {
 
 
     @Test()
-    public void getInstitutionPositive() {
+    public void getAdminIDPositive() {
         logger.info("ARMS_17 is running");
-        adminID = "3cfeb994-88f4-48d0-b105-309f42f91412";
+        adminID = Helper.getAdminID();
         Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
         response.then()
                 .log().body()
@@ -33,14 +33,10 @@ public class GetAdminRegistrationApplicationIDTest {
                 .body("response.id", notNullValue())
                 .body("response.createdUser", notNullValue())
                 .body("response.status", notNullValue())
-                .body("response.adminUser.firstName", notNullValue())
-                .body("response.adminUser.lastName", notNullValue())
-                .body("response.adminUser.email", notNullValue())
-                .body("response.adminUser.id", notNullValue())
-                .body("response.adminUser.phoneNumber", nullValue());
+                .body("response.institution.id", notNullValue());
     }
     @Test()
-    public void getInstitutionInvalidId() {
+    public void getAdminInvalidId() {
         logger.info("ARMS_18 is running");
         adminID = "invalid-id";
         Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);

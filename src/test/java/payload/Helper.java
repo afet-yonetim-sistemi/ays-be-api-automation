@@ -334,5 +334,21 @@ public class Helper {
         return sortList;
     }
 
+    public static String getAdminID() {
+        RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
+        Pagination pagination = setPagination(1, 10);
+        requestBodyInstitution.setPagination(setPagination(1, 10));
+        int currentPage = 1;
+        while (true) {
+            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution,"SUPER_ADMIN");
+            String adminID = response.jsonPath().getString("response.content[0].id");
+            if (adminID != null) {
+                return adminID;
+            }
+
+        }
+
+    }
+
 }
 
