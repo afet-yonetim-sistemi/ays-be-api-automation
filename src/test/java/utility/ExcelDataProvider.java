@@ -4,10 +4,10 @@ import org.testng.annotations.DataProvider;
 
 import java.io.IOException;
 
-public class DataProviders {
+public class ExcelDataProvider {
     private XLUtility xl;
 
-    public DataProviders() throws IOException {
+    public ExcelDataProvider() throws IOException {
         String path = System.getProperty("user.dir") + "pathOfExcelFile";
         xl = new XLUtility(path);
     }
