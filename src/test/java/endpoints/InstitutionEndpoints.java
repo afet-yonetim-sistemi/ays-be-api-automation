@@ -138,6 +138,15 @@ public class InstitutionEndpoints {
                 .when()
                 .get(Routes.getRegistrationApplicationsWithId);
     }
+    public static Response getRegistrationApplicationsIdSummary(String adminID) {
+
+        return given()
+                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
+                .pathParam("id", adminID)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(Routes.getGetRegistrationApplicationsIdSummary);
+    }
 }
 
 

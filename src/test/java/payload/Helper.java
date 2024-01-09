@@ -326,6 +326,55 @@ public class Helper {
         filters.setSupportStatuses(supportStatuses);
         return filters;
     }
+    public static FiltersForAssignments createFilterWithAssignmentPhoneNumber(PhoneNumber phoneNumber){
+        FiltersForAssignments filters=new FiltersForAssignments();
+        filters.setPhoneNumber(phoneNumber);
+        return filters;
+    }
+    public static FiltersForAssignments createFilterWithAssignmentStatus(String... statusesToAdd){
+        FiltersForAssignments filters=new FiltersForAssignments();
+        List<String> statuses=new ArrayList<>();
+        if (statusesToAdd != null) {
+            Collections.addAll(statuses, statusesToAdd);
+        }
+        filters.setStatuses(statuses);
+        return filters;
+    }
+    public static FiltersForAssignments createFilterWithAssignmentStatusAndLineNumber(String lineNumber,String... statusesToAdd){
+        FiltersForAssignments filters=new FiltersForAssignments();
+        List<String> statuses=new ArrayList<>();
+        if (statusesToAdd != null) {
+            Collections.addAll(statuses, statusesToAdd);
+        }
+        filters.setStatuses(statuses);
+        PhoneNumber phoneNumber=new PhoneNumber();
+        phoneNumber.setLineNumber(lineNumber);
+        filters.setPhoneNumber(phoneNumber);
+        return filters;
+    }
+    public static FiltersForAssignments createFilterWithAssignmentStatusAndCountryCOde(String countryCode,String... statusesToAdd){
+        FiltersForAssignments filters=new FiltersForAssignments();
+        List<String> statuses=new ArrayList<>();
+        if (statusesToAdd != null) {
+            Collections.addAll(statuses, statusesToAdd);
+        }
+        filters.setStatuses(statuses);
+        PhoneNumber phoneNumber=new PhoneNumber();
+        phoneNumber.setCountryCode(countryCode);
+        filters.setPhoneNumber(phoneNumber);
+        return filters;
+    }
+    public static FiltersForAssignments createFilterWithAssignmentStatusPhoneNumber(PhoneNumber phoneNumber,String... statusesToAdd){
+        FiltersForAssignments filters=new FiltersForAssignments();
+        List<String> statuses=new ArrayList<>();
+        if (statusesToAdd != null) {
+            Collections.addAll(statuses, statusesToAdd);
+        }
+        filters.setStatuses(statuses);
+        filters.setPhoneNumber(phoneNumber);
+        return filters;
+    }
+
     public static List<Sort> createSortBody(String property,String direction){
         Sort sort = new Sort();
         sort.setDirection(direction);
