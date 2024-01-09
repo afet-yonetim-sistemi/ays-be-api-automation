@@ -46,6 +46,7 @@ public class Routes {
     //AYS APIS SUPER_ADMIN ARMS
     public static String postRegistrationApplications = base_url + "/api/v1/admin/registration-applications";
     public static String getRegistrationApplicationsWithId = base_url+ "/api/v1/admin/registration-application/{id}";
+    public static String getGetRegistrationApplicationsIdSummary = base_url + "/api/v1/admin/registration-application/{id}/summary";
 
 
 }
