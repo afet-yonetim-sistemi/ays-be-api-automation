@@ -1,6 +1,9 @@
 package tests.institution.adminregistrationmanagementservice;
 
 import endpoints.InstitutionEndpoints;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +21,13 @@ public class GetAdminRegistrationApplicationIDTest {
 
 
     @Test()
+    @Story("As a super admin I want to get detailed information about administrator registration applications when I use valid ID")
+    @Severity(SeverityLevel.NORMAL)
     public void getAdminIDPositive() {
         logger.info("ARMS_17 is running");
         adminID = Helper.getAdminID();
         Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
         response.then()
-                .log().body()
                 .statusCode(200)
                 .contentType("application/json")
                 .body("time", notNullValue())
@@ -36,12 +40,13 @@ public class GetAdminRegistrationApplicationIDTest {
                 .body("response.institution.id", notNullValue());
     }
     @Test()
+    @Story("As a super admin I want to get proper error message when I use invalid ID information")
+    @Severity(SeverityLevel.NORMAL)
     public void getAdminInvalidId() {
         logger.info("ARMS_18 is running");
         adminID = "invalid-id";
         Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
         response.then()
-                .log().body()
                 .statusCode(400)
                 .contentType("application/json")
                 .body("time", notNullValue())
