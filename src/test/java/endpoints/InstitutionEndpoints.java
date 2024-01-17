@@ -138,6 +138,7 @@ public class InstitutionEndpoints {
                 .when()
                 .get(Routes.getRegistrationApplicationsWithId);
     }
+
     public static Response getRegistrationApplicationsIdSummary(String adminID) {
 
         return given()
@@ -147,6 +148,25 @@ public class InstitutionEndpoints {
                 .when()
                 .get(Routes.getGetRegistrationApplicationsIdSummary);
     }
+
+    public static Response postRegistrationApplicationApprove(String applicationID) {
+        return given()
+                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
+                .pathParam("id", applicationID)
+                .contentType(ContentType.JSON)
+                .when()
+                .post(Routes.postRegistrationApplicationApprove);
+    }
+    public static Response postRegistrationAdminApplication(ApplicationRegistration applicationRegistration){
+        return given()
+                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
+                .contentType(ContentType.JSON)
+                .body(applicationRegistration)
+                .when()
+                .post(Routes.postRegistrationApplication);
+
+    }
+
 }
 
 

@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
+import utility.ConfigurationReader;
 
 import java.util.*;
 
@@ -69,8 +70,9 @@ public class Helper {
         requestBodyAssignments.setPagination(pagination);
         return requestBodyAssignments;
     }
+
     public static RequestBodyUsers createRequestBodyUsers(int page, int pageSize) {
-        RequestBodyUsers requestBodyUsers=new RequestBodyUsers();
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         Pagination pagination = new Pagination();
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
@@ -156,7 +158,8 @@ public class Helper {
         requestBodyAssignments.setFilter(filters);
         return requestBodyAssignments;
     }
-    public static Pagination createPagination(){
+
+    public static Pagination createPagination() {
         Pagination pagination = new Pagination();
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -292,30 +295,35 @@ public class Helper {
         }
         return false;
     }
-    public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname){
+
+    public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname) {
         FiltersForUsers filters = new FiltersForUsers();
         filters.setFirstName(firstname);
         filters.setLastName(lastname);
         return filters;
     }
-    public static FiltersForUsers createFilterWithUserStatus(String status){
+
+    public static FiltersForUsers createFilterWithUserStatus(String status) {
         FiltersForUsers filters = new FiltersForUsers();
         List<String> statuses = Arrays.asList(status);
         filters.setStatuses(statuses);
         return filters;
     }
-    public static FiltersForUsers createFilterWithUserSupportStatus(String supportStatus){
+
+    public static FiltersForUsers createFilterWithUserSupportStatus(String supportStatus) {
         FiltersForUsers filters = new FiltersForUsers();
         List<String> statuses = Arrays.asList(supportStatus);
         filters.setSupportStatuses(statuses);
         return filters;
     }
-    public static FiltersForUsers createFilterWithUserPhoneNumber(PhoneNumber phoneNumber){
+
+    public static FiltersForUsers createFilterWithUserPhoneNumber(PhoneNumber phoneNumber) {
         FiltersForUsers filters = new FiltersForUsers();
         filters.setPhoneNumber(phoneNumber);
         return filters;
     }
-    public static FiltersForUsers createFilterWithAllUserFilters(PhoneNumber phoneNumber,String firstname,String lastname,String status, String supportStatus){
+
+    public static FiltersForUsers createFilterWithAllUserFilters(PhoneNumber phoneNumber, String firstname, String lastname, String status, String supportStatus) {
         FiltersForUsers filters = new FiltersForUsers();
         filters.setPhoneNumber(phoneNumber);
         filters.setFirstName(firstname);
@@ -326,47 +334,52 @@ public class Helper {
         filters.setSupportStatuses(supportStatuses);
         return filters;
     }
-    public static FiltersForAssignments createFilterWithAssignmentPhoneNumber(PhoneNumber phoneNumber){
-        FiltersForAssignments filters=new FiltersForAssignments();
+
+    public static FiltersForAssignments createFilterWithAssignmentPhoneNumber(PhoneNumber phoneNumber) {
+        FiltersForAssignments filters = new FiltersForAssignments();
         filters.setPhoneNumber(phoneNumber);
         return filters;
     }
-    public static FiltersForAssignments createFilterWithAssignmentStatus(String... statusesToAdd){
-        FiltersForAssignments filters=new FiltersForAssignments();
-        List<String> statuses=new ArrayList<>();
+
+    public static FiltersForAssignments createFilterWithAssignmentStatus(String... statusesToAdd) {
+        FiltersForAssignments filters = new FiltersForAssignments();
+        List<String> statuses = new ArrayList<>();
         if (statusesToAdd != null) {
             Collections.addAll(statuses, statusesToAdd);
         }
         filters.setStatuses(statuses);
         return filters;
     }
-    public static FiltersForAssignments createFilterWithAssignmentStatusAndLineNumber(String lineNumber,String... statusesToAdd){
-        FiltersForAssignments filters=new FiltersForAssignments();
-        List<String> statuses=new ArrayList<>();
+
+    public static FiltersForAssignments createFilterWithAssignmentStatusAndLineNumber(String lineNumber, String... statusesToAdd) {
+        FiltersForAssignments filters = new FiltersForAssignments();
+        List<String> statuses = new ArrayList<>();
         if (statusesToAdd != null) {
             Collections.addAll(statuses, statusesToAdd);
         }
         filters.setStatuses(statuses);
-        PhoneNumber phoneNumber=new PhoneNumber();
+        PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setLineNumber(lineNumber);
         filters.setPhoneNumber(phoneNumber);
         return filters;
     }
-    public static FiltersForAssignments createFilterWithAssignmentStatusAndCountryCOde(String countryCode,String... statusesToAdd){
-        FiltersForAssignments filters=new FiltersForAssignments();
-        List<String> statuses=new ArrayList<>();
+
+    public static FiltersForAssignments createFilterWithAssignmentStatusAndCountryCOde(String countryCode, String... statusesToAdd) {
+        FiltersForAssignments filters = new FiltersForAssignments();
+        List<String> statuses = new ArrayList<>();
         if (statusesToAdd != null) {
             Collections.addAll(statuses, statusesToAdd);
         }
         filters.setStatuses(statuses);
-        PhoneNumber phoneNumber=new PhoneNumber();
+        PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         filters.setPhoneNumber(phoneNumber);
         return filters;
     }
-    public static FiltersForAssignments createFilterWithAssignmentStatusPhoneNumber(PhoneNumber phoneNumber,String... statusesToAdd){
-        FiltersForAssignments filters=new FiltersForAssignments();
-        List<String> statuses=new ArrayList<>();
+
+    public static FiltersForAssignments createFilterWithAssignmentStatusPhoneNumber(PhoneNumber phoneNumber, String... statusesToAdd) {
+        FiltersForAssignments filters = new FiltersForAssignments();
+        List<String> statuses = new ArrayList<>();
         if (statusesToAdd != null) {
             Collections.addAll(statuses, statusesToAdd);
         }
@@ -375,7 +388,7 @@ public class Helper {
         return filters;
     }
 
-    public static List<Sort> createSortBody(String property,String direction){
+    public static List<Sort> createSortBody(String property, String direction) {
         Sort sort = new Sort();
         sort.setDirection(direction);
         sort.setProperty(property);
@@ -387,7 +400,7 @@ public class Helper {
         RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
         requestBodyInstitution.setPagination(setPagination(1, 10));
         while (true) {
-            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution,"SUPER_ADMIN");
+            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
             String adminID = response.jsonPath().getString("response.content[0].id");
             if (adminID != null) {
                 return adminID;
@@ -395,6 +408,19 @@ public class Helper {
 
         }
 
+    }
+
+    public static String getAdminRegistrationApplicationID() {
+        ApplicationRegistration applicationRegistration = new ApplicationRegistration();
+        applicationRegistration.setReason("A valid test string must have forty character.");
+        applicationRegistration.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        Response response = InstitutionEndpoints.postRegistrationAdminApplication(applicationRegistration);
+        if (response != null) {
+            return response.jsonPath().getString("response.id");
+
+        } else {
+            throw new RuntimeException("Registration application creation failed with status code: " + response.getStatusCode());
+        }
     }
 
 }
