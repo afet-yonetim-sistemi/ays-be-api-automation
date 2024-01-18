@@ -166,6 +166,15 @@ public class InstitutionEndpoints {
                 .post(Routes.postRegistrationApplication);
 
     }
+    public static Response postRegistrationApplicationReject(String applicationID,RejectReason rejectReason) {
+        return given()
+                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
+                .pathParam("id", applicationID)
+                .contentType(ContentType.JSON)
+                .body(rejectReason)
+                .when()
+                .post(Routes.postRegistrationApplicationReject);
+    }
 
 }
 
