@@ -98,6 +98,7 @@ public class DataProvider {
                 {Helper.generateLineNumber() + "a"}
         };
     }
+
     @org.testng.annotations.DataProvider(name = "invalidLongitudeValues")
     public Object[][] invalidLongitudeValues() {
         return new Object[][]{
@@ -112,6 +113,7 @@ public class DataProvider {
                 {Double.NaN, "must be less than or equal to 180"}
         };
     }
+
     @org.testng.annotations.DataProvider(name = "invalidLatitudeValues")
     public Object[][] invalidLatitudeValues() {
         return new Object[][]{
@@ -124,7 +126,9 @@ public class DataProvider {
                 {Double.NaN, "must be greater than or equal to -90"}
 
         };
-    }@org.testng.annotations.DataProvider(name = "invalidFirstNamesAndLastDataForAssignment")
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidFirstNamesAndLastDataForAssignment")
     public Object[][] invalidFirstAndLastNamesDataForAssignment() {
         return new Object[][]{
                 {"", "must not be blank"},
@@ -137,6 +141,14 @@ public class DataProvider {
                 {"F", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
                 {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"}
 
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidRejectReason")
+    public Object[][] invalidRejectReason() {
+        return new Object[][]{
+                {"A".repeat(39)},
+                {"A".repeat(513)}
         };
     }
 
