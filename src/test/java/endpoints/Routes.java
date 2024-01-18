@@ -47,6 +47,8 @@ public class Routes {
     public static String postRegistrationApplications = base_url + "/api/v1/admin/registration-applications";
     public static String getRegistrationApplicationsWithId = base_url+ "/api/v1/admin/registration-application/{id}";
     public static String getGetRegistrationApplicationsIdSummary = base_url + "/api/v1/admin/registration-application/{id}/summary";
+    public static String postRegistrationApplicationApprove=base_url+"/api/v1/admin/registration-application/{id}/approve";
+    public static String postRegistrationApplication=base_url+"/api/v1/admin/registration-application";
 
 
 }
