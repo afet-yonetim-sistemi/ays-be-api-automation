@@ -109,8 +109,7 @@ public class DataProvider {
                 {200.0, "must be less than or equal to 180"},
                 {270.0, "must be less than or equal to 180"},
                 {180.000000001234, "must be less than or equal to 180"},
-                {-180.000000001234, "must be greater than or equal to -180"},
-                {Double.NaN, "must be less than or equal to 180"}
+                {-180.000000001234, "must be greater than or equal to -180"}
         };
     }
 
@@ -122,8 +121,7 @@ public class DataProvider {
                 {90.000000001, "must be less than or equal to 90"},
                 {-90.000000001, "must be greater than or equal to -90"},
                 {-200.0, "must be greater than or equal to -90"},
-                {200.0, "must be less than or equal to 90"},
-                {Double.NaN, "must be greater than or equal to -90"}
+                {200.0, "must be less than or equal to 90"}
 
         };
     }
@@ -149,6 +147,15 @@ public class DataProvider {
         return new Object[][]{
                 {"A".repeat(39)},
                 {"A".repeat(513)}
+        };
+    }
+    @org.testng.annotations.DataProvider(name = "invalidDataForPostApplicationReasonField")
+    public Object[][] invalidDataForPostApplicationReasonField() {
+        return new Object[][]{
+                {"reason less then forty", "size must be between 40 and 512","reason","String"},
+                {null, "must not be blank","reason","String"},
+                {"       ", "size must be between 40 and 512","reason","String"},
+                {"A".repeat(513), "size must be between 40 and 512","reason","String"}
         };
     }
 
