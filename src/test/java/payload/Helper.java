@@ -422,6 +422,23 @@ public class Helper {
             throw new RuntimeException("Registration application creation failed with status code: " + response.getStatusCode());
         }
     }
+    public static String generateReasonString() {
+        Faker faker = new Faker();
+        int length = 40 + faker.number().numberBetween(0, 472);
+        return faker.lorem().characters(length);
+    }
+    public static ApplicationRegistration generateApplicationRegistrationPayload(){
+        ApplicationRegistration application=new ApplicationRegistration();
+        application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        application.setReason(generateReasonString());
+        return application;
+    }
+    public static ApplicationRegistration generateApplicationRegistrationPayloadWithoutReason(){
+        ApplicationRegistration application=new ApplicationRegistration();
+        application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        return application;
+    }
+
 
 }
 
