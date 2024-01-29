@@ -11,7 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.Listeners;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 import payload.ApplicationRegistration;
 import payload.Helper;
@@ -23,46 +23,42 @@ public class PostAdminRegistrationApplicationTest extends DataProvider {
     Logger logger = LogManager.getLogger(this.getClass());
     ApplicationRegistration application = new ApplicationRegistration();
 
+
     @Test
-    @Story("As a Super Admin I want to create an admin under an Institution")
-    @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplication() {
-        logger.info("Test case ARMS_Create_01 is running");
+        logInfo("ARMS_Create_01 Story:As a Super Admin I want to create an admin under an Institution", true);
         application = Helper.generateApplicationRegistrationPayload();
-        logRequestPayload(application);
+        logInfo(logRequestPayload(application), true);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
-        logResponseBody(response);
+        logInfo(logResponseBody(response), true);
         response.then()
                 .spec(successResponseSpec())
                 .body("response", hasKey("id"));
     }
 
     @Test(dataProvider = "invalidDataForPostApplicationReasonField")
-    @Story("As a Super Admin when I create an admin under an Institution with invalid reason or institution id I want to get a proper error message")
-    @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
-        logger.info("Test case ARMS_Create_02 is running");
+        logInfo("ARMS_Create_02 Story:As a Super Admin when I create an admin under an Institution with invalid reason or institution id I want to get a proper error message", true);
         application = Helper.generateApplicationRegistrationPayloadWithoutReason();
         application.setReason(reason);
-        logRequestPayload(application);
+        logInfo(logRequestPayload(application), true);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
-        logResponseBody(response);
+        logInfo(logResponseBody(response), true);
         response.then()
                 .spec(badRequestResponseSpec())
                 .body("subErrors[0].message", anyOf(containsString(message), containsString("must not be blank")))
                 .body("subErrors[0].field", equalTo(field))
                 .body("subErrors[0].type", equalTo(type));
     }
+
     @Test
-    @Story("As a Super Admin when I create an admin registration application with invalid institution ID I want to get a proper error message")
-    @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
-        logger.info("Test case ARMS_Create_03 is running");
+        logInfo("ARMS_Create_03 Story:As a Super Admin when I create an admin registration application with invalid institution ID I want to get a proper error message", true);
         application = Helper.generateApplicationRegistrationPayload();
         application.setInstitutionId("invalidId");
-        logRequestPayload(application);
+        logInfo(logRequestPayload(application), true);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
-        logResponseBody(response);
+        logInfo(logResponseBody(response), true);
         response.then()
                 .statusCode(404)
                 .contentType("application/json")
@@ -72,16 +68,17 @@ public class PostAdminRegistrationApplicationTest extends DataProvider {
                 .body("isSuccess", equalTo(false))
                 .body("message", containsString("INSTITUTION NOT EXIST!"));
     }
+
     @Test
     @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
-        logger.info("Test case ARMS_Create_05 is running");
+        logInfo("ARMS_Create_04 Story:As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message", true);
         application = Helper.generateApplicationRegistrationPayload();
         application.setInstitutionId(null);
-        logRequestPayload(application);
+        logInfo(logRequestPayload(application), true);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
-        logResponseBody(response);
+        logInfo(logResponseBody(response), true);
         response.then()
                 .spec(badRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"))
@@ -111,27 +108,38 @@ public class PostAdminRegistrationApplicationTest extends DataProvider {
                 .build();
     }
 
-    private void logResponseBody(Response response) {
+    private String logResponseBody(Response response) {
         if (response != null) {
             try {
                 String responseBody = response.getBody().asString();
                 logger.info("Response Body:\n" + responseBody);
+                return responseBody;
             } catch (Exception e) {
                 logger.error("Error while logging response body: " + e.getMessage());
             }
         } else {
             logger.warn("Response is null");
         }
+
+        return null;
     }
 
-    private void logRequestPayload(Object requestBody) {
+    private String logRequestPayload(Object requestBody) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String requestBodyJson = mapper.writeValueAsString(requestBody);
             logger.info("Request Body: " + requestBodyJson);
+            return requestBodyJson;
         } catch (JsonProcessingException e) {
             logger.error("Error converting request body to JSON: " + e.getMessage());
         }
+
+        return null;
+    }
+
+    private void logInfo(String message, boolean printToConsole) {
+        logger.info(message);
+        Reporter.log(message, printToConsole);
     }
 
 }

@@ -274,7 +274,7 @@
                         <version>${maven-surefire-plugin.version}</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>src/test/java/runners/InstitutionTestSuite.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/java/runners/ListenerSample.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
