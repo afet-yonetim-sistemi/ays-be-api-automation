@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test name="Listener Sample">
+        <classes>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest">
+                <methods>
+                    <include name="createAnAdminRegistrationApplication"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInputs"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInstitutionId"/>
+                    <include name="createAnAdminRegistrationApplicationWithMissingInstitutionId"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
