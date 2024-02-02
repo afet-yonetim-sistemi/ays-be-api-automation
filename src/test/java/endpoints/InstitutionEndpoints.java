@@ -2,7 +2,16 @@ package endpoints;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import payload.*;
+import org.openqa.selenium.remote.http.HttpMethod;
+import payload.ApplicationRegistration;
+import payload.Assignment;
+import payload.RejectReason;
+import payload.RequestBodyAssignments;
+import payload.RequestBodyInstitution;
+import payload.RequestBodyUsers;
+import payload.User;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -141,12 +150,13 @@ public class InstitutionEndpoints {
 
     public static Response getRegistrationApplicationsIdSummary(String adminID) {
 
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", adminID)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(Routes.getGetRegistrationApplicationsIdSummary);
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url(Routes.getGetRegistrationApplicationsIdSummary)
+                .pathParameter(Map.of("id", adminID))
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response postRegistrationApplicationApprove(String applicationID) {
