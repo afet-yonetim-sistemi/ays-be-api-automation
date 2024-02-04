@@ -17,7 +17,7 @@ public class AysRestAssuredRequest {
     private Object body;
     private String token;
     @Builder.Default
-    private Map<String, String> pathParameter = new HashMap<>();
+    private Map<String, Object> pathParameter = new HashMap<>();
     @Builder.Default
     private ContentType contentType = ContentType.JSON;
 
