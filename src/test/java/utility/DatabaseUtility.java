@@ -1,58 +1,32 @@
 package utility;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 
 public class DatabaseUtility {
-    public Statement statement;
-    private static String jdbcUrl = ConfigurationReader.getProperty("jdbcUrl");
-    private static String username = ConfigurationReader.getProperty("dbusername");
-    private static String password = ConfigurationReader.getProperty("dbpassword");
-    private static Connection connection;
-    public void connect() {
+    private static final Logger logger = LogManager.getLogger(DatabaseUtility.class);
+    private static final String jdbcUrl = ConfigurationReader.getProperty("jdbcUrl");
+    private static final String username = ConfigurationReader.getProperty("DbUsername");
+    private static final String password = ConfigurationReader.getProperty("DbPassword");
+    static Connection connection;
+    protected static Statement statement;
+
+    public static void DBConnection() {
         try {
             connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to connect to the database.");
+            logger.error("Error establishing database connection: {}", e.getMessage());
         }
     }
 
-    public void disconnect() {
+    public static void DBConnectionClose() {
         try {
-            if (connection != null) {
-                connection.close();
-            }
+            connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateUserStatus(String newStatus) {
-        String username=ConfigurationReader.getProperty("user4name");
-        try {
-            String sql = "UPDATE AYS_USER SET SUPPORT_STATUS = ? WHERE USERNAME = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, newStatus);
-            statement.setString(2, username);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update user status.");
-        }
-    }
-
-    public void updateAssignments() {
-        try {
-            String userId = ConfigurationReader.getProperty("userID");
-            String sql = "UPDATE AYS_ASSIGNMENT SET USER_ID = NULL, status = 'AVAILABLE' WHERE USER_ID = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, userId);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update assignments.");
+            logger.error("Error closing database connection: {}", e.getMessage());
         }
     }
 
