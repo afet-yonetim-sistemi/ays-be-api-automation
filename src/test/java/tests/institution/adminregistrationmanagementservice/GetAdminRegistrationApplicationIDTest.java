@@ -17,16 +17,16 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAdminRegistrationApplicationIDTest {
     Logger logger = LogManager.getLogger(this.getClass());
-    String adminID;
+    String applicationID;
 
 
     @Test()
     @Story("As a super admin I want to get detailed information about administrator registration applications when I use valid ID")
     @Severity(SeverityLevel.NORMAL)
-    public void getAdminIDPositive() {
+    public void getRegistrationApplicationIDPositive() {
         logger.info("ARMS_17 is running");
-        adminID = Helper.getAdminID();
-        Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
+        applicationID = Helper.getApplicationsID();
+        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationID);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -42,10 +42,10 @@ public class GetAdminRegistrationApplicationIDTest {
     @Test()
     @Story("As a super admin I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
-    public void getAdminInvalidId() {
+    public void getRegistrationApplicationInvalidID() {
         logger.info("ARMS_18 is running");
-        adminID = "invalid-id";
-        Response response = InstitutionEndpoints.getRegistrationApplicationsId(adminID);
+        applicationID = "invalid-id";
+        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationID);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")

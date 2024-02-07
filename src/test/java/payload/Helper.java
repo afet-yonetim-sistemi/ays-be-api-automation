@@ -396,18 +396,28 @@ public class Helper {
         return sortList;
     }
 
-    public static String getAdminID() {
+    public static String getApplicationID() {
+        ApplicationRegistration applicationRegistration = new ApplicationRegistration();
+        applicationRegistration.setReason("A valid test string must have forty character.");
+        applicationRegistration.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        while (true) {
+            Response response = InstitutionEndpoints.postRegistrationAdminApplication(applicationRegistration);
+            String applicationID = response.jsonPath().getString("response.id");
+            if (applicationID != null) {
+                return applicationID;
+            }
+        }
+    }
+    public static String getApplicationsID() {
         RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
         requestBodyInstitution.setPagination(setPagination(1, 10));
         while (true) {
-            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
-            String adminID = response.jsonPath().getString("response.content[0].id");
-            if (adminID != null) {
-                return adminID;
+            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+            String applicationsID = response.jsonPath().getString("response.content[0].id");
+            if (applicationsID != null) {
+                return applicationsID;
             }
-
         }
-
     }
 
     public static String getAdminRegistrationApplicationID() {

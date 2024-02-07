@@ -15,15 +15,15 @@ import static org.hamcrest.Matchers.*;
 public class GetAdminRegistrationApplicationIdSummaryTest {
 
     Logger logger = LogManager.getLogger(this.getClass());
-    String adminID;
+    String applicationID;
 
     @Test()
     @Story("As a user I want to get detailed information about administrator registration applications summary when I use valid ID ")
     @Severity(SeverityLevel.NORMAL)
-    public void getIdSummaryPositive() {
+    public void getRegistrationApplicationIdSummaryPositive() {
         logger.info("ARMS_19 is running");
-        adminID = Helper.getAdminID();
-        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(adminID);
+        applicationID = Helper.getApplicationID();
+        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -36,10 +36,10 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
     @Test()
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
-    public void getIdSummaryNegative() {
+    public void getRegistrationApplicationIdSummaryNegative() {
         logger.info("ARMS_20 is running");
-        adminID = "invalidID";
-        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(adminID);
+        applicationID = "invalidID";
+        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")
@@ -53,10 +53,10 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
     @Test()
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
-    public void getIdSummaryNegative2() {
+    public void getRegistrationApplicationIdSummaryNegative2() {
         logger.info("ARMS_21 is running");
-        adminID = "0d0c71be-7473-4d98-caa8-55dec809c31c"; // invalid ID with UUID format
-        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(adminID);
+        applicationID = "0d0c71be-7473-4d98-caa8-55dec809c31c"; // invalid ID with UUID format
+        Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(401)
                 .contentType("application/json")

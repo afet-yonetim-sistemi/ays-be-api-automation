@@ -35,18 +35,17 @@ public class PostAdminRegistrationApplicationsTest {
         filter = new Filter();
         sort = new Sort();
     }
-
     @Test()
     @Story("As a super admin I want to list administrator registration applications with request to pagination")
     @Severity(SeverityLevel.NORMAL)
-    public void postRegistrationWithPagination() {
+    public void postRegistrationApplicationsWithPagination() {
         logger.info("Test case ARMS_01 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
         requestBodyInstitution.setPagination(pagination);
 
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -55,37 +54,17 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.content", notNullValue())
                 .body("response.sortedBy", nullValue());
     }
-
-    @Test()
-    @Story("As an admin I cannot list administrator registration applications with request to pagination")
-    @Severity(SeverityLevel.NORMAL)
-    public void postRegistrationWithPaginationUnauthorized() {
-        logger.info("Test case ARMS_02 is running.. ");
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
-
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
-        response.then()
-                .statusCode(403)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("FORBIDDEN"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("AUTH ERROR"));
-
-    }
-
     @Test(dataProvider = "paginationScenarios")
     @Story("As a super admin I want to get proper error message when I request to pagination with invalid data")
     @Severity(SeverityLevel.NORMAL)
-    public void postRegistrationWithPagination(int page,int pageSize) {
+    public void postRegistrationApplicationsWithPagination(int page,int pageSize) {
         logger.info("Test case ARMS_03 is running.. ");
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
         requestBodyInstitution.setPagination(pagination);
 
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")
@@ -94,11 +73,10 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("header", equalTo("VALIDATION ERROR"))
                 .body("subErrors[0].message",containsString("must be between 1 and 99999999"));
     }
-
     @Test()
     @Story("As a super admin I want to list administrator registration applications with request to pagination and filter")
     @Severity(SeverityLevel.NORMAL)
-    public void postRegistrationWithPaginationAndFilter() {
+    public void postRegistrationApplicationsWithPaginationAndFilter() {
         logger.info("Test case ARMS_06 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -109,7 +87,7 @@ public class PostAdminRegistrationApplicationsTest {
         filter.setStatuses(newStatuses);
         requestBodyInstitution.setFilter(filter);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -119,34 +97,11 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.sortedBy", nullValue())
                 .body("response.filteredBy",notNullValue());
     }
-
-    @Test()
-    @Story("As an admin I cannot list administrator registration applications with pagination and filter")
-    @Severity(SeverityLevel.NORMAL)
-    public void postRegistrationWithPaginationAndFilter2() {
-        logger.info("Test case ARMS_07 is running.. ");
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
-
-        List<String> newStatuses = Arrays.asList("WAITING");
-        filter.setStatuses(newStatuses);
-        requestBodyInstitution.setFilter(filter);
-
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
-        response.then()
-                .statusCode(403)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("FORBIDDEN"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("AUTH ERROR"));
-    }
-
     @Test()
     @Story("As a super admin I want to get proper error message when I request to filter with invalid status input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and filter with invalid statuses value")
-    public void postRegistrationWithPaginationAndFilter3() {
+    public void postRegistrationApplicationsWithPaginationAndFilter3() {
         logger.info("Test case ARMS_08 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -155,7 +110,7 @@ public class PostAdminRegistrationApplicationsTest {
         statuses.add("WAIT");
         filter.setStatuses(statuses);
         requestBodyInstitution.setFilter(filter);
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")
@@ -163,12 +118,11 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("isSuccess", equalTo(false))
                 .body("header", equalTo("VALIDATION ERROR"));
     }
-
     @Test()
     @Story("As a super admin I want to list administrator registration applications with request to pagination and sort")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and sort with Authorization")
-    public void postRegistrationWithPaginationAndSort() {
+    public void postRegistrationApplicationsWithPaginationAndSort() {
         logger.info("Test case ARMS_09 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -180,7 +134,7 @@ public class PostAdminRegistrationApplicationsTest {
         newSort.add(sort);
         requestBodyInstitution.setSort(newSort);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -190,36 +144,11 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.sortedBy", notNullValue())
                 .body("response.filteredBy", nullValue());
     }
-
-    @Test()
-    @Story("As an admin I cannot list administrator registration applications with request to pagination and sort")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Pagination and sort with Unauthorization")
-    public void postRegistrationWithPaginationAndSort2() {
-        logger.info("Test case ARMS_10 is running.. ");
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
-
-        sort.setProperty("createdAt");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
-
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
-        response.then()
-                .statusCode(403)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("FORBIDDEN"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("AUTH ERROR"));
-    }
     @Test()
     @Story("As a super admin I want to get proper error message when I request to sort with invalid input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and invalid sort value with Authorization")
-    public void postRegistrationWithPaginationAndInvalidSort() {
+    public void postRegistrationApplicationsWithPaginationAndInvalidSort() {
         logger.info("Test case ARMS_11 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -231,7 +160,7 @@ public class PostAdminRegistrationApplicationsTest {
         newSort.add(sort);
         requestBodyInstitution.setSort(newSort);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")
@@ -239,12 +168,11 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("isSuccess", equalTo(false))
                 .body("header", equalTo("VALIDATION ERROR"));
     }
-
     @Test()
     @Story("As a super admin I want to list administrator registration applications with request to pagination filter and sort")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,sort and filter with Authorization")
-    public void postRegistrationWithPaginationSortFilter() {
+    public void postRegistrationApplicationsWithPaginationSortFilter() {
         logger.info("Test case ARMS_12 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -261,7 +189,7 @@ public class PostAdminRegistrationApplicationsTest {
         newSort.add(sort);
         requestBodyInstitution.setSort(newSort);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -271,41 +199,11 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.sortedBy", notNullValue())
                 .body("response.filteredBy",notNullValue());
     }
-
-    @Test()
-    @Story("As an admin I cannot list administrator registration applications with request to pagination and sort")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Pagination,sort and filter with Unauthorization")
-    public void postRegistrationWithPaginationSortFilter2() {
-        logger.info("Test case ARMS_13 is running.. ");
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
-
-        List<String> statuses = new ArrayList<>();
-        statuses.add("WAITING");
-        filter.setStatuses(statuses);
-        requestBodyInstitution.setFilter(filter);
-
-        sort.setProperty("createdAt");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
-
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "ADMIN");
-        response.then()
-                .statusCode(403)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("FORBIDDEN"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("AUTH ERROR"));
-    }
     @Test()
     @Story("As a super admin I want to get proper error message when I request to sort and filter with invalid input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,invalid sort and invalid filter with Authorization")
-    public void postRegistrationWithPaginationInvalidSortInvalidFilter() {
+    public void postRegistrationApplicationsWithPaginationInvalidSortInvalidFilter() {
         logger.info("Test case ARMS_14 is running.. ");
         pagination.setPage(1);
         pagination.setPageSize(10);
@@ -322,7 +220,7 @@ public class PostAdminRegistrationApplicationsTest {
         newSort.add(sort);
         requestBodyInstitution.setSort(newSort);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution, "SUPER_ADMIN");
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .statusCode(400)
                 .contentType("application/json")
