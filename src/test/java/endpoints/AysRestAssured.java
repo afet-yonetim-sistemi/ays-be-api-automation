@@ -7,11 +7,12 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Reporter;
 
 @UtilityClass
 public class AysRestAssured {
-
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static Response perform(AysRestAssuredRequest restAssuredRequest) {
@@ -33,7 +34,7 @@ public class AysRestAssured {
         restAssuredRequest.getPathParameter().forEach(requestSpecification::pathParam);
 
         if (restAssuredRequest.isRequestBodyExist()) {
-            requestSpecification.body(GSON.toJson(restAssuredRequest.getBody()));
+            requestSpecification.body(restAssuredRequest.getBody());
         }
 
         Response response = (switch (restAssuredRequest.getHttpMethod()) {

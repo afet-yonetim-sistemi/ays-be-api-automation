@@ -1,41 +1,45 @@
 package endpoints;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.openqa.selenium.remote.http.HttpMethod;
 import payload.AdminCredentials;
 
-import static io.restassured.RestAssured.given;
-
 public class InstitutionAuthEndpoints {
-    public static Response getAdminToken(AdminCredentials adminCredentials){
-        return given()
-                .contentType(ContentType.JSON)
+    public static Response getAdminToken(AdminCredentials adminCredentials) {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authAdminToken)
                 .body(adminCredentials)
-                .when()
-                .post(Routes.authAdminToken);
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
 
-    public static Response adminTokenRefresh(String refreshToken ){
-        return given()
-                .contentType(ContentType.JSON)
+    public static Response adminTokenRefresh(String refreshToken) {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authAdminTokenRefresh)
                 .body("{\n" +
-                        "    \"refreshToken\": \""+refreshToken+"\"\n" +
+                        "    \"refreshToken\": \"" + refreshToken + "\"\n" +
                         "}")
-                .when()
-                .post(Routes.authAdminTokenRefresh);
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
 
-    public static Response adminInvalidateToken(String accessToken,String refreshToken){
-        return given()
-                .header("Authorization", "Bearer " + accessToken)
-                .contentType(ContentType.JSON)
+    public static Response adminInvalidateToken(String accessToken, String refreshToken) {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authAdminTokenInvalidate)
                 .body("{\n" +
-                        "    \"refreshToken\": \""+refreshToken+"\"\n" +
+                        "    \"refreshToken\": \"" + refreshToken + "\"\n" +
                         "}")
-                .when()
-                .post(Routes.authAdminTokenInvalidate);
+                .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
 }

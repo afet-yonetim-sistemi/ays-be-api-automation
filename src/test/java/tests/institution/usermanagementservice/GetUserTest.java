@@ -2,8 +2,6 @@ package tests.institution.usermanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
@@ -12,7 +10,6 @@ import payload.User;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserTest {
-    Logger logger = LogManager.getLogger(this.getClass());
     String userID;
 
     @BeforeMethod
@@ -24,7 +21,6 @@ public class GetUserTest {
 
     @Test()
     public void getUser() {
-        logger.info("Test case UMS_26 is running");
         Response response = InstitutionEndpoints.getUser(userID);
         response.then()
                 .log().body()

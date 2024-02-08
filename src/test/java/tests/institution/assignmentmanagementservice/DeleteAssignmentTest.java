@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class DeleteAssignmentTest {
     Assignment assignment=new Assignment();
     String assignmentId;
-    Logger logger = LogManager.getLogger(this.getClass());
     @BeforeMethod
     public void setup(){
         assignment= Helper.createANewAssignment();
@@ -36,7 +35,6 @@ public class DeleteAssignmentTest {
 
     @Test()
     public void deleteAssignmentNegative() {
-        logger.info("IAMS_46 is running");
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);
         response.then()

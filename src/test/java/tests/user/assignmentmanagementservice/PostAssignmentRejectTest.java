@@ -2,8 +2,6 @@ package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import payload.Assignment;
@@ -12,11 +10,9 @@ import payload.Location;
 import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.containsString;
 
 public class PostAssignmentRejectTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -25,9 +21,10 @@ public class PostAssignmentRejectTest {
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
-        assignment=Helper.createANewAssignment();
+        assignment = Helper.createANewAssignment();
 
     }
+
     @Test()
     public void rejectAssignmentBeforeSearch() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -46,7 +43,6 @@ public class PostAssignmentRejectTest {
 
     @Test()
     public void rejectAssignmentAfterSearch() {
-        logger.info("Test case UMS_06 is running");
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.rejectAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -56,6 +52,7 @@ public class PostAssignmentRejectTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
     }
+
     @Test()
     public void rejectInProgressAssignment() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());

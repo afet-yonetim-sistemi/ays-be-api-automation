@@ -2,8 +2,6 @@ package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import payload.Assignment;
@@ -15,7 +13,6 @@ import static org.hamcrest.Matchers.*;
 
 public class PostAssignmentApproveTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -24,12 +21,13 @@ public class PostAssignmentApproveTest {
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
-        assignment=Helper.createANewAssignment();
+        assignment = Helper.createANewAssignment();
 
     }
+
     @Test()
     public void assignmentApproveWhenUserHasNoReservedAssignment() {
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -43,7 +41,6 @@ public class PostAssignmentApproveTest {
 
     @Test()
     public void assignmentApprove() {
-        logger.info("Test case UMS_07 is running");
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -54,9 +51,10 @@ public class PostAssignmentApproveTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
     }
+
     @Test()
     public void assignmentApproveWhenUserHasAssignedAssignment() {
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

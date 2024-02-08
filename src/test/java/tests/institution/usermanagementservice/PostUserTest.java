@@ -2,8 +2,6 @@ package tests.institution.usermanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,8 +16,6 @@ public class PostUserTest {
     User userPayload;
     UserCredentials userCredentials;
 
-    Logger logger = LogManager.getLogger(this.getClass());
-
     @BeforeMethod
     public void setupData() {
         userPayload = Helper.createUserPayload();
@@ -27,7 +23,6 @@ public class PostUserTest {
 
     @Test()
     public void createAUser() {
-        logger.info("Test case UMS_01 is running");
         Response response = InstitutionEndpoints.createAUser(userPayload);
         userCredentials = response.then()
                 .statusCode(200)
@@ -81,7 +76,6 @@ public class PostUserTest {
     @Test(dataProvider = "lineNumberData")
     public void createUserWithInvalidLineNumber(String lineNumber) {
         userPayload.getPhoneNumber().setLineNumber(lineNumber);
-        System.out.println(lineNumber);
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
                 .statusCode(400)
@@ -122,7 +116,6 @@ public class PostUserTest {
     public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, String message) {
         userPayload.setFirstName(firstName);
         userPayload.setLastName(lastName);
-        logger.info("Test case UMS_02-25 are running");
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
                 .contentType("application/json")

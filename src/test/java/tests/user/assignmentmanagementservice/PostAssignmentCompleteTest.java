@@ -2,8 +2,6 @@ package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import payload.Assignment;
@@ -12,11 +10,9 @@ import payload.Location;
 import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.containsString;
 
 public class PostAssignmentCompleteTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -25,12 +21,13 @@ public class PostAssignmentCompleteTest {
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
-        assignment=Helper.createANewAssignment();
+        assignment = Helper.createANewAssignment();
 
     }
+
     @Test()
     public void assignmentCompleteWhenUserHasReservedAssignment() {
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -44,10 +41,10 @@ public class PostAssignmentCompleteTest {
                         containsString("assignmentStatus:IN_PROGRESS")))
                 .body("isSuccess", equalTo(false));
     }
+
     @Test()
     public void assignmentComplete() {
-        logger.info("Test case UMS_13 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -59,10 +56,10 @@ public class PostAssignmentCompleteTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
     }
+
     @Test()
     public void assignmentCompleteNegative() {
-        logger.info("Test case UMS_13 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

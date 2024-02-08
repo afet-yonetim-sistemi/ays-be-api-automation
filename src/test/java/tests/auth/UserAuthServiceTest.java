@@ -2,8 +2,6 @@ package tests.auth;
 
 import endpoints.UserAuthEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import payload.Helper;
@@ -16,7 +14,6 @@ import static org.hamcrest.Matchers.notNullValue;
 public class UserAuthServiceTest {
     Token token = new Token();
     UserCredentials userCredentials = new UserCredentials();
-    Logger logger = LogManager.getLogger(this.getClass());
     private String username;
     private String password;
 
@@ -29,7 +26,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 0)
     public void getTokenForValidUser() {
-        logger.info("Test case UAS_01 is running");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .statusCode(200)
@@ -46,7 +42,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 4)
     public void getTokenInvalidPassword() {
-        logger.info("Test case UAS_02 is running");
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -60,7 +55,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 5)
     public void getTokenInvalidUsername() {
-        logger.info("Test case UAS_03 is running");
         userCredentials.setPassword(password);
         userCredentials.setUsername("invalidUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -76,7 +70,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 6)
     public void getTokenMissingUsername() {
-        logger.info("Test case UAS_07 is running");
         userCredentials.setPassword(password);
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -94,7 +87,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 7)
     public void getTokenMissingPassword() {
-        logger.info("Test case UAS_08 is running");
         userCredentials.setUsername(username);
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -112,7 +104,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 2)
     public void userTokenRefresh() {
-        logger.info("Test case UAS_05 is running");
         Response response = UserAuthEndpoints.userTokenRefresh(token.getRefreshToken());
         response.then()
                 .statusCode(200)
@@ -130,7 +121,6 @@ public class UserAuthServiceTest {
 
     @Test(priority = 3)
     public void userInvalidateToken() {
-        logger.info("Test case UAS_06 is running");
         Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), token.getRefreshToken());
         response.then()
                 .statusCode(200)
