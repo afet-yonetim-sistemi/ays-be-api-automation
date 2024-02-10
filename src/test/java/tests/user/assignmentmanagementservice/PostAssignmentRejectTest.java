@@ -20,7 +20,7 @@ public class PostAssignmentRejectTest {
     @BeforeClass
     public void setup() {
         userCredentials = Helper.createNewUser();
-        location = new Location();
+        location = Helper.generateLocationTR();
         assignment = Helper.createANewAssignment();
 
     }

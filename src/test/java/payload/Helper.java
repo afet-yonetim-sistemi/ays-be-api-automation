@@ -1,7 +1,9 @@
 package payload;
 
 import com.github.javafaker.Faker;
+import endpoints.InstitutionAuthEndpoints;
 import endpoints.InstitutionEndpoints;
+import endpoints.UserAuthEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
 import utility.ConfigurationReader;
@@ -408,15 +410,21 @@ public class Helper {
             }
         }
     }
-    public static String getApplicationsID() {
+
+    public static String getApplicationId() {
         RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
         requestBodyInstitution.setPagination(setPagination(1, 10));
-        while (true) {
-            Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
-            String applicationsID = response.jsonPath().getString("response.content[0].id");
-            if (applicationsID != null) {
-                return applicationsID;
+        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        List<Map<String, Object>> content = response.jsonPath().getList("response.content");
+        if (content != null && !content.isEmpty()) {
+            String applicationId = (String) content.get(0).get("id");
+            if (applicationId != null) {
+                return applicationId;
+            } else {
+                throw new RuntimeException("Application ID is null");
             }
+        } else {
+            throw new RuntimeException("No registration applications found");
         }
     }
 
@@ -432,21 +440,57 @@ public class Helper {
             throw new RuntimeException("Registration application creation failed with status code: " + response.getStatusCode());
         }
     }
+
     public static String generateReasonString() {
         Faker faker = new Faker();
         int length = 40 + faker.number().numberBetween(0, 472);
         return faker.lorem().characters(length);
     }
-    public static ApplicationRegistration generateApplicationRegistrationPayload(){
-        ApplicationRegistration application=new ApplicationRegistration();
+
+    public static ApplicationRegistration generateApplicationRegistrationPayload() {
+        ApplicationRegistration application = new ApplicationRegistration();
         application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
         application.setReason(generateReasonString());
         return application;
     }
-    public static ApplicationRegistration generateApplicationRegistrationPayloadWithoutReason(){
-        ApplicationRegistration application=new ApplicationRegistration();
+
+    public static ApplicationRegistration generateApplicationRegistrationPayloadWithoutReason() {
+        ApplicationRegistration application = new ApplicationRegistration();
         application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
         return application;
+    }
+
+    public static String getAdminRefreshToken(AdminCredentials adminCredentials) {
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        return response.jsonPath().getString("response.refreshToken");
+    }
+
+    public static String getUserRefreshToken(UserCredentials userCredentials) {
+        Response response = UserAuthEndpoints.getUserToken(userCredentials);
+        return response.jsonPath().getString("response.refreshToken");
+    }
+
+    public static Token getAdminToken(AdminCredentials adminCredentials) {
+        Token token = new Token();
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        token.setAccessToken(response.jsonPath().getString("response.accessToken"));
+        token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
+        return token;
+    }
+
+    public static Token getUserToken(UserCredentials userCredentials) {
+        Token token = new Token();
+        Response response = UserAuthEndpoints.getUserToken(userCredentials);
+        token.setAccessToken(response.jsonPath().getString("response.accessToken"));
+        token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
+        return token;
+    }
+
+    public static AdminCredentials setIntsAdminCredentials() {
+        AdminCredentials adminCredentials = new AdminCredentials();
+        adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
+        adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
+        return adminCredentials;
     }
 
 

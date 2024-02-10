@@ -5,24 +5,17 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
 
 import static org.hamcrest.Matchers.*;
 
 public class PostAdminRegistrationApplicationApproveTest {
-    String applicationID;
-
-    @BeforeMethod
-    void setup() {
-        applicationID = Helper.getAdminRegistrationApplicationID();
-    }
-
     @Test
     @Story("As a super admin when I approve an application with WAITING or REJECTED status I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void approveANotCompletedApplication() {
+        String applicationID = Helper.getAdminRegistrationApplicationID();
         Response response = InstitutionEndpoints.postRegistrationApplicationApprove(applicationID);
         response.then()
                 .statusCode(404)

@@ -7,6 +7,7 @@ import io.qameta.allure.Story;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.ApplicationRegistration;
 import payload.Helper;
@@ -15,8 +16,12 @@ import utility.DataProvider;
 import static org.hamcrest.Matchers.*;
 
 public class PostAdminRegistrationApplicationTest extends DataProvider {
-    ApplicationRegistration application = new ApplicationRegistration();
+    ApplicationRegistration application;
 
+    @BeforeMethod
+    public void setup() {
+        application = new ApplicationRegistration();
+    }
 
     @Test
     public void createAnAdminRegistrationApplication() {

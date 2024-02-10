@@ -7,14 +7,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import payload.Helper;
 import payload.User;
-import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PostUserTest {
     User userPayload;
-    UserCredentials userCredentials;
 
     @BeforeMethod
     public void setupData() {
@@ -24,9 +22,6 @@ public class PostUserTest {
     @Test()
     public void createAUser() {
         Response response = InstitutionEndpoints.createAUser(userPayload);
-        userCredentials = response.then()
-                .statusCode(200)
-                .extract().jsonPath().getObject("response", UserCredentials.class);
         response.then()
                 .contentType("application/json")
                 .body("response", notNullValue())
@@ -130,15 +125,15 @@ public class PostUserTest {
     public Object[][] userData() {
         return new Object[][]{
                 {null, "Mehmet", "must not be blank"},
-                {"", "Mehmet", "must not be blank"},  // UMS_02
-                {"4", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_03
-                {"44", "Mehmet", "MUST BE VALID"},  // UMS_04
-                {"A", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_05
-                {"A".repeat(256), "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_06
-                {"Ahmet", "1", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_10
-                {"Ahmet", "12", "MUST BE VALID"},  // UMS_11
-                {"Ahmet", "M", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_12
-                {"Ahmet", "M".repeat(256), "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},  // UMS_13
+                {"", "Mehmet", "must not be blank"},
+                {"4", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {"44", "Mehmet", "MUST BE VALID"},
+                {"A", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {"A".repeat(256), "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {"Ahmet", "1", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {"Ahmet", "12", "MUST BE VALID"},
+                {"Ahmet", "M", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {"Ahmet", "M".repeat(256), "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
                 {"Ahmet", "", "must not be blank"},
                 {"Ahmet", null, "must not be blank"},
 

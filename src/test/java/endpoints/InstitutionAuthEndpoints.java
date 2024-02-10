@@ -3,6 +3,7 @@ package endpoints;
 import io.restassured.response.Response;
 import org.openqa.selenium.remote.http.HttpMethod;
 import payload.AdminCredentials;
+import payload.RefreshToken;
 
 public class InstitutionAuthEndpoints {
     public static Response getAdminToken(AdminCredentials adminCredentials) {
@@ -16,26 +17,22 @@ public class InstitutionAuthEndpoints {
     }
 
 
-    public static Response adminTokenRefresh(String refreshToken) {
+    public static Response adminTokenRefresh(RefreshToken refreshToken) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url(Routes.authAdminTokenRefresh)
-                .body("{\n" +
-                        "    \"refreshToken\": \"" + refreshToken + "\"\n" +
-                        "}")
+                .body(refreshToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
 
-    public static Response adminInvalidateToken(String accessToken, String refreshToken) {
+    public static Response adminInvalidateToken(String accessToken, RefreshToken refreshToken) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url(Routes.authAdminTokenInvalidate)
-                .body("{\n" +
-                        "    \"refreshToken\": \"" + refreshToken + "\"\n" +
-                        "}")
+                .body(refreshToken)
                 .token(accessToken)
                 .build();
 

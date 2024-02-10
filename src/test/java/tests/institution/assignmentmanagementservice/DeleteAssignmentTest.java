@@ -2,8 +2,6 @@ package tests.institution.assignmentmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,16 +9,17 @@ import payload.Assignment;
 import payload.Helper;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.equalTo;
 
 public class DeleteAssignmentTest {
-    Assignment assignment=new Assignment();
+    Assignment assignment;
     String assignmentId;
+
     @BeforeMethod
-    public void setup(){
-        assignment= Helper.createANewAssignment();
+    public void setup() {
+        assignment = Helper.createANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
+
     @Test()
     public void deleteAssignment() {
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);

@@ -11,13 +11,12 @@ import payload.Helper;
 import static org.hamcrest.Matchers.*;
 
 public class GetAdminRegistrationApplicationIdSummaryTest {
-    String applicationID;
 
     @Test()
     @Story("As a user I want to get detailed information about administrator registration applications summary when I use valid ID ")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryPositive() {
-        applicationID = Helper.getApplicationID();
+        String applicationID = Helper.getApplicationID();
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(200)
@@ -33,7 +32,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryNegative() {
-        applicationID = "invalidID";
+        String applicationID = "invalidID";
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(400)
@@ -50,7 +49,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryNegative2() {
-        applicationID = "0d0c71be-7473-4d98-caa8-55dec809c31c"; // invalid ID with UUID format
+        String applicationID = "0d0c71be-7473-4d98-caa8-55dec809c31c";
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(401)

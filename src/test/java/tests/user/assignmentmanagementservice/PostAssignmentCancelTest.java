@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.*;
 public class PostAssignmentCancelTest {
     Assignment assignment;
     UserCredentials userCredentials;
-    Reason reason;
     Location location;
 
     @BeforeMethod
@@ -25,7 +24,7 @@ public class PostAssignmentCancelTest {
 
     @Test
     public void cancelAssignmentNegative() {
-        reason = new Reason();
+        Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -40,7 +39,7 @@ public class PostAssignmentCancelTest {
 
     @Test
     public void cancelAssignmentAsReserved() {
-        reason = new Reason();
+        Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
@@ -60,7 +59,7 @@ public class PostAssignmentCancelTest {
 
     @Test
     public void cancelAssignmentPositiveAssigned() {
-        reason = new Reason();
+        Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
@@ -77,7 +76,7 @@ public class PostAssignmentCancelTest {
 
     @Test
     public void cancelAssignmentPositiveInProgress() {
-        reason = new Reason();
+        Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
@@ -95,7 +94,7 @@ public class PostAssignmentCancelTest {
 
     @Test
     public void cancelAssignmentWithNullReasonField() {
-        reason = new Reason();
+        Reason reason = new Reason();
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(Helper.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
@@ -116,7 +115,7 @@ public class PostAssignmentCancelTest {
 
     @Test(dataProvider = "reasonsProvider")
     public void cancelAssignmentWithInvalidReason(String reasonData) {
-        reason = new Reason();
+        Reason reason = new Reason();
         reason.setReason(reasonData);
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());

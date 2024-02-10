@@ -2,6 +2,7 @@ package endpoints;
 
 import io.restassured.response.Response;
 import org.openqa.selenium.remote.http.HttpMethod;
+import payload.RefreshToken;
 import payload.UserCredentials;
 
 public class UserAuthEndpoints {
@@ -18,25 +19,23 @@ public class UserAuthEndpoints {
 
     }
 
-    public static Response userTokenRefresh(String refreshToken) {
+    public static Response userTokenRefresh(RefreshToken refreshToken) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url(Routes.authUserTokenRefresh)
-                .body(new RefreshTokenRequest(refreshToken))
+                .body(refreshToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response userInvalidateToken(String accessToken, String refreshToken) {
+    public static Response userInvalidateToken(String accessToken, RefreshToken refreshToken) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url(Routes.authUserTokenInvalidate)
-                .body("{\n" +
-                        "    \"refreshToken\": \"" + refreshToken + "\"\n" +
-                        "}")
+                .body(refreshToken)
                 .token(accessToken)
                 .build();
 

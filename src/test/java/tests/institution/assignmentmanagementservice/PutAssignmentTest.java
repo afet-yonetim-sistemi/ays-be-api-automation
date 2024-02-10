@@ -11,7 +11,7 @@ import payload.Helper;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PutAssignmentTest {
-    Assignment assignment = new Assignment();
+    Assignment assignment;
     String assignmentId;
 
     @BeforeMethod
