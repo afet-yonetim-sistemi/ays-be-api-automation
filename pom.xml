@@ -274,7 +274,7 @@
                         <version>${maven-surefire-plugin.version}</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>src/test/java/runners/ListenerSample.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/java/runners/RegressionSuite.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -291,7 +291,7 @@
                         <version>${maven-surefire-plugin.version}</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>src/test/java/runners/RegressionSuite.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/java/runners/SmokeSuite.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>

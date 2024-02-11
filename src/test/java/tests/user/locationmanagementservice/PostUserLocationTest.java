@@ -2,8 +2,6 @@ package tests.user.locationmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,7 +14,6 @@ import static org.hamcrest.Matchers.*;
 
 public class PostUserLocationTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -31,7 +28,6 @@ public class PostUserLocationTest {
 
     @Test()
     public void updateLocationWithReservedAssignment() {
-        logger.info("Test case UMS_05 is running");
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -47,7 +43,6 @@ public class PostUserLocationTest {
 
     @Test()
     public void updateLocationWithAssignedAssignment() {
-        logger.info("Test case UMS_08 is running");
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -64,7 +59,6 @@ public class PostUserLocationTest {
 
     @Test()
     public void updateLocationAfterStart() {
-        logger.info("Test case UMS_12 is running");
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -77,9 +71,10 @@ public class PostUserLocationTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
     }
+
     @Test(dataProvider = "invalidLongitudeValues")
     public void updateLocationWithInValidLongitude(Double invalidLongitude, String errorMessage) {
-        location = Helper.generateLocation(invalidLongitude,75.0);
+        location = Helper.generateLocation(invalidLongitude, 75.0);
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -95,23 +90,24 @@ public class PostUserLocationTest {
                 .body("subErrors[0].type", equalTo("Double"))
                 .body("subErrors[0].value", equalTo(String.valueOf(invalidLongitude)));
     }
+
     @DataProvider(name = "invalidLongitudeValues")
     public Object[][] invalidLongitudeValues() {
         return new Object[][]{
-                {180.000000001,"must be less than or equal to 180"},
-                {-180.000000001,"must be greater than or equal to -180"},
-                {-200.0,"must be greater than or equal to -180"},
-                {-270.0,"must be greater than or equal to -180"},
-                {200.0,"must be less than or equal to 180"},
-                {270.0,"must be less than or equal to 180"},
-                {180.000000001234,"must be less than or equal to 180"},
-                {-180.000000001234,"must be greater than or equal to -180"},
+                {180.000000001, "must be less than or equal to 180"},
+                {-180.000000001, "must be greater than or equal to -180"},
+                {-200.0, "must be greater than or equal to -180"},
+                {-270.0, "must be greater than or equal to -180"},
+                {200.0, "must be less than or equal to 180"},
+                {270.0, "must be less than or equal to 180"},
+                {180.000000001234, "must be less than or equal to 180"},
+                {-180.000000001234, "must be greater than or equal to -180"},
         };
     }
 
     @Test(dataProvider = "invalidLatitudeValues")
     public void updateLocationWithInValidLatitude(Double invalidLatitude, String errorMessage) {
-        location = Helper.generateLocation(95.0,invalidLatitude);
+        location = Helper.generateLocation(95.0, invalidLatitude);
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -127,15 +123,16 @@ public class PostUserLocationTest {
                 .body("subErrors[0].type", equalTo("Double"))
                 .body("subErrors[0].value", equalTo(String.valueOf(invalidLatitude)));
     }
+
     @DataProvider(name = "invalidLatitudeValues")
     public Object[][] invalidLatitudeValues() {
         return new Object[][]{
-                {100.0,"must be less than or equal to 90"},
-                {-100.0,"must be greater than or equal to -90"},
-                {90.000000001,"must be less than or equal to 90"},
-                {-90.000000001,"must be greater than or equal to -90"},
-                {-200.0,"must be greater than or equal to -90"},
-                {200.0,"must be less than or equal to 90"},
+                {100.0, "must be less than or equal to 90"},
+                {-100.0, "must be greater than or equal to -90"},
+                {90.000000001, "must be less than or equal to 90"},
+                {-90.000000001, "must be greater than or equal to -90"},
+                {-200.0, "must be greater than or equal to -90"},
+                {200.0, "must be less than or equal to 90"},
 
         };
     }

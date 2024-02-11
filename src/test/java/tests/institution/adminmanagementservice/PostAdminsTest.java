@@ -1,4 +1,5 @@
 package tests.institution.adminmanagementservice;
+
 import endpoints.InstitutionEndpoints;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -7,16 +8,16 @@ import io.qameta.allure.Story;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import java.util.List;
+
 import static org.hamcrest.Matchers.*;
+
 @Epic("Institution Admin Management Service")
 public class PostAdminsTest {
-    Logger logger = LogManager.getLogger(this.getClass());
     String currentPage;
     String currentPageSize;
 
@@ -25,11 +26,11 @@ public class PostAdminsTest {
         currentPage = null;
         currentPageSize = null;
     }
+
     @Test(dataProvider = "positivePaginationData")
     @Story("As an Institution admin I want to list all admins")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithValidPageAndPageSize(int page, int pageSize) {
-        logger.info("Test case IMS_01 is running");
         String pagination = "{\"pagination\":{\"page\":" + page + ",\"pageSize\":" + pageSize + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
         if (page == 1 && pageSize == 10) {
@@ -62,7 +63,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when page value is null")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithEmptyPageValue() {
-        logger.info("Test case IMS_02 is running");
         currentPageSize = "10";
         String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":" + currentPageSize + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
@@ -77,7 +77,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when pageSize value is null")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithEmptyPageSizeValue() {
-        logger.info("Test case IMS_03 is running");
         currentPage = "1";
         String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":" + currentPageSize + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
@@ -92,7 +91,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when page field is missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageField() {
-        logger.info("Test case IMS_04 is running");
         currentPageSize = "10";
         String pagination = "{\"pagination\":{\"pageSize\":" + currentPageSize + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
@@ -107,7 +105,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when pageSize field is missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageSizeField() {
-        logger.info("Test case IMS_05 is running");
         currentPage = "1";
         String pagination = "{\"pagination\":{\"page\":" + currentPage + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
@@ -122,7 +119,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when page and pageSize fields are missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageAndPageSizeField() {
-        logger.info("Test case IMS_06 is running");
         String pagination = "{\"pagination\":{}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
         response.then()
@@ -139,7 +135,6 @@ public class PostAdminsTest {
     @Story("As an Institution admin I want to get proper error message when page or pageSize fields are invalid")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {
-        logger.info("Test case IMS_07 is running");
         String pagination = "{\"pagination\":{\"page\":" + page + ",\"pageSize\":" + pageSize + "}}";
         Response response = InstitutionEndpoints.listAdmins(pagination);
         response.then()

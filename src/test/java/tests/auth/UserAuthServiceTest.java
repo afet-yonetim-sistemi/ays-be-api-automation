@@ -2,11 +2,10 @@ package tests.auth;
 
 import endpoints.UserAuthEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Helper;
+import payload.RefreshToken;
 import payload.Token;
 import payload.UserCredentials;
 
@@ -14,22 +13,15 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class UserAuthServiceTest {
-    Token token = new Token();
-    UserCredentials userCredentials = new UserCredentials();
-    Logger logger = LogManager.getLogger(this.getClass());
-    private String username;
-    private String password;
+    UserCredentials userCredentials;
 
-    @BeforeClass
+    @BeforeMethod
     public void setup() {
         userCredentials = Helper.createNewUser();
-        username = userCredentials.getUsername();
-        password = userCredentials.getPassword();
     }
 
-    @Test(priority = 0)
+    @Test()
     public void getTokenForValidUser() {
-        logger.info("Test case UAS_01 is running");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .statusCode(200)
@@ -40,13 +32,10 @@ public class UserAuthServiceTest {
                 .body("response.accessToken", notNullValue())
                 .body("response.accessTokenExpiresAt", notNullValue())
                 .body("response.refreshToken", notNullValue());
-        token.setAccessToken(response.jsonPath().getString("response.accessToken"));
-        token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
     }
 
-    @Test(priority = 4)
-    public void getTokenInvalidPassword() {
-        logger.info("Test case UAS_02 is running");
+    @Test()
+    public void getUserTokenWithInvalidPassword() {
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -58,11 +47,9 @@ public class UserAuthServiceTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test(priority = 5)
-    public void getTokenInvalidUsername() {
-        logger.info("Test case UAS_03 is running");
-        userCredentials.setPassword(password);
-        userCredentials.setUsername("invalidUserName");
+    @Test()
+    public void getUserTokenWithInvalidUsername() {
+        userCredentials.setUsername("wrongUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .statusCode(401)
@@ -74,10 +61,8 @@ public class UserAuthServiceTest {
 
     }
 
-    @Test(priority = 6)
-    public void getTokenMissingUsername() {
-        logger.info("Test case UAS_07 is running");
-        userCredentials.setPassword(password);
+    @Test()
+    public void getUserTokenWithNullUsername() {
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -92,10 +77,8 @@ public class UserAuthServiceTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(priority = 7)
-    public void getTokenMissingPassword() {
-        logger.info("Test case UAS_08 is running");
-        userCredentials.setUsername(username);
+    @Test()
+    public void getUserTokenWithNullPassword() {
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -110,10 +93,11 @@ public class UserAuthServiceTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(priority = 2)
+    @Test()
     public void userTokenRefresh() {
-        logger.info("Test case UAS_05 is running");
-        Response response = UserAuthEndpoints.userTokenRefresh(token.getRefreshToken());
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(Helper.getUserRefreshToken(userCredentials));
+        Response response = UserAuthEndpoints.userTokenRefresh(refreshToken);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -123,15 +107,14 @@ public class UserAuthServiceTest {
                 .body("response.accessToken", notNullValue())
                 .body("response.accessTokenExpiresAt", notNullValue())
                 .body("response.refreshToken", notNullValue());
-        token.setAccessToken(response.jsonPath().getString("response.accessToken"));
-        token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
-
     }
 
-    @Test(priority = 3)
+    @Test()
     public void userInvalidateToken() {
-        logger.info("Test case UAS_06 is running");
-        Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), token.getRefreshToken());
+        Token token = Helper.getUserToken(userCredentials);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(token.getRefreshToken());
+        Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")

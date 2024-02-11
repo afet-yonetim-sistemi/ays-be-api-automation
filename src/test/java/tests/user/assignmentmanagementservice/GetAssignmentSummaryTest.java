@@ -2,8 +2,6 @@ package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Assignment;
@@ -12,11 +10,9 @@ import payload.Location;
 import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.equalToObject;
 
 public class GetAssignmentSummaryTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -25,12 +21,12 @@ public class GetAssignmentSummaryTest {
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
-        assignment=Helper.createANewAssignment();
+        assignment = Helper.createANewAssignment();
 
     }
+
     @Test()
     public void getAssignmentSummaryNegative() {
-        logger.info("Test case UMS_22 is running");
         Response response = UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
@@ -41,10 +37,10 @@ public class GetAssignmentSummaryTest {
                 .body("isSuccess", equalToObject(false));
 
     }
+
     @Test()
     public void getReservedAssignmentSummary() {
-        logger.info("Test case UMS_19 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,8 +58,7 @@ public class GetAssignmentSummaryTest {
 
     @Test()
     public void getAssignedAssignmentSummary() {
-        logger.info("Test case UMS_20 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -79,10 +74,10 @@ public class GetAssignmentSummaryTest {
                 .body("response.location", hasKey("latitude"));
 
     }
+
     @Test()
     public void getInProgressAssignmentSummary() {
-        logger.info("Test case UMS_21 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

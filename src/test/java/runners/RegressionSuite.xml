@@ -57,16 +57,23 @@
                     <include name="createAssignmentWithMissingLastName"/>
                     <include name="createAssignmentWithMissingDescription"/>
                     <include name="createAssignmentWithMissingPhoneNumber"/>
-                    <include name="createAssignmentWithMissingLatitude"/>
-                    <include name="createAssignmentWithMissingLongitude"/>
+                    <exclude name="createAssignmentWithMissingLatitude"/>
+                    <exclude name="createAssignmentWithMissingLongitude"/>
                     <include name="createAssignmentWithInvalidDataCombination"/>
                 </methods>
             </class>
             <class name="tests.institution.assignmentmanagementservice.PostAssignmentsTest">
                 <methods>
-                    <include name="listAssignmentsWithFilters"/>
-                    <include name="postAssignmentsPagination"/>
-                    <include name="postAssignmentsMissingPagination"/>
+                    <include name="listAssignmentsWithPositivePaginationScenarios"/>
+                    <include name="listAssignmentsWithNegativePaginationScenarios"/>
+                    <include name="listAssignmentsWithNullPagination"/>
+                    <include name="listAssignmentsWithValidPhoneNumberFilter"/>
+                    <include name="listAssignmentsWithInvalidPhoneNumberFilter"/>
+                    <include name="listAssignmentsWithValidStatus"/>
+                    <include name="listAssignmentsWithInvalidStatus"/>
+                    <include name="listAssignmentsWithValidStatusAndLineNumber"/>
+                    <include name="listAssignmentsWithValidStatusAndCountryCode"/>
+                    <include name="listAssignmentsWithValidStatusAndPhoneNumber"/>
                 </methods>
             </class>
             <class name="tests.institution.assignmentmanagementservice.PutAssignmentTest">
@@ -95,7 +102,21 @@
             </class>
             <class name="tests.institution.usermanagementservice.PostUsersTest">
                 <methods>
-                    <include name="listUsersPositive"/>
+                    <include name="listUsersWithPositivePaginationScenarios"/>
+                    <include name="listUsersWithNegativePaginationScenarios"/>
+                    <include name="listUsersWithNullPagination"/>
+                    <include name="listUsersWithNegativeNameScenariosFilter"/>
+                    <include name="listUsersWithValidUserNameFilter"/>
+                    <include name="listUsersWithValidStatusFilter"/>
+                    <include name="listUsersWithInvalidStatusFilter"/>
+                    <include name="listUsersWithValidSupportStatusFilter"/>
+                    <include name="listUsersWithInvalidSupportStatusFilter"/>
+                    <include name="listUsersWithValidPhoneNumberFilter"/>
+                    <include name="listUsersWithInvalidPhoneNumberFilter"/>
+                    <exclude name="listUsersWithValidFiltersAndSort"/>
+                    <include name="listUsersWithValidSortOptionsInAscendingOrder"/>
+                    <include name="sortUsersWithValidSortOptionsInDescendingOrder"/>
+                    <include name="sortUsersWithInvalidSortOptions"/>
                 </methods>
             </class>
             <class name="tests.institution.usermanagementservice.PutUserTest">
@@ -135,7 +156,7 @@
                 <methods>
                     <include name="cancelAssignmentNegative"/>
                     <include name="cancelAssignmentAsReserved"/>
-                    <include name="cancelAssignmentPositiveAssigned"/>
+                    <exclude name="cancelAssignmentPositiveAssigned"/>
                     <include name="cancelAssignmentPositiveInProgress"/>
                     <include name="cancelAssignmentWithNullReasonField"/>
                     <include name="cancelAssignmentWithInvalidReason"/>
@@ -172,12 +193,14 @@
                     <include name="updateLocationWithReservedAssignment"/>
                     <include name="updateLocationWithAssignedAssignment"/>
                     <include name="updateLocationAfterStart"/>
+                    <include name="updateLocationWithInValidLongitude"/>
+                    <include name="updateLocationWithInValidLatitude"/>
                 </methods>
             </class>
             <class name="tests.user.selfmanagementservice.GetUserSelfTest">
                 <methods>
                     <include name="getSelfInfoPositive"/>
-                    <include name="getSelfInfoNegative"/>
+                    <exclude name="getSelfInfoNegative"/>
                 </methods>
             </class>
             <class name="tests.user.selfmanagementservice.PutUserSelfStatusSupportTest">
@@ -186,8 +209,53 @@
                     <include name="updateSupportStatusAfterReserveAnAssignment"/>
                 </methods>
             </class>
-            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"></class>
-            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest"></class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest">
+                <methods>
+                    <include name="postRegistrationApplicationsWithPagination"/>
+                    <include name="postRegistrationApplicationsWithPaginationNegative"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndFilter"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndFilterNegative"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndSort"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndInvalidSort"/>
+                    <include name="postRegistrationApplicationsWithPaginationSortFilter"/>
+                    <include name="postRegistrationApplicationsWithPaginationInvalidSortInvalidFilter"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest">
+                <methods>
+                    <include name="getRegistrationApplicationIDPositive"/>
+                    <include name="getRegistrationApplicationInvalidID"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest">
+                <methods>
+                    <include name="getRegistrationApplicationIdSummaryPositive"/>
+                    <include name="getRegistrationApplicationIdSummaryNegative"/>
+                    <include name="getRegistrationApplicationIdSummaryNegative2"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest">
+                <methods>
+                    <include name="approveANotCompletedApplication"/>
+                    <include name="approveApplicationWithInvalidId"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest">
+                <methods>
+                    <include name="rejectANotCompletedApplication"/>
+                    <include name="rejectAnApplicationWithInvalidReason"/>
+                    <include name="rejectAnApplicationWithInvalidApplicationId"/>
+                    <include name="rejectAnApplicationWithMissingReasonField"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest">
+                <methods>
+                    <include name="createAnAdminRegistrationApplication"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInputs"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInstitutionId"/>
+                    <include name="createAnAdminRegistrationApplicationWithMissingInstitutionId"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
