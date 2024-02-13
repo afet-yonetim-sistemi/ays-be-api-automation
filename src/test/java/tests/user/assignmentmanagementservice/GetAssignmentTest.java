@@ -2,8 +2,6 @@ package tests.user.assignmentmanagementservice;
 
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.Assignment;
@@ -12,11 +10,9 @@ import payload.Location;
 import payload.UserCredentials;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.equalToObject;
 
 public class GetAssignmentTest {
     UserCredentials userCredentials;
-    Logger logger = LogManager.getLogger(this.getClass());
     Location location;
     Assignment assignment;
 
@@ -25,12 +21,13 @@ public class GetAssignmentTest {
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
-        assignment=Helper.createANewAssignment();
+        assignment = Helper.createANewAssignment();
 
     }
+
     @Test
-    public void getAssignmentDetailsWhenUserHaveNoAssignment(){
-        location=Helper.generateLocationTR();
+    public void getAssignmentDetailsWhenUserHaveNoAssignment() {
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -43,10 +40,10 @@ public class GetAssignmentTest {
                 .body("isSuccess", equalToObject(false));
 
     }
+
     @Test()
     public void getReservedAssignmentDetails() {
-        logger.info("Test case UMS_18 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -60,10 +57,10 @@ public class GetAssignmentTest {
 
 
     }
+
     @Test()
     public void getAssignedAssignmentDetails() {
-        logger.info("Test case UMS_16 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -84,10 +81,10 @@ public class GetAssignmentTest {
                 .body("response.location", hasKey("latitude"));
 
     }
+
     @Test()
     public void getInProgressAssignmentDetails() {
-        logger.info("Test case UMS_17 is running");
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -109,9 +106,10 @@ public class GetAssignmentTest {
                 .body("response.location", hasKey("latitude"));
 
     }
+
     @Test()
     public void getDoneAssignmentDetails() {
-        location=Helper.generateLocationTR();
+        location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

@@ -1,179 +1,221 @@
 package endpoints;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.openqa.selenium.remote.http.HttpMethod;
 import payload.*;
 
-import static io.restassured.RestAssured.given;
+import java.util.Map;
 
 public class InstitutionEndpoints {
     public static Response listAdmins(String pagination) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postAdmins)
                 .body(pagination)
-                .when()
-                .post(Routes.postAdmins);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response createAUser(User userPayload) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
-                .body(userPayload)
-                .when()
-                .post(Routes.postCreateUser);
 
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postCreateUser)
+                .body(userPayload)
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response listUsers(RequestBodyUsers requestBodyUsers) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postUsers)
                 .body(requestBodyUsers)
-                .when()
-                .post(Routes.postUsers);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response getUser(String userId) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", userId)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(Routes.getUser);
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url(Routes.getUser)
+                .pathParameter(Map.of("id", userId))
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
 
     }
 
     public static Response updateUser(String userId, User userPayload) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", userId)
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.PUT)
+                .url(Routes.putUpdateUser)
+                .pathParameter(Map.of("id", userId))
                 .body(userPayload)
-                .when()
-                .put(Routes.putUpdateUser);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response deleteUser(String userId) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", userId)
-                .contentType(ContentType.JSON)
-                .when()
-                .delete(Routes.deleteUser);
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.DELETE)
+                .url(Routes.deleteUser)
+                .pathParameter(Map.of("id", userId))
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response listAssignments(RequestBodyAssignments bodyAssignments) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postListAssignments)
                 .body(bodyAssignments)
-                .when()
-                .post(Routes.postListAssignments);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response createAnAssignment(Assignment assignment) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postCreateAssignment)
                 .body(assignment)
-                .when()
-                .post(Routes.postCreateAssignment);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response getAssignment(String assignmentId) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", assignmentId)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(Routes.getAssignment);
 
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url(Routes.getAssignment)
+                .pathParameter(Map.of("id", assignmentId))
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response updateAssignment(String assignmentId, Assignment assignment) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", assignmentId)
-                .contentType(ContentType.JSON)
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.PUT)
+                .url(Routes.putUpdateAssignment)
+                .pathParameter(Map.of("id", assignmentId))
                 .body(assignment)
-                .when()
-                .put(Routes.putUpdateAssignment);
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response deleteAssignment(String assignmentId) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .pathParam("id", assignmentId)
-                .contentType(ContentType.JSON)
-                .when()
-                .delete(Routes.deleteAssignment);
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.DELETE)
+                .url(Routes.deleteAssignment)
+                .pathParameter(Map.of("id", assignmentId))
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution, String userType) {
-        if (userType.equals("SUPER_ADMIN")) {
-            return given()
-                    .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                    .contentType(ContentType.JSON)
-                    .body(requestBodyInstitution)
-                    .when()
-                    .post(Routes.postRegistrationApplications);
-        }
-        return given()
-                .header("Authorization", "Bearer " + Authorization.institutionAuthorization())
-                .contentType(ContentType.JSON)
+    public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postRegistrationApplications)
                 .body(requestBodyInstitution)
-                .when()
-                .post(Routes.postRegistrationApplications);
+                .token(Authorization.superAdminAuthorization())
+                .build();
 
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response getRegistrationApplicationsId(String adminID) {
 
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", adminID)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(Routes.getRegistrationApplicationsWithId);
+    public static Response getRegistrationApplicationId(String applicationID) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url(Routes.getRegistrationApplicationsWithId)
+                .pathParameter(Map.of("id", applicationID))
+                .token(Authorization.superAdminAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response getRegistrationApplicationsIdSummary(String adminID) {
 
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", adminID)
-                .contentType(ContentType.JSON)
-                .when()
-                .get(Routes.getGetRegistrationApplicationsIdSummary);
+    public static Response getRegistrationApplicationsIdSummary(String applicationID) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url(Routes.getGetRegistrationApplicationsIdSummary)
+                .pathParameter(Map.of("id", applicationID))
+                .token(Authorization.institutionAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response postRegistrationApplicationApprove(String applicationID) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", applicationID)
-                .contentType(ContentType.JSON)
-                .when()
-                .post(Routes.postRegistrationApplicationApprove);
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postRegistrationApplicationApprove)
+                .pathParameter(Map.of("id", applicationID))
+                .token(Authorization.superAdminAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
-    public static Response postRegistrationAdminApplication(ApplicationRegistration applicationRegistration){
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .contentType(ContentType.JSON)
+
+    public static Response postRegistrationAdminApplication(ApplicationRegistration applicationRegistration) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postRegistrationApplication)
                 .body(applicationRegistration)
-                .when()
-                .post(Routes.postRegistrationApplication);
+                .token(Authorization.superAdminAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
 
     }
-    public static Response postRegistrationApplicationReject(String applicationID,RejectReason rejectReason) {
-        return given()
-                .header("Authorization", "Bearer " + Authorization.superAdminAuthorization())
-                .pathParam("id", applicationID)
-                .contentType(ContentType.JSON)
+
+    public static Response postRegistrationApplicationReject(String applicationID, RejectReason rejectReason) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.postRegistrationApplicationReject)
+                .pathParameter(Map.of("id", applicationID))
                 .body(rejectReason)
-                .when()
-                .post(Routes.postRegistrationApplicationReject);
+                .token(Authorization.superAdminAuthorization())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
 }

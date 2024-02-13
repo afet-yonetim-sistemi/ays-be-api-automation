@@ -3,8 +3,6 @@ package tests.user.selfmanagementservice;
 import endpoints.InstitutionEndpoints;
 import endpoints.UserEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,22 +15,20 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserSelfTest {
     UserCredentials userCredentials;
-    User user=new User();
+    User user = new User();
     String userID;
-    Logger logger = LogManager.getLogger(this.getClass());
+
     @BeforeMethod
     public void setup() {
-        user=Helper.createUserPayload();
+        user = Helper.createUserPayload();
         userCredentials = Helper.createNewUser(user);
-        userID = Helper.getUserIDByFirstName(user.getFirstName());
+        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
 
     }
 
-
     @Test()
-    public void getSelfInfoPositive(){
-        logger.info("Test case UMS_14 is running");
-        Response response= UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
+    public void getSelfInfoPositive() {
+        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -50,15 +46,15 @@ public class GetUserSelfTest {
                 .body("response.institution", notNullValue());
 
     }
+
     @Test()
-    public void getSelfInfoNegative(){
-        logger.info("Test case UMS_15 is running");
+    public void getSelfInfoNegative() {
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
-        InstitutionEndpoints.updateUser(userID,user);
+        InstitutionEndpoints.updateUser(userID, user);
         System.out.println(user.getRole());
         System.out.println(user.getStatus());
-        Response response=UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(401)
                 .contentType("application/json")

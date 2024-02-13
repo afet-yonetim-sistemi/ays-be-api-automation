@@ -2,28 +2,25 @@ package tests.institution.assignmentmanagementservice;
 
 import endpoints.InstitutionEndpoints;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import payload.*;
+import payload.Assignment;
+import payload.Helper;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAssignmentTest {
-    Assignment assignment=new Assignment();
+    Assignment assignment = new Assignment();
     String assignmentId;
-    Logger logger = LogManager.getLogger(this.getClass());
+
     @BeforeMethod
-    public void setup(){
-        assignment= Helper.createANewAssignment();
+    public void setup() {
+        assignment = Helper.createANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 
     @Test()
     public void getAssignmentPositive() {
-        logger.info("IAMS_42 is running");
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()
                 .log().body()
@@ -44,9 +41,9 @@ public class GetAssignmentTest {
                 .body("response.location.latitude", notNullValue())
                 .body("response.user", anyOf(nullValue(), notNullValue()));
     }
+
     @Test()
     public void getAssignmentAfterDelete() {
-        logger.info("IAMS_45 is running");
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()

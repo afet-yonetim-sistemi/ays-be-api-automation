@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test name="Smoke Test">
+        <classes>
+            <class name="tests.auth.InstitutionAuthServiceTest">
+                <methods>
+                    <include name="getTokenForValidAdmin"/>
+                    <include name="adminTokenRefresh"/>
+                    <include name="adminInvalidateToken"/>
+                </methods>
+            </class>
+            <class name="tests.auth.UserAuthServiceTest">
+                <methods>
+                    <include name="getTokenForValidUser"/>
+                    <include name="userTokenRefresh"/>
+                    <include name="userInvalidateToken"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminmanagementservice.PostAdminsTest">
+                <methods>
+                    <include name="listAdminsWithValidPageAndPageSize"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest">
+                <methods>
+                    <include name="getRegistrationApplicationIDPositive"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest">
+                <methods>
+                    <include name="getRegistrationApplicationIdSummaryPositive"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest">
+                <methods>
+                    <include name="createAnAdminRegistrationApplication"/>
+                </methods>
+            </class>
+            <class name="tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest">
+                <methods>
+                    <include name="postRegistrationApplicationsWithPagination"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndFilter"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndSort"/>
+                    <include name="postRegistrationApplicationsWithPaginationSortFilter"/>
+                </methods>
+            </class>
+            <class name="tests.institution.assignmentmanagementservice.DeleteAssignmentTest">
+                <methods>
+                    <include name="deleteAssignment"/>
+                </methods>
+            </class>
+            <class name="tests.institution.assignmentmanagementservice.GetAssignmentTest">
+                <methods>
+                    <include name="getAssignmentPositive"/>
+                </methods>
+            </class>
+            <class name="tests.institution.assignmentmanagementservice.PostAssignmentTest">
+                <methods>
+                    <include name="createAnAssignmentPositive"/>
+                </methods>
+            </class>
+            <class name="tests.institution.assignmentmanagementservice.PostAssignmentsTest">
+                <methods>
+                    <include name="listAssignmentsWithPositivePaginationScenarios"/>
+                    <include name="listAssignmentsWithValidPhoneNumberFilter"/>
+                    <include name="listAssignmentsWithValidStatus"/>
+                    <include name="listAssignmentsWithValidStatusAndLineNumber"/>
+                    <include name="listAssignmentsWithValidStatusAndCountryCode"/>
+                    <include name="listAssignmentsWithValidStatusAndPhoneNumber"/>
+                </methods>
+            </class>
+            <class name="tests.institution.assignmentmanagementservice.PutAssignmentTest">
+                <methods>
+                    <include name="updateAssignmentFirstname"/>
+                </methods>
+            </class>
+            <class name="tests.institution.usermanagementservice.DeleteUserTest">
+                <methods>
+                    <include name="deleteUser"/>
+                </methods>
+            </class>
+            <class name="tests.institution.usermanagementservice.GetUserTest">
+                <methods>
+                    <include name="getUser"/>
+                </methods>
+            </class>
+            <class name="tests.institution.usermanagementservice.PostUserTest">
+                <methods>
+                    <include name="createAUser"/>
+                </methods>
+            </class>
+            <class name="tests.institution.usermanagementservice.PostUsersTest">
+                <methods>
+                    <include name="listUsersWithPositivePaginationScenarios"/>
+                </methods>
+            </class>
+            <class name="tests.institution.usermanagementservice.PutUserTest">
+                <methods>
+                    <include name="updateUserAsPassive"/>
+                    <include name="updateUserAsActive"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.GetAssignmentSummaryTest">
+                <methods>
+                    <include name="getReservedAssignmentSummary"/>
+                    <include name="getAssignedAssignmentSummary"/>
+                    <include name="getInProgressAssignmentSummary"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.GetAssignmentTest">
+                <methods>
+                    <include name="getAssignmentDetailsWhenUserHaveNoAssignment"/>
+                    <include name="getReservedAssignmentDetails"/>
+                    <include name="getAssignedAssignmentDetails"/>
+                    <include name="getInProgressAssignmentDetails"/>
+                    <include name="getDoneAssignmentDetails"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentApproveTest">
+                <methods>
+                    <include name="assignmentApprove"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentCancelTest">
+                <methods>
+                    <include name="cancelAssignmentPositiveAssigned"/>
+                    <include name="cancelAssignmentPositiveInProgress"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentCompleteTest">
+                <methods>
+                    <include name="assignmentComplete"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentRejectTest">
+                <methods>
+                    <include name="rejectAssignmentAfterSearch"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentSearchTest">
+                <methods>
+                    <include name="assignmentSearchPositive"/>
+                </methods>
+            </class>
+            <class name="tests.user.assignmentmanagementservice.PostAssignmentStartTest">
+                <methods>
+                    <include name="startAssignedAssignment"/>
+                </methods>
+            </class>
+            <class name="tests.user.locationmanagementservice.PostUserLocationTest">
+                <methods>
+                    <include name="updateLocationAfterStart"/>
+                </methods>
+            </class>
+            <class name="tests.user.selfmanagementservice.GetUserSelfTest">
+                <methods>
+                    <include name="getSelfInfoPositive"/>
+                </methods>
+            </class>
+            <class name="tests.user.selfmanagementservice.PutUserSelfStatusSupportTest">
+                <methods>
+                    <include name="updateSupportStatus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

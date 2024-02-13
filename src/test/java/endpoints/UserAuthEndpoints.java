@@ -1,38 +1,51 @@
 package endpoints;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.openqa.selenium.remote.http.HttpMethod;
+import payload.RefreshToken;
 import payload.UserCredentials;
 
-import static io.restassured.RestAssured.given;
-
 public class UserAuthEndpoints {
-    public static Response getUserToken(UserCredentials userCredentials){
-        return given()
-                .contentType(ContentType.JSON)
+
+    public static Response getUserToken(UserCredentials userCredentials) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authUserToken)
                 .body(userCredentials)
-                .when()
-                .post(Routes.authUserToken);
-    }
-    public static Response userTokenRefresh(String refreshToken){
-        return given()
-                .contentType(ContentType.JSON)
-                .body("{\n" +
-                        "    \"refreshToken\": \""+refreshToken+"\"\n" +
-                        "}")
-                .when()
-                .post(Routes.authUserTokenRefresh);
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
 
     }
-    public static Response userInvalidateToken(String accessToken,String refreshToken){
-        return given()
-                .header("Authorization", "Bearer " + accessToken)
-                .contentType(ContentType.JSON)
-                .body("{\n" +
-                        "    \"refreshToken\": \""+refreshToken+"\"\n" +
-                        "}")
-                .when()
-                .post(Routes.authUserTokenInvalidate);
+
+    public static Response userTokenRefresh(RefreshToken refreshToken) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authUserTokenRefresh)
+                .body(refreshToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response userInvalidateToken(String accessToken, RefreshToken refreshToken) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url(Routes.authUserTokenInvalidate)
+                .body(refreshToken)
+                .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    private record RefreshTokenRequest(String refreshToken) {
+    }
+
+    private record AccessTokenRequest(String accessToken) {
     }
 
 }
