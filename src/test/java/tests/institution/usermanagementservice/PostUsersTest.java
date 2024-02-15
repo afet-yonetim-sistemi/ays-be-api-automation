@@ -1,13 +1,10 @@
 package tests.institution.usermanagementservice;
 
 import endpoints.InstitutionEndpoints;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
+import org.testng.Reporter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import payload.*;
@@ -25,9 +22,25 @@ public class PostUsersTest extends DataProvider {
         requestBodyUsers = new RequestBodyUsers();
     }
 
+    @Test()
+    public void validateUserDetailsInUsersList() {
+        requestBodyUsers.setPagination(Helper.createPagination());
+        Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
+        if (response.jsonPath().getList("response.content").isEmpty()) {
+            Reporter.log("No users under this institution.");
+        } else {
+            response.then()
+                    .body("response.content[0]", hasKey("id"))
+                    .body("response.content[0]", hasKey("firstName"))
+                    .body("response.content[0]", hasKey("lastName"))
+                    .body("response.content[0]", hasKey("status"))
+                    .body("response.content[0]", hasKey("role"))
+                    .body("response.content[0]", hasKey("supportStatus"))
+                    .body("response.content[0]", hasKey("createdAt"));
+        }
+    }
+
     @Test(dataProvider = "positivePaginationData")
-    @Story("As an Institution admin I want to list all users")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithPositivePaginationScenarios(int page, int pageSize) {
         requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -43,8 +56,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test(dataProvider = "negativePaginationData")
-    @Story("As an Institution admin I want to get a proper error message when pagination values are invalid")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithNegativePaginationScenarios(int page, int pageSize) {
         requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -57,8 +68,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test()
-    @Story("As an Institution admin I want to get a proper error message when pagination values are null")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithNullPagination() {
         Pagination pagination = new Pagination();
         requestBodyUsers.setPagination(pagination);
@@ -75,8 +84,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test(dataProvider = "invalidNames")
-    @Story("As an Institution admin I want to get a proper error message when firstname or/and lastname are invalid.")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithNegativeNameScenariosFilter(String firstname, String lastname, String errorMessage) {
         requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(firstname, lastname));
         requestBodyUsers.setPagination(Helper.createPagination());
@@ -89,10 +96,7 @@ public class PostUsersTest extends DataProvider {
 
     }
 
-    @Test()
-    @Story("As an Institution admin I want to filter users by firstName and LastName")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidUserNameFilter() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
@@ -108,6 +112,7 @@ public class PostUsersTest extends DataProvider {
                 .body("response.content[0].status", equalTo("ACTIVE"))
                 .body("response.content[0].role", equalTo("VOLUNTEER"))
                 .body("response.content[0].supportStatus", equalTo("IDLE"))
+                .body("response.content[0].createdAt", notNullValue())
                 .body("response.pageNumber", equalTo(1))
                 .body("response.totalPageCount", notNullValue())
                 .body("response.totalElementCount", notNullValue())
@@ -115,10 +120,7 @@ public class PostUsersTest extends DataProvider {
                 .body("response", hasKey("filteredBy"));
     }
 
-    @Test()
-    @Story("As an Institution admin I want to filter users by their status")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidStatusFilter() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
@@ -133,6 +135,7 @@ public class PostUsersTest extends DataProvider {
                 .body("response.content[0].lastName", notNullValue())
                 .body("response.content[0].status", equalTo("ACTIVE"))
                 .body("response.content[0].role", equalTo("VOLUNTEER"))
+                .body("response.content[0].createdAt", notNullValue())
                 .body("response.pageNumber", equalTo(1))
                 .body("response.totalPageCount", notNullValue())
                 .body("response.totalElementCount", notNullValue())
@@ -140,10 +143,7 @@ public class PostUsersTest extends DataProvider {
                 .body("response", hasKey("filteredBy"));
     }
 
-    @Test()
-    @Story("As an Institution admin I want to get a proper error message when I filter users with invalid user status")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidStatusFilter() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
@@ -154,10 +154,7 @@ public class PostUsersTest extends DataProvider {
                 .spec(badRequestResponseSpec());
     }
 
-    @Test()
-    @Story("As an Institution admin I want to filter users by their support status")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidSupportStatusFilter() {
         Helper.createNewUser();
         requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("IDLE"));
@@ -175,8 +172,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test()
-    @Story("As an Institution admin I want to get a proper error message when I filter users with invalid user support status")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithInvalidSupportStatusFilter() {
         requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("Ready"));
         requestBodyUsers.setPagination(Helper.createPagination());
@@ -185,10 +180,7 @@ public class PostUsersTest extends DataProvider {
                 .spec(badRequestResponseSpec());
     }
 
-    @Test()
-    @Story("As an Institution admin I want to filter users by their phone number")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidPhoneNumberFilter() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
@@ -211,9 +203,7 @@ public class PostUsersTest extends DataProvider {
                 .body("response", hasKey("filteredBy"));
     }
 
-    @Test(dataProvider = "invalidPhoneNumberData")
-    @Story("As an Institution admin I want to get a proper error message when I filter users with invalid phone number")
-    @Severity(SeverityLevel.NORMAL)
+    @Test(dataProvider = "invalidPhoneNumberData", description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidPhoneNumberFilter(String countryCode, String lineNumber) {
         Helper.createNewUser();
         PhoneNumber phoneNumber = new PhoneNumber();
@@ -230,10 +220,7 @@ public class PostUsersTest extends DataProvider {
 
     }
 
-    @Test()
-    @Story("As an Institution admin I want to filter users by all filters and sort")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
+    @Test(description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidFiltersAndSort() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
@@ -259,8 +246,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test()
-    @Story("As an Institution admin I want to sort users with valid sort options in ascending order")
-    @Severity(SeverityLevel.NORMAL)
     public void listUsersWithValidSortOptionsInAscendingOrder() {
         requestBodyUsers.setPagination(Helper.createPagination());
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
@@ -272,10 +257,7 @@ public class PostUsersTest extends DataProvider {
 
     }
 
-    @Test()
-    @Story("As an Institution admin I want to sort users with valid sort options in descending order")
-    @Severity(SeverityLevel.NORMAL)
-    @Description("Prior to executing this method, two users are created to prevent failures in case no user is associated with the institution and validate DESC order.")
+    @Test(description = "Prior to executing this method, two users are created to prevent failures in case no user is associated with the institution and validate DESC order.")
     public void sortUsersWithValidSortOptionsInDescendingOrder() {
         User user1 = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user1);
@@ -286,7 +268,6 @@ public class PostUsersTest extends DataProvider {
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "DESC"));
         Response ascResponse = InstitutionEndpoints.listUsers(requestBodyUsers);
         ascResponse.then()
-                .log().body()
                 .spec(successResponseSpec())
                 .body("response.content[0].firstName", equalTo(user2.getFirstName()))
                 .body("response.content[0].lastName", equalTo(user2.getLastName()))
@@ -298,8 +279,6 @@ public class PostUsersTest extends DataProvider {
     }
 
     @Test(dataProvider = "negativeSortData")
-    @Story("As an Institution admin when I sort users with invalid sort options I want to get proper error message")
-    @Severity(SeverityLevel.NORMAL)
     public void sortUsersWithInvalidSortOptions(String property, String direction, String errorMessage) {
         requestBodyUsers.setPagination(Helper.createPagination());
         requestBodyUsers.setSort(Helper.createSortBody(property, direction));
