@@ -21,7 +21,7 @@ public class InstitutionAuthServiceTest {
     }
 
 
-    @Test()
+    @Test
     public void getTokenForValidAdmin() {
         adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
@@ -36,7 +36,7 @@ public class InstitutionAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
     }
 
-    @Test()
+    @Test
     public void getAdminTokenWithInvalidUsername() {
         adminCredentials.setUsername("invalidUsername");
         adminCredentials.setPassword("1234");
@@ -50,7 +50,7 @@ public class InstitutionAuthServiceTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test
     public void adminTokenRefresh() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(Helper.getAdminRefreshToken(Helper.setIntsAdminCredentials()));
@@ -66,7 +66,7 @@ public class InstitutionAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
     }
 
-    @Test()
+    @Test
     public void adminInvalidateToken() {
         Token token = Helper.getAdminToken(Helper.setIntsAdminCredentials());
         RefreshToken refreshToken = new RefreshToken();
@@ -80,7 +80,7 @@ public class InstitutionAuthServiceTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test()
+    @Test
     public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
         Token token = Helper.getAdminToken(Helper.setIntsAdminCredentials());
         RefreshToken refreshToken = new RefreshToken();

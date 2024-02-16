@@ -21,7 +21,7 @@ public class UserAuthServiceTest {
         userCredentials = Helper.createNewUser();
     }
 
-    @Test()
+    @Test
     public void getTokenForValidUser() {
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -35,7 +35,7 @@ public class UserAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
     }
 
-    @Test()
+    @Test
     public void getUserTokenWithInvalidPassword() {
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -48,7 +48,7 @@ public class UserAuthServiceTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test
     public void getUserTokenWithInvalidUsername() {
         userCredentials.setUsername("wrongUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -62,7 +62,7 @@ public class UserAuthServiceTest {
 
     }
 
-    @Test()
+    @Test
     public void getUserTokenWithNullUsername() {
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -78,7 +78,7 @@ public class UserAuthServiceTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test()
+    @Test
     public void getUserTokenWithNullPassword() {
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -94,7 +94,7 @@ public class UserAuthServiceTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test()
+    @Test
     public void userTokenRefresh() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(Helper.getUserRefreshToken(userCredentials));
@@ -110,7 +110,7 @@ public class UserAuthServiceTest {
                 .body("response.refreshToken", notNullValue());
     }
 
-    @Test()
+    @Test
     public void userInvalidateToken() {
         Token token = Helper.getUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();
@@ -123,13 +123,14 @@ public class UserAuthServiceTest {
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
     }
-    @Test()
-    public void testUserInvalidRefreshTokenForAccessTokenCreation(){
+
+    @Test
+    public void testUserInvalidRefreshTokenForAccessTokenCreation() {
         Token token = Helper.getUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(token.getRefreshToken());
         UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
-        Response response=InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
+        Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
                 .statusCode(401)
                 .contentType("application/json")
