@@ -1,5 +1,6 @@
 package tests.auth;
 
+import endpoints.InstitutionAuthEndpoints;
 import endpoints.UserAuthEndpoints;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
@@ -121,5 +122,20 @@ public class UserAuthServiceTest {
                 .body("time", notNullValue())
                 .body("httpStatus", equalTo("OK"))
                 .body("isSuccess", equalTo(true));
+    }
+    @Test()
+    public void testUserInvalidRefreshTokenForAccessTokenCreation(){
+        Token token = Helper.getUserToken(userCredentials);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(token.getRefreshToken());
+        UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
+        Response response=InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
+        response.then()
+                .statusCode(401)
+                .contentType("application/json")
+                .body("time", notNullValue())
+                .body("httpStatus", equalTo("UNAUTHORIZED"))
+                .body("header", equalTo("AUTH ERROR"))
+                .body("isSuccess", equalTo(false));
     }
 }

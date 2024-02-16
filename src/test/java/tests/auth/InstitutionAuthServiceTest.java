@@ -80,4 +80,19 @@ public class InstitutionAuthServiceTest {
                 .body("isSuccess", equalTo(true));
     }
 
+    @Test()
+    public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
+        Token token = Helper.getAdminToken(Helper.setIntsAdminCredentials());
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(token.getRefreshToken());
+        InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);
+        Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
+        response.then()
+                .statusCode(401)
+                .contentType("application/json")
+                .body("time", notNullValue())
+                .body("httpStatus", equalTo("UNAUTHORIZED"))
+                .body("header", equalTo("AUTH ERROR"))
+                .body("isSuccess", equalTo(false));
+    }
 }
