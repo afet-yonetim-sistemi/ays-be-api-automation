@@ -8,9 +8,7 @@ import payload.AdminCredentials;
 import payload.Helper;
 import payload.RefreshToken;
 import payload.Token;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import tests.AysResponseSpecs;
 
 public class InstitutionAuthServiceTest {
     AdminCredentials adminCredentials;
@@ -26,14 +24,8 @@ public class InstitutionAuthServiceTest {
         adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
-                .body("response.accessToken", notNullValue())
-                .body("response.accessTokenExpiresAt", notNullValue())
-                .body("response.refreshToken", notNullValue());
+                .spec(AysResponseSpecs.successResponseSpec())
+                .spec(AysResponseSpecs.getTokenResponseSpec());
     }
 
     @Test
@@ -42,12 +34,7 @@ public class InstitutionAuthServiceTest {
         adminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.unauthorizedResponseSpec());
     }
 
     @Test
@@ -56,14 +43,8 @@ public class InstitutionAuthServiceTest {
         refreshToken.setRefreshToken(Helper.getAdminRefreshToken(Helper.setIntsAdminCredentials()));
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
-                .body("response.accessToken", notNullValue())
-                .body("response.accessTokenExpiresAt", notNullValue())
-                .body("response.refreshToken", notNullValue());
+                .spec(AysResponseSpecs.successResponseSpec())
+                .spec(AysResponseSpecs.getTokenResponseSpec());
     }
 
     @Test
@@ -73,11 +54,7 @@ public class InstitutionAuthServiceTest {
         refreshToken.setRefreshToken(token.getRefreshToken());
         Response response = InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.successResponseSpec());
     }
 
     @Test
@@ -88,11 +65,6 @@ public class InstitutionAuthServiceTest {
         InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.unauthorizedResponseSpec());
     }
 }

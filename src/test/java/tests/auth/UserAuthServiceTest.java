@@ -9,9 +9,7 @@ import payload.Helper;
 import payload.RefreshToken;
 import payload.Token;
 import payload.UserCredentials;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import tests.AysResponseSpecs;
 
 public class UserAuthServiceTest {
     UserCredentials userCredentials;
@@ -25,14 +23,8 @@ public class UserAuthServiceTest {
     public void getTokenForValidUser() {
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
-                .body("response.accessToken", notNullValue())
-                .body("response.accessTokenExpiresAt", notNullValue())
-                .body("response.refreshToken", notNullValue());
+                .spec(AysResponseSpecs.successResponseSpec())
+                .spec(AysResponseSpecs.getTokenResponseSpec());
     }
 
     @Test
@@ -40,12 +32,7 @@ public class UserAuthServiceTest {
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.unauthorizedResponseSpec());
     }
 
     @Test
@@ -53,12 +40,7 @@ public class UserAuthServiceTest {
         userCredentials.setUsername("wrongUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.unauthorizedResponseSpec());
 
     }
 
@@ -67,15 +49,8 @@ public class UserAuthServiceTest {
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false))
-                .body("subErrors[0].message", equalTo("must not be blank"))
-                .body("subErrors[0].field", equalTo("username"))
-                .body("subErrors[0].type", equalTo("String"));
+                .spec(AysResponseSpecs.badRequestResponseSpec())
+                .spec(AysResponseSpecs.nullCredentialFieldErrorSpec("username"));
     }
 
     @Test
@@ -83,15 +58,8 @@ public class UserAuthServiceTest {
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false))
-                .body("subErrors[0].message", equalTo("must not be blank"))
-                .body("subErrors[0].field", equalTo("password"))
-                .body("subErrors[0].type", equalTo("String"));
+                .spec(AysResponseSpecs.badRequestResponseSpec())
+                .spec(AysResponseSpecs.nullCredentialFieldErrorSpec("password"));
     }
 
     @Test
@@ -100,14 +68,8 @@ public class UserAuthServiceTest {
         refreshToken.setRefreshToken(Helper.getUserRefreshToken(userCredentials));
         Response response = UserAuthEndpoints.userTokenRefresh(refreshToken);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
-                .body("response.accessToken", notNullValue())
-                .body("response.accessTokenExpiresAt", notNullValue())
-                .body("response.refreshToken", notNullValue());
+                .spec(AysResponseSpecs.successResponseSpec())
+                .spec(AysResponseSpecs.getTokenResponseSpec());
     }
 
     @Test
@@ -117,11 +79,7 @@ public class UserAuthServiceTest {
         refreshToken.setRefreshToken(token.getRefreshToken());
         Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.successResponseSpec());
     }
 
     @Test
@@ -132,11 +90,6 @@ public class UserAuthServiceTest {
         UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.unauthorizedResponseSpec());
     }
 }
