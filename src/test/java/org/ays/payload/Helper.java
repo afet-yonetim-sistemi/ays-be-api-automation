@@ -2,6 +2,7 @@ package org.ays.payload;
 
 import com.github.javafaker.Faker;
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
@@ -16,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+@UtilityClass
 public class Helper {
+
     public static User getUser(String userID) {
         Response response = InstitutionEndpoints.getUser(userID);
         if (response.getStatusCode() == 200) {
