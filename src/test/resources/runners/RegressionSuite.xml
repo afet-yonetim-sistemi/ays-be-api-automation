@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="ays-be-api-automation">
+        <classes>
+            <class name="org.ays.tests.auth.InstitutionAuthServiceTest">
+                <methods>
+                    <include name="getTokenForValidAdmin"/>
+                    <include name="getTokenForInvalidAdmin"/>
+                    <include name="adminTokenRefresh"/>
+                    <include name="adminInvalidateToken"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.auth.UserAuthServiceTest">
+                <methods>
+                    <include name="getTokenForValidUser"/>
+                    <include name="getTokenInvalidPassword"/>
+                    <include name="getTokenInvalidUsername"/>
+                    <include name="getTokenMissingUsername"/>
+                    <include name="getTokenMissingPassword"/>
+                    <include name="userTokenRefresh"/>
+                    <include name="userInvalidateToken"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminmanagementservice.PostAdminsTest">
+                <methods>
+                    <include name="listAdminsWithValidPageAndPageSize"/>
+                    <include name="listAdminsWithEmptyPageValue"/>
+                    <include name="listAdminsWithEmptyPageSizeValue"/>
+                    <include name="listAdminsWithMissingPageField"/>
+                    <include name="listAdminsWithMissingPageSizeField"/>
+                    <include name="listAdminsWithMissingPageAndPageSizeField"/>
+                    <include name="listAdminsWithPageSizeValueNot10"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.assignmentmanagementservice.DeleteAssignmentTest">
+                <methods>
+                    <include name="deleteAssignment"/>
+                    <include name="deleteAssignmentNegative"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.assignmentmanagementservice.GetAssignmentTest">
+                <methods>
+                    <include name="getAssignmentPositive"/>
+                    <include name="getAssignmentAfterDelete"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.assignmentmanagementservice.PostAssignmentTest">
+                <methods>
+                    <include name="createAnAssignmentPositive"/>
+                    <include name="createAssignmentWithInvalidCountryCode"/>
+                    <include name="createAssignmentWithInvalidPhoneNumber"/>
+                    <include name="createAssignmentWithInvalidLineNumber"/>
+                    <include name="createAssignmentWithInvalidLongitude"/>
+                    <include name="createAssignmentWithInvalidLatitude"/>
+                    <include name="createAssignmentWithMissingFirstName"/>
+                    <include name="createAssignmentWithMissingLastName"/>
+                    <include name="createAssignmentWithMissingDescription"/>
+                    <include name="createAssignmentWithMissingPhoneNumber"/>
+                    <exclude name="createAssignmentWithMissingLatitude"/>
+                    <exclude name="createAssignmentWithMissingLongitude"/>
+                    <include name="createAssignmentWithInvalidDataCombination"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.assignmentmanagementservice.PostAssignmentsTest">
+                <methods>
+                    <include name="listAssignmentsWithPositivePaginationScenarios"/>
+                    <include name="listAssignmentsWithNegativePaginationScenarios"/>
+                    <include name="listAssignmentsWithNullPagination"/>
+                    <include name="listAssignmentsWithValidPhoneNumberFilter"/>
+                    <include name="listAssignmentsWithInvalidPhoneNumberFilter"/>
+                    <include name="listAssignmentsWithValidStatus"/>
+                    <include name="listAssignmentsWithInvalidStatus"/>
+                    <include name="listAssignmentsWithValidStatusAndLineNumber"/>
+                    <include name="listAssignmentsWithValidStatusAndCountryCode"/>
+                    <include name="listAssignmentsWithValidStatusAndPhoneNumber"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.assignmentmanagementservice.PutAssignmentTest">
+                <methods>
+                    <include name="updateAssignmentFirstname"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.usermanagementservice.DeleteUserTest">
+                <methods>
+                    <include name="deleteUser"/>
+                    <include name="deleteUserNegative"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.usermanagementservice.GetUserTest">
+                <methods>
+                    <include name="getUser"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.usermanagementservice.PostUserTest">
+                <methods>
+                    <include name="createAUser"/>
+                    <include name="createUserWithInvalidCountryCode"/>
+                    <include name="createUserWithInvalidLineNumber"/>
+                    <include name="createUserWithInvalidFirstnameAndLastname"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest">
+                <methods>
+                    <include name="listUsersWithPositivePaginationScenarios"/>
+                    <include name="listUsersWithNegativePaginationScenarios"/>
+                    <include name="listUsersWithNullPagination"/>
+                    <include name="listUsersWithNegativeNameScenariosFilter"/>
+                    <include name="listUsersWithValidUserNameFilter"/>
+                    <include name="listUsersWithValidStatusFilter"/>
+                    <include name="listUsersWithInvalidStatusFilter"/>
+                    <include name="listUsersWithValidSupportStatusFilter"/>
+                    <include name="listUsersWithInvalidSupportStatusFilter"/>
+                    <include name="listUsersWithValidPhoneNumberFilter"/>
+                    <include name="listUsersWithInvalidPhoneNumberFilter"/>
+                    <exclude name="listUsersWithValidFiltersAndSort"/>
+                    <include name="listUsersWithValidSortOptionsInAscendingOrder"/>
+                    <include name="sortUsersWithValidSortOptionsInDescendingOrder"/>
+                    <include name="sortUsersWithInvalidSortOptions"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.usermanagementservice.PutUserTest">
+                <methods>
+                    <include name="updateUserAsPassive"/>
+                    <include name="updateUserAsActive"/>
+                    <include name="updateUserWithInvalidRole"/>
+                    <include name="updateUserWithBlankRole"/>
+                    <include name="updateUserWithBlankStatus"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest">
+                <methods>
+                    <include name="getAssignmentSummaryNegative"/>
+                    <include name="getReservedAssignmentSummary"/>
+                    <include name="getAssignedAssignmentSummary"/>
+                    <include name="getInProgressAssignmentSummary"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest">
+                <methods>
+                    <include name="getAssignmentDetailsWhenUserHaveNoAssignment"/>
+                    <include name="getReservedAssignmentDetails"/>
+                    <include name="getAssignedAssignmentDetails"/>
+                    <include name="getInProgressAssignmentDetails"/>
+                    <include name="getDoneAssignmentDetails"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest">
+                <methods>
+                    <include name="assignmentApproveWhenUserHasNoReservedAssignment"/>
+                    <include name="assignmentApprove"/>
+                    <include name="assignmentApproveWhenUserHasAssignedAssignment"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCancelTest">
+                <methods>
+                    <include name="cancelAssignmentNegative"/>
+                    <include name="cancelAssignmentAsReserved"/>
+                    <exclude name="cancelAssignmentPositiveAssigned"/>
+                    <include name="cancelAssignmentPositiveInProgress"/>
+                    <include name="cancelAssignmentWithNullReasonField"/>
+                    <include name="cancelAssignmentWithInvalidReason"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCompleteTest">
+                <methods>
+                    <include name="assignmentCompleteWhenUserHasReservedAssignment"/>
+                    <include name="assignmentComplete"/>
+                    <include name="assignmentCompleteNegative"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentRejectTest">
+                <methods>
+                    <include name="rejectAssignmentBeforeSearch"/>
+                    <include name="rejectAssignmentAfterSearch"/>
+                    <include name="rejectInProgressAssignment"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentSearchTest">
+                <methods>
+                    <include name="assignmentSearchNegative"/>
+                    <include name="assignmentSearchPositive"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentStartTest">
+                <methods>
+                    <include name="startAssignedAssignment"/>
+                    <include name="startInProgressAssignment"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.locationmanagementservice.PostUserLocationTest">
+                <methods>
+                    <include name="updateLocationWithReservedAssignment"/>
+                    <include name="updateLocationWithAssignedAssignment"/>
+                    <include name="updateLocationAfterStart"/>
+                    <include name="updateLocationWithInValidLongitude"/>
+                    <include name="updateLocationWithInValidLatitude"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest">
+                <methods>
+                    <include name="getSelfInfoPositive"/>
+                    <exclude name="getSelfInfoNegative"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest">
+                <methods>
+                    <include name="updateSupportStatus"/>
+                    <include name="updateSupportStatusAfterReserveAnAssignment"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest">
+                <methods>
+                    <include name="postRegistrationApplicationsWithPagination"/>
+                    <include name="postRegistrationApplicationsWithPaginationNegative"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndFilter"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndFilterNegative"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndSort"/>
+                    <include name="postRegistrationApplicationsWithPaginationAndInvalidSort"/>
+                    <include name="postRegistrationApplicationsWithPaginationSortFilter"/>
+                    <include name="postRegistrationApplicationsWithPaginationInvalidSortInvalidFilter"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest">
+                <methods>
+                    <include name="getRegistrationApplicationIDPositive"/>
+                    <include name="getRegistrationApplicationInvalidID"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest">
+                <methods>
+                    <include name="getRegistrationApplicationIdSummaryPositive"/>
+                    <include name="getRegistrationApplicationIdSummaryNegative"/>
+                    <include name="getRegistrationApplicationIdSummaryNegative2"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest">
+                <methods>
+                    <include name="approveANotCompletedApplication"/>
+                    <include name="approveApplicationWithInvalidId"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest">
+                <methods>
+                    <include name="rejectANotCompletedApplication"/>
+                    <include name="rejectAnApplicationWithInvalidReason"/>
+                    <include name="rejectAnApplicationWithInvalidApplicationId"/>
+                    <include name="rejectAnApplicationWithMissingReasonField"/>
+                </methods>
+            </class>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest">
+                <methods>
+                    <include name="createAnAdminRegistrationApplication"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInputs"/>
+                    <include name="createAnAdminRegistrationApplicationWithInvalidInstitutionId"/>
+                    <include name="createAnAdminRegistrationApplicationWithMissingInstitutionId"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

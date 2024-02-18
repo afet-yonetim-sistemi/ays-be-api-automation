@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="User Suite">
+        <classes>
+            <class name="org.ays.tests.auth.UserAuthServiceTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCancelTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCompleteTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentRejectTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentSearchTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentStartTest"></class>
+            <class name="org.ays.tests.user.locationmanagementservice.PostUserLocationTest"></class>
+            <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"></class>
+            <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"></class>
+
+        </classes>
+    </test>
+</suite>
