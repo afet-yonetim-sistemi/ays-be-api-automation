@@ -3,22 +3,17 @@ package org.ays.endpoints;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.SuperAdminCredentials;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.ConfigurationReader;
 
-import java.util.Date;
-
+@UtilityClass
 public class Authorization {
-    public static AdminCredentials adminCredentials = new AdminCredentials();
-    public static UserCredentials userCredentials = new UserCredentials();
-    public static SuperAdminCredentials superAdminCredentials = new SuperAdminCredentials();
-    protected static String accessToken;
-    protected static String refreshToken;
-    protected static Date tokenGeneratedTime;
 
     public static String institutionAuthorization() {
+        AdminCredentials adminCredentials = new AdminCredentials();
         adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
         adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
 
@@ -26,22 +21,20 @@ public class Authorization {
                 .contentType(ContentType.JSON)
                 .body(adminCredentials)
                 .when()
-                .post(Routes.base_url + getTokenURL("ADMIN"))
+                .post("/api/v1/authentication/admin/token")
                 .then()
                 .extract()
                 .response();
 
-        if (response.jsonPath().getBoolean("isSuccess")) {
-            accessToken = response.jsonPath().getString("response.accessToken");
-            refreshToken = response.jsonPath().getString("response.refreshToken");
-            tokenGeneratedTime = new Date();
-        } else {
+        if (!response.jsonPath().getBoolean("isSuccess")) {
             System.out.println(response.jsonPath().prettify());
         }
-        return accessToken;
+
+        return response.jsonPath().getString("response.accessToken");
     }
 
     public static String userAuthorization(String username, String password) {
+        UserCredentials userCredentials = new UserCredentials();
         userCredentials.setUsername(username);
         userCredentials.setPassword(password);
 
@@ -49,22 +42,20 @@ public class Authorization {
                 .contentType(ContentType.JSON)
                 .body(userCredentials)
                 .when()
-                .post(Routes.base_url + getTokenURL("USER"))
+                .post("/api/v1/authentication/token")
                 .then()
                 .extract()
                 .response();
 
-        if (response.jsonPath().getBoolean("isSuccess")) {
-            accessToken = response.jsonPath().getString("response.accessToken");
-            refreshToken = response.jsonPath().getString("response.refreshToken");
-            tokenGeneratedTime = new Date();
-        } else {
+        if (!response.jsonPath().getBoolean("isSuccess")) {
             System.out.println(response.jsonPath().prettify());
         }
-        return accessToken;
+
+        return response.jsonPath().getString("response.accessToken");
     }
 
     public static String superAdminAuthorization() {
+        SuperAdminCredentials superAdminCredentials = new SuperAdminCredentials();
         superAdminCredentials.setUsername(ConfigurationReader.getProperty("superAdmin_username"));
         superAdminCredentials.setPassword(ConfigurationReader.getProperty("superAdmin_password"));
 
@@ -72,27 +63,16 @@ public class Authorization {
                 .contentType(ContentType.JSON)
                 .body(superAdminCredentials)
                 .when()
-                .post(Routes.base_url + getTokenURL("SUPER_ADMIN"))
+                .post("/api/v1/authentication/admin/token")
                 .then()
                 .extract()
                 .response();
 
-        if (response.jsonPath().getBoolean("isSuccess")) {
-            accessToken = response.jsonPath().getString("response.accessToken");
-            refreshToken = response.jsonPath().getString("response.refreshToken");
-            tokenGeneratedTime = new Date();
-        } else {
+        if (!response.jsonPath().getBoolean("isSuccess")) {
             System.out.println(response.jsonPath().prettify());
         }
-        return accessToken;
-    }
 
-    private static String getTokenURL(String userType) {
-        if ("ADMIN".equals(userType) || "SUPER_ADMIN".equals(userType)) {
-            return "/api/v1/authentication/admin/token";
-        }
-        return "/api/v1/authentication/token";
+        return response.jsonPath().getString("response.accessToken");
     }
-
 
 }

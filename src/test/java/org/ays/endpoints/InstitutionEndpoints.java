@@ -1,6 +1,7 @@
 package org.ays.endpoints;
 
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Assignment;
 import org.ays.payload.RejectReason;
@@ -12,13 +13,14 @@ import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
 
+@UtilityClass
 public class InstitutionEndpoints {
 
     public static Response listAdmins(String pagination) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAdmins)
+                .url("/api/v1/admins")
                 .body(pagination)
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -30,7 +32,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postCreateUser)
+                .url("/api/v1/user")
                 .body(userPayload)
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -42,7 +44,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postUsers)
+                .url("/api/v1/users")
                 .body(requestBodyUsers)
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -54,7 +56,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getUser)
+                .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -67,7 +69,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.PUT)
-                .url(Routes.putUpdateUser)
+                .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .body(userPayload)
                 .token(Authorization.institutionAuthorization())
@@ -80,7 +82,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.DELETE)
-                .url(Routes.deleteUser)
+                .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -92,7 +94,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postListAssignments)
+                .url("/api/v1/assignments")
                 .body(bodyAssignments)
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -104,7 +106,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postCreateAssignment)
+                .url("/api/v1/assignment")
                 .body(assignment)
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -116,7 +118,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getAssignment)
+                .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -128,7 +130,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.PUT)
-                .url(Routes.putUpdateAssignment)
+                .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
                 .body(assignment)
                 .token(Authorization.institutionAuthorization())
@@ -141,7 +143,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.DELETE)
-                .url(Routes.deleteAssignment)
+                .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -153,7 +155,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postRegistrationApplications)
+                .url("/api/v1/admin/registration-applications")
                 .body(requestBodyInstitution)
                 .token(Authorization.superAdminAuthorization())
                 .build();
@@ -166,7 +168,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getRegistrationApplicationsWithId)
+                .url("/api/v1/admin/registration-application/{id}")
                 .pathParameter(Map.of("id", applicationID))
                 .token(Authorization.superAdminAuthorization())
                 .build();
@@ -179,7 +181,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getGetRegistrationApplicationsIdSummary)
+                .url("/api/v1/admin/registration-application/{id}/summary")
                 .pathParameter(Map.of("id", applicationID))
                 .token(Authorization.institutionAuthorization())
                 .build();
@@ -191,7 +193,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postRegistrationApplicationApprove)
+                .url("/api/v1/admin/registration-application/{id}/approve")
                 .pathParameter(Map.of("id", applicationID))
                 .token(Authorization.superAdminAuthorization())
                 .build();
@@ -203,7 +205,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postRegistrationApplication)
+                .url("/api/v1/admin/registration-application")
                 .body(applicationRegistration)
                 .token(Authorization.superAdminAuthorization())
                 .build();
@@ -216,7 +218,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postRegistrationApplicationReject)
+                .url("/api/v1/admin/registration-application/{id}/reject")
                 .pathParameter(Map.of("id", applicationID))
                 .body(rejectReason)
                 .token(Authorization.superAdminAuthorization())

@@ -1,15 +1,17 @@
 package org.ays.endpoints;
 
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import org.ays.payload.Location;
 import org.ays.payload.Reason;
 import org.openqa.selenium.remote.http.HttpMethod;
 
+@UtilityClass
 public class UserEndpoints {
     public static Response updateSupportStatus(String payload, String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.PUT)
-                .url(Routes.putUpdateUserSupportStatus)
+                .url("/api/v1/user-self/status/support")
                 .body(payload)
                 .token(Authorization.userAuthorization(username, password))
                 .build();
@@ -20,7 +22,7 @@ public class UserEndpoints {
     public static Response updateLocation(Location location, String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postUserLocation)
+                .url("/api/v1/user/location")
                 .body(location)
                 .token(Authorization.userAuthorization(username, password))
                 .build();
@@ -31,7 +33,7 @@ public class UserEndpoints {
     public static Response searchAssignment(Location location, String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentSearch)
+                .url("/api/v1/assignment/search")
                 .body(location)
                 .token(Authorization.userAuthorization(username, password))
                 .build();
@@ -42,7 +44,7 @@ public class UserEndpoints {
     public static Response approveAssignment(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentApprove)
+                .url("/api/v1/assignment/approve")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -52,7 +54,7 @@ public class UserEndpoints {
     public static Response rejectAssignment(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentReject)
+                .url("/api/v1/assignment/reject")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -62,7 +64,7 @@ public class UserEndpoints {
     public static Response startAssignment(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentStart)
+                .url("/api/v1/assignment/start")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -72,7 +74,7 @@ public class UserEndpoints {
     public static Response completeAssignment(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentComplete)
+                .url("/api/v1/assignment/complete")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -82,7 +84,7 @@ public class UserEndpoints {
     public static Response getUserSelfInfo(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getUserSelfInfo)
+                .url("/api/v1/user-self")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -92,7 +94,7 @@ public class UserEndpoints {
     public static Response getAssignmentUser(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getAssignmentUser)
+                .url("/api/v1/assignment")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -102,7 +104,7 @@ public class UserEndpoints {
     public static Response getAssignmentSummaryUser(String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
-                .url(Routes.getAssignmentSummaryUser)
+                .url("/api/v1/assignment/summary")
                 .token(Authorization.userAuthorization(username, password))
                 .build();
 
@@ -112,7 +114,7 @@ public class UserEndpoints {
     public static Response cancelAssignment(Reason reason, String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url(Routes.postAssignmentCancel)
+                .url("/api/v1/assignment/cancel")
                 .body(reason)
                 .token(Authorization.userAuthorization(username, password))
                 .build();
