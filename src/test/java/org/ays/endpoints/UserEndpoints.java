@@ -13,7 +13,7 @@ public class UserEndpoints {
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user-self/status/support")
                 .body(payload)
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -24,7 +24,7 @@ public class UserEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user/location")
                 .body(location)
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -35,7 +35,7 @@ public class UserEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/search")
                 .body(location)
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -45,7 +45,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/approve")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -55,7 +55,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/reject")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -65,7 +65,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/start")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -75,7 +75,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/complete")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -85,7 +85,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/user-self")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -95,7 +95,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/assignment")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -105,7 +105,7 @@ public class UserEndpoints {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/assignment/summary")
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -116,7 +116,7 @@ public class UserEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment/cancel")
                 .body(reason)
-                .token(Authorization.userAuthorization(username, password))
+                .token(Authorization.loginAndGetUserAccessToken(username, password))
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);

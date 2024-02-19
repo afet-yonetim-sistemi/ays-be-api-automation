@@ -44,10 +44,4 @@ public class UserAuthEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    private record RefreshTokenRequest(String refreshToken) {
-    }
-
-    private record AccessTokenRequest(String accessToken) {
-    }
-
 }

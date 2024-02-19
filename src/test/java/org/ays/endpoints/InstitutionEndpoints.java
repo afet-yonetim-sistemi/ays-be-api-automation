@@ -22,7 +22,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admins")
                 .body(pagination)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -34,7 +34,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user")
                 .body(userPayload)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -46,7 +46,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
                 .body(requestBodyUsers)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -58,7 +58,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -72,7 +72,7 @@ public class InstitutionEndpoints {
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .body(userPayload)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -84,7 +84,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -96,7 +96,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignments")
                 .body(bodyAssignments)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -108,7 +108,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/assignment")
                 .body(assignment)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -120,7 +120,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -133,7 +133,7 @@ public class InstitutionEndpoints {
                 .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
                 .body(assignment)
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -145,7 +145,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/assignment/{id}")
                 .pathParameter(Map.of("id", assignmentId))
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -157,7 +157,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-applications")
                 .body(requestBodyInstitution)
-                .token(Authorization.superAdminAuthorization())
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -170,7 +170,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin/registration-application/{id}")
                 .pathParameter(Map.of("id", applicationID))
-                .token(Authorization.superAdminAuthorization())
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -183,7 +183,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin/registration-application/{id}/summary")
                 .pathParameter(Map.of("id", applicationID))
-                .token(Authorization.institutionAuthorization())
+                .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -195,7 +195,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-application/{id}/approve")
                 .pathParameter(Map.of("id", applicationID))
-                .token(Authorization.superAdminAuthorization())
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -207,7 +207,7 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-application")
                 .body(applicationRegistration)
-                .token(Authorization.superAdminAuthorization())
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -221,7 +221,7 @@ public class InstitutionEndpoints {
                 .url("/api/v1/admin/registration-application/{id}/reject")
                 .pathParameter(Map.of("id", applicationID))
                 .body(rejectReason)
-                .token(Authorization.superAdminAuthorization())
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
