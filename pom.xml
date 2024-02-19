@@ -308,7 +308,7 @@
                         <version>${maven-surefire-plugin.version}</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>src/test/resources/runners/RegressionSuite.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/resources/testsuite/RegressionSuite.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
@@ -325,7 +325,7 @@
                         <version>${maven-surefire-plugin.version}</version>
                         <configuration>
                             <suiteXmlFiles>
-                                <suiteXmlFile>src/test/resources/runners/SmokeSuite.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/resources/testsuite/SmokeSuite.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
