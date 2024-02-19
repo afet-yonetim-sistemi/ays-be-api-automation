@@ -11,9 +11,9 @@ import java.sql.Statement;
 
 public class DatabaseUtility {
     private static final Logger logger = LogManager.getLogger(DatabaseUtility.class);
-    private static final String jdbcUrl = ConfigurationReader.getProperty("jdbcUrl");
-    private static final String username = ConfigurationReader.getProperty("DbUsername");
-    private static final String password = ConfigurationReader.getProperty("DbPassword");
+    private static final String jdbcUrl = AysConfigurationProperty.Database.URL;
+    private static final String username = AysConfigurationProperty.Database.USERNAME;
+    private static final String password = AysConfigurationProperty.Database.PASSWORD;
     protected static Statement statement;
     static Connection connection;
 

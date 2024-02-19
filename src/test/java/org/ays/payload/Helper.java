@@ -7,7 +7,7 @@ import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.endpoints.UserEndpoints;
-import org.ays.utility.ConfigurationReader;
+import org.ays.utility.AysConfigurationProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -410,7 +410,7 @@ public class Helper {
     public static String getApplicationID() {
         ApplicationRegistration applicationRegistration = new ApplicationRegistration();
         applicationRegistration.setReason("A valid test string must have forty character.");
-        applicationRegistration.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        applicationRegistration.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
         while (true) {
             Response response = InstitutionEndpoints.postRegistrationAdminApplication(applicationRegistration);
             String applicationID = response.jsonPath().getString("response.id");
@@ -440,7 +440,7 @@ public class Helper {
     public static String getAdminRegistrationApplicationID() {
         ApplicationRegistration applicationRegistration = new ApplicationRegistration();
         applicationRegistration.setReason("A valid test string must have forty character.");
-        applicationRegistration.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        applicationRegistration.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(applicationRegistration);
         if (response != null) {
             return response.jsonPath().getString("response.id");
@@ -458,14 +458,14 @@ public class Helper {
 
     public static ApplicationRegistration generateApplicationRegistrationPayload() {
         ApplicationRegistration application = new ApplicationRegistration();
-        application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        application.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
         application.setReason(generateReasonString());
         return application;
     }
 
     public static ApplicationRegistration generateApplicationRegistrationPayloadWithoutReason() {
         ApplicationRegistration application = new ApplicationRegistration();
-        application.setInstitutionId(ConfigurationReader.getProperty("InstitutionID"));
+        application.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
         return application;
     }
 
@@ -497,8 +497,8 @@ public class Helper {
 
     public static AdminCredentials setIntsAdminCredentials() {
         AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
-        adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
+        adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
+        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         return adminCredentials;
     }
 

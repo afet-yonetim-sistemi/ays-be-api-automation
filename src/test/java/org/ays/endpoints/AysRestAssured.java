@@ -7,14 +7,13 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
-import org.ays.utility.ConfigurationReader;
+import org.ays.utility.AysConfigurationProperty;
 import org.testng.Reporter;
 
 @UtilityClass
 public class AysRestAssured {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    public static final String BASE_API_URL = ConfigurationReader.getProperty("base_url");
 
     public static Response perform(AysRestAssuredRequest restAssuredRequest) {
 
@@ -38,7 +37,7 @@ public class AysRestAssured {
             requestSpecification.body(restAssuredRequest.getBody());
         }
 
-        String url = BASE_API_URL.concat(restAssuredRequest.getUrl());
+        String url = AysConfigurationProperty.Api.URL.concat(restAssuredRequest.getUrl());
         Response response = (switch (restAssuredRequest.getHttpMethod()) {
             case GET -> requestSpecification.get(url);
             case POST -> requestSpecification.post(url);

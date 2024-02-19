@@ -4,15 +4,15 @@ import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.UserCredentials;
-import org.ays.utility.ConfigurationReader;
+import org.ays.utility.AysConfigurationProperty;
 
 @UtilityClass
 public class Authorization {
 
     public static String loginAndGetSuperAdminAccessToken() {
         AdminCredentials superAdminCredentials = new AdminCredentials();
-        superAdminCredentials.setUsername(ConfigurationReader.getProperty("superAdmin_username"));
-        superAdminCredentials.setPassword(ConfigurationReader.getProperty("superAdmin_password"));
+        superAdminCredentials.setUsername(AysConfigurationProperty.SuperAdminUserOne.USERNAME);
+        superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(superAdminCredentials);
 
@@ -26,8 +26,8 @@ public class Authorization {
     public static String loginAndGetAdminAccessToken() {
 
         AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setUsername(ConfigurationReader.getProperty("institution1Username"));
-        adminCredentials.setPassword(ConfigurationReader.getProperty("institution1Password"));
+        adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
+        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 
