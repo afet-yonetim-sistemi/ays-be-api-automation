@@ -1,6 +1,7 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
+import org.ays.exception.AysConfigurationException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,9 +14,15 @@ public class AysConfigurationProperty {
 
     static {
         try (FileInputStream input = new FileInputStream("configuration.properties")) {
+
             PROPERTIES.load(input);
+
+            if (PROPERTIES.isEmpty()) {
+                throw new AysConfigurationException("Configuration properties are empty!");
+            }
+
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            throw new AysConfigurationException(exception);
         }
     }
 
