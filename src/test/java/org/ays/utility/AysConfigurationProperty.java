@@ -1,10 +1,10 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
-import org.ays.exception.AysConfigurationException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Properties;
 
 @UtilityClass
@@ -48,6 +48,21 @@ public class AysConfigurationProperty {
             public static final String USERNAME = PROPERTIES.getProperty("institution_one.admin_user_one.username");
             public static final String PASSWORD = PROPERTIES.getProperty("institution_one.admin_user_one.password");
         }
+    }
+
+    private static class AysConfigurationException extends RuntimeException {
+
+        @Serial
+        private static final long serialVersionUID = -3108411992530107699L;
+
+        public AysConfigurationException(String message) {
+            super(message);
+        }
+
+        public AysConfigurationException(Throwable cause) {
+            super(cause);
+        }
+
     }
 
 }
