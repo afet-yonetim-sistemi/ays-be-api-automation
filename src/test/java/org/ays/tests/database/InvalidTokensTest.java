@@ -1,7 +1,6 @@
 package org.ays.tests.database;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.ays.utility.DatabaseUtility;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -11,8 +10,8 @@ import org.testng.annotations.Test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Slf4j
 public class InvalidTokensTest extends DatabaseUtility {
-    Logger logger = LogManager.getLogger(this.getClass());
 
     @BeforeMethod
     public void setup() {
@@ -21,9 +20,7 @@ public class InvalidTokensTest extends DatabaseUtility {
 
     @Test(description = "Validate the removal of expired tokens from the invalid token table")
     public void validateExpiredTokenDeletion() {
-        String query = "SELECT IF(COUNT(*) > 0, 'true', 'false') AS IS_INVALID_TOKEN_EXIST " +
-                "FROM AYS_INVALID_TOKEN " +
-                "WHERE (CREATED_AT + INTERVAL (SELECT DEFINITION FROM AYS_PARAMETER WHERE NAME = 'AUTH_REFRESH_TOKEN_EXPIRE_DAY') DAY + INTERVAL 1 DAY) < NOW()";
+        String query = "SELECT IF(COUNT(*) > 0, 'true', 'false') AS IS_INVALID_TOKEN_EXIST " + "FROM AYS_INVALID_TOKEN " + "WHERE (CREATED_AT + INTERVAL (SELECT DEFINITION FROM AYS_PARAMETER WHERE NAME = 'AUTH_REFRESH_TOKEN_EXPIRE_DAY') DAY + INTERVAL 1 DAY) < NOW()";
         try (ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 String result = resultSet.getString("IS_INVALID_TOKEN_EXIST");
@@ -36,7 +33,7 @@ public class InvalidTokensTest extends DatabaseUtility {
                 Assert.fail("No result returned from the query");
             }
         } catch (SQLException e) {
-            logger.error("Failed to execute the validateExpiredTokenDeletion test: {}", e.getMessage());
+            log.error("Failed to execute the validateExpiredTokenDeletion test: {}", e.getMessage());
             throw new RuntimeException("Failed to execute the validateExpiredTokenDeletion test.");
         }
     }
@@ -45,6 +42,5 @@ public class InvalidTokensTest extends DatabaseUtility {
     public void cleanup() {
         DBConnectionClose();
     }
-
 
 }

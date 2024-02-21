@@ -30,11 +30,8 @@
         <hamcrest-all.version>1.3</hamcrest-all.version>
         <reporting-plugin.version>7.2.0</reporting-plugin.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <poi.version>5.2.5</poi.version>
         <extentreports.version>5.1.1</extentreports.version>
         <mysql-connector-java.version>8.0.32</mysql-connector-java.version>
-        <log4j-core.version>2.22.0</log4j-core.version>
-        <log4j-api.version>2.22.0</log4j-api.version>
         <jquery.version>3.6.4</jquery.version>
         <gson.version>2.10.1</gson.version>
         <snakeyaml.version>2.2</snakeyaml.version>
@@ -48,6 +45,8 @@
         <commons-codec.version>1.16.0</commons-codec.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <allure.version>2.24.0</allure.version>
+        <slf4j-api.version>2.0.12</slf4j-api.version>
+        <logback-classic.version>1.5.0</logback-classic.version>
     </properties>
 
     <dependencies>
@@ -59,6 +58,10 @@
                 <exclusion>
                     <groupId>org.webjars</groupId>
                     <artifactId>jquery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
             <scope>test</scope>
@@ -156,38 +159,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- ================== -->
-        <!-- excel dependencies -->
-        <!-- ================== -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-            <version>${poi.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-            <version>${poi.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- ================== -->
-        <!-- excel dependencies -->
-        <!-- ================== -->
-
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
@@ -213,25 +184,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-api.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.testng</groupId>
                     <artifactId>testng</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
             <version>${allure.version}</version>
@@ -261,6 +223,12 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic.version}</version>
         </dependency>
 
     </dependencies>
