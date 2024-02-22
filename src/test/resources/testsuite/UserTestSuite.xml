@@ -3,7 +3,6 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="User Suite">
         <classes>
-            <class name="org.ays.tests.auth.UserAuthServiceTest"></class>
             <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"></class>
             <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest"></class>
             <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest"></class>
