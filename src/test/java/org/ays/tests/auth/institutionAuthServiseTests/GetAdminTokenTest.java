@@ -11,14 +11,9 @@ import org.testng.annotations.Test;
 public class GetAdminTokenTest {
     AdminCredentials adminCredentials;
 
-    @BeforeMethod
-    public void setup() {
-        adminCredentials = new AdminCredentials();
-    }
-
-
     @Test
     public void getTokenForValidAdmin() {
+        adminCredentials = new AdminCredentials();
         adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
@@ -28,6 +23,7 @@ public class GetAdminTokenTest {
 
     @Test
     public void getAdminTokenWithInvalidUsername() {
+        adminCredentials = new AdminCredentials();
         adminCredentials.setUsername("invalidUsername");
         adminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);

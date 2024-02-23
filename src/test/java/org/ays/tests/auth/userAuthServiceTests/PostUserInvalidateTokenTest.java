@@ -13,13 +13,9 @@ import org.testng.annotations.Test;
 public class PostUserInvalidateTokenTest {
     UserCredentials userCredentials;
 
-    @BeforeMethod
-    public void setup() {
-        userCredentials = Helper.createNewUser();
-    }
-
     @Test
     public void userInvalidateToken() {
+        userCredentials = Helper.createNewUser();
         Token token = Helper.getUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(token.getRefreshToken());
