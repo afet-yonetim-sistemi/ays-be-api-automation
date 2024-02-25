@@ -11,8 +11,7 @@ import org.testng.annotations.Test;
 public class GetAdminTokenTest {
     @Test
     public void getTokenForValidAdmin() {
-        AdminCredentials adminCredentials;
-        adminCredentials = Helper.setIntsAdminCredentials();
+        AdminCredentials adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.successResponseSpec())
