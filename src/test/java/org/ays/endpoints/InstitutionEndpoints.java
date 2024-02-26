@@ -2,13 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.ApplicationRegistration;
-import org.ays.payload.Assignment;
-import org.ays.payload.RejectReason;
-import org.ays.payload.RequestBodyAssignments;
-import org.ays.payload.RequestBodyInstitution;
-import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.User;
+import org.ays.payload.*;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
@@ -221,6 +215,16 @@ public class InstitutionEndpoints {
                 .url("/api/v1/admin/registration-application/{id}/reject")
                 .pathParameter(Map.of("id", applicationID))
                 .body(rejectReason)
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response getInstitutionsSummary() {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url("/api/v1/institutions/summary")
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 

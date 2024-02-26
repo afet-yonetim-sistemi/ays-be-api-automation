@@ -1,23 +1,21 @@
 package org.ays.payload;
 
 import com.github.javafaker.Faker;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.utility.AysConfigurationProperty;
+import org.testng.Reporter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @UtilityClass
+@Slf4j
 public class Helper {
 
     public static User getUser(String userID) {
@@ -500,6 +498,16 @@ public class Helper {
         adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         return adminCredentials;
+    }
+
+    public static List<Map<String, String>> extractResponseAsList(Response response) {
+        JsonPath jsonPath = response.jsonPath();
+        return jsonPath.getList("response");
+    }
+
+    public static void customLog(String message) {
+        log.info(message);
+        Reporter.log(message);
     }
 
 
