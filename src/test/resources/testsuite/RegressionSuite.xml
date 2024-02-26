@@ -3,25 +3,6 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="ays-be-api-automation">
         <classes>
-            <class name="org.ays.tests.auth.InstitutionAuthServiceTest">
-                <methods>
-                    <include name="getTokenForValidAdmin"/>
-                    <include name="getTokenForInvalidAdmin"/>
-                    <include name="adminTokenRefresh"/>
-                    <include name="adminInvalidateToken"/>
-                </methods>
-            </class>
-            <class name="org.ays.tests.auth.UserAuthServiceTest">
-                <methods>
-                    <include name="getTokenForValidUser"/>
-                    <include name="getTokenInvalidPassword"/>
-                    <include name="getTokenInvalidUsername"/>
-                    <include name="getTokenMissingUsername"/>
-                    <include name="getTokenMissingPassword"/>
-                    <include name="userTokenRefresh"/>
-                    <include name="userInvalidateToken"/>
-                </methods>
-            </class>
             <class name="org.ays.tests.institution.adminmanagementservice.PostAdminsTest">
                 <methods>
                     <include name="listAdminsWithValidPageAndPageSize"/>
