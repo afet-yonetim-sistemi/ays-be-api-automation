@@ -2,7 +2,13 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.*;
+import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.Assignment;
+import org.ays.payload.RejectReason;
+import org.ays.payload.RequestBodyAssignments;
+import org.ays.payload.RequestBodyInstitution;
+import org.ays.payload.RequestBodyUsers;
+import org.ays.payload.User;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
