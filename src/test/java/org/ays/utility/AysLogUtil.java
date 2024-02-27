@@ -7,7 +7,7 @@ import org.testng.Reporter;
 @UtilityClass
 @Slf4j
 public class AysLogUtil {
-    public static void customLog(String message) {
+    public static void info(String message) {
         log.info(message);
         Reporter.log(message);
     }
