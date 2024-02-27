@@ -10,7 +10,6 @@ import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.utility.AysConfigurationProperty;
-import org.testng.Reporter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -509,11 +508,6 @@ public class Helper {
     public static List<Map<String, String>> extractResponseAsList(Response response) {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("response");
-    }
-
-    public static void customLog(String message) {
-        log.info(message);
-        Reporter.log(message);
     }
 
 

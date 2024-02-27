@@ -256,6 +256,11 @@
                     <include name="createAnAdminRegistrationApplicationWithMissingInstitutionId"/>
                 </methods>
             </class>
+            <class name="org.ays.tests.institution.institutionservice.GetInstitutionsSummaryTest">
+                <methods>
+                    <include name="listInstitutionsPositive"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
