@@ -227,6 +227,16 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response getInstitutionsSummary() {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url("/api/v1/institutions/summary")
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
 }
 
 
