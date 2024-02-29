@@ -5,7 +5,6 @@ import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.Helper;
 import org.ays.utility.AysResponseSpecs;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class GetAdminTokenTest {
@@ -14,8 +13,8 @@ public class GetAdminTokenTest {
         AdminCredentials adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec())
-                .spec(AysResponseSpecs.getTokenResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
     @Test
@@ -25,6 +24,6 @@ public class GetAdminTokenTest {
         adminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
-                .spec(AysResponseSpecs.unauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 }

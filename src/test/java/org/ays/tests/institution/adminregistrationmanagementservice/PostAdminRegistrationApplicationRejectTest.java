@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class PostAdminRegistrationApplicationRejectTest extends DataProvider {
+public class PostAdminRegistrationApplicationRejectTest {
     String applicationID;
     RejectReason reason;
 
@@ -46,7 +46,7 @@ public class PostAdminRegistrationApplicationRejectTest extends DataProvider {
                         containsString("WAITING")));
     }
 
-    @Test(dataProvider = "invalidRejectReason")
+    @Test(dataProvider = "invalidRejectReason", dataProviderClass = DataProvider.class)
     @Story("As a super admin when I approve an application with reason field less than 40 or more than 512 characters I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {

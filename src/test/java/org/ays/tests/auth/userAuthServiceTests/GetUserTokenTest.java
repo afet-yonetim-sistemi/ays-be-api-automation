@@ -20,8 +20,8 @@ public class GetUserTokenTest {
     public void getTokenForValidUser() {
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec())
-                .spec(AysResponseSpecs.getTokenResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class GetUserTokenTest {
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .spec(AysResponseSpecs.unauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class GetUserTokenTest {
         userCredentials.setUsername("wrongUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .spec(AysResponseSpecs.unauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 
     }
 
@@ -46,8 +46,8 @@ public class GetUserTokenTest {
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .spec(AysResponseSpecs.badRequestResponseSpec())
-                .spec(AysResponseSpecs.nullCredentialFieldErrorSpec("username"));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.expectNullCredentialFieldErrorSpec("username"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GetUserTokenTest {
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
-                .spec(AysResponseSpecs.badRequestResponseSpec())
-                .spec(AysResponseSpecs.nullCredentialFieldErrorSpec("password"));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.expectNullCredentialFieldErrorSpec("password"));
     }
 }

@@ -25,8 +25,8 @@ public class PostUserTokenRefreshTest {
         refreshToken.setRefreshToken(Helper.getUserRefreshToken(userCredentials));
         Response response = UserAuthEndpoints.userTokenRefresh(refreshToken);
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec())
-                .spec(AysResponseSpecs.getTokenResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
     @Test
@@ -37,6 +37,6 @@ public class PostUserTokenRefreshTest {
         UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .spec(AysResponseSpecs.unauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 }
