@@ -15,7 +15,7 @@ public class GetInstitutionsSummaryTest {
     public void listInstitutionsPositive() {
         Response response = InstitutionEndpoints.getInstitutionsSummary();
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
         if (Helper.extractResponseAsList(response).isEmpty()) {
             AysLogUtil.info("There are no institutions");

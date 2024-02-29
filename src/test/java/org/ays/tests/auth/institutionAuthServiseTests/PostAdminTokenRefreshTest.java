@@ -15,8 +15,8 @@ public class PostAdminTokenRefreshTest {
         refreshToken.setRefreshToken(Helper.getAdminRefreshToken(Helper.setIntsAdminCredentials()));
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec())
-                .spec(AysResponseSpecs.getTokenResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
     @Test
     public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
@@ -26,6 +26,6 @@ public class PostAdminTokenRefreshTest {
         InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(refreshToken);
         response.then()
-                .spec(AysResponseSpecs.unauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 }

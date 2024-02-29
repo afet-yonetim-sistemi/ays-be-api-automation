@@ -16,6 +16,6 @@ public class PostAdminInvalidateTokenTest {
         refreshToken.setRefreshToken(token.getRefreshToken());
         Response response = InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);
         response.then()
-                .spec(AysResponseSpecs.successResponseSpec());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 }
