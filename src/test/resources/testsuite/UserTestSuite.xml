@@ -8,17 +8,17 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCancelTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCompleteTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentRejectTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentSearchTest"></class>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentStartTest"></class>
-            <class name="org.ays.tests.user.locationmanagementservice.PostUserLocationTest"></class>
-            <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"></class>
-            <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"></class>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCancelTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCompleteTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentRejectTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentSearchTest"/>
+            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentStartTest"/>
+            <class name="org.ays.tests.user.locationmanagementservice.PostUserLocationTest"/>
+            <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"/>
+            <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"/>
         </classes>
     </test>
 </suite>
