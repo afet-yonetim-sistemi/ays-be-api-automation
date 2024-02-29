@@ -20,7 +20,7 @@ public class PostAssignmentRejectTest {
     Assignment assignment;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = Helper.generateLocationTR();
@@ -28,7 +28,7 @@ public class PostAssignmentRejectTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void rejectAssignmentBeforeSearch() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.rejectAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -44,7 +44,7 @@ public class PostAssignmentRejectTest {
     }
 
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void rejectAssignmentAfterSearch() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -56,7 +56,7 @@ public class PostAssignmentRejectTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void rejectInProgressAssignment() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());

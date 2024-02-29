@@ -12,14 +12,14 @@ import static org.hamcrest.Matchers.notNullValue;
 public class GetUserTest {
     String userID;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getUser() {
         Response response = InstitutionEndpoints.getUser(userID);
         response.then()

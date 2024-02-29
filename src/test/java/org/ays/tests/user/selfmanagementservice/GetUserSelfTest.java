@@ -18,7 +18,7 @@ public class GetUserSelfTest {
     User user = new User();
     String userID;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         user = Helper.createUserPayload();
         userCredentials = Helper.createNewUser(user);
@@ -26,7 +26,7 @@ public class GetUserSelfTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getSelfInfoPositive() {
         Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -47,7 +47,7 @@ public class GetUserSelfTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void getSelfInfoNegative() {
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");

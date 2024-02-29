@@ -22,13 +22,13 @@ public class PostAdminRegistrationApplicationRejectTest {
     String applicationID;
     RejectReason reason;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     void setup() {
         applicationID = Helper.getAdminRegistrationApplicationID();
         reason = new RejectReason();
     }
 
-    @Test
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin when I approve an application with WAITING status I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectANotCompletedApplication() {
@@ -46,7 +46,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                         containsString("WAITING")));
     }
 
-    @Test(dataProvider = "invalidRejectReason", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidRejectReason", dataProviderClass = DataProvider.class)
     @Story("As a super admin when I approve an application with reason field less than 40 or more than 512 characters I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {
@@ -60,7 +60,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                 .body("subErrors[0].value", equalTo(invalidRejectReason));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin when I reject an application with invalidID I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectAnApplicationWithInvalidApplicationId() {
@@ -75,7 +75,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                 .body("subErrors[0].value", equalTo("invalidApplicationID"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin when I reject an application with null/missing reason field I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectAnApplicationWithMissingReasonField() {

@@ -21,14 +21,14 @@ public class PutUserSelfStatusSupportTest {
     Location location;
     Assignment assignment;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = generateLocationTR();
         assignment = Helper.createANewAssignment();
     }
 
-    @Test(dataProvider = "statusTransitions")
+    @Test(groups = {"Smoke", "Regression", "User"}, dataProvider = "statusTransitions")
     public void updateSupportStatus(String fromStatus, String toStatus) {
         String payload = createPayloadWithSupportStatus(toStatus);
         Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());

@@ -58,7 +58,7 @@ public class PostAdminsTest {
         currentPageSize = null;
     }
 
-    @Test(dataProvider = "positivePaginationData")
+    @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider="positivePaginationData")
     @Story("As an Institution admin I want to list all admins")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithValidPageAndPageSize(int page, int pageSize) {
@@ -90,7 +90,7 @@ public class PostAdminsTest {
         }
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an Institution admin I want to get proper error message when page value is null")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithEmptyPageValue() {
@@ -104,7 +104,7 @@ public class PostAdminsTest {
                 .body("subErrors[0].type", equalTo("int"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an Institution admin I want to get proper error message when pageSize value is null")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithEmptyPageSizeValue() {
@@ -118,7 +118,7 @@ public class PostAdminsTest {
                 .body("subErrors[0].type", equalTo("int"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an Institution admin I want to get proper error message when page field is missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageField() {
@@ -132,7 +132,7 @@ public class PostAdminsTest {
                 .body("subErrors[0].type", equalTo("int"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an Institution admin I want to get proper error message when pageSize field is missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageSizeField() {
@@ -146,7 +146,7 @@ public class PostAdminsTest {
                 .body("subErrors[0].type", equalTo("int"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an Institution admin I want to get proper error message when page and pageSize fields are missing")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithMissingPageAndPageSizeField() {
@@ -162,7 +162,7 @@ public class PostAdminsTest {
                 .body("subErrors[1].type", equalTo("int"));
     }
 
-    @Test(dataProvider = "negativePaginationData")
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData")
     @Story("As an Institution admin I want to get proper error message when page or pageSize fields are invalid")
     @Severity(SeverityLevel.NORMAL)
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {

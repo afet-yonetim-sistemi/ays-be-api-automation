@@ -14,12 +14,12 @@ import static org.hamcrest.Matchers.notNullValue;
 public class PostUserTest {
     User userPayload;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setupData() {
         userPayload = Helper.createUserPayload();
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void createAUser() {
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
@@ -29,7 +29,7 @@ public class PostUserTest {
                 .body("response.password", notNullValue());
     }
 
-    @Test(dataProvider = "countryCodeData")
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "countryCodeData")
     public void createUserWithInvalidCountryCode(String countryCode) {
         userPayload.getPhoneNumber().setCountryCode(countryCode);
         Response response = InstitutionEndpoints.createAUser(userPayload);
@@ -68,7 +68,7 @@ public class PostUserTest {
         };
     }
 
-    @Test(dataProvider = "lineNumberData")
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "lineNumberData")
     public void createUserWithInvalidLineNumber(String lineNumber) {
         userPayload.getPhoneNumber().setLineNumber(lineNumber);
         Response response = InstitutionEndpoints.createAUser(userPayload);
@@ -107,7 +107,7 @@ public class PostUserTest {
 
     }
 
-    @Test(dataProvider = "userFirstNameLastNameData")
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "userFirstNameLastNameData")
     public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, String message) {
         userPayload.setFirstName(firstName);
         userPayload.setLastName(lastName);

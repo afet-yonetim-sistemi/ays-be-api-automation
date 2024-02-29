@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.hasItem;
 public class PostUsersTest {
     RequestBodyUsers requestBodyUsers;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyUsers = new RequestBodyUsers();
     }

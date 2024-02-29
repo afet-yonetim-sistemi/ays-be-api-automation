@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PostAdminRegistrationApplicationApproveTest {
-    @Test
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin when I approve an application with WAITING or REJECTED status I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void approveANotCompletedApplication() {
@@ -32,7 +32,7 @@ public class PostAdminRegistrationApplicationApproveTest {
                         containsString("COMPLETED")));
     }
 
-    @Test
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin when I approve an application with invalidID I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void approveApplicationWithInvalidId() {

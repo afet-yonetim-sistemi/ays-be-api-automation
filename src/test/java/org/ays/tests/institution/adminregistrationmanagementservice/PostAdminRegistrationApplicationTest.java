@@ -22,12 +22,12 @@ import static org.hamcrest.Matchers.notNullValue;
 public class PostAdminRegistrationApplicationTest {
     ApplicationRegistration application;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         application = new ApplicationRegistration();
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
         application = Helper.generateApplicationRegistrationPayload();
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
@@ -36,7 +36,7 @@ public class PostAdminRegistrationApplicationTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
         application = Helper.generateApplicationRegistrationPayloadWithoutReason();
         application.setReason(reason);
@@ -48,7 +48,7 @@ public class PostAdminRegistrationApplicationTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test
+    @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
         application = Helper.generateApplicationRegistrationPayload();
         application.setInstitutionId("invalidId");
@@ -63,7 +63,7 @@ public class PostAdminRegistrationApplicationTest {
                 .body("message", containsString("INSTITUTION NOT EXIST!"));
     }
 
-    @Test
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {

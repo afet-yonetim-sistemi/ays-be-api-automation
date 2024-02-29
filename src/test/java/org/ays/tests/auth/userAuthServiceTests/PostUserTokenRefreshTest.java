@@ -14,12 +14,12 @@ import org.testng.annotations.Test;
 public class PostUserTokenRefreshTest {
     UserCredentials userCredentials;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void userTokenRefresh() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(Helper.getUserRefreshToken(userCredentials));
@@ -29,7 +29,7 @@ public class PostUserTokenRefreshTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
         Token token = Helper.getUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();

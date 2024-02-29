@@ -10,7 +10,7 @@ import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 public class PostUserInvalidateTokenTest {
-    @Test
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void userInvalidateToken() {
         UserCredentials userCredentials = Helper.createNewUser();
         Token token = Helper.getUserToken(userCredentials);

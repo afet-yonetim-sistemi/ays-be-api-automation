@@ -19,7 +19,7 @@ public class PostAssignmentApproveTest {
     Assignment assignment;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -27,7 +27,7 @@ public class PostAssignmentApproveTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasNoReservedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -41,7 +41,7 @@ public class PostAssignmentApproveTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentApprove() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -54,7 +54,7 @@ public class PostAssignmentApproveTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasAssignedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());

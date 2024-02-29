@@ -13,14 +13,14 @@ import static org.hamcrest.Matchers.equalTo;
 public class DeleteUserTest {
     String userID;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         User user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteUser() {
         Response deleteResponse = InstitutionEndpoints.deleteUser(userID);
         deleteResponse.then()
@@ -37,7 +37,7 @@ public class DeleteUserTest {
     }
 
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void deleteUserNegative() {
         InstitutionEndpoints.deleteUser(userID);
         Response response = InstitutionEndpoints.deleteUser(userID);

@@ -20,7 +20,7 @@ public class PostUserLocationTest {
     Assignment assignment;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -28,7 +28,7 @@ public class PostUserLocationTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void updateLocationWithReservedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -43,7 +43,7 @@ public class PostUserLocationTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void updateLocationWithAssignedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -59,7 +59,7 @@ public class PostUserLocationTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void updateLocationAfterStart() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -74,7 +74,7 @@ public class PostUserLocationTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test(dataProvider = "invalidLongitudeValues")
+    @Test(groups = {"Regression", "User"}, dataProvider = "invalidLongitudeValues")
     public void updateLocationWithInValidLongitude(Double invalidLongitude, String errorMessage) {
         location = Helper.generateLocation(invalidLongitude, 75.0);
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -107,7 +107,7 @@ public class PostUserLocationTest {
         };
     }
 
-    @Test(dataProvider = "invalidLatitudeValues")
+    @Test(groups = {"Regression", "User"}, dataProvider = "invalidLatitudeValues")
     public void updateLocationWithInValidLatitude(Double invalidLatitude, String errorMessage) {
         location = Helper.generateLocation(95.0, invalidLatitude);
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
