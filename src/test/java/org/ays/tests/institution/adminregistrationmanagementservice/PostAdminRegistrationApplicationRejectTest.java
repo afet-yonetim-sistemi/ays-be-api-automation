@@ -46,7 +46,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                         containsString("WAITING")));
     }
 
-    @Test(dataProvider = "invalidRejectReason",dataProviderClass = DataProvider.class)
+    @Test(dataProvider = "invalidRejectReason", dataProviderClass = DataProvider.class)
     @Story("As a super admin when I approve an application with reason field less than 40 or more than 512 characters I want to get proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {

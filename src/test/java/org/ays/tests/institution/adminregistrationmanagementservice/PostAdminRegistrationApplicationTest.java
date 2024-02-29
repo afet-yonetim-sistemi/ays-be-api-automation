@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class PostAdminRegistrationApplicationTest{
+public class PostAdminRegistrationApplicationTest {
     ApplicationRegistration application;
 
     @BeforeMethod
@@ -36,7 +36,7 @@ public class PostAdminRegistrationApplicationTest{
                 .body("response", hasKey("id"));
     }
 
-    @Test(dataProvider = "invalidDataForPostApplicationReasonField",dataProviderClass = DataProvider.class)
+    @Test(dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
         application = Helper.generateApplicationRegistrationPayloadWithoutReason();
         application.setReason(reason);
