@@ -6,6 +6,7 @@ import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getAssignmentDetailsWhenUserHaveNoAssignment() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -47,7 +48,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getReservedAssignmentDetails() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -64,7 +65,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentDetails() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -88,7 +89,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentDetails() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -113,7 +114,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getDoneAssignmentDetails() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

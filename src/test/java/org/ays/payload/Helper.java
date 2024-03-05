@@ -10,6 +10,7 @@ import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.utility.AysConfigurationProperty;
+import org.ays.utility.AysRandomUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ import java.util.Random;
 @UtilityClass
 @Slf4j
 public class Helper {
+
+
 
     public static User getUser(String userID) {
         Response response = InstitutionEndpoints.getUser(userID);
@@ -61,10 +64,10 @@ public class Helper {
     }
 
     public static User createUserPayload() {
-        Faker faker = new Faker();
+
         User userPayload = new User();
-        userPayload.setFirstName(faker.name().firstName());
-        userPayload.setLastName(faker.name().lastName());
+        userPayload.setFirstName(AysRandomUtil.generateFirstName());
+        userPayload.setLastName(AysRandomUtil.generateLastName());
         userPayload.setPhoneNumber(createPhoneNumber());
         return userPayload;
     }
@@ -105,12 +108,11 @@ public class Helper {
     }
 
     public static Assignment createAssignmentPayload() {
-        Faker faker = new Faker();
         Assignment assignment = new Assignment();
-        assignment.setFirstName(faker.name().firstName());
-        assignment.setLastName(faker.name().lastName());
+        assignment.setFirstName(AysRandomUtil.generateFirstName());
+        assignment.setLastName(AysRandomUtil.generateLastName());
         assignment.setPhoneNumber(createPhoneNumber());
-        assignment.setDescription(faker.commerce().productName());
+        assignment.setDescription(AysRandomUtil.generateDescription());
         assignment.setLatitude(generateRandomCoordinate(38, 40));
         assignment.setLongitude(generateRandomCoordinate(28, 43));
         return assignment;
@@ -118,7 +120,7 @@ public class Helper {
 
     public static PhoneNumber createPhoneNumber() {
         PhoneNumber phoneNumber = new PhoneNumber();
-        phoneNumber.setLineNumber(generateLineNumber());
+        phoneNumber.setLineNumber(AysRandomUtil.generateLineNumber());
         phoneNumber.setCountryCode("90");
         return phoneNumber;
 
@@ -132,16 +134,6 @@ public class Helper {
         return requestBodyAssignments;
     }
 
-    public static String generateLineNumber() {
-        Random random = new Random();
-        StringBuilder phoneNumberBuilder = new StringBuilder();
-        phoneNumberBuilder.append("535");
-        for (int i = 0; i < 7; i++) {
-            int digit = random.nextInt(10);
-            phoneNumberBuilder.append(digit);
-        }
-        return phoneNumberBuilder.toString();
-    }
 
     public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {
         Response response = InstitutionEndpoints.listAssignments(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
@@ -223,15 +215,7 @@ public class Helper {
         return null;
     }
 
-    public static Location generateLocation(double minLat, double maxLat, double minLon, double maxLon) {
-        Random rand = new Random();
-        double latitude = minLat + (maxLat - minLat) * rand.nextDouble();
-        double longitude = minLon + (maxLon - minLon) * rand.nextDouble();
-        Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
-    }
+
 
     public static Location generateLocation(Double longitude, Double latitude) {
         Location location = new Location();
@@ -241,15 +225,6 @@ public class Helper {
     }
 
 
-    public static Location generateLocationTR() {
-        Random rand = new Random();
-        double latitude = 38 + (40 - 38) * rand.nextDouble();
-        double longitude = 28 + (43 - 28) * rand.nextDouble();
-        Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
-    }
 
     public static void setSupportStatus(String status, String username, String password) {
         String payload = createPayloadWithSupportStatus(status);
@@ -267,48 +242,6 @@ public class Helper {
         return min + (max - min) * random.nextDouble();
     }
 
-    public static String generateString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/";
-        Random random = new Random();
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(characters.length());
-            char randomChar = characters.charAt(randomIndex);
-            builder.append(randomChar);
-        }
-
-        return builder.toString();
-    }
-
-    public static String generateInvalidLineNumber() {
-        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488};
-        Random random = new Random();
-        String phoneNumber;
-        do {
-            int firstThreeDigits = random.nextInt(900) + 100;
-            phoneNumber = String.valueOf(firstThreeDigits) + generateRandomDigits(7);
-        } while (isPrefixInArray(Integer.parseInt(phoneNumber.substring(0, 3)), prefixesArray));
-        return phoneNumber;
-    }
-
-    public static String generateRandomDigits(int length) {
-        Random random = new Random();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            stringBuilder.append(random.nextInt(10));
-        }
-        return stringBuilder.toString();
-    }
-
-    public static boolean isPrefixInArray(int prefix, int[] prefixesArray) {
-        for (int i : prefixesArray) {
-            if (i == prefix) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname) {
         FiltersForUsers filters = new FiltersForUsers();
@@ -453,16 +386,11 @@ public class Helper {
         }
     }
 
-    public static String generateReasonString() {
-        Faker faker = new Faker();
-        int length = 40 + faker.number().numberBetween(0, 472);
-        return faker.lorem().characters(length);
-    }
 
     public static ApplicationRegistration generateApplicationRegistrationPayload() {
         ApplicationRegistration application = new ApplicationRegistration();
         application.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
-        application.setReason(generateReasonString());
+        application.setReason(AysRandomUtil.generateReasonString());
         return application;
     }
 

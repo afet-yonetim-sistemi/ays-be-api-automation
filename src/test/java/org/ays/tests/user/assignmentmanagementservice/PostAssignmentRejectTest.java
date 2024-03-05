@@ -6,6 +6,7 @@ import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -23,7 +24,7 @@ public class PostAssignmentRejectTest {
     @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         assignment = Helper.createANewAssignment();
 
     }

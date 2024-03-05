@@ -6,6 +6,7 @@ import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,7 +31,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithReservedAssignment() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.updateLocation(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -45,7 +46,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithAssignedAssignment() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -61,7 +62,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void updateLocationAfterStart() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

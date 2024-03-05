@@ -6,6 +6,7 @@ import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -29,7 +30,7 @@ public class PostAssignmentSearchTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentSearchNegative() {
-        location = Helper.generateLocation(38, 40, 28, 43);
+        location = AysRandomUtil.generateLocation(38, 40, 28, 43);
         Response response = UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(409)
@@ -42,7 +43,7 @@ public class PostAssignmentSearchTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentSearchPositive() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
-        location = Helper.generateLocation(38, 40, 28, 43);
+        location = AysRandomUtil.generateLocation(38, 40, 28, 43);
         Response response = UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)

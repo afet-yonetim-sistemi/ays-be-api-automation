@@ -6,6 +6,7 @@ import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -44,7 +45,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getReservedAssignmentSummary() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,7 +63,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentSummary() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -81,7 +82,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentSummary() {
-        location = Helper.generateLocationTR();
+        location = AysRandomUtil.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

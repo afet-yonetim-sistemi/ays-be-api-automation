@@ -93,11 +93,11 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "invalidLineNumberData")
     public static Object[][] lineNumberData() {
         return new Object[][]{
-                {Helper.generateInvalidLineNumber()},
-                {Helper.generateLineNumber() + "*"},
+                {AysRandomUtil.generateInvalidLineNumber()},
+                {AysRandomUtil.generateLineNumber() + "*"},
                 {""}, {"          "},
                 {null},
-                {Helper.generateLineNumber() + "a"}
+                {AysRandomUtil.generateLineNumber() + "a"}
         };
     }
 
