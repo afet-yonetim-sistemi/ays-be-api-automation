@@ -9,7 +9,7 @@ import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 public class PostAdminTokenRefreshTest {
-    @Test
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminTokenRefresh() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(Helper.getAdminRefreshToken(Helper.setIntsAdminCredentials()));
@@ -18,7 +18,7 @@ public class PostAdminTokenRefreshTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
-    @Test
+    @Test(groups = {"Regression", "Institution"})
     public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
         Token token = Helper.getAdminToken(Helper.setIntsAdminCredentials());
         RefreshToken refreshToken = new RefreshToken();

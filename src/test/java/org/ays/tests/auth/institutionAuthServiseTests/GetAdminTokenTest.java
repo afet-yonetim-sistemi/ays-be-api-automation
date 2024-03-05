@@ -8,7 +8,7 @@ import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 public class GetAdminTokenTest {
-    @Test
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidAdmin() {
         AdminCredentials adminCredentials = Helper.setIntsAdminCredentials();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
@@ -17,7 +17,7 @@ public class GetAdminTokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test
+    @Test(groups = {"Regression", "Institution"})
     public void getAdminTokenWithInvalidUsername() {
         AdminCredentials adminCredentials = new AdminCredentials();
         adminCredentials.setUsername("invalidUsername");

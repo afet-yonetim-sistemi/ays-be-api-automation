@@ -20,12 +20,12 @@ import static org.hamcrest.Matchers.notNullValue;
 public class PostAssignmentTest {
     Assignment assignment;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setupData() {
         assignment = Helper.createAssignmentPayload();
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     @Story("As an admin I want to create an assignment.")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAssignmentPositive() {
@@ -35,7 +35,7 @@ public class PostAssignmentTest {
 
     }
 
-    @Test(dataProvider = "invalidDescriptionData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDescriptionData", dataProviderClass = DataProvider.class)
     @Story("As an admin when I create an assignment with invalid description I want to get a proper error messages.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidDescription(String invalidDescription, String errorMessage) {
@@ -48,7 +48,7 @@ public class PostAssignmentTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(dataProvider = "invalidCountryCodeData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCountryCodeData", dataProviderClass = DataProvider.class)
     @Story("As an admin when I create an assignment with invalid country code input I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidCountryCode(String countryCode) {
@@ -72,7 +72,7 @@ public class PostAssignmentTest {
     }
 
 
-    @Test(dataProvider = "invalidLineNumberData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidLineNumberData", dataProviderClass = DataProvider.class)
     @Story("As an admin user when I create an assignment with invalid line number I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidLineNumber(String lineNumber) {
@@ -95,7 +95,7 @@ public class PostAssignmentTest {
         }
     }
 
-    @Test(dataProvider = "invalidLongitudeValues", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidLongitudeValues", dataProviderClass = DataProvider.class)
     @Story("As an admin user when I create an assignment with invalid longitude input I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidLongitude(Double invalidLongitude, String errorMessage) {
@@ -110,7 +110,7 @@ public class PostAssignmentTest {
     }
 
 
-    @Test(dataProvider = "invalidLatitudeValues", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidLatitudeValues", dataProviderClass = DataProvider.class)
     @Story("As an admin user when I create an assignment with invalid latitude input I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidLatitude(Double invalidLatitude, String errorMessage) {
@@ -124,7 +124,7 @@ public class PostAssignmentTest {
                 .body("subErrors[0].value", equalTo(String.valueOf(invalidLatitude)));
     }
 
-    @Test
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an admin when I create an assignment with not a number value of latitude I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithMissingLatitude() {
@@ -138,7 +138,7 @@ public class PostAssignmentTest {
                 .body("subErrors.value", hasItems("NaN", "NaN"));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an admin when I create an assignment with not a number value of longitude I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithMissingLongitude() {
@@ -153,7 +153,7 @@ public class PostAssignmentTest {
     }
 
 
-    @Test(dataProvider = "invalidFirstNamesAndLastDataForAssignment", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidFirstNamesAndLastDataForAssignment", dataProviderClass = DataProvider.class)
     @Story("As an admin when I create an assignment with invalid first name I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidFirstName(String firstName, String errorMessage) {
@@ -166,7 +166,7 @@ public class PostAssignmentTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(dataProvider = "invalidFirstNamesAndLastDataForAssignment", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidFirstNamesAndLastDataForAssignment", dataProviderClass = DataProvider.class)
     @Story("As an admin when I create an assignment with invalid last name I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidLastName(String lastName, String errorMessage) {
@@ -180,7 +180,7 @@ public class PostAssignmentTest {
     }
 
 
-    @Test
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an admin when I create an assignment with null Phone number I want to get a proper error message.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithMissingPhoneNumber() {
@@ -194,7 +194,7 @@ public class PostAssignmentTest {
     }
 
 
-    @Test
+    @Test(groups = {"Regression", "Institution"})
     @Story("As an admin when I create an assignment with multiple invalid inputs I want to get proper error messages.")
     @Severity(SeverityLevel.NORMAL)
     public void createAssignmentWithInvalidDataCombination() {

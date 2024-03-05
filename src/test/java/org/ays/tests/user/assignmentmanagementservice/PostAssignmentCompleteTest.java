@@ -20,7 +20,7 @@ public class PostAssignmentCompleteTest {
     Assignment assignment;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -28,7 +28,7 @@ public class PostAssignmentCompleteTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void assignmentCompleteWhenUserHasReservedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -45,7 +45,7 @@ public class PostAssignmentCompleteTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentComplete() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -60,7 +60,7 @@ public class PostAssignmentCompleteTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void assignmentCompleteNegative() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());

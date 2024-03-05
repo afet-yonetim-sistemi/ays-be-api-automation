@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.hasItem;
 public class PostAssignmentsTest {
     RequestBodyAssignments requestBodyAssignments;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyAssignments = new RequestBodyAssignments();
     }

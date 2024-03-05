@@ -16,13 +16,13 @@ public class DeleteAssignmentTest {
     Assignment assignment;
     String assignmentId;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         assignment = Helper.createANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteAssignment() {
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);
         response.then()
@@ -34,7 +34,7 @@ public class DeleteAssignmentTest {
     }
 
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void deleteAssignmentNegative() {
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);

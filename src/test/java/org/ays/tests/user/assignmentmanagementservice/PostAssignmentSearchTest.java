@@ -19,7 +19,7 @@ public class PostAssignmentSearchTest {
     Assignment assignment;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -27,7 +27,7 @@ public class PostAssignmentSearchTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void assignmentSearchNegative() {
         location = Helper.generateLocation(38, 40, 28, 43);
         Response response = UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -39,7 +39,7 @@ public class PostAssignmentSearchTest {
                 .body("message", containsString("USER NOT READY TO TAKE ASSIGNMENT!"));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentSearchPositive() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         location = Helper.generateLocation(38, 40, 28, 43);

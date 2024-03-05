@@ -28,7 +28,7 @@ public class PostAdminRegistrationApplicationsTest {
     Filter filter;
     Sort sort;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyInstitution = new RequestBodyInstitution();
         pagination = new Pagination();
@@ -36,7 +36,7 @@ public class PostAdminRegistrationApplicationsTest {
         sort = new Sort();
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPagination() {
@@ -55,7 +55,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.sortedBy", nullValue());
     }
 
-    @Test(dataProvider = "paginationScenarios")
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "paginationScenarios")
     @Story("As a super admin I want to get proper error message when I request to pagination with invalid data")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPaginationNegative(int page, int pageSize) {
@@ -74,7 +74,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("subErrors[0].message", containsString("must be between 1 and 99999999"));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination and filter")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPaginationAndFilter() {
@@ -98,7 +98,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.filteredBy", notNullValue());
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin I want to get proper error message when I request to filter with invalid status input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and filter with invalid statuses value")
@@ -119,7 +119,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("header", equalTo("VALIDATION ERROR"));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination and sort")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and sort with Authorization")
@@ -145,7 +145,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.filteredBy", nullValue());
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin I want to get proper error message when I request to sort with invalid input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and invalid sort value with Authorization")
@@ -169,7 +169,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("header", equalTo("VALIDATION ERROR"));
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination filter and sort")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,sort and filter with Authorization")
@@ -200,7 +200,7 @@ public class PostAdminRegistrationApplicationsTest {
                 .body("response.filteredBy", notNullValue());
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a super admin I want to get proper error message when I request to sort and filter with invalid input")
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,invalid sort and invalid filter with Authorization")

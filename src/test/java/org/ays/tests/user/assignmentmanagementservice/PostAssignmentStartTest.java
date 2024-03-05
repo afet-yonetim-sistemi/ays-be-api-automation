@@ -20,7 +20,7 @@ public class PostAssignmentStartTest {
     Assignment assignment;
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -28,7 +28,7 @@ public class PostAssignmentStartTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void startAssignedAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -42,7 +42,7 @@ public class PostAssignmentStartTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void startInProgressAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());

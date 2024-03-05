@@ -11,12 +11,12 @@ import org.testng.annotations.Test;
 public class GetUserTokenTest {
     UserCredentials userCredentials;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getTokenForValidUser() {
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -24,7 +24,7 @@ public class GetUserTokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void getUserTokenWithInvalidPassword() {
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -32,7 +32,7 @@ public class GetUserTokenTest {
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void getUserTokenWithInvalidUsername() {
         userCredentials.setUsername("wrongUserName");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -41,7 +41,7 @@ public class GetUserTokenTest {
 
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void getUserTokenWithNullUsername() {
         userCredentials.setUsername(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
@@ -50,7 +50,7 @@ public class GetUserTokenTest {
                 .spec(AysResponseSpecs.expectNullCredentialFieldErrorSpec("username"));
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void getUserTokenWithNullPassword() {
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);

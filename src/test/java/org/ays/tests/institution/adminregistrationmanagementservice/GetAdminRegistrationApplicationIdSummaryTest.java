@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAdminRegistrationApplicationIdSummaryTest {
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a user I want to get detailed information about administrator registration applications summary when I use valid ID ")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryPositive() {
@@ -30,7 +30,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
                 .body("response.institution", notNullValue());
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryNegative() {
@@ -47,7 +47,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "SuperAdmin"})
     @Story("As a user I want to get proper error message when I use invalid ID information")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryNegative2() {

@@ -9,7 +9,7 @@ import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 public class PostAdminInvalidateTokenTest {
-    @Test
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminInvalidateToken() {
         Token token = Helper.getAdminToken(Helper.setIntsAdminCredentials());
         RefreshToken refreshToken = new RefreshToken();

@@ -14,14 +14,14 @@ public class PutUserTest {
     User user = new User();
     String userID;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         user = Helper.createUserPayload();
         InstitutionEndpoints.createAUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateUserAsPassive() {
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
@@ -35,7 +35,7 @@ public class PutUserTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void updateUserAsActive() {
         user.setRole("VOLUNTEER");
         user.setStatus("PASSIVE");
@@ -51,7 +51,7 @@ public class PutUserTest {
         Assert.assertEquals(user.getStatus(), "ACTIVE");
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void updateUserWithInvalidRole() {
         user.setRole("VOL");
         user.setStatus("ACTIVE");
@@ -64,7 +64,7 @@ public class PutUserTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void updateUserWithBlankRole() {
         user.setRole("");
         user.setStatus("ACTIVE");
@@ -77,7 +77,7 @@ public class PutUserTest {
                 .body("isSuccess", equalTo(false));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void updateUserWithBlankStatus() {
         user.setRole("VOLUNTEER");
         user.setStatus("");

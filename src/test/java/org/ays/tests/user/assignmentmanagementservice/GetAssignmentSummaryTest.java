@@ -21,7 +21,7 @@ public class GetAssignmentSummaryTest {
     Assignment assignment;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -29,7 +29,7 @@ public class GetAssignmentSummaryTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void getAssignmentSummaryNegative() {
         Response response = UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -42,7 +42,7 @@ public class GetAssignmentSummaryTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getReservedAssignmentSummary() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -60,7 +60,7 @@ public class GetAssignmentSummaryTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentSummary() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -79,7 +79,7 @@ public class GetAssignmentSummaryTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentSummary() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());

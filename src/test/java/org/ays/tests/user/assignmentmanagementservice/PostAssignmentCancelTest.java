@@ -22,14 +22,14 @@ public class PostAssignmentCancelTest {
     UserCredentials userCredentials;
     Location location;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         assignment = Helper.createANewAssignment();
         location = Helper.generateLocationTR();
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void cancelAssignmentNegative() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
@@ -44,7 +44,7 @@ public class PostAssignmentCancelTest {
                 .body("isSuccess", equalToObject(false));
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void cancelAssignmentAsReserved() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
@@ -64,7 +64,7 @@ public class PostAssignmentCancelTest {
 
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void cancelAssignmentPositiveAssigned() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
@@ -81,7 +81,7 @@ public class PostAssignmentCancelTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void cancelAssignmentPositiveInProgress() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
@@ -99,7 +99,7 @@ public class PostAssignmentCancelTest {
                 .body("isSuccess", equalTo(true));
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void cancelAssignmentWithNullReasonField() {
         Reason reason = new Reason();
         String status = Helper.createPayloadWithSupportStatus("READY");
@@ -120,7 +120,7 @@ public class PostAssignmentCancelTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(dataProvider = "reasonsProvider")
+    @Test(groups = {"Regression", "User"}, dataProvider = "reasonsProvider")
     public void cancelAssignmentWithInvalidReason(String reasonData) {
         Reason reason = new Reason();
         reason.setReason(reasonData);

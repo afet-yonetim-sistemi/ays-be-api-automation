@@ -14,13 +14,13 @@ public class PutAssignmentTest {
     Assignment assignment;
     String assignmentId;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         assignment = Helper.createANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateAssignmentFirstname() {
         String expectedName = "updated firstname";
         assignment.setFirstName(expectedName);

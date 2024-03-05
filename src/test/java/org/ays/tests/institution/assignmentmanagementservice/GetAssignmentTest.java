@@ -17,13 +17,13 @@ public class GetAssignmentTest {
     Assignment assignment = new Assignment();
     String assignmentId;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         assignment = Helper.createANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getAssignmentPositive() {
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()
@@ -46,7 +46,7 @@ public class GetAssignmentTest {
                 .body("response.user", anyOf(nullValue(), notNullValue()));
     }
 
-    @Test()
+    @Test(groups = {"Regression", "Institution"})
     public void getAssignmentAfterDelete() {
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.getAssignment(assignmentId);

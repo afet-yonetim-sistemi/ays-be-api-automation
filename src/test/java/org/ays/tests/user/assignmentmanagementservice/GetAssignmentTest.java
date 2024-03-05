@@ -21,7 +21,7 @@ public class GetAssignmentTest {
     Assignment assignment;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
         location = new Location();
@@ -29,7 +29,7 @@ public class GetAssignmentTest {
 
     }
 
-    @Test
+    @Test(groups = {"Regression", "User"})
     public void getAssignmentDetailsWhenUserHaveNoAssignment() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -45,7 +45,7 @@ public class GetAssignmentTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void getReservedAssignmentDetails() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,7 +62,7 @@ public class GetAssignmentTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentDetails() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -86,7 +86,7 @@ public class GetAssignmentTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentDetails() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
@@ -111,7 +111,7 @@ public class GetAssignmentTest {
 
     }
 
-    @Test()
+    @Test(groups = {"Regression", "User"})
     public void getDoneAssignmentDetails() {
         location = Helper.generateLocationTR();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
