@@ -24,24 +24,6 @@ import java.util.Random;
 @Slf4j
 public class Helper {
 
-
-
-    public static User getUser(String userID) {
-        Response response = InstitutionEndpoints.getUser(userID);
-        if (response.getStatusCode() == 200) {
-            if (response.jsonPath().get("response") != null) {
-                return response.then()
-                        .extract()
-                        .jsonPath()
-                        .getObject("response", User.class);
-            } else {
-                throw new RuntimeException("User data not found for userID: " + userID);
-            }
-        } else {
-            throw new RuntimeException("Failed to retrieve user with status code: " + response.getStatusCode());
-        }
-    }
-
     public static UserCredentials createNewUser() {
         User user = createUserPayload();
         Response response = InstitutionEndpoints.createAUser(user);
@@ -72,13 +54,6 @@ public class Helper {
         return userPayload;
     }
 
-    public static Map<String, String> createLoginPayload(String username, String password) {
-        Map<String, String> payload = new HashMap<>();
-        payload.put("username", username);
-        payload.put("password", password);
-        return payload;
-    }
-
     public static RequestBodyAssignments createRequestBodyAssignments(int page, int pageSize) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
         Pagination pagination = new Pagination();
@@ -86,15 +61,6 @@ public class Helper {
         pagination.setPageSize(pageSize);
         requestBodyAssignments.setPagination(pagination);
         return requestBodyAssignments;
-    }
-
-    public static RequestBodyUsers createRequestBodyUsers(int page, int pageSize) {
-        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        Pagination pagination = new Pagination();
-        pagination.setPage(page);
-        pagination.setPageSize(pageSize);
-        requestBodyUsers.setPagination(pagination);
-        return requestBodyUsers;
     }
 
     public static Assignment createANewAssignment() {
@@ -123,17 +89,7 @@ public class Helper {
         phoneNumber.setLineNumber(AysRandomUtil.generateLineNumber());
         phoneNumber.setCountryCode("90");
         return phoneNumber;
-
-
     }
-
-    public static RequestBodyAssignments createRequestBodyAssignmentsMissingPagination() {
-        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
-        Pagination pagination = new Pagination();
-        requestBodyAssignments.setPagination(pagination);
-        return requestBodyAssignments;
-    }
-
 
     public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {
         Response response = InstitutionEndpoints.listAssignments(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
@@ -172,31 +128,6 @@ public class Helper {
         return pagination;
     }
 
-
-    public static String getUserIDByFirstName(String firstName) {
-        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        Pagination pagination = setPagination(1, 10);
-        requestBodyUsers.setPagination(setPagination(1, 10));
-        int currentPage = 1;
-        while (true) {
-            Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
-            String userID = extractUserIdFromTheUserListByFirstname(response, firstName);
-            if (userID != null) {
-                return userID;
-            }
-            int currentPageNumber = response.jsonPath().getInt("response.pageNumber");
-            int totalPageCount = response.jsonPath().getInt("response.totalPageCount");
-            if (currentPageNumber >= totalPageCount) {
-                break;
-            }
-            pagination.setPage(currentPage + 1);
-            requestBodyUsers.setPagination(pagination);
-            currentPage++;
-        }
-
-        return null;
-    }
-
     public static Pagination setPagination(int page, int pageSize) {
         Pagination pagination = new Pagination();
         pagination.setPageSize(pageSize);
@@ -204,27 +135,12 @@ public class Helper {
         return pagination;
     }
 
-    private static String extractUserIdFromTheUserListByFirstname(Response response, String firstname) {
-        List<Map<String, Object>> userList = response.jsonPath().getList("response.content");
-        for (Map<String, Object> user : userList) {
-            String userFirstName = (String) user.get("firstName");
-            if (firstname.equals(userFirstName)) {
-                return (String) user.get("id");
-            }
-        }
-        return null;
-    }
-
-
-
     public static Location generateLocation(Double longitude, Double latitude) {
         Location location = new Location();
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         return location;
     }
-
-
 
     public static void setSupportStatus(String status, String username, String password) {
         String payload = createPayloadWithSupportStatus(status);
@@ -241,7 +157,6 @@ public class Helper {
         Random random = new Random();
         return min + (max - min) * random.nextDouble();
     }
-
 
     public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname) {
         FiltersForUsers filters = new FiltersForUsers();
@@ -386,7 +301,6 @@ public class Helper {
         }
     }
 
-
     public static ApplicationRegistration generateApplicationRegistrationPayload() {
         ApplicationRegistration application = new ApplicationRegistration();
         application.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
@@ -437,7 +351,6 @@ public class Helper {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("response");
     }
-
 
 }
 

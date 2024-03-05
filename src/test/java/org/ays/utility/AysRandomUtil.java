@@ -35,11 +35,6 @@ public class AysRandomUtil {
         return phoneNumberBuilder.toString();
     }
 
-    private static double generateRandomCoordinate(int min, int max) {
-
-        return min + (max - min) * RANDOM.nextDouble();
-    }
-
     public static String generateString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/";
         StringBuilder builder = new StringBuilder();
@@ -104,6 +99,5 @@ public class AysRandomUtil {
         location.setLongitude(longitude);
         return location;
     }
-
 
 }
