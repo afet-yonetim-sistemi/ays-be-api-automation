@@ -30,7 +30,7 @@ public class PostAssignmentSearchTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentSearchNegative() {
-        location = AysRandomUtil.generateLocation(38, 40, 28, 43);
+        location = Location.generateLocation(38, 40, 28, 43);
         Response response = UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(409)
@@ -43,7 +43,7 @@ public class PostAssignmentSearchTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentSearchPositive() {
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
-        location = AysRandomUtil.generateLocation(38, 40, 28, 43);
+        location = Location.generateLocation(38, 40, 28, 43);
         Response response = UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(200)

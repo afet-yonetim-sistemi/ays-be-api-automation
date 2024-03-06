@@ -24,7 +24,7 @@ public class PutUserSelfStatusSupportTest {
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = Helper.createNewUser();
-        location = AysRandomUtil.generateLocationTR();
+        location = Location.generateLocationTR();
         assignment = Helper.createANewAssignment();
     }
 

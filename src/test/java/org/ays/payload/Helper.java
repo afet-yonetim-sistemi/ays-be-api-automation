@@ -79,8 +79,8 @@ public class Helper {
         assignment.setLastName(AysRandomUtil.generateLastName());
         assignment.setPhoneNumber(createPhoneNumber());
         assignment.setDescription(AysRandomUtil.generateDescription());
-        assignment.setLatitude(generateRandomCoordinate(38, 40));
-        assignment.setLongitude(generateRandomCoordinate(28, 43));
+        assignment.setLatitude(AysRandomUtil.generateRandomCoordinate(38, 40));
+        assignment.setLongitude(AysRandomUtil.generateRandomCoordinate(28, 43));
         return assignment;
     }
 
@@ -135,13 +135,6 @@ public class Helper {
         return pagination;
     }
 
-    public static Location generateLocation(Double longitude, Double latitude) {
-        Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
-    }
-
     public static void setSupportStatus(String status, String username, String password) {
         String payload = createPayloadWithSupportStatus(status);
         UserEndpoints.updateSupportStatus(payload, username, password);
@@ -151,11 +144,6 @@ public class Helper {
         return "{\n" +
                 "    \"supportStatus\": \"" + supportStatus + "\"\n" +
                 "}";
-    }
-
-    private static double generateRandomCoordinate(int min, int max) {
-        Random random = new Random();
-        return min + (max - min) * random.nextDouble();
     }
 
     public static FiltersForUsers createFilterWithUserFirstAndLastName(String firstname, String lastname) {
