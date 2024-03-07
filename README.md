@@ -1,4 +1,4 @@
-# AYS API Test Automation Repository
+# AYS | Afet Yönetim Sistemi API Test Automation [![Application Status](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/actions/workflows/application-health-checker.yml/badge.svg)](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/actions/workflows/application-health-checker.yml)
 
 This repository contains automated API tests using the REST Assured framework. The tests are organized into packages for ease of use and maintainability.
 
