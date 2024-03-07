@@ -24,36 +24,6 @@ import java.util.Random;
 @Slf4j
 public class Helper {
 
-    public static UserCredentials createNewUser() {
-        User user = createUserPayload();
-        Response response = InstitutionEndpoints.createAUser(user);
-        if (response.getStatusCode() == 200) {
-            return response.then()
-                    .extract().jsonPath().getObject("response", UserCredentials.class);
-        } else {
-            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static UserCredentials createNewUser(User userPayload) {
-        Response response = InstitutionEndpoints.createAUser(userPayload);
-        if (response.getStatusCode() == 200) {
-            return response.then()
-                    .extract().jsonPath().getObject("response", UserCredentials.class);
-        } else {
-            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static User createUserPayload() {
-
-        User userPayload = new User();
-        userPayload.setFirstName(AysRandomUtil.generateFirstName());
-        userPayload.setLastName(AysRandomUtil.generateLastName());
-        userPayload.setPhoneNumber(createPhoneNumber());
-        return userPayload;
-    }
-
     public static RequestBodyAssignments createRequestBodyAssignments(int page, int pageSize) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
         Pagination pagination = new Pagination();
@@ -77,18 +47,11 @@ public class Helper {
         Assignment assignment = new Assignment();
         assignment.setFirstName(AysRandomUtil.generateFirstName());
         assignment.setLastName(AysRandomUtil.generateLastName());
-        assignment.setPhoneNumber(createPhoneNumber());
+        assignment.setPhoneNumber(PhoneNumber.generatePhoneNumber());
         assignment.setDescription(AysRandomUtil.generateDescription());
         assignment.setLatitude(AysRandomUtil.generateRandomCoordinate(38, 40));
         assignment.setLongitude(AysRandomUtil.generateRandomCoordinate(28, 43));
         return assignment;
-    }
-
-    public static PhoneNumber createPhoneNumber() {
-        PhoneNumber phoneNumber = new PhoneNumber();
-        phoneNumber.setLineNumber(AysRandomUtil.generateLineNumber());
-        phoneNumber.setCountryCode("90");
-        return phoneNumber;
     }
 
     public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {

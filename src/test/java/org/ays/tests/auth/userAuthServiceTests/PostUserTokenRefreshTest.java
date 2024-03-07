@@ -16,7 +16,7 @@ public class PostUserTokenRefreshTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
+        userCredentials = UserCredentials.generateCreate();
     }
 
     @Test(groups = {"Smoke", "Regression", "User"})

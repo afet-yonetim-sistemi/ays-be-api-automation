@@ -23,7 +23,7 @@ public class PutUserSelfStatusSupportTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
+        userCredentials = UserCredentials.generateCreate();
         location = Location.generateLocationTR();
         assignment = Helper.createANewAssignment();
     }

@@ -2,11 +2,7 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
-import org.ays.payload.Pagination;
-import org.ays.payload.PhoneNumber;
-import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.User;
+import org.ays.payload.*;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -89,7 +85,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidUserNameFilter() {
-        User user = Helper.createUserPayload();
+        User user = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(user.getFirstName(), user.getLastName()));
         requestBodyUsers.setPagination(Helper.createPagination());
@@ -105,7 +101,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidStatusFilter() {
-        Helper.createNewUser();
+        UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACTIVE"));
         requestBodyUsers.setPagination(Helper.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -120,7 +116,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidStatusFilter() {
-        Helper.createNewUser();
+        UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACT"));
         requestBodyUsers.setPagination(Helper.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -130,7 +126,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidSupportStatusFilter() {
-        Helper.createNewUser();
+        UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("IDLE"));
         requestBodyUsers.setPagination(Helper.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -154,7 +150,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidPhoneNumberFilter() {
-        User user = Helper.createUserPayload();
+        User user = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithUserPhoneNumber(user.getPhoneNumber()));
         requestBodyUsers.setPagination(Helper.createPagination());
@@ -171,7 +167,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberDataForFilter", dataProviderClass = DataProvider.class, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidPhoneNumberFilter(String countryCode, String lineNumber, String errorMessage) {
-        Helper.createNewUser();
+        UserCredentials.generateCreate();
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
@@ -188,7 +184,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidFiltersAndSort() {
-        User user = Helper.createUserPayload();
+        User user = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithAllUserFilters(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
@@ -225,9 +221,9 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, two users are created to prevent failures in case no user is associated with the institution and validate DESC order.")
     public void listUsersWithValidSortOptionsInDescendingOrder() {
-        User user1 = Helper.createUserPayload();
+        User user1 = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user1);
-        User user2 = Helper.createUserPayload();
+        User user2 = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user2);
 
         requestBodyUsers.setPagination(Helper.createPagination());

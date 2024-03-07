@@ -24,7 +24,7 @@ public class GetAssignmentTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
+        userCredentials = UserCredentials.generateCreate();
         location = new Location();
         assignment = Helper.createANewAssignment();
 
