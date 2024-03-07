@@ -25,7 +25,7 @@ public class PostAssignmentRejectTest {
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
         location = Location.generateLocationTR();
-        assignment = Helper.createANewAssignment();
+        assignment = Assignment.generateCreateAssignment();
 
     }
 

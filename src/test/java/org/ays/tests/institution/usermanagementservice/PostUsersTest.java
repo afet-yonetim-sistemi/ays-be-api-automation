@@ -25,7 +25,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void validateUserDetailsInUsersList() {
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -39,7 +39,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
     public void listUsersWithPositivePaginationScenarios(int page, int pageSize) {
-        requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
+        requestBodyUsers.setPagination(Pagination.setPagination(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -49,7 +49,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = DataProvider.class)
     public void listUsersWithNegativePaginationScenarios(int page, int pageSize) {
-        requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
+        requestBodyUsers.setPagination(Pagination.setPagination(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -73,7 +73,7 @@ public class PostUsersTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
     public void listUsersWithNegativeNameScenariosFilter(String firstname, String lastname, String errorMessage) {
         requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(firstname, lastname));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -88,7 +88,7 @@ public class PostUsersTest {
         User user = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(user.getFirstName(), user.getLastName()));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -103,7 +103,7 @@ public class PostUsersTest {
     public void listUsersWithValidStatusFilter() {
         UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACTIVE"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -118,7 +118,7 @@ public class PostUsersTest {
     public void listUsersWithInvalidStatusFilter() {
         UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACT"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
@@ -128,7 +128,7 @@ public class PostUsersTest {
     public void listUsersWithValidSupportStatusFilter() {
         UserCredentials.generateCreate();
         requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("IDLE"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -142,7 +142,7 @@ public class PostUsersTest {
     @Test(groups = {"Regression", "Institution"})
     public void listUsersWithInvalidSupportStatusFilter() {
         requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("Ready"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
@@ -153,7 +153,7 @@ public class PostUsersTest {
         User user = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithUserPhoneNumber(user.getPhoneNumber()));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -172,7 +172,7 @@ public class PostUsersTest {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         requestBodyUsers.setFilter(Helper.createFilterWithUserPhoneNumber(phoneNumber));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -188,7 +188,7 @@ public class PostUsersTest {
         InstitutionEndpoints.createAUser(user);
         requestBodyUsers.setFilter(Helper.createFilterWithAllUserFilters(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -206,7 +206,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listUsersWithValidSortOptionsInAscendingOrder() {
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
         Response ascResponse = InstitutionEndpoints.listUsers(requestBodyUsers);
         ascResponse.then()
@@ -226,7 +226,7 @@ public class PostUsersTest {
         User user2 = User.generateUserPayload();
         InstitutionEndpoints.createAUser(user2);
 
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         requestBodyUsers.setSort(Helper.createSortBody("createdAt", "DESC"));
         Response ascResponse = InstitutionEndpoints.listUsers(requestBodyUsers);
         ascResponse.then()
@@ -244,7 +244,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "negativeSortData", dataProviderClass = DataProvider.class)
     public void sortUsersWithInvalidSortOptions(String property, String direction, String errorMessage) {
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         requestBodyUsers.setSort(Helper.createSortBody(property, direction));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()

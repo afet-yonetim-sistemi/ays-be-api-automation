@@ -26,7 +26,7 @@ public class GetAssignmentTest {
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
         location = new Location();
-        assignment = Helper.createANewAssignment();
+        assignment = Assignment.generateCreateAssignment();
 
     }
 

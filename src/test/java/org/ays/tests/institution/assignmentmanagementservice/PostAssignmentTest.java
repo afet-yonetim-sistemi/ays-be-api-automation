@@ -22,7 +22,7 @@ public class PostAssignmentTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setupData() {
-        assignment = Helper.createAssignmentPayload();
+        assignment = Assignment.generateCreateAssignmentPayload();
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})

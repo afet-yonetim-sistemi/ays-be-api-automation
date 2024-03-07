@@ -26,7 +26,7 @@ public class PostAssignmentCancelTest {
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
-        assignment = Helper.createANewAssignment();
+        assignment = Assignment.generateCreateAssignment();
         location = Location.generateLocationTR();
     }
 

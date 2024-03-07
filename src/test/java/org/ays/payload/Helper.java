@@ -24,38 +24,9 @@ import java.util.Random;
 @Slf4j
 public class Helper {
 
-    public static RequestBodyAssignments createRequestBodyAssignments(int page, int pageSize) {
-        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
-        Pagination pagination = new Pagination();
-        pagination.setPage(page);
-        pagination.setPageSize(pageSize);
-        requestBodyAssignments.setPagination(pagination);
-        return requestBodyAssignments;
-    }
-
-    public static Assignment createANewAssignment() {
-        Assignment assignment = createAssignmentPayload();
-        Response response = InstitutionEndpoints.createAnAssignment(assignment);
-        if (response.getStatusCode() == 200) {
-            return assignment;
-        } else {
-            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static Assignment createAssignmentPayload() {
-        Assignment assignment = new Assignment();
-        assignment.setFirstName(AysRandomUtil.generateFirstName());
-        assignment.setLastName(AysRandomUtil.generateLastName());
-        assignment.setPhoneNumber(PhoneNumber.generatePhoneNumber());
-        assignment.setDescription(AysRandomUtil.generateDescription());
-        assignment.setLatitude(AysRandomUtil.generateRandomCoordinate(38, 40));
-        assignment.setLongitude(AysRandomUtil.generateRandomCoordinate(28, 43));
-        return assignment;
-    }
 
     public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {
-        Response response = InstitutionEndpoints.listAssignments(createRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
+        Response response = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generateRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
         return response.jsonPath().getString("response.content[0].id");
 
     }
@@ -67,35 +38,11 @@ public class Helper {
 
     public static RequestBodyUsers createRequestBodyUsersWithPhoneNumberFilter(PhoneNumber phoneNumber) {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPagination(createPagination());
+        requestBodyUsers.setPagination(Pagination.createPagination());
         FiltersForUsers filters = new FiltersForUsers();
         filters.setPhoneNumber(phoneNumber);
         requestBodyUsers.setFilter(filters);
         return requestBodyUsers;
-    }
-
-    public static RequestBodyAssignments createRequestBodyAssignmentsWithPhoneNumberFilter(PhoneNumber phoneNumber) {
-        RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
-
-        requestBodyAssignments.setPagination(createPagination());
-        FiltersForAssignments filters = new FiltersForAssignments();
-        filters.setPhoneNumber(phoneNumber);
-        requestBodyAssignments.setFilter(filters);
-        return requestBodyAssignments;
-    }
-
-    public static Pagination createPagination() {
-        Pagination pagination = new Pagination();
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        return pagination;
-    }
-
-    public static Pagination setPagination(int page, int pageSize) {
-        Pagination pagination = new Pagination();
-        pagination.setPageSize(pageSize);
-        pagination.setPage(page);
-        return pagination;
     }
 
     public static void setSupportStatus(String status, String username, String password) {
@@ -224,7 +171,7 @@ public class Helper {
 
     public static String getApplicationId() {
         RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
-        requestBodyInstitution.setPagination(setPagination(1, 10));
+        requestBodyInstitution.setPagination(Pagination.setPagination(1, 10));
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         List<Map<String, Object>> content = response.jsonPath().getList("response.content");
         if (content != null && !content.isEmpty()) {

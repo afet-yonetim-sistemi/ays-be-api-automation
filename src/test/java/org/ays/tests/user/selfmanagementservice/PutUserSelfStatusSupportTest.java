@@ -25,7 +25,7 @@ public class PutUserSelfStatusSupportTest {
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
         location = Location.generateLocationTR();
-        assignment = Helper.createANewAssignment();
+        assignment = Assignment.generateCreateAssignment();
     }
 
     @Test(groups = {"Smoke", "Regression", "User"}, dataProvider = "statusTransitions")

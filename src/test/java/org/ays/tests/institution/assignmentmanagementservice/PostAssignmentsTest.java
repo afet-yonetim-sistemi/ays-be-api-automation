@@ -27,7 +27,7 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
     public void listAssignmentsWithPositivePaginationScenarios(int page, int pageSize) {
-        requestBodyAssignments.setPagination(Helper.setPagination(page, pageSize));
+        requestBodyAssignments.setPagination(Pagination.setPagination(page, pageSize));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -36,7 +36,7 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = DataProvider.class)
     public void listAssignmentsWithNegativePaginationScenarios(int page, int pageSize) {
-        requestBodyAssignments = Helper.createRequestBodyAssignments(page, pageSize);
+        requestBodyAssignments = RequestBodyAssignments.generateRequestBodyAssignments(page, pageSize);
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -59,9 +59,9 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidPhoneNumberFilter() {
-        Assignment assignment = Helper.createANewAssignment();
+        Assignment assignment = Assignment.generateCreateAssignment();
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentPhoneNumber(assignment.getPhoneNumber()));
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -78,7 +78,7 @@ public class PostAssignmentsTest {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentPhoneNumber(phoneNumber));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -91,8 +91,8 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusFilter() {
-        Helper.createANewAssignment();
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        Assignment.generateCreateAssignment();
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatus("AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -106,8 +106,8 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithInvalidStatus() {
-        Helper.createANewAssignment();
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        Assignment.generateCreateAssignment();
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatus("available", "ASSIGNED"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -116,8 +116,8 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusAndLineNumber() {
-        Assignment assignment = Helper.createANewAssignment();
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        Assignment assignment = Assignment.generateCreateAssignment();
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusAndLineNumber(assignment.getPhoneNumber().getLineNumber(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -132,8 +132,8 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusAndCountryCode() {
-        Assignment assignment = Helper.createANewAssignment();
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        Assignment assignment = Assignment.generateCreateAssignment();
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusAndCountryCOde(assignment.getPhoneNumber().getCountryCode(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -149,8 +149,8 @@ public class PostAssignmentsTest {
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusAndPhoneNumber() {
-        Assignment assignment = Helper.createANewAssignment();
-        requestBodyAssignments.setPagination(Helper.createPagination());
+        Assignment assignment = Assignment.generateCreateAssignment();
+        requestBodyAssignments.setPagination(Pagination.createPagination());
         requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusPhoneNumber(assignment.getPhoneNumber(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
