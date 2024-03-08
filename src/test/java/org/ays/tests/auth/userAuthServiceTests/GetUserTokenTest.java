@@ -2,7 +2,6 @@ package org.ays.tests.auth.userAuthServiceTests;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;

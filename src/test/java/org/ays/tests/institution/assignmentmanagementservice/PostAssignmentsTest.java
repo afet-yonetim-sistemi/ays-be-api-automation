@@ -2,11 +2,7 @@ package org.ays.tests.institution.assignmentmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
-import org.ays.payload.Pagination;
-import org.ays.payload.PhoneNumber;
-import org.ays.payload.RequestBodyAssignments;
+import org.ays.payload.*;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
@@ -60,7 +56,7 @@ public class PostAssignmentsTest {
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidPhoneNumberFilter() {
         Assignment assignment = Assignment.generateCreateAssignment();
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentPhoneNumber(assignment.getPhoneNumber()));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentPhoneNumber(assignment.getPhoneNumber()));
         requestBodyAssignments.setPagination(Pagination.createPagination());
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
@@ -79,7 +75,7 @@ public class PostAssignmentsTest {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentPhoneNumber(phoneNumber));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentPhoneNumber(phoneNumber));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -93,7 +89,7 @@ public class PostAssignmentsTest {
     public void listAssignmentsWithValidStatusFilter() {
         Assignment.generateCreateAssignment();
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatus("AVAILABLE"));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentStatus("AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -108,7 +104,7 @@ public class PostAssignmentsTest {
     public void listAssignmentsWithInvalidStatus() {
         Assignment.generateCreateAssignment();
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatus("available", "ASSIGNED"));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentStatus("available", "ASSIGNED"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
@@ -118,7 +114,7 @@ public class PostAssignmentsTest {
     public void listAssignmentsWithValidStatusAndLineNumber() {
         Assignment assignment = Assignment.generateCreateAssignment();
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusAndLineNumber(assignment.getPhoneNumber().getLineNumber(), "AVAILABLE"));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentStatusAndLineNumber(assignment.getPhoneNumber().getLineNumber(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -134,7 +130,7 @@ public class PostAssignmentsTest {
     public void listAssignmentsWithValidStatusAndCountryCode() {
         Assignment assignment = Assignment.generateCreateAssignment();
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusAndCountryCOde(assignment.getPhoneNumber().getCountryCode(), "AVAILABLE"));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentStatusAndCountryCOde(assignment.getPhoneNumber().getCountryCode(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -151,7 +147,7 @@ public class PostAssignmentsTest {
     public void listAssignmentsWithValidStatusAndPhoneNumber() {
         Assignment assignment = Assignment.generateCreateAssignment();
         requestBodyAssignments.setPagination(Pagination.createPagination());
-        requestBodyAssignments.setFilter(Helper.createFilterWithAssignmentStatusPhoneNumber(assignment.getPhoneNumber(), "AVAILABLE"));
+        requestBodyAssignments.setFilter(FiltersForAssignments.generateCreateFilterWithAssignmentStatusPhoneNumber(assignment.getPhoneNumber(), "AVAILABLE"));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())

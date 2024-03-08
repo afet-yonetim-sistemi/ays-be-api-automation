@@ -31,7 +31,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Regression", "User"})
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
-        Token token = Helper.getUserToken(userCredentials);
+        Token token = Token.generateUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(token.getRefreshToken());
         UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);

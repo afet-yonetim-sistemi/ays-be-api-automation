@@ -5,7 +5,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
+import org.ays.payload.ApplicationRegistration;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -18,7 +18,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
     @Story("As a user I want to get detailed information about administrator registration applications summary when I use valid ID ")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIdSummaryPositive() {
-        String applicationID = Helper.getApplicationID();
+        String applicationID = ApplicationRegistration.generateApplicationID();
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
                 .statusCode(200)

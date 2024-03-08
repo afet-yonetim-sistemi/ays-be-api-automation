@@ -2,7 +2,6 @@ package org.ays.tests.auth.userAuthServiceTests;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.RefreshToken;
 import org.ays.payload.Token;
 import org.ays.payload.UserCredentials;
@@ -13,7 +12,7 @@ public class PostUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userInvalidateToken() {
         UserCredentials userCredentials = UserCredentials.generateCreate();
-        Token token = Helper.getUserToken(userCredentials);
+        Token token = Token.generateUserToken(userCredentials);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(token.getRefreshToken());
         Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), refreshToken);

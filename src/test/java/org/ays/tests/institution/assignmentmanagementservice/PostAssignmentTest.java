@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

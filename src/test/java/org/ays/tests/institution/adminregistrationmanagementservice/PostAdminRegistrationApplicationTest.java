@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.ApplicationRegistration;
-import org.ays.payload.Helper;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,7 +28,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
-        application = Helper.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generateApplicationRegistrationPayload();
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(successResponseSpec())
@@ -38,7 +37,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
-        application = Helper.generateApplicationRegistrationPayloadWithoutReason();
+        application = ApplicationRegistration.generateApplicationRegistrationPayloadWithoutReason();
         application.setReason(reason);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()
@@ -50,7 +49,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
-        application = Helper.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generateApplicationRegistrationPayload();
         application.setInstitutionId("invalidId");
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()
@@ -67,7 +66,7 @@ public class PostAdminRegistrationApplicationTest {
     @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
-        application = Helper.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generateApplicationRegistrationPayload();
         application.setInstitutionId(null);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()

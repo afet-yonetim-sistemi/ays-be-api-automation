@@ -2,7 +2,6 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.User;
 import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
