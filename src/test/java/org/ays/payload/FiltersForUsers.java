@@ -43,7 +43,7 @@ public class FiltersForUsers {
         return filters;
     }
 
-    public static FiltersForUsers generateCreateFilterWithAllUserFilters(PhoneNumber phoneNumber, String firstname, String lastname, String status, String supportStatus) {
+    public static FiltersForUsers generate(PhoneNumber phoneNumber, String firstname, String lastname, String status, String supportStatus) {
         FiltersForUsers filters = new FiltersForUsers();
         filters.setPhoneNumber(phoneNumber);
         filters.setFirstName(firstname);

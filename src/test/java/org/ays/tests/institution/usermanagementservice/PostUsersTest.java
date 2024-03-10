@@ -186,7 +186,7 @@ public class PostUsersTest {
     public void listUsersWithValidFiltersAndSort() {
         User user = User.generate();
         InstitutionEndpoints.createAUser(user);
-        requestBodyUsers.setFilter(FiltersForUsers.generateCreateFilterWithAllUserFilters(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
+        requestBodyUsers.setFilter(FiltersForUsers.generate(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
         requestBodyUsers.setSort(Sort.generate("createdAt", "ASC"));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
