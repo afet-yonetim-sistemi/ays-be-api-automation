@@ -19,10 +19,10 @@ public class RequestBodyAssignments {
         return requestBodyAssignments;
     }
 
-    public static RequestBodyAssignments generateRequestBodyAssignmentsWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+    public static RequestBodyAssignments generate(PhoneNumber phoneNumber) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
 
-        requestBodyAssignments.setPagination(Pagination.createPagination());
+        requestBodyAssignments.setPagination(Pagination.generateFirstPage());
         FiltersForAssignments filters = new FiltersForAssignments();
         filters.setPhoneNumber(phoneNumber);
         requestBodyAssignments.setFilter(filters);

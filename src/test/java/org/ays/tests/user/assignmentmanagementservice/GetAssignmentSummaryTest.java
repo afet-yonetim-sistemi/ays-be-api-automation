@@ -44,7 +44,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getReservedAssignmentSummary() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,7 +62,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentSummary() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -81,7 +81,7 @@ public class GetAssignmentSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentSummary() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

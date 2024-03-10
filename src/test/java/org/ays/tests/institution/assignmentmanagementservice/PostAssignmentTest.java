@@ -21,7 +21,7 @@ public class PostAssignmentTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setupData() {
-        assignment = Assignment.generateCreateAssignmentPayload();
+        assignment = Assignment.generate();
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})

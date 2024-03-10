@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class GetAdminTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidAdmin() {
-        AdminCredentials adminCredentials = AdminCredentials.generateIntsAdminCredentials();
+        AdminCredentials adminCredentials = AdminCredentials.generate();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())

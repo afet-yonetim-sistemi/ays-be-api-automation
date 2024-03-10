@@ -18,7 +18,7 @@ public class Assignment {
     private Double longitude;
 
     public static Assignment generateCreateAssignment() {
-        Assignment assignment = generateCreateAssignmentPayload();
+        Assignment assignment = generate();
         Response response = InstitutionEndpoints.createAnAssignment(assignment);
         if (response.getStatusCode() == 200) {
             return assignment;
@@ -27,11 +27,11 @@ public class Assignment {
         }
     }
 
-    public static Assignment generateCreateAssignmentPayload() {
+    public static Assignment generate() {
         Assignment assignment = new Assignment();
         assignment.setFirstName(AysRandomUtil.generateFirstName());
         assignment.setLastName(AysRandomUtil.generateLastName());
-        assignment.setPhoneNumber(PhoneNumber.generatePhoneNumber());
+        assignment.setPhoneNumber(PhoneNumber.generateForTurkey());
         assignment.setDescription(AysRandomUtil.generateDescription());
         assignment.setLatitude(AysRandomUtil.generateRandomCoordinate(38, 40));
         assignment.setLongitude(AysRandomUtil.generateRandomCoordinate(28, 43));

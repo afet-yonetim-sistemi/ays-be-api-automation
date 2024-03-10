@@ -23,7 +23,7 @@ public class PostAssignmentRejectTest {
     @BeforeClass(alwaysRun = true)
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         assignment = Assignment.generateCreateAssignment();
 
     }

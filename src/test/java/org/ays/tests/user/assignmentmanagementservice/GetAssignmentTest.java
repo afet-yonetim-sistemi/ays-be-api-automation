@@ -31,7 +31,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getAssignmentDetailsWhenUserHaveNoAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -47,7 +47,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getReservedAssignmentDetails() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.getAssignmentUser(userCredentials.getUsername(), userCredentials.getPassword());
@@ -64,7 +64,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getAssignedAssignmentDetails() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -88,7 +88,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getInProgressAssignmentDetails() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -113,7 +113,7 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "User"})
     public void getDoneAssignmentDetails() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

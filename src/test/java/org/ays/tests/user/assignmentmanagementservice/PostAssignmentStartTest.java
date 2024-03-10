@@ -30,7 +30,7 @@ public class PostAssignmentStartTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void startAssignedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -44,7 +44,7 @@ public class PostAssignmentStartTest {
 
     @Test(groups = {"Regression", "User"})
     public void startInProgressAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

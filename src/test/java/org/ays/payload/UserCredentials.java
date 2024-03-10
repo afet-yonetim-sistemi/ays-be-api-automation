@@ -13,7 +13,7 @@ public class UserCredentials {
     private String password;
 
     public static UserCredentials generateCreate() {
-        User user = User.generateUserPayload();
+        User user = User.generate();
         Response response = InstitutionEndpoints.createAUser(user);
         if (response.getStatusCode() == 200) {
             return response.then()

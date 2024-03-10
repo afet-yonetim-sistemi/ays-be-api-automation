@@ -11,7 +11,7 @@ public class PhoneNumber {
     private String countryCode;
     private String lineNumber;
 
-    public static PhoneNumber generatePhoneNumber() {
+    public static PhoneNumber generateForTurkey() {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setLineNumber(AysRandomUtil.generateLineNumber());
         phoneNumber.setCountryCode("90");

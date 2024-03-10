@@ -10,14 +10,14 @@ public class Pagination {
     private int page;
     private int pageSize;
 
-    public static Pagination createPagination() {
+    public static Pagination generateFirstPage() {
         Pagination pagination = new Pagination();
         pagination.setPage(1);
         pagination.setPageSize(10);
         return pagination;
     }
 
-    public static Pagination setPagination(int page, int pageSize) {
+    public static Pagination generate(int page, int pageSize) {
         Pagination pagination = new Pagination();
         pagination.setPageSize(pageSize);
         pagination.setPage(page);

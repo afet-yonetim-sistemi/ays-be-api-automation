@@ -28,7 +28,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
-        application = ApplicationRegistration.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generate();
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(successResponseSpec())
@@ -49,7 +49,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
-        application = ApplicationRegistration.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generate();
         application.setInstitutionId("invalidId");
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()
@@ -66,7 +66,7 @@ public class PostAdminRegistrationApplicationTest {
     @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
-        application = ApplicationRegistration.generateApplicationRegistrationPayload();
+        application = ApplicationRegistration.generate();
         application.setInstitutionId(null);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
         response.then()

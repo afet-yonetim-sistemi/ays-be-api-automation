@@ -13,9 +13,9 @@ public class RequestBodyUsers {
     private FiltersForUsers filter;
     private List<Sort> sort;
 
-    public static RequestBodyUsers generateCreateRequestBodyUsersWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+    public static RequestBodyUsers generate(PhoneNumber phoneNumber) {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPagination(Pagination.createPagination());
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         FiltersForUsers filters = new FiltersForUsers();
         filters.setPhoneNumber(phoneNumber);
         requestBodyUsers.setFilter(filters);

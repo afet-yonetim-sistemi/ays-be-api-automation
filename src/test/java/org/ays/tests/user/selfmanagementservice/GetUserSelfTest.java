@@ -20,7 +20,7 @@ public class GetUserSelfTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        user = User.generateUserPayload();
+        user = User.generate();
         userCredentials = UserCredentials.generateCreate(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
 

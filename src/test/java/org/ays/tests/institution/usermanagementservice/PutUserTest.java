@@ -16,7 +16,7 @@ public class PutUserTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        user = User.generateUserPayload();
+        user = User.generate();
         InstitutionEndpoints.createAUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }

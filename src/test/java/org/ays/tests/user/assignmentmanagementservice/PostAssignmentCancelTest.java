@@ -27,7 +27,7 @@ public class PostAssignmentCancelTest {
     public void setup() {
         userCredentials = UserCredentials.generateCreate();
         assignment = Assignment.generateCreateAssignment();
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
     }
 
     @Test(groups = {"Regression", "User"})
@@ -71,7 +71,7 @@ public class PostAssignmentCancelTest {
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -88,7 +88,7 @@ public class PostAssignmentCancelTest {
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -105,7 +105,7 @@ public class PostAssignmentCancelTest {
         Reason reason = new Reason();
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -127,7 +127,7 @@ public class PostAssignmentCancelTest {
         reason.setReason(reasonData);
         String status = Helper.createPayloadWithSupportStatus("READY");
         UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()

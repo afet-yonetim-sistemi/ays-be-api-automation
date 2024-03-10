@@ -30,7 +30,7 @@ public class PostAssignmentCompleteTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentCompleteWhenUserHasReservedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -47,7 +47,7 @@ public class PostAssignmentCompleteTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentComplete() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,7 +62,7 @@ public class PostAssignmentCompleteTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentCompleteNegative() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

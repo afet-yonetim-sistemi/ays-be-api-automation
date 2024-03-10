@@ -16,7 +16,7 @@ public class PostUserTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setupData() {
-        userPayload = User.generateUserPayload();
+        userPayload = User.generate();
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})

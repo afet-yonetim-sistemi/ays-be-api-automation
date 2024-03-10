@@ -81,14 +81,14 @@ public class AysRandomUtil {
         return false;
     }
 
-    public static double generateLatitude() {
+    public static double generateLatitudeForTurkey() {
         return 38 + (40 - 38) * RANDOM.nextDouble();
     }
     public static double generateLatitude(double minLat, double maxLat) {
         return minLat + (maxLat - minLat) * RANDOM.nextDouble();
     }
 
-    public static double generateLongitude() {
+    public static double generateLongitudeForTurkey() {
         return 28 + (43 - 28) * RANDOM.nextDouble();
     }
     public static double generateLongitude(double minLon, double maxLon) {

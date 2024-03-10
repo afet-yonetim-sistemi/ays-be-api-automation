@@ -30,7 +30,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithReservedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.updateLocation(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -45,7 +45,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithAssignedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -61,7 +61,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void updateLocationAfterStart() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

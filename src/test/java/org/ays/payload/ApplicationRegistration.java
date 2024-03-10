@@ -27,7 +27,7 @@ public class ApplicationRegistration {
         }
     }
 
-    public static ApplicationRegistration generateApplicationRegistrationPayload() {
+    public static ApplicationRegistration generate() {
         ApplicationRegistration application = new ApplicationRegistration();
         application.setInstitutionId(AysConfigurationProperty.InstitutionOne.ID);
         application.setReason(AysRandomUtil.generateReasonString());

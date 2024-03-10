@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class PostAdminInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminInvalidateToken() {
-        Token token = Token.generateAdminToken(AdminCredentials.generateIntsAdminCredentials());
+        Token token = Token.generateAdminToken(AdminCredentials.generate());
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(token.getRefreshToken());
         Response response = InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), refreshToken);

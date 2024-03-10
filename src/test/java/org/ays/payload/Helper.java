@@ -20,13 +20,13 @@ public class Helper {
 
 
     public static String extractAssignmentIdByPhoneNumber(PhoneNumber phoneNumber) {
-        Response response = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generateRequestBodyAssignmentsWithPhoneNumberFilter(phoneNumber));
+        Response response = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
         return response.jsonPath().getString("response.content[0].id");
 
     }
 
     public static String extractUserIdByPhoneNumber(PhoneNumber phoneNumber) {
-        Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generateCreateRequestBodyUsersWithPhoneNumberFilter(phoneNumber));
+        Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         return response.jsonPath().getString("response.content[0].id");
     }
 
