@@ -8,7 +8,7 @@ import lombok.Setter;
 public class RequestBodyAssignments {
 
     private Pagination pagination;
-    private FiltersForAssignments filter;
+    private AssignmentsFilter filter;
 
     public static RequestBodyAssignments generateRequestBodyAssignments(int page, int pageSize) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
@@ -21,9 +21,8 @@ public class RequestBodyAssignments {
 
     public static RequestBodyAssignments generate(PhoneNumber phoneNumber) {
         RequestBodyAssignments requestBodyAssignments = new RequestBodyAssignments();
-
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        FiltersForAssignments filters = new FiltersForAssignments();
+        AssignmentsFilter filters = new AssignmentsFilter();
         filters.setPhoneNumber(phoneNumber);
         requestBodyAssignments.setFilter(filters);
         return requestBodyAssignments;

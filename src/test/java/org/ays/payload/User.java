@@ -24,7 +24,6 @@ public class User {
     private Institution institution;
 
     public static User generate() {
-
         User user = new User();
         user.setFirstName(AysRandomUtil.generateFirstName());
         user.setLastName(AysRandomUtil.generateLastName());

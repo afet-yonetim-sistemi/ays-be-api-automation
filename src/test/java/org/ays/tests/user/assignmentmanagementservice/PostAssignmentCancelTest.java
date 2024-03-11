@@ -2,6 +2,7 @@ package org.ays.tests.user.assignmentmanagementservice;
 
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
@@ -25,8 +26,8 @@ public class PostAssignmentCancelTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = UserCredentials.generateCreate();
-        assignment = Assignment.generateCreateAssignment();
+        userCredentials = InstitutionEndpoints.generateANewUser();
+        assignment = InstitutionEndpoints.generateANewAssignment();
         location = Location.generateForTurkey();
     }
 

@@ -19,7 +19,7 @@ public class GetAssignmentTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        assignment = Assignment.generateCreateAssignment();
+        assignment = InstitutionEndpoints.generateANewAssignment();
         assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
     }
 

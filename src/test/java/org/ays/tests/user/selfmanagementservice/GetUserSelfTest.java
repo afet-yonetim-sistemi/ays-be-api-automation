@@ -21,7 +21,7 @@ public class GetUserSelfTest {
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         user = User.generate();
-        userCredentials = UserCredentials.generateCreate(user);
+        userCredentials = InstitutionEndpoints.generateANewUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
 
     }

@@ -1,31 +1,18 @@
 package org.ays.payload;
 
-import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
 public class Assignment {
-
     private String description;
     private String firstName;
     private String lastName;
     private PhoneNumber phoneNumber;
     private Double latitude;
     private Double longitude;
-
-    public static Assignment generateCreateAssignment() {
-        Assignment assignment = generate();
-        Response response = InstitutionEndpoints.createAnAssignment(assignment);
-        if (response.getStatusCode() == 200) {
-            return assignment;
-        } else {
-            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
-        }
-    }
 
     public static Assignment generate() {
         Assignment assignment = new Assignment();

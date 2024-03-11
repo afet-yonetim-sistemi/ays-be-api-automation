@@ -1,6 +1,7 @@
 package org.ays.tests.user.assignmentmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
 import org.ays.payload.Helper;
@@ -21,9 +22,9 @@ public class PostAssignmentApproveTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        userCredentials = UserCredentials.generateCreate();
+        userCredentials = InstitutionEndpoints.generateANewUser();
         location = new Location();
-        assignment = Assignment.generateCreateAssignment();
+        assignment = InstitutionEndpoints.generateANewAssignment();
 
     }
 

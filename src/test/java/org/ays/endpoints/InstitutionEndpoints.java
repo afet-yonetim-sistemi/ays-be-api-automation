@@ -2,6 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.payload.AdminsPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Assignment;
 import org.ays.payload.RejectReason;
@@ -9,6 +10,9 @@ import org.ays.payload.RequestBodyAssignments;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
+import org.ays.payload.UserCredentials;
+import org.ays.utility.AysConfigurationProperty;
+import org.ays.utility.AysRandomUtil;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
@@ -16,12 +20,12 @@ import java.util.Map;
 @UtilityClass
 public class InstitutionEndpoints {
 
-    public static Response listAdmins(String pagination) {
+    public static Response listAdmins(AdminsPayload adminsPayload) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admins")
-                .body(pagination)
+                .body(adminsPayload)
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
@@ -235,6 +239,47 @@ public class InstitutionEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static String generateApplicationID() {
+        ApplicationRegistration applicationRegistration = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
+        Response response = postRegistrationAdminApplication(applicationRegistration);
+        if (response.getStatusCode() == 200) {
+            return response.then().extract().jsonPath().getString("response.id");
+        } else {
+            throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
+    public static UserCredentials generateANewUser() {
+        User user = User.generate();
+        Response response = createAUser(user);
+        if (response.getStatusCode() == 200) {
+            return response.then()
+                    .extract().jsonPath().getObject("response", UserCredentials.class);
+        } else {
+            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
+    public static UserCredentials generateANewUser(User userPayload) {
+        Response response = createAUser(userPayload);
+        if (response.getStatusCode() == 200) {
+            return response.then()
+                    .extract().jsonPath().getObject("response", UserCredentials.class);
+        } else {
+            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
+    public static Assignment generateANewAssignment() {
+        Assignment assignment = Assignment.generate();
+        Response response = createAnAssignment(assignment);
+        if (response.getStatusCode() == 200) {
+            return assignment;
+        } else {
+            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
+        }
     }
 
 }
