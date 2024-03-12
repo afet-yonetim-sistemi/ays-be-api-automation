@@ -12,9 +12,11 @@ import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.either;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 
@@ -61,14 +63,14 @@ public class PostAssignmentsTest {
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidPhoneNumberFilter() {
         Assignment assignment = InstitutionEndpoints.generateANewAssignment();
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(assignment.getPhoneNumber().getLineNumber(), assignment.getPhoneNumber().getCountryCode()));
+        requestBodyAssignments.setFilter(AssignmentsFilter.generate(assignment.getPhoneNumber(), null));
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectAssignmentDetailsInContent())
                 .spec(AysResponseSpecs.expectDefaultListingDetails())
-                .body("response.filteredBy.statuses", empty())
+                .body("response.filteredBy.statuses", equalTo(null))
                 .body("response.filteredBy.phoneNumber.countryCode", equalTo(assignment.getPhoneNumber().getCountryCode()))
                 .body("response.filteredBy.phoneNumber.lineNumber", equalTo(assignment.getPhoneNumber().getLineNumber()));
 
@@ -80,7 +82,7 @@ public class PostAssignmentsTest {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(phoneNumber.getLineNumber(), phoneNumber.getCountryCode()));
+        requestBodyAssignments.setFilter(AssignmentsFilter.generate(phoneNumber, null));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -93,8 +95,10 @@ public class PostAssignmentsTest {
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusFilter() {
         InstitutionEndpoints.generateANewAssignment();
+        List<String> statuses = new ArrayList<>();
+        statuses.add("AVAILABLE");
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(null, null, "AVAILABLE"));
+        requestBodyAssignments.setFilter(AssignmentsFilter.generate(null, statuses));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -109,51 +113,23 @@ public class PostAssignmentsTest {
     @Test(groups = {"Regression", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithInvalidStatus() {
         InstitutionEndpoints.generateANewAssignment();
+        List<String> statuses = new ArrayList<>();
+        statuses.add("available");
+        statuses.add("ASSIGNED");
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(null, null, "available", "ASSIGNED"));
+        requestBodyAssignments.setFilter(AssignmentsFilter.generate(null, statuses));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
     @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
-    public void listAssignmentsWithValidStatusAndLineNumber() {
-        Assignment assignment = InstitutionEndpoints.generateANewAssignment();
-        requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(assignment.getPhoneNumber().getLineNumber(), null, "AVAILABLE"));
-        Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
-        response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectAssignmentDetailsInContent())
-                .spec(AysResponseSpecs.expectDefaultListingDetails())
-                .body("response.filteredBy.statuses", hasItem("AVAILABLE"))
-                .body("response.filteredBy.phoneNumber.lineNumber", equalTo(assignment.getPhoneNumber().getLineNumber()))
-                .body("response.filteredBy.phoneNumber.countryCode", equalTo(null));
-
-    }
-
-    @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
-    public void listAssignmentsWithValidStatusAndCountryCode() {
-        Assignment assignment = InstitutionEndpoints.generateANewAssignment();
-        requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(null, assignment.getPhoneNumber().getCountryCode(), "AVAILABLE"));
-        Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
-        response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectAssignmentDetailsInContent())
-                .spec(AysResponseSpecs.expectDefaultListingDetails())
-                .body("response.sortedBy", equalTo(null))
-                .body("response.filteredBy.statuses", hasItem("AVAILABLE"))
-                .body("response.filteredBy.phoneNumber.lineNumber", equalTo(null))
-                .body("response.filteredBy.phoneNumber.countryCode", equalTo(assignment.getPhoneNumber().getCountryCode()));
-
-    }
-
-    @Test(groups = {"Regression", "Smoke", "Institution"}, description = "Prior to executing this method, an assignment is created to prevent failures in case no user is associated with the institution.")
     public void listAssignmentsWithValidStatusAndPhoneNumber() {
         Assignment assignment = InstitutionEndpoints.generateANewAssignment();
+        List<String> statuses = new ArrayList<>();
+        statuses.add("AVAILABLE");
         requestBodyAssignments.setPagination(Pagination.generateFirstPage());
-        requestBodyAssignments.setFilter(AssignmentsFilter.generate(assignment.getPhoneNumber().getLineNumber(), assignment.getPhoneNumber().getCountryCode(), "AVAILABLE"));
+        requestBodyAssignments.setFilter(AssignmentsFilter.generate(assignment.getPhoneNumber(), statuses));
         Response response = InstitutionEndpoints.listAssignments(requestBodyAssignments);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())

@@ -2,7 +2,7 @@ package org.ays.tests.institution.adminmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.AdminsPayload;
+import org.ays.payload.AdminsListPayload;
 import org.ays.payload.Pagination;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
@@ -29,7 +29,7 @@ public class PostAdminsTest {
     public void listAdminsWithValidPageAndPageSize(int page, int pageSize) {
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
-        Response response = InstitutionEndpoints.listAdmins(AdminsPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectDefaultListingDetails());
@@ -55,7 +55,7 @@ public class PostAdminsTest {
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageValue() {
         pagination.setPageSize(10);
-        Response response = InstitutionEndpoints.listAdmins(AdminsPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -66,7 +66,7 @@ public class PostAdminsTest {
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageSizeValue() {
         pagination.setPage(1);
-        Response response = InstitutionEndpoints.listAdmins(AdminsPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -76,7 +76,7 @@ public class PostAdminsTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageAndPageSizeFields() {
-        Response response = InstitutionEndpoints.listAdmins(AdminsPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -91,7 +91,7 @@ public class PostAdminsTest {
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
-        Response response = InstitutionEndpoints.listAdmins(AdminsPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))

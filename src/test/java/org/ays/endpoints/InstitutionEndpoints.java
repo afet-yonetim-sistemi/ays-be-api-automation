@@ -2,7 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.AdminsPayload;
+import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Assignment;
 import org.ays.payload.RejectReason;
@@ -20,12 +20,12 @@ import java.util.Map;
 @UtilityClass
 public class InstitutionEndpoints {
 
-    public static Response listAdmins(AdminsPayload adminsPayload) {
+    public static Response listAdmins(AdminsListPayload adminsListPayload) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admins")
-                .body(adminsPayload)
+                .body(adminsListPayload)
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 

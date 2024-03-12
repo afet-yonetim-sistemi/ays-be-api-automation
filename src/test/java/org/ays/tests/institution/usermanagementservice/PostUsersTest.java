@@ -14,6 +14,9 @@ import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -107,7 +110,9 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidStatusFilter() {
         InstitutionEndpoints.generateANewUser();
-        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, "ACTIVE", null));
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, statuses, null));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
@@ -122,7 +127,9 @@ public class PostUsersTest {
     @Test(groups = {"Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidStatusFilter() {
         InstitutionEndpoints.generateANewUser();
-        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, "ACT", null));
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACT");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, statuses, null));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
@@ -132,7 +139,9 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidSupportStatusFilter() {
         InstitutionEndpoints.generateANewUser();
-        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, "IDLE"));
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("IDLE");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, supportStatuses));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
@@ -146,7 +155,9 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listUsersWithInvalidSupportStatusFilter() {
-        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, "Ready"));
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("Ready");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, supportStatuses));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
@@ -189,8 +200,12 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidFiltersAndSort() {
         User user = User.generate();
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("IDLE");
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
         InstitutionEndpoints.createAUser(user);
-        requestBodyUsers.setFilter(UsersFilter.generate(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
+        requestBodyUsers.setFilter(UsersFilter.generate(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), statuses, supportStatuses));
         requestBodyUsers.setSort(Sort.generate("createdAt", "ASC"));
         requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
