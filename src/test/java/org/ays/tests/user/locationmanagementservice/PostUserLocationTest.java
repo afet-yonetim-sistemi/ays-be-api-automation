@@ -3,9 +3,10 @@ package org.ays.tests.user.locationmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,7 +32,11 @@ public class PostUserLocationTest {
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithReservedAssignment() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.updateLocation(location, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -46,7 +51,11 @@ public class PostUserLocationTest {
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithAssignedAssignment() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.updateLocation(location, userCredentials.getUsername(), userCredentials.getPassword());
@@ -62,7 +71,11 @@ public class PostUserLocationTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void updateLocationAfterStart() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -77,7 +90,11 @@ public class PostUserLocationTest {
     @Test(groups = {"Regression", "User"}, dataProvider = "invalidLongitudeValues")
     public void updateLocationWithInValidLongitude(Double invalidLongitude, String errorMessage) {
         location = Location.generate(75.0, invalidLongitude);
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -110,7 +127,11 @@ public class PostUserLocationTest {
     @Test(groups = {"Regression", "User"}, dataProvider = "invalidLatitudeValues")
     public void updateLocationWithInValidLatitude(Double invalidLatitude, String errorMessage) {
         location = Location.generate(invalidLatitude, 95.0);
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());

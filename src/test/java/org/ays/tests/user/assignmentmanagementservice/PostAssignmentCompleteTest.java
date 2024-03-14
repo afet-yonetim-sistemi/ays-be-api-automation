@@ -3,9 +3,10 @@ package org.ays.tests.user.assignmentmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,12 @@ public class PostAssignmentCompleteTest {
     @Test(groups = {"Regression", "User"})
     public void assignmentCompleteWhenUserHasReservedAssignment() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.completeAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -48,7 +54,12 @@ public class PostAssignmentCompleteTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentComplete() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -63,7 +74,12 @@ public class PostAssignmentCompleteTest {
     @Test(groups = {"Regression", "User"})
     public void assignmentCompleteNegative() {
         location = Location.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());

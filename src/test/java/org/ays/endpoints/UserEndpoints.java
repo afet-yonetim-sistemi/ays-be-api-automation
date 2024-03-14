@@ -4,11 +4,13 @@ import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.Location;
 import org.ays.payload.Reason;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 @UtilityClass
 public class UserEndpoints {
-    public static Response updateSupportStatus(String payload, String username, String password) {
+
+    public static Response updateSupportStatus(UserSupportStatusUpdatePayload payload, String username, String password) {
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user-self/status/support")

@@ -4,10 +4,11 @@ package org.ays.tests.user.assignmentmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.Reason;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -49,8 +50,12 @@ public class PostAssignmentCancelTest {
     public void cancelAssignmentAsReserved() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-        String status = Helper.createPayloadWithSupportStatus("READY");
-        UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.getAssignmentSummaryUser(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -69,8 +74,12 @@ public class PostAssignmentCancelTest {
     public void cancelAssignmentPositiveAssigned() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-        String status = Helper.createPayloadWithSupportStatus("READY");
-        UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -86,8 +95,12 @@ public class PostAssignmentCancelTest {
     public void cancelAssignmentPositiveInProgress() {
         Reason reason = new Reason();
         reason.setReason("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-        String status = Helper.createPayloadWithSupportStatus("READY");
-        UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -103,8 +116,12 @@ public class PostAssignmentCancelTest {
     @Test(groups = {"Regression", "User"})
     public void cancelAssignmentWithNullReasonField() {
         Reason reason = new Reason();
-        String status = Helper.createPayloadWithSupportStatus("READY");
-        UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
@@ -125,8 +142,12 @@ public class PostAssignmentCancelTest {
     public void cancelAssignmentWithInvalidReason(String reasonData) {
         Reason reason = new Reason();
         reason.setReason(reasonData);
-        String status = Helper.createPayloadWithSupportStatus("READY");
-        UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());

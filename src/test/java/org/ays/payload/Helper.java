@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.endpoints.UserEndpoints;
 
 import java.util.List;
 import java.util.Map;
@@ -28,17 +27,6 @@ public class Helper {
     public static String extractUserIdByPhoneNumber(PhoneNumber phoneNumber) {
         Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generateCreateRequestBodyUsersWithPhoneNumberFilter(phoneNumber));
         return response.jsonPath().getString("response.content[0].id");
-    }
-
-    public static void setSupportStatus(String status, String username, String password) {
-        String payload = createPayloadWithSupportStatus(status);
-        UserEndpoints.updateSupportStatus(payload, username, password);
-    }
-
-    public static String createPayloadWithSupportStatus(String supportStatus) {
-        return "{\n" +
-                "    \"supportStatus\": \"" + supportStatus + "\"\n" +
-                "}";
     }
 
     public static String getAdminRefreshToken(AdminCredentials adminCredentials) {

@@ -3,14 +3,14 @@ package org.ays.tests.user.selfmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.ays.payload.Helper.createPayloadWithSupportStatus;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -29,8 +29,13 @@ public class PutUserSelfStatusSupportTest {
 
     @Test(groups = {"Smoke", "Regression", "User"}, dataProvider = "statusTransitions")
     public void updateSupportStatus(String fromStatus, String toStatus) {
-        String payload = createPayloadWithSupportStatus(toStatus);
-        Response response = UserEndpoints.updateSupportStatus(payload, userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserSupportStatus userSupportStatus = UserSupportStatus.valueOf(toStatus);
+        Response response = UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(userSupportStatus),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         response.then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -54,10 +59,19 @@ public class PutUserSelfStatusSupportTest {
 
     @Test()
     public void updateSupportStatusAfterReserveAnAssignment() {
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
-        String status = Helper.createPayloadWithSupportStatus("IDLE");
-        Response response = UserEndpoints.updateSupportStatus(status, userCredentials.getUsername(), userCredentials.getPassword());
+
+        Response response = UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.IDLE),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         response.then()
                 .statusCode(409)
                 .body("time", notNullValue())
