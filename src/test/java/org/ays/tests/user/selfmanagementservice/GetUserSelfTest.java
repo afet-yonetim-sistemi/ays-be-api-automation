@@ -19,7 +19,7 @@ public class GetUserSelfTest {
         User user = User.generate();
         userCredentials = InstitutionEndpoints.generateANewUser(user);
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = user.getPhoneNumber();
         Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID =  userIDResponse.jsonPath().getString("response.content[0].id");
 
@@ -48,7 +48,7 @@ public class GetUserSelfTest {
         User user = User.generate();
         userCredentials = InstitutionEndpoints.generateANewUser(user);
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = user.getPhoneNumber();
         Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID =  userIDResponse.jsonPath().getString("response.content[0].id");
 

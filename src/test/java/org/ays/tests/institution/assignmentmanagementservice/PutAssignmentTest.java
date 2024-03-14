@@ -16,7 +16,7 @@ public class PutAssignmentTest {
     public void updateAssignmentFirstname() {
         Assignment assignment = InstitutionEndpoints.generateANewAssignment();
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
         Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
         String assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
 

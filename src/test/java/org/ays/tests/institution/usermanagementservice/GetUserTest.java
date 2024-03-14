@@ -17,7 +17,7 @@ public class GetUserTest {
         User user = User.generate();
         InstitutionEndpoints.createAUser(user);
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = user.getPhoneNumber();
         Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID =  userIDResponse.jsonPath().getString("response.content[0].id");
 

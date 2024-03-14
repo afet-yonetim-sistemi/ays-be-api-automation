@@ -21,7 +21,7 @@ public class GetAssignmentTest {
     public void getAssignmentPositive() {
         assignment = InstitutionEndpoints.generateANewAssignment();
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
         Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
         assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
 
@@ -50,7 +50,7 @@ public class GetAssignmentTest {
     public void getAssignmentAfterDelete() {
         assignment = InstitutionEndpoints.generateANewAssignment();
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
         Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
         assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
 

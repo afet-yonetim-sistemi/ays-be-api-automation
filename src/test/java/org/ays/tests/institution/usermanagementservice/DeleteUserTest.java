@@ -18,7 +18,7 @@ public class DeleteUserTest {
         User user = User.generate();
         InstitutionEndpoints.createAUser(user);
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = user.getPhoneNumber();
         Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID =  response.jsonPath().getString("response.content[0].id");
 
@@ -42,7 +42,7 @@ public class DeleteUserTest {
         User user = User.generate();
         InstitutionEndpoints.createAUser(user);
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        PhoneNumber phoneNumber = user.getPhoneNumber();
         Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID =  userIDResponse.jsonPath().getString("response.content[0].id");
 

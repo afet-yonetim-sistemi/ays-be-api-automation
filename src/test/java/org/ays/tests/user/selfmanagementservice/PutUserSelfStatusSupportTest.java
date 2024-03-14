@@ -29,7 +29,7 @@ public class PutUserSelfStatusSupportTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "User"}, dataProvider = "statusTransitions")
-    public void updateSupportStatus(String fromStatus, String toStatus) {
+    public void updateSupportStatus(String toStatus) {
 
         UserSupportStatus userSupportStatus = UserSupportStatus.valueOf(toStatus);
         Response response = UserEndpoints.updateSupportStatus(
