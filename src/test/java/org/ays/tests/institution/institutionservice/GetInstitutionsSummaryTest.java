@@ -2,7 +2,6 @@ package org.ays.tests.institution.institutionservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
@@ -17,7 +16,7 @@ public class GetInstitutionsSummaryTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        if (Helper.extractResponseAsList(response).isEmpty()) {
+        if (response.jsonPath().getList("response").isEmpty()) {
             AysLogUtil.info("There are no institutions");
         } else {
             response.then()

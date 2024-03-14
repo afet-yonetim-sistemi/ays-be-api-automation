@@ -1,16 +1,12 @@
 package org.ays.payload;
 
 
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
-
-import java.util.List;
-import java.util.Map;
 
 
 @UtilityClass
@@ -39,10 +35,4 @@ public class Helper {
         return response.jsonPath().getString("response.refreshToken");
     }
 
-    public static List<Map<String, String>> extractResponseAsList(Response response) {
-        JsonPath jsonPath = response.jsonPath();
-        return jsonPath.getList("response");
-    }
-
 }
-
