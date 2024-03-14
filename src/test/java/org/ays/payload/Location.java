@@ -24,12 +24,10 @@ public class Location {
         return Location.generate(latitude,longitude);
     }
 
-    public static Location generateLocationTR() {
-        double latitude = AysRandomUtil.generateLatitude();
-        double longitude = AysRandomUtil.generateLongitude();
+    public static Location generateForTurkey() {
         Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
+        location.setLatitude(AysRandomUtil.generateLatitudeForTurkey());
+        location.setLongitude(AysRandomUtil.generateLongitudeForTurkey());
         return location;
     }
 

@@ -23,13 +23,12 @@ public class User {
     private String supportStatus;
     private Institution institution;
 
-    public static User generateUserPayload() {
-
-        User userPayload = new User();
-        userPayload.setFirstName(AysRandomUtil.generateFirstName());
-        userPayload.setLastName(AysRandomUtil.generateLastName());
-        userPayload.setPhoneNumber(PhoneNumber.generatePhoneNumber());
-        return userPayload;
+    public static User generate() {
+        User user = new User();
+        user.setFirstName(AysRandomUtil.generateFirstName());
+        user.setLastName(AysRandomUtil.generateLastName());
+        user.setPhoneNumber(PhoneNumber.generateForTurkey());
+        return user;
     }
 
 }

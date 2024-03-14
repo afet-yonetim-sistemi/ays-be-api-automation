@@ -13,7 +13,7 @@ public class PostAdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminTokenRefresh() {
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
-        tokenRefreshPayload.setRefreshToken(Helper.getAdminRefreshToken(AdminCredentials.generateIntsAdminCredentials()));
+        tokenRefreshPayload.setRefreshToken(Helper.getAdminRefreshToken(AdminCredentials.generate()));
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -21,7 +21,7 @@ public class PostAdminTokenRefreshTest {
     }
     @Test(groups = {"Regression", "Institution"})
     public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
-        Token token = Token.generateAdminToken(AdminCredentials.generateIntsAdminCredentials());
+        Token token = Token.generateAdminToken(AdminCredentials.generate());
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
         InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), tokenRefreshPayload);

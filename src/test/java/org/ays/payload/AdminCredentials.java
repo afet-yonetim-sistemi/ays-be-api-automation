@@ -11,7 +11,7 @@ public class AdminCredentials {
     private String username;
     private String password;
 
-    public static AdminCredentials generateIntsAdminCredentials() {
+    public static AdminCredentials generate() {
         AdminCredentials adminCredentials = new AdminCredentials();
         adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);

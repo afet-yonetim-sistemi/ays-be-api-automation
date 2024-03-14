@@ -7,7 +7,6 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.RejectReason;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
@@ -24,7 +23,7 @@ public class PostAdminRegistrationApplicationRejectTest {
 
     @BeforeMethod(alwaysRun = true)
     void setup() {
-        applicationID = ApplicationRegistration.generateApplicationID();
+        applicationID = InstitutionEndpoints.generateApplicationID();
         reason = new RejectReason();
     }
 

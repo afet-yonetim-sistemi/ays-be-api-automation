@@ -1,6 +1,7 @@
 package org.ays.tests.user.assignmentmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
 import org.ays.payload.Location;
@@ -22,15 +23,15 @@ public class PostAssignmentApproveTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        userCredentials = UserCredentials.generateCreate();
+        userCredentials = InstitutionEndpoints.generateANewUser();
         location = new Location();
-        assignment = Assignment.generateCreateAssignment();
+        assignment = InstitutionEndpoints.generateANewAssignment();
 
     }
 
     @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasNoReservedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
 
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
@@ -49,7 +50,7 @@ public class PostAssignmentApproveTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentApprove() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
 
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
@@ -67,7 +68,7 @@ public class PostAssignmentApproveTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasAssignedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
 
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),

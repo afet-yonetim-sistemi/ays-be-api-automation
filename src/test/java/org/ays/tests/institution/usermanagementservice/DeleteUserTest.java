@@ -15,7 +15,7 @@ public class DeleteUserTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        User user = User.generateUserPayload();
+        User user = User.generate();
         InstitutionEndpoints.createAUser(user);
         userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
     }

@@ -37,7 +37,7 @@
             <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"/>
             <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest"/>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest"/>

@@ -8,15 +8,14 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestBodyUsers {
-
     private Pagination pagination;
-    private FiltersForUsers filter;
+    private UsersFilter filter;
     private List<Sort> sort;
 
-    public static RequestBodyUsers generateCreateRequestBodyUsersWithPhoneNumberFilter(PhoneNumber phoneNumber) {
+    public static RequestBodyUsers generate(PhoneNumber phoneNumber) {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPagination(Pagination.createPagination());
-        FiltersForUsers filters = new FiltersForUsers();
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
+        UsersFilter filters = new UsersFilter();
         filters.setPhoneNumber(phoneNumber);
         requestBodyUsers.setFilter(filters);
         return requestBodyUsers;

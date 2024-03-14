@@ -2,6 +2,7 @@ package org.ays.tests.user.assignmentmanagementservice;
 
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
 import org.ays.payload.Location;
@@ -26,9 +27,9 @@ public class PostAssignmentCancelTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = UserCredentials.generateCreate();
-        assignment = Assignment.generateCreateAssignment();
-        location = Location.generateLocationTR();
+        userCredentials = InstitutionEndpoints.generateANewUser();
+        assignment = InstitutionEndpoints.generateANewAssignment();
+        location = Location.generateForTurkey();
     }
 
     @Test(groups = {"Regression", "User"})
@@ -80,7 +81,7 @@ public class PostAssignmentCancelTest {
                 userCredentials.getUsername(),
                 userCredentials.getPassword()
         );
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -101,7 +102,7 @@ public class PostAssignmentCancelTest {
                 userCredentials.getUsername(),
                 userCredentials.getPassword()
         );
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -122,7 +123,7 @@ public class PostAssignmentCancelTest {
                 userCredentials.getUsername(),
                 userCredentials.getPassword()
         );
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.startAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
@@ -148,7 +149,7 @@ public class PostAssignmentCancelTest {
                 userCredentials.getUsername(),
                 userCredentials.getPassword()
         );
-        UserEndpoints.searchAssignment(Location.generateLocationTR(), userCredentials.getUsername(), userCredentials.getPassword());
+        UserEndpoints.searchAssignment(Location.generateForTurkey(), userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.cancelAssignment(reason, userCredentials.getUsername(), userCredentials.getPassword());
         response.then()

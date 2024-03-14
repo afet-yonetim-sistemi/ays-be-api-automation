@@ -13,7 +13,7 @@ public class Sort {
     private String property;
     private String direction;
 
-    public static List<Sort> generateCreateSortBody(String property, String direction) {
+    public static List<Sort> generate(String property, String direction) {
         Sort sort = new Sort();
         sort.setDirection(direction);
         sort.setProperty(property);

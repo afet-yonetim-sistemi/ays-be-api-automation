@@ -1,6 +1,7 @@
 package org.ays.tests.user.locationmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
 import org.ays.payload.Location;
@@ -23,15 +24,15 @@ public class PostUserLocationTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = UserCredentials.generateCreate();
+        userCredentials = InstitutionEndpoints.generateANewUser();
         location = new Location();
-        assignment = Assignment.generateCreateAssignment();
+        assignment = InstitutionEndpoints.generateANewAssignment();
 
     }
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithReservedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
                 userCredentials.getUsername(),
@@ -50,7 +51,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Regression", "User"})
     public void updateLocationWithAssignedAssignment() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
                 userCredentials.getUsername(),
@@ -70,7 +71,7 @@ public class PostUserLocationTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void updateLocationAfterStart() {
-        location = Location.generateLocationTR();
+        location = Location.generateForTurkey();
         UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
                 userCredentials.getUsername(),
