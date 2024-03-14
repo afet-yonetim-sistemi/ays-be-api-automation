@@ -1,7 +1,6 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
-import org.ays.payload.Helper;
 
 @UtilityClass
 public class DataProvider {

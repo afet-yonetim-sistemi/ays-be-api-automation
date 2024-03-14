@@ -3,7 +3,6 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.payload.AdminCredentials;
-import org.ays.payload.Helper;
 import org.ays.payload.Token;
 import org.ays.payload.TokenRefreshPayload;
 import org.ays.utility.AysResponseSpecs;
