@@ -1,8 +1,8 @@
 package org.ays.tests.auth.userAuthServiceTests;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
@@ -13,7 +13,7 @@ public class GetUserTokenTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
+        userCredentials = InstitutionEndpoints.generateANewUser();
     }
 
     @Test(groups = {"Smoke", "Regression", "User"})

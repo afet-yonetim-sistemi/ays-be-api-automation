@@ -3,8 +3,8 @@ package org.ays.tests.institution.assignmentmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
-import org.testng.annotations.BeforeMethod;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyAssignments;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.anyOf;
@@ -17,14 +17,14 @@ public class GetAssignmentTest {
     Assignment assignment = new Assignment();
     String assignmentId;
 
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        assignment = Helper.createANewAssignment();
-        assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
-    }
-
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getAssignmentPositive() {
+        assignment = InstitutionEndpoints.generateANewAssignment();
+
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
+        Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
+        assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
+
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()
                 .log().body()
@@ -48,6 +48,12 @@ public class GetAssignmentTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getAssignmentAfterDelete() {
+        assignment = InstitutionEndpoints.generateANewAssignment();
+
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
+        Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
+        assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
+
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.getAssignment(assignmentId);
         response.then()

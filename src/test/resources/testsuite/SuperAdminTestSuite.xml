@@ -8,7 +8,7 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIDTest"/>
+            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"/>

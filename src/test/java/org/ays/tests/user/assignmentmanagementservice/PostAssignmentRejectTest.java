@@ -1,11 +1,13 @@
 package org.ays.tests.user.assignmentmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -22,15 +24,20 @@ public class PostAssignmentRejectTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
-        location = Helper.generateLocationTR();
-        assignment = Helper.createANewAssignment();
+        userCredentials = InstitutionEndpoints.generateANewUser();
+        location = Location.generateForTurkey();
+        assignment = InstitutionEndpoints.generateANewAssignment();
 
     }
 
     @Test(groups = {"Regression", "User"})
     public void rejectAssignmentBeforeSearch() {
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         Response response = UserEndpoints.rejectAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
@@ -46,7 +53,12 @@ public class PostAssignmentRejectTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void rejectAssignmentAfterSearch() {
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.rejectAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -58,7 +70,12 @@ public class PostAssignmentRejectTest {
 
     @Test(groups = {"Regression", "User"})
     public void rejectInProgressAssignment() {
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.rejectAssignment(userCredentials.getUsername(), userCredentials.getPassword());

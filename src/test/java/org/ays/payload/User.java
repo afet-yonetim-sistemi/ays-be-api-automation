@@ -2,6 +2,7 @@ package org.ays.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
@@ -21,5 +22,13 @@ public class User {
     private PhoneNumber phoneNumber;
     private String supportStatus;
     private Institution institution;
+
+    public static User generate() {
+        User user = new User();
+        user.setFirstName(AysRandomUtil.generateFirstName());
+        user.setLastName(AysRandomUtil.generateLastName());
+        user.setPhoneNumber(PhoneNumber.generateForTurkey());
+        return user;
+    }
 
 }

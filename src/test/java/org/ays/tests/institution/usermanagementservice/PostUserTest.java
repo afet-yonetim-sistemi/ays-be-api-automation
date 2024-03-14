@@ -2,8 +2,8 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.User;
+import org.ays.utility.AysRandomUtil;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,7 +16,7 @@ public class PostUserTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setupData() {
-        userPayload = Helper.createUserPayload();
+        userPayload = User.generate();
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
@@ -98,11 +98,11 @@ public class PostUserTest {
     @DataProvider(name = "lineNumberData")
     public Object[][] lineNumberData() {
         return new Object[][]{
-                {Helper.generateInvalidLineNumber()},
-                {Helper.generateLineNumber() + "*"},
+                {AysRandomUtil.generateInvalidLineNumber()},
+                {AysRandomUtil.generateLineNumber() + "*"},
                 {""}, {"          "},
                 {null},
-                {Helper.generateLineNumber() + "a"}
+                {AysRandomUtil.generateLineNumber() + "a"}
         };
 
     }

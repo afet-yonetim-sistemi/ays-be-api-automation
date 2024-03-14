@@ -5,20 +5,19 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GetAdminRegistrationApplicationIDTest {
+public class GetAdminRegistrationApplicationTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to get detailed information about administrator registration applications when I use valid ID")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIDPositive() {
-        String applicationID = Helper.getApplicationId();
-        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationID);
+        String applicationId = InstitutionEndpoints.generateApplicationID();
+        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationId);
         response.then()
                 .statusCode(200)
                 .contentType("application/json")

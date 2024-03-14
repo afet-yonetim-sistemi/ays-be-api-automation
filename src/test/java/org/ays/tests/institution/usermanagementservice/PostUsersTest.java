@@ -2,16 +2,20 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
 import org.ays.payload.Pagination;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RequestBodyUsers;
+import org.ays.payload.Sort;
 import org.ays.payload.User;
+import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.either;
@@ -29,7 +33,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void validateUserDetailsInUsersList() {
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -43,7 +47,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
     public void listUsersWithPositivePaginationScenarios(int page, int pageSize) {
-        requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
+        requestBodyUsers.setPagination(Pagination.generate(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -53,7 +57,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = DataProvider.class)
     public void listUsersWithNegativePaginationScenarios(int page, int pageSize) {
-        requestBodyUsers.setPagination(Helper.setPagination(page, pageSize));
+        requestBodyUsers.setPagination(Pagination.generate(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -76,8 +80,8 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
     public void listUsersWithNegativeNameScenariosFilter(String firstname, String lastname, String errorMessage) {
-        requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(firstname, lastname));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setFilter(UsersFilter.generate(null, firstname, lastname, null, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -89,10 +93,10 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidUserNameFilter() {
-        User user = Helper.createUserPayload();
+        User user = User.generate();
         InstitutionEndpoints.createAUser(user);
-        requestBodyUsers.setFilter(Helper.createFilterWithUserFirstAndLastName(user.getFirstName(), user.getLastName()));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setFilter(UsersFilter.generate(null, user.getFirstName(), user.getLastName(), null, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -105,9 +109,11 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidStatusFilter() {
-        Helper.createNewUser();
-        requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACTIVE"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        InstitutionEndpoints.generateANewUser();
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, statuses, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -120,9 +126,11 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidStatusFilter() {
-        Helper.createNewUser();
-        requestBodyUsers.setFilter(Helper.createFilterWithUserStatus("ACT"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        InstitutionEndpoints.generateANewUser();
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACT");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, statuses, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
@@ -130,9 +138,11 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidSupportStatusFilter() {
-        Helper.createNewUser();
-        requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("IDLE"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        InstitutionEndpoints.generateANewUser();
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("IDLE");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, supportStatuses));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -145,8 +155,10 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listUsersWithInvalidSupportStatusFilter() {
-        requestBodyUsers.setFilter(Helper.createFilterWithUserSupportStatus("Ready"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("Ready");
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, supportStatuses));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
@@ -154,10 +166,10 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidPhoneNumberFilter() {
-        User user = Helper.createUserPayload();
+        User user = User.generate();
         InstitutionEndpoints.createAUser(user);
-        requestBodyUsers.setFilter(Helper.createFilterWithUserPhoneNumber(user.getPhoneNumber()));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setFilter(UsersFilter.generate(user.getPhoneNumber(), null, null, null, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -171,12 +183,11 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberDataForFilter", dataProviderClass = DataProvider.class, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithInvalidPhoneNumberFilter(String countryCode, String lineNumber, String errorMessage) {
-        Helper.createNewUser();
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
-        requestBodyUsers.setFilter(Helper.createFilterWithUserPhoneNumber(phoneNumber));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setFilter(UsersFilter.generate(phoneNumber, null, null, null, null));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -188,11 +199,15 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, a user is created to prevent failures in case no user is associated with the institution.")
     public void listUsersWithValidFiltersAndSort() {
-        User user = Helper.createUserPayload();
+        User user = User.generate();
+        List<String> supportStatuses = new ArrayList<>();
+        supportStatuses.add("IDLE");
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
         InstitutionEndpoints.createAUser(user);
-        requestBodyUsers.setFilter(Helper.createFilterWithAllUserFilters(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), "ACTIVE", "IDLE"));
-        requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
-        requestBodyUsers.setPagination(Helper.createPagination());
+        requestBodyUsers.setFilter(UsersFilter.generate(user.getPhoneNumber(), user.getFirstName(), user.getLastName(), statuses, supportStatuses));
+        requestBodyUsers.setSort(Sort.generate("createdAt", "ASC"));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -210,8 +225,8 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listUsersWithValidSortOptionsInAscendingOrder() {
-        requestBodyUsers.setPagination(Helper.createPagination());
-        requestBodyUsers.setSort(Helper.createSortBody("createdAt", "ASC"));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
+        requestBodyUsers.setSort(Sort.generate("createdAt", "ASC"));
         Response ascResponse = InstitutionEndpoints.listUsers(requestBodyUsers);
         ascResponse.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -225,13 +240,13 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, description = "Prior to executing this method, two users are created to prevent failures in case no user is associated with the institution and validate DESC order.")
     public void listUsersWithValidSortOptionsInDescendingOrder() {
-        User user1 = Helper.createUserPayload();
+        User user1 = User.generate();
         InstitutionEndpoints.createAUser(user1);
-        User user2 = Helper.createUserPayload();
+        User user2 = User.generate();
         InstitutionEndpoints.createAUser(user2);
 
-        requestBodyUsers.setPagination(Helper.createPagination());
-        requestBodyUsers.setSort(Helper.createSortBody("createdAt", "DESC"));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
+        requestBodyUsers.setSort(Sort.generate("createdAt", "DESC"));
         Response ascResponse = InstitutionEndpoints.listUsers(requestBodyUsers);
         ascResponse.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -248,8 +263,8 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "negativeSortData", dataProviderClass = DataProvider.class)
     public void sortUsersWithInvalidSortOptions(String property, String direction, String errorMessage) {
-        requestBodyUsers.setPagination(Helper.createPagination());
-        requestBodyUsers.setSort(Helper.createSortBody(property, direction));
+        requestBodyUsers.setPagination(Pagination.generateFirstPage());
+        requestBodyUsers.setSort(Sort.generate(property, direction));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

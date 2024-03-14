@@ -3,11 +3,8 @@ package org.ays.tests.user.selfmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
-import org.ays.payload.Helper;
-import org.ays.payload.User;
-import org.ays.payload.UserCredentials;
+import org.ays.payload.*;
 import org.hamcrest.Matchers;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -15,19 +12,18 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserSelfTest {
     UserCredentials userCredentials;
-    User user = new User();
     String userID;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        user = Helper.createUserPayload();
-        userCredentials = Helper.createNewUser(user);
-        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
-
-    }
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getSelfInfoPositive() {
+        User user = User.generate();
+        userCredentials = InstitutionEndpoints.generateANewUser(user);
+
+        PhoneNumber phoneNumber = user.getPhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID =  userIDResponse.jsonPath().getString("response.content[0].id");
+
+
         Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .contentType("application/json")
@@ -49,6 +45,13 @@ public class GetUserSelfTest {
 
     @Test(groups = {"Regression", "User"})
     public void getSelfInfoNegative() {
+        User user = User.generate();
+        userCredentials = InstitutionEndpoints.generateANewUser(user);
+
+        PhoneNumber phoneNumber = user.getPhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID =  userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
         InstitutionEndpoints.updateUser(userID, user);

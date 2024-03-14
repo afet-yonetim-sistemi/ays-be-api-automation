@@ -1,7 +1,6 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
-import org.ays.payload.Helper;
 
 @UtilityClass
 public class DataProvider {
@@ -93,11 +92,11 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "invalidLineNumberData")
     public static Object[][] lineNumberData() {
         return new Object[][]{
-                {Helper.generateInvalidLineNumber()},
-                {Helper.generateLineNumber() + "*"},
+                {AysRandomUtil.generateInvalidLineNumber()},
+                {AysRandomUtil.generateLineNumber() + "*"},
                 {""}, {"          "},
                 {null},
-                {Helper.generateLineNumber() + "a"}
+                {AysRandomUtil.generateLineNumber() + "a"}
         };
     }
 

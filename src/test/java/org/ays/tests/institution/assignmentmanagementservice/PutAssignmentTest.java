@@ -3,25 +3,23 @@ package org.ays.tests.institution.assignmentmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyAssignments;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class PutAssignmentTest {
-    Assignment assignment;
-    String assignmentId;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        assignment = Helper.createANewAssignment();
-        assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
-    }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateAssignmentFirstname() {
+        Assignment assignment = InstitutionEndpoints.generateANewAssignment();
+
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
+        Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
+        String assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
+
         String expectedName = "updated firstname";
         assignment.setFirstName(expectedName);
         Response response = InstitutionEndpoints.updateAssignment(assignmentId, assignment);

@@ -1,159 +1,84 @@
 package org.ays.tests.institution.adminmanagementservice;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
-import io.restassured.specification.ResponseSpecification;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.payload.AdminsListPayload;
+import org.ays.payload.Pagination;
+import org.ays.utility.AysLogUtil;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
-@Epic("Institution Admin Management Service")
 public class PostAdminsTest {
-    String currentPage;
-    String currentPageSize;
+    Pagination pagination;
 
-    @DataProvider(name = "negativePaginationData")
-    public static Object[][] negativePaginationData() {
-        return new Object[][]{
-                {-1, 10},
-                {100000000, 10},
-                {-5, 10},
-                {1, -10},
-                {1, 1000000000},
-                {1, -5},
-                {-100, 100000000},
-                {-5, -5},
-                {100000000, 100000000}
-        };
-    }
-
-    @DataProvider(name = "positivePaginationData")
-    public static Object[][] positivePaginationData() {
-        return new Object[][]{
-                {1, 10},
-                {99999999, 1},
-                {50, 50},
-                {1000, 20}
-        };
-    }
-
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
-        currentPage = null;
-        currentPageSize = null;
+        pagination = new Pagination();
     }
 
-    @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider="positivePaginationData")
-    @Story("As an Institution admin I want to list all admins")
-    @Severity(SeverityLevel.NORMAL)
+    @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = org.ays.utility.DataProvider.class)
     public void listAdminsWithValidPageAndPageSize(int page, int pageSize) {
-        String pagination = "{\"pagination\":{\"page\":" + page + ",\"pageSize\":" + pageSize + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
-        if (page == 1 && pageSize == 10) {
+        pagination.setPage(page);
+        pagination.setPageSize(pageSize);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectDefaultListingDetails());
+        if (response.jsonPath().getList("response.content").isEmpty()) {
+            AysLogUtil.info("No admins found");
+        } else {
             response.then()
-                    .spec(successResponseSpec())
-                    .body("response.content", hasSize(greaterThan(0)))
+                    .body("response.content", instanceOf(List.class))
                     .body("response.content[0].id", notNullValue())
                     .body("response.content[0].username", notNullValue())
                     .body("response.content[0].firstName", notNullValue())
                     .body("response.content[0].lastName", notNullValue())
                     .body("response.content[0].status", notNullValue())
-                    .body("response.pageNumber", equalTo(page))
-                    .body("response.totalPageCount", notNullValue())
-                    .body("response.totalElementCount", notNullValue())
-                    .body("response", hasKey("sortedBy"))
-                    .body("response", hasKey("filteredBy"));
-        } else {
-            response.then()
-                    .spec(successResponseSpec())
-                    .body("response.content", instanceOf(List.class))
-                    .body("response.pageNumber", equalTo(page))
-                    .body("response.totalPageCount", notNullValue())
-                    .body("response.totalElementCount", notNullValue())
-                    .body("response", hasKey("sortedBy"))
-                    .body("response", hasKey("filteredBy"));
+                    .body("response.content[0].institution.createdUser", notNullValue())
+                    .body("response.content[0].institution.createdAt", notNullValue())
+                    .body("response.content[0].institution", hasKey("updatedUser"))
+                    .body("response.content[0].institution", hasKey("updatedAt"))
+                    .body("response.content[0].institution.id", notNullValue())
+                    .body("response.content[0].institution.name", notNullValue());
         }
     }
 
     @Test(groups = {"Regression", "Institution"})
-    @Story("As an Institution admin I want to get proper error message when page value is null")
-    @Severity(SeverityLevel.NORMAL)
-    public void listAdminsWithEmptyPageValue() {
-        currentPageSize = "10";
-        String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":" + currentPageSize + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
+    public void listAdminsWithNullPageValue() {
+        pagination.setPageSize(10);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
-                .spec(badRequestResponseSpec())
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
                 .body("subErrors[0].field", equalTo("page"))
                 .body("subErrors[0].type", equalTo("int"));
     }
 
     @Test(groups = {"Regression", "Institution"})
-    @Story("As an Institution admin I want to get proper error message when pageSize value is null")
-    @Severity(SeverityLevel.NORMAL)
-    public void listAdminsWithEmptyPageSizeValue() {
-        currentPage = "1";
-        String pagination = "{\"pagination\":{\"page\":" + currentPage + ",\"pageSize\":" + currentPageSize + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
+    public void listAdminsWithNullPageSizeValue() {
+        pagination.setPage(1);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
-                .spec(badRequestResponseSpec())
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
                 .body("subErrors[0].field", equalTo("pageSize"))
                 .body("subErrors[0].type", equalTo("int"));
     }
 
     @Test(groups = {"Regression", "Institution"})
-    @Story("As an Institution admin I want to get proper error message when page field is missing")
-    @Severity(SeverityLevel.NORMAL)
-    public void listAdminsWithMissingPageField() {
-        currentPageSize = "10";
-        String pagination = "{\"pagination\":{\"pageSize\":" + currentPageSize + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
+    public void listAdminsWithNullPageAndPageSizeFields() {
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
-                .spec(badRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
-                .body("subErrors[0].field", equalTo("page"))
-                .body("subErrors[0].type", equalTo("int"));
-    }
-
-    @Test(groups = {"Regression", "Institution"})
-    @Story("As an Institution admin I want to get proper error message when pageSize field is missing")
-    @Severity(SeverityLevel.NORMAL)
-    public void listAdminsWithMissingPageSizeField() {
-        currentPage = "1";
-        String pagination = "{\"pagination\":{\"page\":" + currentPage + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
-        response.then()
-                .spec(badRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
-                .body("subErrors[0].field", equalTo("pageSize"))
-                .body("subErrors[0].type", equalTo("int"));
-    }
-
-    @Test(groups = {"Regression", "Institution"})
-    @Story("As an Institution admin I want to get proper error message when page and pageSize fields are missing")
-    @Severity(SeverityLevel.NORMAL)
-    public void listAdminsWithMissingPageAndPageSizeField() {
-        String pagination = "{\"pagination\":{}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
-        response.then()
-                .spec(badRequestResponseSpec())
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
                 .body("subErrors[0].field", anyOf(equalTo("page"), equalTo("pageSize")))
                 .body("subErrors[0].type", equalTo("int"))
@@ -162,38 +87,15 @@ public class PostAdminsTest {
                 .body("subErrors[1].type", equalTo("int"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData")
-    @Story("As an Institution admin I want to get proper error message when page or pageSize fields are invalid")
-    @Severity(SeverityLevel.NORMAL)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = org.ays.utility.DataProvider.class)
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {
-        String pagination = "{\"pagination\":{\"page\":" + page + ",\"pageSize\":" + pageSize + "}}";
-        Response response = InstitutionEndpoints.listAdmins(pagination);
+        pagination.setPage(page);
+        pagination.setPageSize(pageSize);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
         response.then()
-                .spec(badRequestResponseSpec())
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
                 .body("subErrors[0].field", anyOf(equalTo("page"), equalTo("pageSize")))
                 .body("subErrors[0].type", equalTo("int"));
     }
-
-    private ResponseSpecification badRequestResponseSpec() {
-        return new ResponseSpecBuilder()
-                .expectStatusCode(400)
-                .expectContentType("application/json")
-                .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("BAD_REQUEST"))
-                .expectBody("header", equalTo("VALIDATION ERROR"))
-                .expectBody("isSuccess", equalTo(false))
-                .build();
-    }
-
-    private ResponseSpecification successResponseSpec() {
-        return new ResponseSpecBuilder()
-                .expectStatusCode(200)
-                .expectContentType("application/json")
-                .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("OK"))
-                .expectBody("isSuccess", equalTo(true))
-                .build();
-    }
-
 }

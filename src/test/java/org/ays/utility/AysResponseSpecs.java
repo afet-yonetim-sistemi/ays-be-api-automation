@@ -36,6 +36,17 @@ public class AysResponseSpecs {
                 .build();
     }
 
+    public static ResponseSpecification expectNotFoundResponseSpec() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(404)
+                .expectContentType("application/json")
+                .expectBody("time", notNullValue())
+                .expectBody("httpStatus", equalTo("NOT_FOUND"))
+                .expectBody("header", equalTo("NOT EXIST"))
+                .expectBody("isSuccess", equalTo(false))
+                .build();
+    }
+
     public static ResponseSpecification expectUnauthorizedResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(401)

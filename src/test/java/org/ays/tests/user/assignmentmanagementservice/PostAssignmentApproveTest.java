@@ -1,11 +1,13 @@
 package org.ays.tests.user.assignmentmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
 import org.ays.payload.Location;
 import org.ays.payload.UserCredentials;
+import org.ays.payload.UserSupportStatus;
+import org.ays.payload.UserSupportStatusUpdatePayload;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,16 +23,21 @@ public class PostAssignmentApproveTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        userCredentials = Helper.createNewUser();
+        userCredentials = InstitutionEndpoints.generateANewUser();
         location = new Location();
-        assignment = Helper.createANewAssignment();
+        assignment = InstitutionEndpoints.generateANewAssignment();
 
     }
 
     @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasNoReservedAssignment() {
-        location = Helper.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        location = Location.generateForTurkey();
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
                 .statusCode(404)
@@ -43,8 +50,13 @@ public class PostAssignmentApproveTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void assignmentApprove() {
-        location = Helper.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        location = Location.generateForTurkey();
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         response.then()
@@ -56,8 +68,13 @@ public class PostAssignmentApproveTest {
 
     @Test(groups = {"Regression", "User"})
     public void assignmentApproveWhenUserHasAssignedAssignment() {
-        location = Helper.generateLocationTR();
-        Helper.setSupportStatus("READY", userCredentials.getUsername(), userCredentials.getPassword());
+        location = Location.generateForTurkey();
+
+        UserEndpoints.updateSupportStatus(
+                new UserSupportStatusUpdatePayload(UserSupportStatus.READY),
+                userCredentials.getUsername(),
+                userCredentials.getPassword()
+        );
         UserEndpoints.searchAssignment(location, userCredentials.getUsername(), userCredentials.getPassword());
         UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());
         Response response = UserEndpoints.approveAssignment(userCredentials.getUsername(), userCredentials.getPassword());

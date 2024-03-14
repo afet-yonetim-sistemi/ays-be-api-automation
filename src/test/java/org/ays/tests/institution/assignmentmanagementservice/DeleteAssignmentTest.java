@@ -3,9 +3,9 @@ package org.ays.tests.institution.assignmentmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Assignment;
-import org.ays.payload.Helper;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyAssignments;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -16,14 +16,14 @@ public class DeleteAssignmentTest {
     Assignment assignment;
     String assignmentId;
 
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        assignment = Helper.createANewAssignment();
-        assignmentId = Helper.extractAssignmentIdByPhoneNumber(assignment.getPhoneNumber());
-    }
-
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteAssignment() {
+        assignment = InstitutionEndpoints.generateANewAssignment();
+
+        PhoneNumber phoneNumber = assignment.getPhoneNumber();
+        Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
+        assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
+
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);
         response.then()
                 .statusCode(200)
@@ -36,6 +36,12 @@ public class DeleteAssignmentTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteAssignmentNegative() {
+        assignment = InstitutionEndpoints.generateANewAssignment();
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response assignmentIdResponse = InstitutionEndpoints.listAssignments(RequestBodyAssignments.generate(phoneNumber));
+        assignmentId = assignmentIdResponse.jsonPath().getString("response.content[0].id");
+
         InstitutionEndpoints.deleteAssignment(assignmentId);
         Response response = InstitutionEndpoints.deleteAssignment(assignmentId);
         response.then()

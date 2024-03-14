@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RefreshToken {
+public class TokenRefreshPayload {
 
     private String refreshToken;
 
