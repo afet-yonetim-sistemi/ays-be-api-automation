@@ -2,9 +2,9 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -12,15 +12,15 @@ import static org.hamcrest.Matchers.notNullValue;
 public class GetUserTest {
     String userID;
 
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        User user = User.generate();
-        InstitutionEndpoints.createAUser(user);
-        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
-    }
-
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getUser() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID =  userIDResponse.jsonPath().getString("response.content[0].id");
+
         Response response = InstitutionEndpoints.getUser(userID);
         response.then()
                 .log().body()

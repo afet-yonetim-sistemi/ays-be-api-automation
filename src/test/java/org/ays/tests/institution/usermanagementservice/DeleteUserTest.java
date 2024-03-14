@@ -2,9 +2,9 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -13,15 +13,15 @@ import static org.hamcrest.Matchers.equalTo;
 public class DeleteUserTest {
     String userID;
 
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        User user = User.generate();
-        InstitutionEndpoints.createAUser(user);
-        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
-    }
-
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteUser() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID =  response.jsonPath().getString("response.content[0].id");
+
         Response deleteResponse = InstitutionEndpoints.deleteUser(userID);
         deleteResponse.then()
                 .statusCode(200)
@@ -39,6 +39,13 @@ public class DeleteUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteUserNegative() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID =  userIDResponse.jsonPath().getString("response.content[0].id");
+
         InstitutionEndpoints.deleteUser(userID);
         Response response = InstitutionEndpoints.deleteUser(userID);
         response.then()

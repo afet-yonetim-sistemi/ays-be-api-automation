@@ -19,11 +19,4 @@ public class Helper {
 
     }
 
-    public static String extractUserIdByPhoneNumber(PhoneNumber phoneNumber) {
-        Response response = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
-        return response.jsonPath().getString("response.content[0].id");
-    }
-
-
-
 }

@@ -2,27 +2,26 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.Helper;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class PutUserTest {
-    User user = new User();
     String userID;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        user = User.generate();
-        InstitutionEndpoints.createAUser(user);
-        userID = Helper.extractUserIdByPhoneNumber(user.getPhoneNumber());
-    }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateUserAsPassive() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID = userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
         Response response = InstitutionEndpoints.updateUser(userID, user);
@@ -37,6 +36,13 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserAsActive() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID = userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setRole("VOLUNTEER");
         user.setStatus("PASSIVE");
         InstitutionEndpoints.updateUser(userID, user);
@@ -53,6 +59,13 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithInvalidRole() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID = userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setRole("VOL");
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
@@ -66,6 +79,13 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithBlankRole() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID = userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setRole("");
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
@@ -79,6 +99,13 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithBlankStatus() {
+        User user = User.generate();
+        InstitutionEndpoints.createAUser(user);
+
+        PhoneNumber phoneNumber = new PhoneNumber();
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        userID = userIDResponse.jsonPath().getString("response.content[0].id");
+
         user.setRole("VOLUNTEER");
         user.setStatus("");
         Response response = InstitutionEndpoints.updateUser(userID, user);
