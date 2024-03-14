@@ -24,9 +24,6 @@ public class Helper {
         return response.jsonPath().getString("response.content[0].id");
     }
 
-    public static String getAdminRefreshToken(AdminCredentials adminCredentials) {
-        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
-        return response.jsonPath().getString("response.refreshToken");
-    }
+
 
 }

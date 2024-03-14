@@ -12,8 +12,12 @@ import org.testng.annotations.Test;
 public class PostAdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminTokenRefresh() {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
-        tokenRefreshPayload.setRefreshToken(Helper.getAdminRefreshToken(AdminCredentials.generate()));
+        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        String  refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
+
+        tokenRefreshPayload.setRefreshToken(refreshToken);
         Response response = InstitutionAuthEndpoints.adminTokenRefresh(tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
