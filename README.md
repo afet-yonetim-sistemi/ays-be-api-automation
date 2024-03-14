@@ -1,4 +1,4 @@
-# AYS API Test Automation Repository
+# AYS | Afet Yönetim Sistemi API Test Automation [![Application Status](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/actions/workflows/application-health-checker.yml/badge.svg)](https://github.com/afet-yonetim-sistemi/ays-be-api-automation/actions/workflows/application-health-checker.yml)
 
 This repository contains automated API tests using the REST Assured framework. The tests are organized into packages for ease of use and maintainability.
 
@@ -42,32 +42,28 @@ __Managing Responses__:
 
 *__runners__*: TestNG configuration file for managing test suites.
 
+---
 
 ## Contributing
 
 If you'd like to contribute to this project, please follow these guidelines:
-1.Clone this repository to your local machine.
+
+1. Clone this repository to your local machine.
 git clone https://github.com/afet-yonetim-sistemi/ays-be-api-automation.git
 
-2.Create a new branch for your feature or bug fix.
+2. Create a new branch for your feature or bug fix.
 
-3.Store endpoints in ‘Routes’ class.
+3. Store endpoints in ‘Routes’ class.
 
-4.Create an http request method in the related ‘endpoints’ class.
+4. Create an http request method in the related ‘endpoints’ class.
 
-5.Script your test case under the ‘tests’ package’s related test class.
+5. Script your test case under the ‘tests’ package’s related test class.
 
-6.Make your changes and commit them.
+6. Make your changes and commit them.
 
-7.Create a pull request, describing your changes and why they should be merged.
+7. Create a pull request, describing your changes and why they should be merged.
 
-## Running Specific Test Suites
-
-You can run specific test suites by modifying the testng.xml file under the runners package. Add or remove <suite> elements to define the suites you want to run.
-
-## Generating Reports
-
-Test execution reports can be found in the ‘reports’ directory. You can open the HTML report in a web browser to view test results.
+---
 
 ## Using the Configuration File
 
@@ -75,11 +71,51 @@ The project leverages a configuration file (configuration.properties) to securel
 
 To effectively utilize this configuration file, follow these steps:
 
-1.Create a Configuration File: Duplicate the sample_configuration.properties file provided in the framework, renaming it as configuration.properties. Input your sensitive data in the form of key-value pairs within this file.
+1. **Create a Configuration File:** Duplicate the sample_configuration.properties file provided in the framework,
+   renaming it as configuration.properties. Input your sensitive data in the form of key-value pairs within this file.
 
-2.Accessing Configuration Data: To access the stored data, use the ConfigurationReader.getProperty("your key") method available under the utility package. This method retrieves the values associated with specific keys from the configuration.properties file.
+2. **Accessing Configuration Data:** To access the stored data, use the ConfigurationReader.getProperty("your key")
+   method available under the utility package. This method retrieves the values associated with specific keys from the
+   configuration.properties file.
 
-3.Example Usage - HowToUseConfigurationFile Class:
+3. **Example Usage - HowToUseConfigurationFile Class:**
 Review the HowToUseConfigurationFile class located in the utility package. This class demonstrates practical usage by showcasing examples of calling the ConfigurationReader.getProperty("your key") method to retrieve configuration values.
 
 By following these steps, you can securely manage sensitive information and easily access it within the project using the ConfigurationReader utility.
+
+---
+
+## Running Specific Test Suites
+
+You can run specific test suites by modifying the testng.xml file under the runners package. Add or remove <suite>
+elements to define the suites you want to run.
+
+---
+
+## Running Tests from the Command Line
+
+You can run tests from the command line using Maven. Navigate to the project directory and run the following command:
+
+**Daily Test Execution:**
+
+- Smoke Test
+
+```bash
+mvn clean test -P daily
+```
+
+**Weekly(All) Test Execution:**
+
+- Smoke Test
+- Regression Test
+
+```bash
+mvn clean test -P weekly
+```
+
+---
+
+## Generating Reports
+
+Test execution reports can be found in the ‘reports’ directory. You can open the HTML report in a web browser to view
+test results.
