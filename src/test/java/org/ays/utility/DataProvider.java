@@ -1,6 +1,7 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
+import org.ays.payload.UserSupportStatus;
 
 @UtilityClass
 public class DataProvider {
@@ -175,13 +176,13 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "statusTransitions")
     public static Object[][] statusTransitions() {
         return new Object[][]{
-                {"READY"},
-                {"IDLE"},
-                {"BUSY"},
-                {"IDLE"},
-                {"READY"},
-                {"BUSY"},
-                {"READY"}
+                {UserSupportStatus.READY},
+                {UserSupportStatus.IDLE},
+                {UserSupportStatus.BUSY},
+                {UserSupportStatus.IDLE},
+                {UserSupportStatus.READY},
+                {UserSupportStatus.BUSY},
+                {UserSupportStatus.READY}
         };
     }
 
