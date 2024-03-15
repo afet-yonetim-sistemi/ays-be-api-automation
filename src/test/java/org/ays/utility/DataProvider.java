@@ -172,4 +172,17 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "statusTransitions")
+    public static Object[][] statusTransitions() {
+        return new Object[][]{
+                {"READY"},
+                {"IDLE"},
+                {"BUSY"},
+                {"IDLE"},
+                {"READY"},
+                {"BUSY"},
+                {"READY"}
+        };
+    }
+
 }
