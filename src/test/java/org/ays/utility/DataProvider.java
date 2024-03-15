@@ -176,13 +176,13 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "statusTransitions")
     public static Object[][] statusTransitions() {
         return new Object[][]{
-                {UserSupportStatus.READY},
-                {UserSupportStatus.IDLE},
-                {UserSupportStatus.BUSY},
-                {UserSupportStatus.IDLE},
-                {UserSupportStatus.READY},
-                {UserSupportStatus.BUSY},
-                {UserSupportStatus.READY}
+                {UserSupportStatus.READY.toString()},
+                {UserSupportStatus.IDLE.toString()},
+                {UserSupportStatus.BUSY.toString()},
+                {UserSupportStatus.IDLE.toString()},
+                {UserSupportStatus.READY.toString()},
+                {UserSupportStatus.BUSY.toString()},
+                {UserSupportStatus.READY.toString()}
         };
     }
 
