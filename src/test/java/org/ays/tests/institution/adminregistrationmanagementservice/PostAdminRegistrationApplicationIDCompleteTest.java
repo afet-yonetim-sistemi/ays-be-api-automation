@@ -1,12 +1,9 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.PhoneNumber;
-import org.ays.payload.RequestBodyForRegistrationIDComplete;
+import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -17,16 +14,10 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class PostAdminRegistrationApplicationIDCompleteTest {
 
-    String applicationID;
-    RequestBodyForRegistrationIDComplete registrationIDComplete;
-
-
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    @Story("As a super admin I want to create an admin registration complete.")
-    @Severity(SeverityLevel.NORMAL)
-    public void createRegistrationIDCompletePositive() {
-        applicationID = InstitutionEndpoints.generateApplicationID();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationPositive() {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
         response.then()
@@ -34,10 +25,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
-    @Story("As a super admin I want to get proper error message when I use invalid firstName information")
-    public void createRegistrationIDCompleteWitInvalidFirstName(String invalidFirstName, String errorMessage) {
-        applicationID = InstitutionEndpoints.generateApplicationID();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, String errorMessage) {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
         registrationIDComplete.setFirstName(invalidFirstName);
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
@@ -49,10 +39,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
-    @Story("As a super admin I want to get proper error message when I use lastName ID information")
-    public void createRegistrationIDCompleteWitInvalidLastName(String invalidFLastName, String errorMessage) {
-        applicationID = InstitutionEndpoints.generateApplicationID();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, String errorMessage) {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
         registrationIDComplete.setLastName(invalidFLastName);
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
@@ -64,10 +53,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = DataProvider.class)
-    @Story("As a super admin I want to get proper error message when I use invalid email information.")
-    public void createRegistrationIDCompleteWitInvalidEmail(String invalidEmail, String errorMessage) {
-        applicationID = InstitutionEndpoints.generateApplicationID();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, String errorMessage) {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
         registrationIDComplete.setEmail(invalidEmail);
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
@@ -79,10 +67,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = DataProvider.class)
-    @Story("As a super admin I want to get proper error message when I use invalid phoneNumber information.")
-    public void createRegistrationIDCompleteWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
-        applicationID = InstitutionEndpoints.generateApplicationID();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
 
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
@@ -98,11 +85,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
-    @Story("As a super admin I want to get proper error message when I use invalid ID information")
-    @Severity(SeverityLevel.NORMAL)
-    public void createRegistrationWithInvalidFormatID() {
-        applicationID = "invalidID";
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWithInvalidFormatID() {
+        String applicationID = "invalidID";
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
         response.then()
@@ -111,11 +96,9 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
-    @Story("As a super admin I want to get proper error message when I use invalid ID information")
-    @Severity(SeverityLevel.NORMAL)
-    public void createRegistrationWithIDStatusCompleted() {
-        applicationID = InstitutionEndpoints.generateApplicationIDForCompletedStatus();
-        registrationIDComplete = RequestBodyForRegistrationIDComplete.generateRequestBody();
+    public void completeApplicationRegistrationWithIDCompletedStatus() {
+        String applicationID = InstitutionEndpoints.generateApplicationIDForCompletedStatus();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
         response.then()

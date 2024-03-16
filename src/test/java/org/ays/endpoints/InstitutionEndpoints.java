@@ -2,7 +2,19 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.*;
+import org.ays.payload.AdminsListPayload;
+import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.ApplicationRegistrationSupportStatus;
+import org.ays.payload.Assignment;
+import org.ays.payload.Filter;
+import org.ays.payload.Pagination;
+import org.ays.payload.RejectReason;
+import org.ays.payload.RequestBodyAssignments;
+import org.ays.payload.RegistrationApplicationCompletePayload;
+import org.ays.payload.RequestBodyInstitution;
+import org.ays.payload.RequestBodyUsers;
+import org.ays.payload.User;
+import org.ays.payload.UserCredentials;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
 import org.openqa.selenium.remote.http.HttpMethod;
@@ -284,7 +296,7 @@ public class InstitutionEndpoints {
         }
     }
 
-    public static Response postRegistrationApplicationIDComplete(String applicationID, RequestBodyForRegistrationIDComplete requestBodyForRegistrationComplete) {
+    public static Response postRegistrationApplicationIDComplete(String applicationID, RegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)

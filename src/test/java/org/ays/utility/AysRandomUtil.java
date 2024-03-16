@@ -2,9 +2,6 @@ package org.ays.utility;
 
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.Location;
-import org.ays.payload.PhoneNumber;
-import org.ays.payload.RequestBodyForRegistrationIDComplete;
 
 import java.util.Random;
 
