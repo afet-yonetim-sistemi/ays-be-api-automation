@@ -106,6 +106,40 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
                 .body("message", containsString("ADMIN USER REGISTER APPLICATION NOT EXIST!"));
     }
 
+    @Test(groups = {"Regression", "SuperAdmin"})
+    public void completeRegistrationApplicationWithExistEmail() {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
+
+        String email = registrationIDComplete.getEmail();
+        String newApplicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        newRegistrationIDComplete.setEmail(email);
+
+        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
+        response.then()
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message", containsString("ADMIN USER ALREADY EXIST!"));
+    }
+
+    @Test(groups = {"Regression", "SuperAdmin"})
+    public void completeRegistrationApplicationWithExistPhoneNumber() {
+        String applicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload registrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, registrationIDComplete);
+
+        PhoneNumber phoneNumber = registrationIDComplete.getPhoneNumber();
+        String newApplicationID = InstitutionEndpoints.generateApplicationID();
+        RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        newRegistrationIDComplete.setPhoneNumber(phoneNumber);
+
+        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
+        response.then()
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message", containsString("ADMIN USER ALREADY EXIST!"));
+    }
+
 }
 
 
