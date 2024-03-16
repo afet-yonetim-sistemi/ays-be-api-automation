@@ -12,4 +12,12 @@ public class RequestBodyInstitution {
     private List<Sort> sort;
     private Filter filter;
 
+    public static RequestBodyInstitution generateFilter(Pagination pagination, Filter filter) {
+        RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
+        requestBodyInstitution.setPagination(pagination);
+        requestBodyInstitution.setFilter(filter);
+
+        return requestBodyInstitution;
+    }
+
 }

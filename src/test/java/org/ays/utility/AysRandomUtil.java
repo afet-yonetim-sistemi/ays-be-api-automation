@@ -2,6 +2,9 @@ package org.ays.utility;
 
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
+import org.ays.payload.Location;
+import org.ays.payload.PhoneNumber;
+import org.ays.payload.RequestBodyForRegistrationIDComplete;
 
 import java.util.Random;
 
@@ -21,6 +24,18 @@ public class AysRandomUtil {
 
     public static String generateDescription() {
         return FAKER.commerce().productName();
+    }
+
+    public static String generateUsername() {
+        return FAKER.name().username();
+    }
+
+    public static String generateEmailAddress() {
+        return FAKER.internet().emailAddress();
+    }
+
+    public static String generatePassword() {
+        return FAKER.internet().password();
     }
 
     public static String generateString(int length) {
@@ -51,7 +66,7 @@ public class AysRandomUtil {
 
     public static String generateLineNumber() {
         StringBuilder phoneNumberBuilder = new StringBuilder();
-        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488,501, 505, 506, 507, 551,552, 553, 554, 555, 559,516,530, 531, 532, 533, 534, 535, 536, 537, 538, 539,540, 541, 542, 543, 544, 545, 546, 547, 548, 549};
+        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488, 501, 505, 506, 507, 551, 552, 553, 554, 555, 559, 516, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549};
         int randomIndex = RANDOM.nextInt(prefixesArray.length);
         int selectedPrefix = prefixesArray[randomIndex];
         phoneNumberBuilder.append(selectedPrefix);
@@ -63,7 +78,7 @@ public class AysRandomUtil {
     }
 
     public static String generateInvalidLineNumber() {
-        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488,501, 505, 506, 507, 551,552, 553, 554, 555, 559,516,530, 531, 532, 533, 534, 535, 536, 537, 538, 539,540, 541, 542, 543, 544, 545, 546, 547, 548, 549};
+        int[] prefixesArray = {212, 216, 222, 224, 226, 228, 232, 236, 242, 246, 248, 252, 256, 258, 262, 264, 266, 272, 274, 276, 282, 284, 286, 288, 312, 318, 322, 324, 326, 328, 332, 338, 342, 344, 346, 348, 352, 354, 356, 358, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 392, 412, 414, 416, 422, 424, 426, 428, 432, 434, 436, 438, 442, 446, 452, 454, 456, 458, 462, 464, 466, 472, 474, 476, 478, 482, 484, 486, 488, 501, 505, 506, 507, 551, 552, 553, 554, 555, 559, 516, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549};
 
         String phoneNumber;
         do {

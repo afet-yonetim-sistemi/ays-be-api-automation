@@ -2,15 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.payload.AdminsListPayload;
-import org.ays.payload.ApplicationRegistration;
-import org.ays.payload.Assignment;
-import org.ays.payload.RejectReason;
-import org.ays.payload.RequestBodyAssignments;
-import org.ays.payload.RequestBodyInstitution;
-import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.User;
-import org.ays.payload.UserCredentials;
+import org.ays.payload.*;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
 import org.openqa.selenium.remote.http.HttpMethod;
@@ -251,6 +243,16 @@ public class InstitutionEndpoints {
         }
     }
 
+    public static String generateApplicationIDForCompletedStatus() {
+        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(Pagination.generateFirstPage(), Filter.generate(ApplicationRegistrationSupportStatus.COMPLETED));
+        Response response = postRegistrationApplications(requestBodyInstitution);
+        if (response.getStatusCode() == 200) {
+            return response.then().extract().jsonPath().getString("response.content[0].id");
+        } else {
+            throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
     public static UserCredentials generateANewUser() {
         User user = User.generate();
         Response response = createAUser(user);
@@ -280,6 +282,20 @@ public class InstitutionEndpoints {
         } else {
             throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
         }
+    }
+
+    public static Response postRegistrationApplicationIDComplete(String applicationID, RequestBodyForRegistrationIDComplete requestBodyForRegistrationComplete) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/admin/registration-application/{id}/complete")
+                .pathParameter(Map.of("id", applicationID))
+                .body(requestBodyForRegistrationComplete)
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+
     }
 
 }
