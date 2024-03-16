@@ -1,6 +1,7 @@
 package org.ays.utility;
 
 import lombok.experimental.UtilityClass;
+import org.ays.payload.UserSupportStatus;
 
 @UtilityClass
 public class DataProvider {
@@ -169,6 +170,19 @@ public class DataProvider {
                 {"90", "", "size must be between 7 and 15"},
                 {"90", "12345", "size must be between 7 and 15"},
                 {"90", "1234567890123456", "size must be between 7 and 15"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "statusTransitions")
+    public static Object[][] statusTransitions() {
+        return new Object[][]{
+                {UserSupportStatus.READY.toString()},
+                {UserSupportStatus.IDLE.toString()},
+                {UserSupportStatus.BUSY.toString()},
+                {UserSupportStatus.IDLE.toString()},
+                {UserSupportStatus.READY.toString()},
+                {UserSupportStatus.BUSY.toString()},
+                {UserSupportStatus.READY.toString()}
         };
     }
 

@@ -58,6 +58,17 @@ public class AysResponseSpecs {
                 .build();
     }
 
+    public static ResponseSpecification expectConflictResponseSpec() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(409)
+                .expectContentType("application/json")
+                .expectBody("time", notNullValue())
+                .expectBody("httpStatus", equalTo("CONFLICT"))
+                .expectBody("header", equalTo("ALREADY EXIST"))
+                .expectBody("isSuccess", equalTo(false))
+                .build();
+    }
+
     public static ResponseSpecification expectGetTokenResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectBody("response.accessToken", notNullValue())
