@@ -186,4 +186,45 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidFirstAndLastNamesDataForAdminRegistration")
+    public Object[][] invalidFirstAndLastNamesDataForAdminRegistration() {
+        return new Object[][]{
+                {"", "must not be blank"},
+                {null, "must not be blank"},
+                {"       ", "must not be blank"},
+                {" firstName", "NAME MUST NOT START OR END WITH WHITESPACE"},
+                {"25", "MUST BE VALID"},
+                {"firstName ", "NAME MUST NOT START OR END WITH WHITESPACE"},
+                {"firstName*", "MUST BE VALID"},
+                {"F", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
+                {".a", "MUST BE VALID"},
+                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"}
+
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidEmailForAdminRegistration")
+    public Object[][] invalidEmailForAdminRegistration() {
+        return new Object[][]{
+                {"", "must not be blank"},
+                {null, "must not be blank"},
+                {"  ", "must not be blank"},
+                {"abc", "MUST BE VALID"},
+                {"abcgmail.com", "MUST BE VALID"},
+                {"abc@gmail", "MUST BE VALID"}
+
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidPhoneNumberDataForRegistrationComplete")
+    public static Object[][] invalidPhoneNumberDataForRegistrationComplete() {
+        return new Object[][]{
+                {"", "1234567890", "must not be blank", "countryCode", "String"},
+                {"12345", "1234567890", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "", "must not be blank", "lineNumber", "String"},
+                {"90", "12345", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "1234567890123456", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"}
+        };
+    }
+
 }

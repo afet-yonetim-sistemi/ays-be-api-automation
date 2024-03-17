@@ -4,9 +4,13 @@ import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.ApplicationRegistrationSupportStatus;
 import org.ays.payload.Assignment;
+import org.ays.payload.Filter;
+import org.ays.payload.Pagination;
 import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyAssignments;
+import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
@@ -251,6 +255,16 @@ public class InstitutionEndpoints {
         }
     }
 
+    public static String generateApplicationIDForCompletedStatus() {
+        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(Pagination.generateFirstPage(), Filter.generate(ApplicationRegistrationSupportStatus.COMPLETED));
+        Response response = postRegistrationApplications(requestBodyInstitution);
+        if (response.getStatusCode() == 200) {
+            return response.then().extract().jsonPath().getString("response.content[0].id");
+        } else {
+            throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
     public static UserCredentials generateANewUser() {
         User user = User.generate();
         Response response = createAUser(user);
@@ -282,10 +296,17 @@ public class InstitutionEndpoints {
         }
     }
 
+    public static Response postRegistrationApplicationIDComplete(String applicationID, RegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/admin/registration-application/{id}/complete")
+                .pathParameter(Map.of("id", applicationID))
+                .body(requestBodyForRegistrationComplete)
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
 }
-
-
-
-
-
-
