@@ -307,13 +307,6 @@ public class InstitutionEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
-
     }
 
 }
-
-
-
-
-
-

@@ -18,15 +18,15 @@ public class RegistrationApplicationCompletePayload {
 
     public static RegistrationApplicationCompletePayload generate() {
 
-        RegistrationApplicationCompletePayload registrationIDComplete = new RegistrationApplicationCompletePayload();
-        registrationIDComplete.setUsername(AysRandomUtil.generateUsername());
-        registrationIDComplete.setEmail(AysRandomUtil.generateEmailAddress());
-        registrationIDComplete.setPassword(AysRandomUtil.generatePassword());
-        registrationIDComplete.setFirstName(AysRandomUtil.generateFirstName());
-        registrationIDComplete.setLastName(AysRandomUtil.generateLastName());
-        registrationIDComplete.setPhoneNumber(PhoneNumber.generateForTurkey());
+        RegistrationApplicationCompletePayload completePayload = new RegistrationApplicationCompletePayload();
+        completePayload.setUsername(AysRandomUtil.generateUsername());
+        completePayload.setEmail(AysRandomUtil.generateEmailAddress());
+        completePayload.setPassword(AysRandomUtil.generatePassword());
+        completePayload.setFirstName(AysRandomUtil.generateFirstName());
+        completePayload.setLastName(AysRandomUtil.generateLastName());
+        completePayload.setPhoneNumber(PhoneNumber.generateForTurkey());
 
-        return registrationIDComplete;
+        return completePayload;
     }
 
 }
