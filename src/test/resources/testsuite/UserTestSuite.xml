@@ -8,15 +8,6 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentSummaryTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.GetAssignmentTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentApproveTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCancelTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentCompleteTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentRejectTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentSearchTest"/>
-            <class name="org.ays.tests.user.assignmentmanagementservice.PostAssignmentStartTest"/>
-            <class name="org.ays.tests.user.locationmanagementservice.PostUserLocationTest"/>
             <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"/>
             <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"/>
         </classes>

@@ -5,12 +5,10 @@ import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.ApplicationRegistrationSupportStatus;
-import org.ays.payload.Assignment;
 import org.ays.payload.Filter;
 import org.ays.payload.Pagination;
-import org.ays.payload.RejectReason;
-import org.ays.payload.RequestBodyAssignments;
 import org.ays.payload.RegistrationApplicationCompletePayload;
+import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
@@ -92,67 +90,6 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response listAssignments(RequestBodyAssignments bodyAssignments) {
-
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/assignments")
-                .body(bodyAssignments)
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response createAnAssignment(Assignment assignment) {
-
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/assignment")
-                .body(assignment)
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response getAssignment(String assignmentId) {
-
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
-                .httpMethod(HttpMethod.GET)
-                .url("/api/v1/assignment/{id}")
-                .pathParameter(Map.of("id", assignmentId))
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response updateAssignment(String assignmentId, Assignment assignment) {
-
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
-                .httpMethod(HttpMethod.PUT)
-                .url("/api/v1/assignment/{id}")
-                .pathParameter(Map.of("id", assignmentId))
-                .body(assignment)
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response deleteAssignment(String assignmentId) {
-
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
-                .httpMethod(HttpMethod.DELETE)
-                .url("/api/v1/assignment/{id}")
-                .pathParameter(Map.of("id", assignmentId))
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
@@ -283,16 +220,6 @@ public class InstitutionEndpoints {
                     .extract().jsonPath().getObject("response", UserCredentials.class);
         } else {
             throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static Assignment generateANewAssignment() {
-        Assignment assignment = Assignment.generate();
-        Response response = createAnAssignment(assignment);
-        if (response.getStatusCode() == 200) {
-            return assignment;
-        } else {
-            throw new RuntimeException("Assignment creation failed with status code: " + response.getStatusCode());
         }
     }
 
