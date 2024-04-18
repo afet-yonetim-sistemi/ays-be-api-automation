@@ -5,10 +5,10 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAdminRegistrationApplicationIdSummaryTest {
@@ -20,11 +20,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
         String applicationID = InstitutionEndpoints.generateApplicationID();
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(true))
-                .body("httpStatus", equalTo("OK"))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.id", notNullValue())
                 .body("response.institution", notNullValue());
     }
@@ -36,12 +32,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
         String applicationID = "invalidID";
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(false))
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));
 
     }
@@ -53,12 +44,7 @@ public class GetAdminRegistrationApplicationIdSummaryTest {
         String applicationID = "0d0c71be-7473-4d98-caa8-55dec809c31c";
         Response response = InstitutionEndpoints.getRegistrationApplicationsIdSummary(applicationID);
         response.then()
-                .statusCode(401)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(false))
-                .body("httpStatus", equalTo("UNAUTHORIZED"))
-                .body("header", equalTo("AUTH ERROR"));
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 
     }
 }

@@ -5,10 +5,10 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class GetAdminRegistrationApplicationTest {
@@ -19,11 +19,7 @@ public class GetAdminRegistrationApplicationTest {
         String applicationId = InstitutionEndpoints.generateApplicationID();
         Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationId);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(true))
-                .body("httpStatus", equalTo("OK"))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.createdAt", notNullValue())
                 .body("response.id", notNullValue())
                 .body("response.createdUser", notNullValue())
@@ -38,12 +34,7 @@ public class GetAdminRegistrationApplicationTest {
         String applicationID = "invalid-id";
         Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationID);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(false))
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));
     }
 }

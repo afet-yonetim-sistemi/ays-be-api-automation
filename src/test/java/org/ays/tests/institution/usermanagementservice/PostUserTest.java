@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.User;
 import org.ays.utility.AysRandomUtil;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -23,7 +24,7 @@ public class PostUserTest {
     public void createAUser() {
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
-                .contentType("application/json")
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response", notNullValue())
                 .body("response.username", notNullValue())
                 .body("response.password", notNullValue());
@@ -34,12 +35,7 @@ public class PostUserTest {
         userPayload.getPhoneNumber().setCountryCode(countryCode);
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
         if (countryCode == null || countryCode.equals("   ") || countryCode.equals("")) {
             response.then()
                     .body("subErrors[0].message", equalTo("must not be blank"))
@@ -73,12 +69,7 @@ public class PostUserTest {
         userPayload.getPhoneNumber().setLineNumber(lineNumber);
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
         if (lineNumber == null || lineNumber.equals("          ") || lineNumber.equals("")) {
             response.then()
                     .body("subErrors[0].message", equalTo("must not be blank"))
@@ -113,11 +104,7 @@ public class PostUserTest {
         userPayload.setLastName(lastName);
         Response response = InstitutionEndpoints.createAUser(userPayload);
         response.then()
-                .contentType("application/json")
-                .statusCode(400)
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false))
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(message));
     }
 

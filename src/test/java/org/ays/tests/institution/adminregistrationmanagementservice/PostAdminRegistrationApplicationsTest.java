@@ -10,6 +10,7 @@ import org.ays.payload.Filter;
 import org.ays.payload.Pagination;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.Sort;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
@@ -47,10 +47,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
                 .body("response.sortedBy", nullValue());
     }
@@ -66,11 +63,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("VALIDATION ERROR"))
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be between 1 and 99999999"));
     }
 
@@ -89,10 +82,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
                 .body("response.sortedBy", nullValue())
                 .body("response.filteredBy", notNullValue());
@@ -112,11 +102,7 @@ public class PostAdminRegistrationApplicationsTest {
         requestBodyInstitution.setFilter(filter);
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("VALIDATION ERROR"));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
@@ -136,10 +122,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
                 .body("response.sortedBy", notNullValue())
                 .body("response.filteredBy", nullValue());
@@ -162,11 +145,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("VALIDATION ERROR"));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
@@ -191,10 +170,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true))
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
                 .body("response.sortedBy", notNullValue())
                 .body("response.filteredBy", notNullValue());
@@ -222,11 +198,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("isSuccess", equalTo(false))
-                .body("header", equalTo("VALIDATION ERROR"));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
 

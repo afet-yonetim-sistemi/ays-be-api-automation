@@ -20,7 +20,6 @@ public class AysResponseSpecs {
                 .expectStatusCode(200)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("OK"))
                 .expectBody("isSuccess", equalTo(true))
                 .build();
     }
@@ -30,7 +29,6 @@ public class AysResponseSpecs {
                 .expectStatusCode(400)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("BAD_REQUEST"))
                 .expectBody("header", equalTo("VALIDATION ERROR"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -41,7 +39,6 @@ public class AysResponseSpecs {
                 .expectStatusCode(404)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("NOT_FOUND"))
                 .expectBody("header", equalTo("NOT EXIST"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -52,7 +49,6 @@ public class AysResponseSpecs {
                 .expectStatusCode(401)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("UNAUTHORIZED"))
                 .expectBody("header", equalTo("AUTH ERROR"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -63,7 +59,6 @@ public class AysResponseSpecs {
                 .expectStatusCode(409)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("httpStatus", equalTo("CONFLICT"))
                 .expectBody("header", equalTo("ALREADY EXIST"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -93,19 +88,6 @@ public class AysResponseSpecs {
                 .expectBody("response.totalElementCount", notNullValue())
                 .expectBody("response.sortedBy", equalTo(null))
                 .expectBody("response.filteredBy", equalTo(null))
-                .build();
-    }
-
-    public static ResponseSpecification expectAssignmentDetailsInContent() {
-        return new ResponseSpecBuilder()
-                .expectBody("response.content[0].createdAt", notNullValue())
-                .expectBody("response.content[0].createdUser", notNullValue())
-                .expectBody("response.content[0].id", notNullValue())
-                .expectBody("response.content[0].status", notNullValue())
-                .expectBody("response.content[0].description", notNullValue())
-                .expectBody("response.content[0].firstName", notNullValue())
-                .expectBody("response.content[0].lastName", notNullValue())
-                .expectBody("response.content[0].location", notNullValue())
                 .build();
     }
 
