@@ -2,6 +2,7 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.payload.ApplicationStatus;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
 import org.ays.utility.AysResponseSpecs;
@@ -20,7 +21,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
         Response getStatus = InstitutionEndpoints.getRegistrationApplicationId(applicationId);
         getStatus.then()
-                .body("response.status", equalTo("REJECTED"));
+                .body("response.status", equalTo(ApplicationStatus.REJECTED.toString()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"}, enabled = false)
