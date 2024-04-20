@@ -1,6 +1,6 @@
 package org.ays.payload;
 
-public enum ApplicationStatus {
+public enum AdminUserRegistrationApplicationStatus {
     REJECTED,
     WAITING,
     COMPLETED,
