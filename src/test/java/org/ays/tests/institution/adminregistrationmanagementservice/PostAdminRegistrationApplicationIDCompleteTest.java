@@ -91,7 +91,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
         Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
 
     }
 

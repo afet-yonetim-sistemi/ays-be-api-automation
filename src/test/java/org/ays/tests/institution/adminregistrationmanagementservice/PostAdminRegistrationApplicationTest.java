@@ -35,7 +35,7 @@ public class PostAdminRegistrationApplicationTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
         application = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
         Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);

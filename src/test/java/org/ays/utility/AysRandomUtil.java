@@ -19,10 +19,6 @@ public class AysRandomUtil {
         return FAKER.name().lastName();
     }
 
-    public static String generateDescription() {
-        return FAKER.commerce().productName();
-    }
-
     public static String generateUsername() {
         return FAKER.name().username();
     }
@@ -33,19 +29,6 @@ public class AysRandomUtil {
 
     public static String generatePassword() {
         return FAKER.internet().password();
-    }
-
-    public static String generateString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/";
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            int randomIndex = RANDOM.nextInt(characters.length());
-            char randomChar = characters.charAt(randomIndex);
-            builder.append(randomChar);
-        }
-
-        return builder.toString();
     }
 
     public static String generateReasonString() {
@@ -94,24 +77,8 @@ public class AysRandomUtil {
         return false;
     }
 
-    public static double generateLatitudeForTurkey() {
-        return 38 + (40 - 38) * RANDOM.nextDouble();
-    }
-
-    public static double generateLatitude(double minLat, double maxLat) {
-        return minLat + (maxLat - minLat) * RANDOM.nextDouble();
-    }
-
-    public static double generateLongitudeForTurkey() {
-        return 28 + (43 - 28) * RANDOM.nextDouble();
-    }
-
-    public static double generateLongitude(double minLon, double maxLon) {
-        return minLon + (maxLon - minLon) * RANDOM.nextDouble();
-    }
-
-    public static double generateRandomCoordinate(int min, int max) {
-        return min + (max - min) * RANDOM.nextDouble();
+    public static String generateRejectionReason() {
+        return FAKER.lorem().characters(50, 100);
     }
 
 }

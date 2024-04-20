@@ -5,10 +5,9 @@ import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
+import org.ays.utility.AysResponseSpecs;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static org.hamcrest.Matchers.equalTo;
 
 public class PutUserTest {
     String userID;
@@ -26,10 +25,7 @@ public class PutUserTest {
         user.setRole("VOLUNTEER");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
         Assert.assertEquals(user.getStatus(), "PASSIVE");
 
     }
@@ -49,11 +45,7 @@ public class PutUserTest {
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .log().body()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("OK"))
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
         Assert.assertEquals(user.getStatus(), "ACTIVE");
     }
 
@@ -70,11 +62,7 @@ public class PutUserTest {
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
     @Test(groups = {"Regression", "Institution"})
@@ -90,11 +78,7 @@ public class PutUserTest {
         user.setStatus("ACTIVE");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
     @Test(groups = {"Regression", "Institution"})
@@ -110,10 +94,6 @@ public class PutUserTest {
         user.setStatus("");
         Response response = InstitutionEndpoints.updateUser(userID, user);
         response.then()
-                .statusCode(400)
-                .contentType("application/json")
-                .body("httpStatus", equalTo("BAD_REQUEST"))
-                .body("header", equalTo("VALIDATION ERROR"))
-                .body("isSuccess", equalTo(false));
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 }
