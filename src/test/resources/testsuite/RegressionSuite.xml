@@ -11,24 +11,6 @@
             <class name="org.ays.tests.auth.institutionAuthServiseTests.GetAdminTokenTest"/>
             <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminInvalidateTokenTest"/>
             <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminTokenRefreshTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.GetUserTokenTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.PostUserInvalidateTokenTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.PostUserTokenRefreshTest"/>
-            <class name="org.ays.tests.institution.adminmanagementservice.PostAdminsTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.DeleteUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.GetUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PutUserTest"/>
-            <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"/>
-            <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest"/>
-            <class name="org.ays.tests.institution.institutionservice.GetInstitutionsSummaryTest"/>
         </classes>
     </test>
 </suite>

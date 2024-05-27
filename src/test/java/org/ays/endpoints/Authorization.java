@@ -11,7 +11,7 @@ public class Authorization {
 
     public static String loginAndGetSuperAdminAccessToken() {
         AdminCredentials superAdminCredentials = new AdminCredentials();
-        superAdminCredentials.setUsername(AysConfigurationProperty.SuperAdminUserOne.USERNAME);
+        superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL);
         superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(superAdminCredentials);
@@ -26,7 +26,7 @@ public class Authorization {
     public static String loginAndGetAdminAccessToken() {
 
         AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
