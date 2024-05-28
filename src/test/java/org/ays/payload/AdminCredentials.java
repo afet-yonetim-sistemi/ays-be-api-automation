@@ -14,7 +14,7 @@ public class AdminCredentials {
 
     public static AdminCredentials generate() {
         AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
 
