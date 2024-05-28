@@ -1,7 +1,6 @@
-package org.ays.tests.auth.userAuthServiceTests;
+package org.ays.tests.auth.landingAuthServiceTests;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.payload.Token;
 import org.ays.payload.TokenRefreshPayload;
@@ -12,7 +11,7 @@ import org.testng.annotations.Test;
 public class PostUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userInvalidateToken() {
-        UserCredentials userCredentials = InstitutionEndpoints.generateANewUser();
+        UserCredentials userCredentials = UserCredentials.generate();
         Token token = Token.generateUserToken(userCredentials);
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());

@@ -3,6 +3,7 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.payload.AdminCredentials;
+import org.ays.payload.SourcePage;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -32,9 +33,36 @@ public class GetAdminTokenTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
+    public void getUserTokenWithUnAuthUserEmailAddress() {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        adminCredentials.setEmailAddress("email@gmail.com");
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
+    }
+
+    @Test(groups = {"Regression", "Institution"})
     public void getTokenWithInvalidPassword() {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         adminCredentials.setPassword("1234");
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
+    }
+
+    @Test(groups = {"Regression", "Institution"})
+    public void getUserTokenWithNullPassword() {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        adminCredentials.setPassword(null);
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
+    }
+
+    @Test(groups = {"Regression", "Institution"})
+    public void getUserTokenWithUnAuthSourcePage() {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        adminCredentials.setSourcePage(SourcePage.LANDING);
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());

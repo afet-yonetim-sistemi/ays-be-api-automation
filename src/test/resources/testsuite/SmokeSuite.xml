@@ -11,9 +11,9 @@
             <class name="org.ays.tests.auth.institutionAuthServiseTests.GetAdminTokenTest"/>
             <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminInvalidateTokenTest"/>
             <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminTokenRefreshTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.GetUserTokenTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.PostUserInvalidateTokenTest"/>
-            <class name="org.ays.tests.auth.userAuthServiceTests.PostUserTokenRefreshTest"/>
+            <class name="org.ays.tests.auth.landingAuthServiceTests.GetUserTokenTest"/>
+            <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserInvalidateTokenTest"/>
+            <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserTokenRefreshTest"/>
             <class name="org.ays.tests.institution.adminmanagementservice.PostAdminsTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest"/>

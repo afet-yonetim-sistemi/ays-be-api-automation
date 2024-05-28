@@ -1,26 +1,19 @@
-package org.ays.tests.auth.userAuthServiceTests;
+package org.ays.tests.auth.landingAuthServiceTests;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.payload.Token;
 import org.ays.payload.TokenRefreshPayload;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysResponseSpecs;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PostUserTokenRefreshTest {
-    UserCredentials userCredentials;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setup() {
-        userCredentials = InstitutionEndpoints.generateANewUser();
-    }
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userTokenRefresh() {
+        UserCredentials userCredentials = UserCredentials.generate();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         Response loginResponse = UserAuthEndpoints.getUserToken(userCredentials);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -34,6 +27,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Regression", "User"})
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
+        UserCredentials userCredentials = UserCredentials.generate();
         Token token = Token.generateUserToken(userCredentials);
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());

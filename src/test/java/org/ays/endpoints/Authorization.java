@@ -40,7 +40,7 @@ public class Authorization {
 
     public static String loginAndGetUserAccessToken(String username, String password) {
         UserCredentials userCredentials = new UserCredentials();
-        userCredentials.setUsername(username);
+        userCredentials.setEmailAddress(username);
         userCredentials.setPassword(password);
 
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
