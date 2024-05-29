@@ -8,13 +8,16 @@ import org.ays.utility.AysConfigurationProperty;
 @Setter
 public class AdminCredentials {
 
-    private String username;
+    private String emailAddress;
     private String password;
+    private SourcePage sourcePage;
 
     public static AdminCredentials generate() {
         AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setUsername(AysConfigurationProperty.InstitutionOne.AdminUserOne.USERNAME);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
+        adminCredentials.setSourcePage(SourcePage.INSTITUTION);
+
         return adminCredentials;
     }
 

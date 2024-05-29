@@ -28,6 +28,14 @@ public class Token {
         token.setAccessToken(response.jsonPath().getString("response.accessToken"));
         token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
         return token;
-
     }
+
+    public static Token generateSuperAdminToken(SuperAdminCredentials superAdminCredentials) {
+        Token token = new Token();
+        Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
+        token.setAccessToken(response.jsonPath().getString("response.accessToken"));
+        token.setRefreshToken(response.jsonPath().getString("response.refreshToken"));
+        return token;
+    }
+
 }

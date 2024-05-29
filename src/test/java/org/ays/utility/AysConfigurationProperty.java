@@ -37,7 +37,7 @@ public class AysConfigurationProperty {
     }
 
     public static class SuperAdminUserOne {
-        public static final String USERNAME = PROPERTIES.getProperty("institution.super_admin_user_one.username");
+        public static final String EMAIL_ADDRESS = PROPERTIES.getProperty("institution.super_admin_user_one.email_address");
         public static final String PASSWORD = PROPERTIES.getProperty("institution.super_admin_user_one.password");
     }
 
@@ -45,9 +45,14 @@ public class AysConfigurationProperty {
         public static final String ID = PROPERTIES.getProperty("institution_one.id");
 
         public static class AdminUserOne {
-            public static final String USERNAME = PROPERTIES.getProperty("institution_one.admin_user_one.username");
+            public static final String EMAIL_ADDRESS = PROPERTIES.getProperty("institution_one.admin_user_one.email_address");
             public static final String PASSWORD = PROPERTIES.getProperty("institution_one.admin_user_one.password");
         }
+    }
+
+    public static class LandingUserOne {
+        public static final String EMAIL_ADDRESS = PROPERTIES.getProperty("landing.user_one.email_address");
+        public static final String PASSWORD = PROPERTIES.getProperty("landing.user_one.password");
     }
 
     private static class AysConfigurationException extends RuntimeException {

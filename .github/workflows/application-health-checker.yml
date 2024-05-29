@@ -43,8 +43,8 @@ jobs:
       - name: Replace database.password in configuration.properties # Step to replace the placeholder database.password in configuration.properties
         run: sed 's|'{DATABASE_PASSWORD}'|'${{ secrets.AYS_DATABASE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
-      - name: Replace institution.super_admin_user_one.username in configuration.properties # Step to replace the placeholder institution.super_admin_user_one.username in configuration.properties
-        run: sed 's|'{INSTITUTION_SUPER_ADMIN_USER_ONE_USERNAME}'|'${{ secrets.AYS_INSTITUTION_SUPER_ADMIN_USER_ONE_USERNAME }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+      - name: Replace institution.super_admin_user_one.emailAddress in configuration.properties # Step to replace the placeholder institution.super_admin_user_one.username in configuration.properties
+        run: sed 's|'{INSTITUTION_SUPER_ADMIN_USER_ONE_EMAIL_ADDRESS}'|'${{ secrets.AYS_INSTITUTION_SUPER_ADMIN_USER_ONE_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
       - name: Replace institution.super_admin_user_one.password in configuration.properties # Step to replace the placeholder institution.super_admin_user_one.password in configuration.properties
         run: sed 's|'{INSTITUTION_SUPER_ADMIN_USER_ONE_PASSWORD}'|'${{ secrets.AYS_INSTITUTION_SUPER_ADMIN_USER_ONE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
@@ -52,11 +52,17 @@ jobs:
       - name: Replace institution_one.id in configuration.properties # Step to replace the placeholder institution_one.id in configuration.properties
         run: sed 's|'{INSTITUTION_ONE_ID}'|'${{ secrets.AYS_INSTITUTION_ONE_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
-      - name: Replace institution_one.admin_user_one.username in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.username in configuration.properties
-        run: sed 's|'{INSTITUTION_ONE_ADMIN_USER_ONE_USERNAME}'|'${{ secrets.AYS_INSTITUTION_ONE_ADMIN_USER_ONE_USERNAME }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+      - name: Replace institution_one.admin_user_one.emailAddress in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.username in configuration.properties
+        run: sed 's|'{INSTITUTION_ONE_ADMIN_USER_ONE_EMAIL_ADDRESS}'|'${{ secrets.AYS_INSTITUTION_ONE_ADMIN_USER_ONE_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
       - name: Replace institution_one.admin_user_one.password in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.password in configuration.properties
         run: sed 's|'{INSTITUTION_ONE_ADMIN_USER_ONE_PASSWORD}'|'${{ secrets.AYS_INSTITUTION_ONE_ADMIN_USER_ONE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+      - name: Replace landing.user_one.emailAddress in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.username in configuration.properties
+        run: sed 's|'{LANDING_USER_ONE_EMAIL_ADDRESS}'|'${{ secrets.AYS_LANDING_USER_ONE_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+      - name: Replace landing.user_one.password in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.password in configuration.properties
+        run: sed 's|'{LANDING_USER_ONE_PASSWORD}'|'${{ secrets.AYS_LANDING_USER_ONE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
 
       - name: Build with Maven # Step to build the project with Maven

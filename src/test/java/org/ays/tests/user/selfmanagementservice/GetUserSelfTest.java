@@ -27,7 +27,7 @@ public class GetUserSelfTest {
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
 
-        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getEmailAddress(), userCredentials.getPassword());
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.username", notNullValue())
@@ -54,7 +54,7 @@ public class GetUserSelfTest {
         user.setStatus("PASSIVE");
         user.setRole("VOLUNTEER");
         InstitutionEndpoints.updateUser(userID, user);
-        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getUsername(), userCredentials.getPassword());
+        Response response = UserEndpoints.getUserSelfInfo(userCredentials.getEmailAddress(), userCredentials.getPassword());
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 

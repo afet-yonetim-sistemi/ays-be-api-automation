@@ -25,7 +25,7 @@ public class PutUserSelfStatusSupportTest {
         UserSupportStatus userSupportStatus = UserSupportStatus.valueOf(toStatus);
         Response response = UserEndpoints.updateSupportStatus(
                 new UserSupportStatusUpdatePayload(userSupportStatus),
-                userCredentials.getUsername(),
+                userCredentials.getEmailAddress(),
                 userCredentials.getPassword()
         );
         response.then()

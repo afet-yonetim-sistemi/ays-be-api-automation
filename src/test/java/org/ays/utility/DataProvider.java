@@ -227,4 +227,17 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddressForGetAdminToken")
+    public static Object[][] invalidEmailAddressForGetAdminToken() {
+        return new Object[][]{
+                {"", "must not be blank", "emailAddress", "String"},
+                {null, "must not be blank", "emailAddress", "String"},
+                {"  ", "must not be blank", "emailAddress", "String"},
+                {"abc", "MUST BE VALID", "emailAddress", "String"},
+                {"abcgmail.com", "MUST BE VALID", "emailAddress", "String"},
+                {"abc@gmail", "MUST BE VALID", "emailAddress", "String"}
+
+        };
+    }
+
 }
