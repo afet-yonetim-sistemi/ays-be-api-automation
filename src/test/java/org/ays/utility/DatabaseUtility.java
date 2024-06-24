@@ -2,11 +2,9 @@ package org.ays.utility;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class DatabaseUtility {
@@ -35,4 +33,40 @@ public class DatabaseUtility {
         }
     }
 
+    public static List<String> getColumNameFromTableWhereValueIs(String columnName, String tableName) {
+        return getColumNameFromTableWhereValueIs(columnName, tableName, null, null);
+    }
+
+    // Overloaded method to fetch column values from a table with a WHERE clause
+    public static List<String> getColumNameFromTableWhereValueIs(String columnName, String tableName, String filterName, Object filterValue) {
+        List<String> valuesInColumn = new ArrayList<>();
+
+        String query = "SELECT " + columnName + " FROM " + tableName;
+
+        if (filterName != null && filterValue != null) {
+            query += " WHERE " + filterName + " = ?";
+        }
+
+        try {
+            // Ensure the connection is established
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                if (filterName != null && filterValue != null) {
+                    preparedStatement.setObject(1, filterValue);
+                }
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        valuesInColumn.add(resultSet.getString(columnName));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return valuesInColumn;
+    }
 }

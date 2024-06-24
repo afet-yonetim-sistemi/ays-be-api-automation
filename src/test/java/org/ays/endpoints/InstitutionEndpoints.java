@@ -236,4 +236,26 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response getAdminsPermissions() {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url("/api/v1/permissions")
+                .token(Authorization.loginAndGetAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response getSuperAdminsPermissions() {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.GET)
+                .url("/api/v1/permissions")
+                .token(Authorization.loginAndGetSuperAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
 }
