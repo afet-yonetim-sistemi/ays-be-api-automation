@@ -17,6 +17,7 @@
             <class name="org.ays.tests.auth.landingAuthServiceTests.GetUserTokenTest"/>
             <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserInvalidateTokenTest"/>
             <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserTokenRefreshTest"/>
+            <class name="org.ays.tests.institution.permissionService.GetPermissionsTest"/>
         </classes>
     </test>
 </suite>

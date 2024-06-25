@@ -3,6 +3,7 @@ package org.ays.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminCredentials;
+import org.ays.payload.SourcePage;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysConfigurationProperty;
 
@@ -13,6 +14,7 @@ public class Authorization {
         AdminCredentials superAdminCredentials = new AdminCredentials();
         superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL_ADDRESS);
         superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
+        superAdminCredentials.setSourcePage(SourcePage.INSTITUTION);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(superAdminCredentials);
 
@@ -28,6 +30,7 @@ public class Authorization {
         AdminCredentials adminCredentials = new AdminCredentials();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
+        adminCredentials.setSourcePage(SourcePage.INSTITUTION);
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 

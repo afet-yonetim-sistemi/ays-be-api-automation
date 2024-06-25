@@ -29,6 +29,7 @@
             <class name="org.ays.tests.user.selfmanagementservice.GetUserSelfTest"/>
             <class name="org.ays.tests.user.selfmanagementservice.PutUserSelfStatusSupportTest"/>
             <class name="org.ays.tests.institution.institutionservice.GetInstitutionsSummaryTest"/>
+            <class name="org.ays.tests.institution.permissionService.GetPermissionsTest"/>
         </classes>
     </test>
 </suite>

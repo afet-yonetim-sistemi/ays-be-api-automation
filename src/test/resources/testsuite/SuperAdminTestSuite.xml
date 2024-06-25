@@ -14,6 +14,7 @@
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest"/>
             <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest"/>
+            <class name="org.ays.tests.institution.permissionService.GetPermissionsTest"/>
         </classes>
     </test>
 </suite>
