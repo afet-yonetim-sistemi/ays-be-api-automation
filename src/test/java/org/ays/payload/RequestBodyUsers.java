@@ -8,13 +8,13 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestBodyUsers {
-    private Pagination pagination;
+    private Pageable pageable;
     private UsersFilter filter;
-    private List<Sort> sort;
+    private List<Orders> orders;
 
     public static RequestBodyUsers generate(PhoneNumber phoneNumber) {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPagination(Pagination.generateFirstPage());
+        requestBodyUsers.setPageable(Pageable.generateFirstPage());
         UsersFilter filters = new UsersFilter();
         filters.setPhoneNumber(phoneNumber);
         requestBodyUsers.setFilter(filters);

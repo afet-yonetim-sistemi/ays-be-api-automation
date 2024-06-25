@@ -13,7 +13,7 @@ public class UserAuthEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v2/authentication/token")
+                .url("/api/v1/authentication/token")
                 .body(userCredentials)
                 .build();
 
@@ -24,7 +24,7 @@ public class UserAuthEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v2/authentication/token/refresh")
+                .url("/api/v1/authentication/token/refresh")
                 .body(tokenRefreshPayload)
                 .build();
 
@@ -35,7 +35,7 @@ public class UserAuthEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v2/authentication/token/invalidate")
+                .url("/api/v1/authentication/token/invalidate")
                 .body(tokenRefreshPayload)
                 .token(accessToken)
                 .build();
