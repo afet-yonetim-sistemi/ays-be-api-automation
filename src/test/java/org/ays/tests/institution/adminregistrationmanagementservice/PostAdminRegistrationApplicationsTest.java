@@ -7,9 +7,9 @@ import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Filter;
-import org.ays.payload.Pagination;
+import org.ays.payload.Orders;
+import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyInstitution;
-import org.ays.payload.Sort;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -24,25 +24,25 @@ import static org.hamcrest.Matchers.nullValue;
 
 public class PostAdminRegistrationApplicationsTest {
     RequestBodyInstitution requestBodyInstitution;
-    Pagination pagination;
+    Pageable pageable;
     Filter filter;
-    Sort sort;
+    Orders orders;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyInstitution = new RequestBodyInstitution();
-        pagination = new Pagination();
+        pageable = new Pageable();
         filter = new Filter();
-        sort = new Sort();
+        orders = new Orders();
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPagination() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
@@ -56,9 +56,9 @@ public class PostAdminRegistrationApplicationsTest {
     @Story("As a super admin I want to get proper error message when I request to pagination with invalid data")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPaginationNegative(int page, int pageSize) {
-        pagination.setPage(page);
-        pagination.setPageSize(pageSize);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(page);
+        pageable.setPageSize(pageSize);
+        requestBodyInstitution.setPageable(pageable);
 
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
@@ -71,9 +71,9 @@ public class PostAdminRegistrationApplicationsTest {
     @Story("As a super admin I want to list administrator registration applications with request to pagination and filter")
     @Severity(SeverityLevel.NORMAL)
     public void postRegistrationApplicationsWithPaginationAndFilter() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
         List<String> newStatuses = new ArrayList<>();
         newStatuses.add("WAITING");
@@ -93,9 +93,9 @@ public class PostAdminRegistrationApplicationsTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and filter with invalid statuses value")
     public void postRegistrationApplicationsWithPaginationAndFilterNegative() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
         List<String> statuses = new ArrayList<>();
         statuses.add("WAIT");
         filter.setStatuses(statuses);
@@ -110,15 +110,15 @@ public class PostAdminRegistrationApplicationsTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and sort with Authorization")
     public void postRegistrationApplicationsWithPaginationAndSort() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
-        sort.setProperty("createdAt");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
+        orders.setProperty("createdAt");
+        orders.setDirection("ASC");
+        List<Orders> newOrders = new ArrayList<>();
+        newOrders.add(orders);
+        requestBodyInstitution.setOrders(newOrders);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
@@ -133,15 +133,15 @@ public class PostAdminRegistrationApplicationsTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination and invalid sort value with Authorization")
     public void postRegistrationApplicationsWithPaginationAndInvalidSort() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
-        sort.setProperty("created");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
+        orders.setProperty("created");
+        orders.setDirection("ASC");
+        List<Orders> newOrders = new ArrayList<>();
+        newOrders.add(orders);
+        requestBodyInstitution.setOrders(newOrders);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
@@ -153,20 +153,20 @@ public class PostAdminRegistrationApplicationsTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,sort and filter with Authorization")
     public void postRegistrationApplicationsWithPaginationSortFilter() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
         List<String> statuses = new ArrayList<>();
         statuses.add("WAITING");
         filter.setStatuses(statuses);
         requestBodyInstitution.setFilter(filter);
 
-        sort.setProperty("createdAt");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
+        orders.setProperty("createdAt");
+        orders.setDirection("ASC");
+        List<Orders> newOrders = new ArrayList<>();
+        newOrders.add(orders);
+        requestBodyInstitution.setOrders(newOrders);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
@@ -181,20 +181,20 @@ public class PostAdminRegistrationApplicationsTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Pagination,invalid sort and invalid filter with Authorization")
     public void postRegistrationApplicationsWithPaginationInvalidSortInvalidFilter() {
-        pagination.setPage(1);
-        pagination.setPageSize(10);
-        requestBodyInstitution.setPagination(pagination);
+        pageable.setPage(1);
+        pageable.setPageSize(10);
+        requestBodyInstitution.setPageable(pageable);
 
         List<String> statuses = new ArrayList<>();
         statuses.add("WAIT");
         filter.setStatuses(statuses);
         requestBodyInstitution.setFilter(filter);
 
-        sort.setProperty("");
-        sort.setDirection("ASC");
-        List<Sort> newSort = new ArrayList<>();
-        newSort.add(sort);
-        requestBodyInstitution.setSort(newSort);
+        orders.setProperty("");
+        orders.setDirection("ASC");
+        List<Orders> newOrders = new ArrayList<>();
+        newOrders.add(orders);
+        requestBodyInstitution.setOrders(newOrders);
 
         Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()

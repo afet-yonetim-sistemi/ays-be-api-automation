@@ -6,7 +6,7 @@ import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.ApplicationRegistrationSupportStatus;
 import org.ays.payload.Filter;
-import org.ays.payload.Pagination;
+import org.ays.payload.Pageable;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyInstitution;
@@ -193,7 +193,7 @@ public class InstitutionEndpoints {
     }
 
     public static String generateApplicationIDForCompletedStatus() {
-        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(Pagination.generateFirstPage(), Filter.generate(ApplicationRegistrationSupportStatus.COMPLETED));
+        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(Pageable.generateFirstPage(), Filter.generate(ApplicationRegistrationSupportStatus.COMPLETED));
         Response response = postRegistrationApplications(requestBodyInstitution);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.content[0].id");

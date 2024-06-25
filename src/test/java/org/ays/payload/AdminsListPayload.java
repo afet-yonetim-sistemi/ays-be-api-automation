@@ -6,11 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdminsListPayload {
-    Pagination pagination;
+    Pageable pageable;
 
-    public static AdminsListPayload generate(Pagination pagination) {
+    public static AdminsListPayload generate(Pageable pageable) {
         AdminsListPayload adminsListPayload = new AdminsListPayload();
-        adminsListPayload.setPagination(pagination);
+        adminsListPayload.setPageable(pageable);
         return adminsListPayload;
     }
 }

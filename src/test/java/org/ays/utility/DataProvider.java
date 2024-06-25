@@ -209,9 +209,9 @@ public class DataProvider {
                 {"", "must not be blank"},
                 {null, "must not be blank"},
                 {"  ", "must not be blank"},
-                {"abc", "MUST BE VALID"},
-                {"abcgmail.com", "MUST BE VALID"},
-                {"abc@gmail", "MUST BE VALID"}
+                {"abc", "must be valid"},
+                {"abcgmail.com", "must be valid"},
+                {"abc@gmail", "must be valid"}
 
         };
     }
@@ -222,8 +222,8 @@ public class DataProvider {
                 {"", "1234567890", "must not be blank", "countryCode", "String"},
                 {"12345", "1234567890", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"},
                 {"90", "", "must not be blank", "lineNumber", "String"},
-                {"90", "12345", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", "1234567890123456", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"}
+                {"90", "12345", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "1234567890123456", "must be valid", "phoneNumber", "AysPhoneNumberRequest"}
         };
     }
 
@@ -233,9 +233,9 @@ public class DataProvider {
                 {"", "must not be blank", "emailAddress", "String"},
                 {null, "must not be blank", "emailAddress", "String"},
                 {"  ", "must not be blank", "emailAddress", "String"},
-                {"abc", "MUST BE VALID", "emailAddress", "String"},
-                {"abcgmail.com", "MUST BE VALID", "emailAddress", "String"},
-                {"abc@gmail", "MUST BE VALID", "emailAddress", "String"}
+                {"abc", "must be valid", "emailAddress", "String"},
+                {"abcgmail.com", "must be valid", "emailAddress", "String"},
+                {"abc@gmail", "must be valid", "emailAddress", "String"}
 
         };
     }

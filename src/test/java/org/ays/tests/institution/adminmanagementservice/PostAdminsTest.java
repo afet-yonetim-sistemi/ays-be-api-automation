@@ -3,7 +3,7 @@ package org.ays.tests.institution.adminmanagementservice;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.AdminsListPayload;
-import org.ays.payload.Pagination;
+import org.ays.payload.Pageable;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
@@ -18,18 +18,18 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PostAdminsTest {
-    Pagination pagination;
+    Pageable pageable;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        pagination = new Pagination();
+        pageable = new Pageable();
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = org.ays.utility.DataProvider.class)
     public void listAdminsWithValidPageAndPageSize(int page, int pageSize) {
-        pagination.setPage(page);
-        pagination.setPageSize(pageSize);
-        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        pageable.setPage(page);
+        pageable.setPageSize(pageSize);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pageable));
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectDefaultListingDetails());
@@ -54,8 +54,8 @@ public class PostAdminsTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageValue() {
-        pagination.setPageSize(10);
-        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        pageable.setPageSize(10);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pageable));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -65,8 +65,8 @@ public class PostAdminsTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageSizeValue() {
-        pagination.setPage(1);
-        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        pageable.setPage(1);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pageable));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -76,7 +76,7 @@ public class PostAdminsTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void listAdminsWithNullPageAndPageSizeFields() {
-        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pageable));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
@@ -89,9 +89,9 @@ public class PostAdminsTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = org.ays.utility.DataProvider.class)
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {
-        pagination.setPage(page);
-        pagination.setPageSize(pageSize);
-        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pagination));
+        pageable.setPage(page);
+        pageable.setPageSize(pageSize);
+        Response response = InstitutionEndpoints.listAdmins(AdminsListPayload.generate(pageable));
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))

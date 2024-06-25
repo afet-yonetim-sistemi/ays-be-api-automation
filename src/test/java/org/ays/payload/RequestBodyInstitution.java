@@ -8,13 +8,13 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestBodyInstitution {
-    private Pagination pagination;
-    private List<Sort> sort;
+    private Pageable pageable;
+    private List<Orders> orders;
     private Filter filter;
 
-    public static RequestBodyInstitution generateFilter(Pagination pagination, Filter filter) {
+    public static RequestBodyInstitution generateFilter(Pageable pageable, Filter filter) {
         RequestBodyInstitution requestBodyInstitution = new RequestBodyInstitution();
-        requestBodyInstitution.setPagination(pagination);
+        requestBodyInstitution.setPageable(pageable);
         requestBodyInstitution.setFilter(filter);
 
         return requestBodyInstitution;
