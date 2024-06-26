@@ -275,10 +275,10 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "blankApplicantName")
     public static Object[][] blankApplicantName() {
         return new Object[][]{
-                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED, "String"},
-                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED, "String"},
-                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED, "String"},
-                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED, "String"},
+                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
         };
     }
 
