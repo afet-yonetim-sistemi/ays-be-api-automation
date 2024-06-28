@@ -94,8 +94,7 @@ public class AysRandomUtil {
     }
 
     public static int generateSeatingCount() {
-        Random rand = new Random();
-        return rand.nextInt(999) + 1;
+        return RANDOM.nextInt(999) + 1;
     }
 
 }
