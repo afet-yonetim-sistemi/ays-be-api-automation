@@ -220,7 +220,7 @@ public class DataProvider {
     public static Object[][] invalidPhoneNumberDataForRegistrationComplete() {
         return new Object[][]{
                 {"", "1234567890", "must not be blank", "countryCode", "String"},
-                {"12345", "1234567890", "MUST BE VALID", "phoneNumber", "AysPhoneNumberRequest"},
+                {"12345", "1234567890", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
                 {"90", "", "must not be blank", "lineNumber", "String"},
                 {"90", "12345", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
                 {"90", "1234567890123456", "must be valid", "phoneNumber", "AysPhoneNumberRequest"}
@@ -237,6 +237,109 @@ public class DataProvider {
                 {"abcgmail.com", "must be valid", "emailAddress", "String"},
                 {"abc@gmail", "must be valid", "emailAddress", "String"}
 
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidName")
+    public static Object[][] invalidName() {
+        return new Object[][]{
+                {"firstName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
+                {"firstName", "a", ErrorMessage.NAME_LENGTH, "String"},
+                {"firstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"firstName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
+                {"firstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
+                {"firstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
+                {"lastName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
+                {"lastName", "a", ErrorMessage.NAME_LENGTH, "String"},
+                {"lastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"lastName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
+                {"lastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
+                {"lastName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "applicantName")
+    public static Object[][] applicantName() {
+        return new Object[][]{
+                {"applicantFirstName", "a", ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantFirstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantFirstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
+                {"applicantFirstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
+                {"applicantLastName", "a", ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantLastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantLastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
+                {"applicantFirstName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "blankApplicantName")
+    public static Object[][] blankApplicantName() {
+        return new Object[][]{
+                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
+        };
+    }
+
+
+    @org.testng.annotations.DataProvider(name = "invalidSourceCityData")
+    public static Object[][] invalidSourceCityData() {
+        return new Object[][]{
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"},
+                {"City$Name", ErrorMessage.MUST_BE_VALID, "sourceCity", "String"},
+                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "sourceCity", "String"},
+                {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidSourceDistrictData")
+    public static Object[][] invalidSourceDistrictData() {
+        return new Object[][]{
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"},
+                {"District$Name", ErrorMessage.MUST_BE_VALID, "sourceDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "sourceDistrict", "String"},
+                {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidAddressData")
+    public static Object[][] invalidAddressData() {
+        return new Object[][]{
+                {"", ErrorMessage.SIZE_BETWEEN, "address", "String"},
+                {"Short", ErrorMessage.SIZE_BETWEEN, "address", "String"},
+                {"A".repeat(251), ErrorMessage.SIZE_BETWEEN, "address", "String"},
+                {"A", ErrorMessage.SIZE_BETWEEN, "address", "String"},
+                {"                      ", ErrorMessage.MUST_NOT_BE_BLANK, "address", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidSeatingCountData")
+    public static Object[][] invalidSeatingCountData() {
+        return new Object[][]{
+                {0, ErrorMessage.SEATING_COUNT_BETWEEN, "seatingCount", "Integer"},
+                {-1, ErrorMessage.SEATING_COUNT_BETWEEN, "seatingCount", "Integer"},
+                {1000, ErrorMessage.SEATING_COUNT_BETWEEN, "seatingCount", "Integer"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidTargetCityData")
+    public static Object[][] invalidTargetCityData() {
+        return new Object[][]{
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"},
+                {"City$Name", ErrorMessage.MUST_BE_VALID, "targetCity", "String"},
+                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "targetCity", "String"},
+                {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidTargetDistrictData")
+    public static Object[][] invalidTargetDistrictData() {
+        return new Object[][]{
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"},
+                {"District$Name", ErrorMessage.MUST_BE_VALID, "targetDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "targetDistrict", "String"},
+                {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"}
         };
     }
 

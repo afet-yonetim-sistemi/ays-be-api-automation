@@ -81,4 +81,20 @@ public class AysRandomUtil {
         return FAKER.lorem().characters(50, 100);
     }
 
+    public static String generateRandomCity() {
+        return FAKER.address().city();
+    }
+
+    public static String generateRandomDistrict() {
+        return FAKER.address().state();
+    }
+
+    public static String generateRandomAddress() {
+        return FAKER.address().fullAddress();
+    }
+
+    public static int generateSeatingCount() {
+        return RANDOM.nextInt(999) + 1;
+    }
+
 }
