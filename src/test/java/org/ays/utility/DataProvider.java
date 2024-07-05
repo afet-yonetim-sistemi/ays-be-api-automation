@@ -3,6 +3,9 @@ package org.ays.utility;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.UserSupportStatus;
 
+import java.util.Arrays;
+import java.util.List;
+
 @UtilityClass
 public class DataProvider {
     @org.testng.annotations.DataProvider(name = "positivePaginationData")
@@ -342,5 +345,67 @@ public class DataProvider {
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"}
         };
     }
+
+    @org.testng.annotations.DataProvider(name = "invalidCityDataForFilteringEvacuationApplications")
+    public static Object[][] invalidCityDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {"City$Name", ErrorMessage.CONTAINS_INVALID_CHARACTERS, "sourceCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
+                {"C", ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
+                {"", ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"}
+
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidDistrictDataForFilteringEvacuationApplications")
+    public static Object[][] invalidDistrictDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {"", ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
+                {"District$Name", ErrorMessage.CONTAINS_INVALID_CHARACTERS, "sourceDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
+                {"D", ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidStatusesDataForFilteringEvacuationApplications")
+    public static Object[][] invalidStatusesDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {Arrays.asList("INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING", "INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING".repeat(10)), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING$%^&*"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("pending"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "validStatusesDataForFilteringEvacuationApplications")
+    public static Object[][] validStatusesDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {List.of("PENDING"), List.of("PENDING")},
+                {List.of("IN_REVIEW"), List.of("IN_REVIEW")},
+                {List.of("IN_PROGRESS"), List.of("IN_PROGRESS")},
+                {List.of("RECEIVED_FIRST_APPROVE"), List.of("RECEIVED_FIRST_APPROVE")},
+                {List.of("RECEIVED_SECOND_APPROVE"), List.of("RECEIVED_SECOND_APPROVE")},
+                {List.of("RECEIVED_THIRD_APPROVE"), List.of("RECEIVED_THIRD_APPROVE")},
+                {List.of("COMPLETED"), List.of("COMPLETED")},
+                {List.of("CANCELLED"), List.of("CANCELLED")},
+                {List.of("PENDING", "COMPLETED"), List.of("COMPLETED", "PENDING")},
+                {List.of("CANCELLED", "IN_REVIEW"), List.of("IN_REVIEW", "CANCELLED")}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "negativeOrderData")
+    public static Object[][] negativeOrderData() {
+        return new Object[][]{
+                {null, "ASC", ErrorMessage.MUST_NOT_BE_BLANK},
+                {"createdAt", null, ErrorMessage.MUST_NOT_BE_NULL},
+                {"", "ASC", ErrorMessage.MUST_NOT_BE_BLANK},
+                {"invalid", "DESC", ErrorMessage.MUST_BE_TRUE},
+                {"createdAt", "invalid", ErrorMessage.MUST_BE_ACCEPTED_VALUE},
+                {"createdAt", "", ErrorMessage.MUST_BE_ACCEPTED_VALUE}
+        };
+    }
+
 
 }
