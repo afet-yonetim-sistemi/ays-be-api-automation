@@ -85,7 +85,7 @@ public class PostEmergencyEvacuationApplicationsTest {
 
     }
 
-    @Test(groups = {"Smoke", "Institution"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution","Regression"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
     public void testListingEvacuationApplicationsWithValidPagination(int page, int pageSize) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
@@ -183,7 +183,7 @@ public class PostEmergencyEvacuationApplicationsTest {
 
     }
 
-    @Test(groups = {"Smoke", "Institution"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution","Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
     public void testFilteringEvacuationApplicationsWithValidStatusesField(List<String> statuses, List<String> expectedStatuses) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);

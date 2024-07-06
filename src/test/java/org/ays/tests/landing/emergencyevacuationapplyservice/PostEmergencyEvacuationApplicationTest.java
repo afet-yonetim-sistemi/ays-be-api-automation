@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class PostEmergencyEvacuationApplicationTest {
@@ -22,8 +21,7 @@ public class PostEmergencyEvacuationApplicationTest {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Smoke", "Regression", "Landing"})
@@ -31,8 +29,7 @@ public class PostEmergencyEvacuationApplicationTest {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
-                .body("time", notNullValue())
-                .body("isSuccess", equalTo(true));
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidName", dataProviderClass = DataProvider.class)
@@ -48,7 +45,8 @@ public class PostEmergencyEvacuationApplicationTest {
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
+                .body("subErrors", hasItem(
+                        hasEntry("message", errorMessage.getMessage())))
                 .body("subErrors[0].field", equalTo(field))
                 .body("subErrors[0].type", equalTo(type));
     }
@@ -66,7 +64,9 @@ public class PostEmergencyEvacuationApplicationTest {
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()));
+                .body("subErrors", hasItem(
+                        hasEntry("message", errorMessage.getMessage())
+                ));
     }
 
 
@@ -175,7 +175,8 @@ public class PostEmergencyEvacuationApplicationTest {
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
+                .body("subErrors", hasItem(
+                        hasEntry("message", errorMessage.getMessage())))
                 .body("subErrors[0].field", equalTo(fieldName))
                 .body("subErrors[0].type", equalTo(fieldType));
     }

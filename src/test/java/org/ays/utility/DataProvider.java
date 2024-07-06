@@ -247,14 +247,14 @@ public class DataProvider {
     public static Object[][] invalidName() {
         return new Object[][]{
                 {"firstName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
-                {"firstName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"firstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"firstName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"firstName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"firstName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
                 {"firstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"firstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
                 {"lastName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
-                {"lastName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"lastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"lastName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"lastName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"lastName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
                 {"lastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"lastName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
@@ -264,12 +264,12 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "applicantName")
     public static Object[][] applicantName() {
         return new Object[][]{
-                {"applicantFirstName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"applicantFirstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantFirstName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"applicantFirstName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"applicantFirstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"applicantFirstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
-                {"applicantLastName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"applicantLastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantLastName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"applicantLastName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"applicantLastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"applicantFirstName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
         };
@@ -291,7 +291,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"},
                 {"City$Name", ErrorMessage.MUST_BE_VALID, "sourceCity", "String"},
-                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "sourceCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"}
         };
     }
@@ -301,7 +301,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"},
                 {"District$Name", ErrorMessage.MUST_BE_VALID, "sourceDistrict", "String"},
-                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "sourceDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"}
         };
     }
@@ -331,7 +331,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"},
                 {"City$Name", ErrorMessage.MUST_BE_VALID, "targetCity", "String"},
-                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "targetCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"}
         };
     }
@@ -341,7 +341,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"},
                 {"District$Name", ErrorMessage.MUST_BE_VALID, "targetDistrict", "String"},
-                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "targetDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "targetDistrict", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"}
         };
     }
