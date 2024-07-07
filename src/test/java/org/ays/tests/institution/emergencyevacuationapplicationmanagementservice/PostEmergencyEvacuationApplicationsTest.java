@@ -6,6 +6,7 @@ import org.ays.endpoints.LandingEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
 import org.ays.payload.Orders;
+import org.ays.payload.Pageable;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -14,17 +15,40 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PostEmergencyEvacuationApplicationsTest {
+
+    @Test(groups = {"Smoke", "Regression"})
+    public void testListingEmergencyEvacuationApplications() {
+        ListEmergencyEvacuationApplications list = new ListEmergencyEvacuationApplications();
+        list.setPageable(Pageable.generateFirstPage());
+
+        Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectUnfilteredListResponseSpec())
+                .body("response.content.id", everyItem(notNullValue()))
+                .body("response.content.referenceNumber", everyItem(notNullValue()))
+                .body("response.content.firstName", everyItem(notNullValue()))
+                .body("response.content.lastName", everyItem(notNullValue()))
+                .body("response.content.phoneNumber.countryCode", everyItem(notNullValue()))
+                .body("response.content.phoneNumber.lineNumber", everyItem(notNullValue()))
+                .body("response.content.seatingCount", everyItem(notNullValue()))
+                .body("response.content.status", everyItem(notNullValue()))
+                .body("response.content.isInPerson", everyItem(notNullValue()))
+                .body("response.content.createdAt", everyItem(notNullValue()));
+    }
+
     @Test(groups = {"Smoke", "Regression"})
     public void testFilteringEvacuationApplicationsWithAnExistingApplicationData() {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         LandingEndpoints.postEmergencyEvacuationApplication(application);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications.generate(application));
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -56,10 +80,12 @@ public class PostEmergencyEvacuationApplicationsTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber() {
+
         String referenceNumber = "asdfghjkliu";
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setReferenceNumber(referenceNumber);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -75,27 +101,23 @@ public class PostEmergencyEvacuationApplicationsTest {
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getPageable().setPage(page);
         list.getPageable().setPageSize(pageSize);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be between 1 and 99999999"))
-                .body("subErrors[0].field", anyOf(equalTo("page"), equalTo("pageSize")))
-                .body("subErrors[0].type", equalTo("int"));
-
-
+                .spec(AysResponseSpecs.expectInvalidPaginationErrors());
     }
 
-    @Test(groups = {"Smoke", "Institution","Regression"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
     public void testListingEvacuationApplicationsWithValidPagination(int page, int pageSize) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getPageable().setPage(page);
         list.getPageable().setPageSize(pageSize);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
-
-
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
@@ -103,12 +125,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceCity(value);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(fieldType));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
@@ -116,13 +137,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceDistrict(value);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(fieldType));
-
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidSeatingCountData", dataProviderClass = DataProvider.class)
@@ -130,13 +149,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSeatingCount(value);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(fieldType));
-
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
@@ -144,13 +161,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceDistrict(value);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(fieldType));
-
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
@@ -158,13 +173,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceCity(value);
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(fieldType));
-
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
@@ -174,23 +187,18 @@ public class PostEmergencyEvacuationApplicationsTest {
         list.getFilter().setStatuses(statuses);
 
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
-
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(expectedMessage.getMessage()))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(type));
-
+                .spec(AysResponseSpecs.subErrorsSpec(expectedMessage, field, type));
     }
 
-    @Test(groups = {"Smoke", "Institution","Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
     public void testFilteringEvacuationApplicationsWithValidStatusesField(List<String> statuses, List<String> expectedStatuses) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setStatuses(statuses);
 
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
-
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.filteredBy.statuses", containsInAnyOrder(expectedStatuses.toArray()));
@@ -203,6 +211,7 @@ public class PostEmergencyEvacuationApplicationsTest {
         list.getFilter().setTargetDistrict("invalid$%%");
         list.getPageable().setPageSize(-1);
         list.getFilter().setReferenceNumber("12345678908");
+
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -211,7 +220,6 @@ public class PostEmergencyEvacuationApplicationsTest {
                         "contains invalid characters",
                         "size must be between 1 and 10"
                 ));
-
     }
 
     @Test(groups = {"Institution", "Regression"}, dataProvider = "negativeOrderData", dataProviderClass = DataProvider.class)
@@ -224,8 +232,5 @@ public class PostEmergencyEvacuationApplicationsTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()));
-
     }
-
-
 }

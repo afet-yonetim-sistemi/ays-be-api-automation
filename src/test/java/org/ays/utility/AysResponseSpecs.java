@@ -119,5 +119,12 @@ public class AysResponseSpecs {
                 .expectBody("subErrors*.type", everyItem(equalTo("int")))
                 .build();
     }
+    public static ResponseSpecification subErrorsSpec(ErrorMessage message, String field, String type) {
+        return new ResponseSpecBuilder()
+                .expectBody("subErrors[0].message", equalTo(message.getMessage()))
+                .expectBody("subErrors[0].field", equalTo(field))
+                .expectBody("subErrors[0].type", equalTo(type))
+                .build();
+    }
 
 }
