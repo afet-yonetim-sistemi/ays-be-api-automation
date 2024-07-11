@@ -78,25 +78,21 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .body("response.filteredBy.isInPerson", equalTo(true));
     }
 
-    @Test(groups = {"Regression", "Institution"})
-    public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber() {
-
-        String referenceNumber = "asdfghjkliu";
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = DataProvider.class)
+    public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber(String field, String value, String type, ErrorMessage errorMessage) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
-        list.getFilter().setReferenceNumber(referenceNumber);
+        list.getFilter().setReferenceNumber(value);
 
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("size must be between 1 and 10"))
-                .body("subErrors[0].field", equalTo("referenceNumber"))
-                .body("subErrors[0].value", equalTo(referenceNumber))
-                .body("subErrors[0].type", equalTo("String"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type))
+                .body("subErrors[0].value", equalTo(value));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = DataProvider.class)
-    public void testListingEvacuationApplicationsWithInvalidPagination(int page, int pageSize) {
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = DataProvider.class)
+    public void testListingEvacuationApplicationsWithInvalidPageable(int page, int pageSize) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getPageable().setPage(page);
@@ -105,11 +101,11 @@ public class PostEmergencyEvacuationApplicationsTest {
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.expectInvalidPaginationErrors());
+                .spec(AysResponseSpecs.expectInvalidPageableErrors());
     }
 
-    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePaginationData", dataProviderClass = DataProvider.class)
-    public void testListingEvacuationApplicationsWithValidPagination(int page, int pageSize) {
+    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = DataProvider.class)
+    public void testListingEvacuationApplicationsWithValidPageable(int page, int pageSize) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getPageable().setPage(page);

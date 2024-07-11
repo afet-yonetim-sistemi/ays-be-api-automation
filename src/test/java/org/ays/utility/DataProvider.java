@@ -8,8 +8,8 @@ import java.util.List;
 
 @UtilityClass
 public class DataProvider {
-    @org.testng.annotations.DataProvider(name = "positivePaginationData")
-    public static Object[][] positivePaginationData() {
+    @org.testng.annotations.DataProvider(name = "positivePageableData")
+    public static Object[][] positivePageableData() {
         return new Object[][]{
                 {1, 10},
                 {99999999, 1},
@@ -18,8 +18,8 @@ public class DataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "negativePaginationData")
-    public static Object[][] negativePaginationData() {
+    @org.testng.annotations.DataProvider(name = "negativePageableData")
+    public static Object[][] negativePageableData() {
         return new Object[][]{
                 {-1, 10},
                 {100000000, 10},
@@ -280,8 +280,8 @@ public class DataProvider {
         return new Object[][]{
                 {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
                 {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
-                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
-                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
+                {"applicantLastName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantLastName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
         };
     }
 
@@ -404,6 +404,15 @@ public class DataProvider {
                 {"invalid", "DESC", ErrorMessage.MUST_BE_TRUE},
                 {"createdAt", "invalid", ErrorMessage.MUST_BE_ACCEPTED_VALUE},
                 {"createdAt", "", ErrorMessage.MUST_BE_ACCEPTED_VALUE}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "negativeReferenceNumberData")
+    public static Object[][] negativeReferenceNumberData() {
+        return new Object[][]{
+                {"referenceNumber", "12345678901", "String", ErrorMessage.SIZE_BETWEEN_1_10},
+                {"referenceNumber", "abcdefghjkl", "String", ErrorMessage.SIZE_BETWEEN_1_10},
+                {"referenceNumber", "1234%^*(*)@", "String", ErrorMessage.SIZE_BETWEEN_1_10}
         };
     }
 

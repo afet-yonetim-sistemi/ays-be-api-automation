@@ -7,6 +7,7 @@ public enum ErrorMessage {
     SEATING_COUNT_BETWEEN("must be between 1 and 999"),
     ALL_APPLICANT_FIELDS_FILLED("all applicant fields must be filled"),
     SIZE_BETWEEN_2_100("size must be between 2 and 100"),
+    SIZE_BETWEEN_1_10("size must be between 1 and 10"),
     CONTAINS_INVALID_CHARACTERS("contains invalid characters"),
     MUST_BE_ACCEPTED_VALUE("must be accepted value"),
     MUST_NOT_BE_NULL("must not be null"),
