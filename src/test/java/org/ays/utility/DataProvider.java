@@ -3,10 +3,13 @@ package org.ays.utility;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.UserSupportStatus;
 
+import java.util.Arrays;
+import java.util.List;
+
 @UtilityClass
 public class DataProvider {
-    @org.testng.annotations.DataProvider(name = "positivePaginationData")
-    public static Object[][] positivePaginationData() {
+    @org.testng.annotations.DataProvider(name = "positivePageableData")
+    public static Object[][] positivePageableData() {
         return new Object[][]{
                 {1, 10},
                 {99999999, 1},
@@ -15,8 +18,8 @@ public class DataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "negativePaginationData")
-    public static Object[][] negativePaginationData() {
+    @org.testng.annotations.DataProvider(name = "negativePageableData")
+    public static Object[][] negativePageableData() {
         return new Object[][]{
                 {-1, 10},
                 {100000000, 10},
@@ -244,14 +247,14 @@ public class DataProvider {
     public static Object[][] invalidName() {
         return new Object[][]{
                 {"firstName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
-                {"firstName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"firstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"firstName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"firstName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"firstName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
                 {"firstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"firstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
                 {"lastName", "", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
-                {"lastName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"lastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"lastName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"lastName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"lastName", "   ", ErrorMessage.MUST_NOT_BE_BLANK, "String"},
                 {"lastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"lastName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
@@ -261,12 +264,12 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "applicantName")
     public static Object[][] applicantName() {
         return new Object[][]{
-                {"applicantFirstName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"applicantFirstName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantFirstName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"applicantFirstName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"applicantFirstName", "firstName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"applicantFirstName", "firstName4", ErrorMessage.MUST_BE_VALID, "String"},
-                {"applicantLastName", "a", ErrorMessage.NAME_LENGTH, "String"},
-                {"applicantLastName", "a".repeat(101), ErrorMessage.NAME_LENGTH, "String"},
+                {"applicantLastName", "a", ErrorMessage.SIZE_BETWEEN_2_100, "String"},
+                {"applicantLastName", "a".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "String"},
                 {"applicantLastName", "lastName$", ErrorMessage.MUST_BE_VALID, "String"},
                 {"applicantFirstName", "lastName4", ErrorMessage.MUST_BE_VALID, "String"}
         };
@@ -277,8 +280,8 @@ public class DataProvider {
         return new Object[][]{
                 {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
                 {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
-                {"applicantFirstName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
-                {"applicantFirstName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
+                {"applicantLastName", "", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED},
+                {"applicantLastName", "   ", ErrorMessage.ALL_APPLICANT_FIELDS_FILLED}
         };
     }
 
@@ -288,7 +291,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"},
                 {"City$Name", ErrorMessage.MUST_BE_VALID, "sourceCity", "String"},
-                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "sourceCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceCity", "String"}
         };
     }
@@ -298,7 +301,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"},
                 {"District$Name", ErrorMessage.MUST_BE_VALID, "sourceDistrict", "String"},
-                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "sourceDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "sourceDistrict", "String"}
         };
     }
@@ -328,7 +331,7 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"},
                 {"City$Name", ErrorMessage.MUST_BE_VALID, "targetCity", "String"},
-                {"C".repeat(101), ErrorMessage.NAME_LENGTH, "targetCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"}
         };
     }
@@ -338,9 +341,80 @@ public class DataProvider {
         return new Object[][]{
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"},
                 {"District$Name", ErrorMessage.MUST_BE_VALID, "targetDistrict", "String"},
-                {"D".repeat(101), ErrorMessage.NAME_LENGTH, "targetDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "targetDistrict", "String"},
                 {"   ", ErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"}
         };
     }
+
+    @org.testng.annotations.DataProvider(name = "invalidCityDataForFilteringEvacuationApplications")
+    public static Object[][] invalidCityDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {"City$Name", ErrorMessage.CONTAINS_INVALID_CHARACTERS, "sourceCity", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
+                {"C", ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
+                {"", ErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"}
+
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidDistrictDataForFilteringEvacuationApplications")
+    public static Object[][] invalidDistrictDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {"", ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
+                {"District$Name", ErrorMessage.CONTAINS_INVALID_CHARACTERS, "sourceDistrict", "String"},
+                {"D".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"},
+                {"D", ErrorMessage.SIZE_BETWEEN_2_100, "sourceDistrict", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidStatusesDataForFilteringEvacuationApplications")
+    public static Object[][] invalidStatusesDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {Arrays.asList("INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING", "INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING".repeat(10)), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("PENDING$%^&*"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {Arrays.asList("pending"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "validStatusesDataForFilteringEvacuationApplications")
+    public static Object[][] validStatusesDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {List.of("PENDING"), List.of("PENDING")},
+                {List.of("IN_REVIEW"), List.of("IN_REVIEW")},
+                {List.of("IN_PROGRESS"), List.of("IN_PROGRESS")},
+                {List.of("RECEIVED_FIRST_APPROVE"), List.of("RECEIVED_FIRST_APPROVE")},
+                {List.of("RECEIVED_SECOND_APPROVE"), List.of("RECEIVED_SECOND_APPROVE")},
+                {List.of("RECEIVED_THIRD_APPROVE"), List.of("RECEIVED_THIRD_APPROVE")},
+                {List.of("COMPLETED"), List.of("COMPLETED")},
+                {List.of("CANCELLED"), List.of("CANCELLED")},
+                {List.of("PENDING", "COMPLETED"), List.of("COMPLETED", "PENDING")},
+                {List.of("CANCELLED", "IN_REVIEW"), List.of("IN_REVIEW", "CANCELLED")}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "negativeOrderData")
+    public static Object[][] negativeOrderData() {
+        return new Object[][]{
+                {null, "ASC", ErrorMessage.MUST_NOT_BE_BLANK},
+                {"createdAt", null, ErrorMessage.MUST_NOT_BE_NULL},
+                {"", "ASC", ErrorMessage.MUST_NOT_BE_BLANK},
+                {"invalid", "DESC", ErrorMessage.MUST_BE_TRUE},
+                {"createdAt", "invalid", ErrorMessage.MUST_BE_ACCEPTED_VALUE},
+                {"createdAt", "", ErrorMessage.MUST_BE_ACCEPTED_VALUE}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "negativeReferenceNumberData")
+    public static Object[][] negativeReferenceNumberData() {
+        return new Object[][]{
+                {"referenceNumber", "12345678901", "String", ErrorMessage.SIZE_BETWEEN_1_10},
+                {"referenceNumber", "abcdefghjkl", "String", ErrorMessage.SIZE_BETWEEN_1_10},
+                {"referenceNumber", "1234%^*(*)@", "String", ErrorMessage.SIZE_BETWEEN_1_10}
+        };
+    }
+
 
 }

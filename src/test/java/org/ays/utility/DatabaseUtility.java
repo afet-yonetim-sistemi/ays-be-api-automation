@@ -2,7 +2,12 @@ package org.ays.utility;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,5 +73,30 @@ public class DatabaseUtility {
         }
 
         return valuesInColumn;
+    }
+
+    public static String getLatestReferenceNumber() {
+        String query = "SELECT REFERENCE_NUMBER FROM AYS_EMERGENCY_EVACUATION_APPLICATION ORDER BY CREATED_AT DESC LIMIT 1";
+        String referenceNumber = null;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    referenceNumber = resultSet.getString("REFERENCE_NUMBER");
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error fetching latest reference number: {}", e.getMessage());
+        } finally {
+            DBConnectionClose();
+        }
+
+        return referenceNumber;
     }
 }

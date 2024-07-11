@@ -55,7 +55,7 @@ public class PostUsersTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = DataProvider.class)
     public void listUsersWithNegativePaginationScenarios(int page, int pageSize) {
         requestBodyUsers.setPageable(Pageable.generate(page, pageSize));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
@@ -74,7 +74,7 @@ public class PostUsersTest {
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.expectInvalidPaginationErrors());
+                .spec(AysResponseSpecs.expectInvalidPageableErrors());
 
     }
 

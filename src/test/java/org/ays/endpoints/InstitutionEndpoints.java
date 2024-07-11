@@ -6,6 +6,7 @@ import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.ApplicationRegistrationSupportStatus;
 import org.ays.payload.Filter;
+import org.ays.payload.ListEmergencyEvacuationApplications;
 import org.ays.payload.Pageable;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
@@ -256,6 +257,18 @@ public class InstitutionEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications list) {
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/emergency-evacuation-applications")
+                .body(list)
+                .token(Authorization.loginAndGetAdminAccessToken())
+                .build();
+        return AysRestAssured.perform(restAssuredRequest);
+
+
     }
 
 }

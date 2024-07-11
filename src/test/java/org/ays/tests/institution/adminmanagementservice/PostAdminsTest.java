@@ -87,7 +87,7 @@ public class PostAdminsTest {
                 .body("subErrors[1].type", equalTo("int"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePaginationData", dataProviderClass = org.ays.utility.DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = org.ays.utility.DataProvider.class)
     public void listAdminsWithNegativeScenarios(int page, int pageSize) {
         pageable.setPage(page);
         pageable.setPageSize(pageSize);
