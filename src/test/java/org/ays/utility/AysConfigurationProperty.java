@@ -48,6 +48,12 @@ public class AysConfigurationProperty {
             public static final String EMAIL_ADDRESS = PROPERTIES.getProperty("institution_one.admin_user_one.email_address");
             public static final String PASSWORD = PROPERTIES.getProperty("institution_one.admin_user_one.password");
         }
+
+        public static class AdminUserTwo {
+            public static final String EMAIL_ADDRESS = PROPERTIES.getProperty("institution_one.admin_user_two.email_address");
+            public static final String PASSWORD = PROPERTIES.getProperty("institution_one.admin_user_two.password");
+        }
+
     }
 
     public static class LandingUserOne {

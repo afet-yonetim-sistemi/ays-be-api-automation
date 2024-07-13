@@ -10,16 +10,16 @@ import java.util.List;
 public class UsersFilter {
     private String firstName;
     private String lastName;
-    private List<String> supportStatuses;
+    private String city;
     private List<String> statuses;
     private PhoneNumber phoneNumber;
 
-    public static UsersFilter generate(PhoneNumber phoneNumber, String firstname, String lastname, List<String> statuses, List<String> supportStatuses) {
+    public static UsersFilter generate(PhoneNumber phoneNumber, String firstname, String lastname, String city, List<String> statuses) {
         UsersFilter filters = new UsersFilter();
         filters.setPhoneNumber(phoneNumber);
         filters.setFirstName(firstname);
         filters.setLastName(lastname);
-        filters.setSupportStatuses(supportStatuses);
+        filters.setCity(city);
         filters.setStatuses(statuses);
         return filters;
     }

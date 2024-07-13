@@ -2,6 +2,7 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.payload.AdminCredentials;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
@@ -18,7 +19,7 @@ public class PutUserTest {
         InstitutionEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         user.setStatus("PASSIVE");
@@ -36,7 +37,7 @@ public class PutUserTest {
         InstitutionEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         user.setRole("VOLUNTEER");
@@ -55,7 +56,7 @@ public class PutUserTest {
         InstitutionEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         user.setRole("VOL");
@@ -71,7 +72,7 @@ public class PutUserTest {
         InstitutionEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         user.setRole("");
@@ -87,7 +88,7 @@ public class PutUserTest {
         InstitutionEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
+        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         user.setRole("VOLUNTEER");

@@ -3,6 +3,9 @@ package org.ays.utility;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
+import org.ays.tests.database.aysInstitutionName.AfetYonetimSistemi;
+import org.ays.tests.database.aysInstitutionName.DisasterFoundation;
+import org.ays.tests.database.aysInstitutionName.VolunteerFoundation;
 import org.hamcrest.Matchers;
 
 import java.util.List;
@@ -126,6 +129,42 @@ public class AysResponseSpecs {
                 .expectBody("subErrors[0].field", equalTo(field))
                 .expectBody("subErrors[0].type", equalTo(type))
                 .build();
+    }
+
+    public static ResponseSpecification expectTotalElementCountForVolunteer() {
+        VolunteerFoundation volunteerFoundation = new VolunteerFoundation();
+        VolunteerFoundation.setUp();
+        volunteerFoundation.testVolunteerFoundationCount();
+        int totalElementCount = volunteerFoundation.getDbUserCount();
+        VolunteerFoundation.tearDown();
+        return new ResponseSpecBuilder()
+                .expectBody("response.totalElementCount", equalTo(totalElementCount))
+                .build();
+
+    }
+
+    public static ResponseSpecification expectTotalElementCountForDisaster() {
+        DisasterFoundation disasterFoundation = new DisasterFoundation();
+        DisasterFoundation.setUp();
+        disasterFoundation.testDisasterFoundationCount();
+        int totalElementCount = disasterFoundation.getDbUserCount();
+        VolunteerFoundation.tearDown();
+        return new ResponseSpecBuilder()
+                .expectBody("response.totalElementCount", equalTo(totalElementCount))
+                .build();
+
+    }
+
+    public static ResponseSpecification expectTotalElementCountForAYS() {
+        AfetYonetimSistemi afetYonetimSistemi = new AfetYonetimSistemi();
+        AfetYonetimSistemi.setUp();
+        afetYonetimSistemi.testAYSCount();
+        int totalElementCount = afetYonetimSistemi.getDbUserCount();
+        VolunteerFoundation.tearDown();
+        return new ResponseSpecBuilder()
+                .expectBody("response.totalElementCount", equalTo(totalElementCount))
+                .build();
+
     }
 
 }
