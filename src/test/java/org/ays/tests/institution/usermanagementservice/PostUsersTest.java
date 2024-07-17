@@ -7,6 +7,7 @@ import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.SuperAdminCredentials;
+import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -80,7 +81,7 @@ public class PostUsersTest {
         }
     }
 
-    @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
     public void usersListForInvalidPropertyValue(String property, ErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
@@ -102,7 +103,7 @@ public class PostUsersTest {
         }
     }
 
-    @Test(groups = {"Smoke", "Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
     public void usersListForInvalidDirectionValue(String direction, ErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
@@ -124,4 +125,44 @@ public class PostUsersTest {
         }
     }
 
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
+    public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, ErrorMessage errorMessage, String field, String type) {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
+        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setFilter(UsersFilter.generate(null, firstName, lastName, null, null));
+
+        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = DataProvider.class)
+    public void usersListForInvalidCityData(String city, ErrorMessage errorMessage, String field, String type) {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
+        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, city, null));
+
+        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = DataProvider.class)
+    public void usersListForInvalidStatusesData(List<String> statuses, ErrorMessage errorMessage, String field, String type) {
+        AdminCredentials adminCredentials = AdminCredentials.generate();
+        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
+        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, statuses));
+
+        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
 }
+

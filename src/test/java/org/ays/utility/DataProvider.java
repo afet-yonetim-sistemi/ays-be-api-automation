@@ -64,15 +64,17 @@ public class DataProvider {
     @org.testng.annotations.DataProvider(name = "invalidNames")
     public static Object[][] invalidNames() {
         return new Object[][]{
-                {"Noah", "Patricia1", "MUST BE VALID"},
-                {".Noah", "Patricia1", "MUST BE VALID"},
-                {" John", "Doe", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"Alice", "Johnson ", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"@#$%", "%^&*", "MUST BE VALID"},
-                {"123", "Smith", "MUST BE VALID"},
-                {"A", "B", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"A".repeat(256), "Doe", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Jane", "B".repeat(256), "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"}
+                {"Noah", "Patricia1", ErrorMessage.MUST_BE_VALID, "lastName", "String"},
+                {".Noah", "Patricia", ErrorMessage.MUST_BE_VALID, "firstName", "String"},
+                {" John", "Doe", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "firstName", "String"},
+                {"Alice", "Johnson ", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "lastName", "String"},
+                {"@#$%", "Johnson", ErrorMessage.MUST_BE_VALID, "firstName", "String"},
+                {"Alice", "@#$%", ErrorMessage.MUST_BE_VALID, "lastName", "String"},
+                {"123", "Smith", ErrorMessage.MUST_BE_VALID, "firstName", "String"},
+                {"A".repeat(256), "Doe", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "firstName", "String"},
+                {"Jane", "B".repeat(256), ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "lastName", "String"},
+                {"", "Doe", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "firstName", "String"},
+                {"Jane", "", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "lastName", "String"}
         };
     }
 
@@ -354,6 +356,17 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidCityDataForUsersList")
+    public static Object[][] invalidCityDataForUsersList() {
+        return new Object[][]{
+                {"", ErrorMessage.SIZE_BETWEEN_2_100, "city", "String"},
+                {"City$Name", ErrorMessage.MUST_BE_VALID, "city", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "city", "String"},
+                {"City  ", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "city", "String"},
+                {"  City", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "city", "String"}
+        };
+    }
+
     @org.testng.annotations.DataProvider(name = "invalidTargetDistrictData")
     public static Object[][] invalidTargetDistrictData() {
         return new Object[][]{
@@ -431,6 +444,18 @@ public class DataProvider {
                 {"referenceNumber", "12345678901", "String", ErrorMessage.SIZE_BETWEEN_1_10},
                 {"referenceNumber", "abcdefghjkl", "String", ErrorMessage.SIZE_BETWEEN_1_10},
                 {"referenceNumber", "1234%^*(*)@", "String", ErrorMessage.SIZE_BETWEEN_1_10}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidStatusesDataForUsersList")
+    public static Object[][] invalidStatusesDataForUsersList() {
+        return new Object[][]{
+                {Arrays.asList("INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {Arrays.asList("ACTIVE", "INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {Arrays.asList("ACTIVE".repeat(10)), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {Arrays.asList("PASSIVE$%^&*"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {Arrays.asList("active"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"}
         };
     }
 
