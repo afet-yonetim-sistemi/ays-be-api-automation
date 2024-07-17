@@ -26,13 +26,16 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                    .spec(AysResponseSpecs.expectTotalElementCountForVolunteer());
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectTotalElementCountForVolunteer());
+
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
@@ -41,13 +44,16 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         Response response = InstitutionEndpoints.listUsersTwo(requestBodyUsers, adminCredentials);
+
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                    .spec(AysResponseSpecs.expectTotalElementCountForDisaster());
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectTotalElementCountForDisaster());
+
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
@@ -56,13 +62,16 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers, superAdminCredentials);
+
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                    .spec(AysResponseSpecs.expectTotalElementCountForAYS());
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectTotalElementCountForAYS());
+
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
@@ -72,13 +81,16 @@ public class PostUsersTest {
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(DatabaseUtility.fetchFirstUserData());
         Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers, superAdminCredentials);
+
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                    .spec(AysResponseSpecs.expectUserDetailsInContent());
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .spec(AysResponseSpecs.expectUserDetailsInContent());
+
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
@@ -96,11 +108,13 @@ public class PostUsersTest {
 
         if (contentList == null || contentList.isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                    .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
@@ -118,11 +132,13 @@ public class PostUsersTest {
 
         if (contentList == null || contentList.isEmpty()) {
             AysLogUtil.info("No users under this institution.");
-        } else {
-            response.then()
-                    .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                    .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+            return;
         }
+
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
