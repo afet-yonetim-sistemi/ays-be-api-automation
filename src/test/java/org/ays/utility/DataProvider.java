@@ -33,13 +33,31 @@ public class DataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "negativeSortData")
-    public static Object[][] negativeSortData() {
+    @org.testng.annotations.DataProvider(name = "invalidOrdersData")
+    public static Object[][] invalidOrdersData() {
         return new Object[][]{
                 {null, "ASC", "must not be null"},
                 {"createdAt", null, "must not be null"},
                 {"", "ASC", "must be true"},
                 {"invalid", "ASC", "must be true"},
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidPropertyData")
+    public static Object[][] invalidPropertyData() {
+        return new Object[][]{
+                {null, ErrorMessage.MUST_NOT_BE_BLANK, "property", "String"},
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "property", "String"},
+                {"invalid", ErrorMessage.MUST_BE_TRUE, "orderPropertyAccepted", null},
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidDirectionData")
+    public static Object[][] invalidDirectionData() {
+        return new Object[][]{
+                {null, ErrorMessage.MUST_NOT_BE_NULL, "direction", "AysSort.Direction"},
+                {"", ErrorMessage.MUST_BE_ACCEPTED_VALUE, "direction", "AysSort.Direction"},
+                {"invalid", ErrorMessage.MUST_BE_ACCEPTED_VALUE, "direction", "AysSort.Direction"},
         };
     }
 

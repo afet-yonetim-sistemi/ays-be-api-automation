@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 @UtilityClass
 public class AysResponseSpecs {
@@ -99,10 +100,12 @@ public class AysResponseSpecs {
                 .expectBody("response.content[0].id", notNullValue())
                 .expectBody("response.content[0].firstName", notNullValue())
                 .expectBody("response.content[0].lastName", notNullValue())
+                .expectBody("response.content[0].emailAddress", notNullValue())
+                .expectBody("response.content[0].phoneNumber", notNullValue())
+                .expectBody("response.content[0].city", notNullValue())
                 .expectBody("response.content[0].status", notNullValue())
-                .expectBody("response.content[0].role", notNullValue())
-                .expectBody("response.content[0].supportStatus", notNullValue())
                 .expectBody("response.content[0].createdAt", notNullValue())
+                .expectBody("response.content[0].updatedAt", nullValue())
                 .build();
     }
 
