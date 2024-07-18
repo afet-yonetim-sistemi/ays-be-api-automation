@@ -21,14 +21,7 @@ public class AfetYonetimSistemi extends DatabaseUtility {
     @Test(description = "Verify AYS user count")
     public void testAYSCount() {
         try {
-            String query = "SELECT COUNT(DISTINCT USER.EMAIL_ADDRESS) AS user_count " +
-                    "FROM AYS_USER USER " +
-                    "JOIN ays.AYS_USER_ROLE_RELATION USER_ROLE_RELATION ON USER.ID = USER_ROLE_RELATION.USER_ID " +
-                    "JOIN AYS_ROLE ROLE ON USER_ROLE_RELATION.ROLE_ID = ROLE.ID " +
-                    "JOIN AYS_ROLE_PERMISSION_RELATION ON ROLE.ID = AYS_ROLE_PERMISSION_RELATION.ROLE_ID " +
-                    "JOIN AYS_PERMISSION PERMISSION ON AYS_ROLE_PERMISSION_RELATION.PERMISSION_ID = PERMISSION.ID " +
-                    "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
-                    "WHERE INSTITUTION.NAME = 'Afet Yönetim Sistemi'";
+            String query = DatabaseUtility.getUserCountQuery("Afet Yönetim Sistemi");
 
             ResultSet resultSet = statement.executeQuery(query);
 

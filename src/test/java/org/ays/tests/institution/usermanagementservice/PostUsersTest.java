@@ -8,6 +8,9 @@ import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.SuperAdminCredentials;
 import org.ays.payload.UsersFilter;
+import org.ays.tests.database.aysInstitutionName.AfetYonetimSistemi;
+import org.ays.tests.database.aysInstitutionName.DisasterFoundation;
+import org.ays.tests.database.aysInstitutionName.VolunteerFoundation;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -25,6 +28,13 @@ public class PostUsersTest {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
+
+        VolunteerFoundation volunteerFoundation = new VolunteerFoundation();
+        VolunteerFoundation.setUp();
+        volunteerFoundation.testVolunteerFoundationCount();
+        int totalElementCount = volunteerFoundation.getDbUserCount();
+        VolunteerFoundation.tearDown();
+
         Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
@@ -34,7 +44,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForVolunteer());
+                .spec(AysResponseSpecs.expectTotalElementCountForVolunteer(totalElementCount));
 
     }
 
@@ -43,6 +53,13 @@ public class PostUsersTest {
         AdminCredentials adminCredentials = AdminCredentials.generateForAdminTwo();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
+
+        DisasterFoundation disasterFoundation = new DisasterFoundation();
+        DisasterFoundation.setUp();
+        disasterFoundation.testDisasterFoundationCount();
+        int totalElementCount = disasterFoundation.getDbUserCount();
+        DisasterFoundation.tearDown();
+
         Response response = InstitutionEndpoints.listUsersTwo(requestBodyUsers, adminCredentials);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
@@ -52,7 +69,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForDisaster());
+                .spec(AysResponseSpecs.expectTotalElementCountForDisaster(totalElementCount));
 
     }
 
@@ -61,6 +78,13 @@ public class PostUsersTest {
         SuperAdminCredentials superAdminCredentials = SuperAdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
+
+        AfetYonetimSistemi afetYonetimSistemi = new AfetYonetimSistemi();
+        AfetYonetimSistemi.setUp();
+        afetYonetimSistemi.testAYSCount();
+        int totalElementCount = afetYonetimSistemi.getDbUserCount();
+        AfetYonetimSistemi.tearDown();
+
         Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers, superAdminCredentials);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
@@ -70,7 +94,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForAYS());
+                .spec(AysResponseSpecs.expectTotalElementCountForAYS(totalElementCount));
 
     }
 

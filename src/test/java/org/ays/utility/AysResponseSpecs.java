@@ -134,36 +134,21 @@ public class AysResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification expectTotalElementCountForVolunteer() {
-        VolunteerFoundation volunteerFoundation = new VolunteerFoundation();
-        VolunteerFoundation.setUp();
-        volunteerFoundation.testVolunteerFoundationCount();
-        int totalElementCount = volunteerFoundation.getDbUserCount();
-        VolunteerFoundation.tearDown();
+    public static ResponseSpecification expectTotalElementCountForVolunteer(int totalElementCount) {
         return new ResponseSpecBuilder()
                 .expectBody("response.totalElementCount", equalTo(totalElementCount))
                 .build();
 
     }
 
-    public static ResponseSpecification expectTotalElementCountForDisaster() {
-        DisasterFoundation disasterFoundation = new DisasterFoundation();
-        DisasterFoundation.setUp();
-        disasterFoundation.testDisasterFoundationCount();
-        int totalElementCount = disasterFoundation.getDbUserCount();
-        VolunteerFoundation.tearDown();
+    public static ResponseSpecification expectTotalElementCountForDisaster(int totalElementCount) {
         return new ResponseSpecBuilder()
                 .expectBody("response.totalElementCount", equalTo(totalElementCount))
                 .build();
 
     }
 
-    public static ResponseSpecification expectTotalElementCountForAYS() {
-        AfetYonetimSistemi afetYonetimSistemi = new AfetYonetimSistemi();
-        AfetYonetimSistemi.setUp();
-        afetYonetimSistemi.testAYSCount();
-        int totalElementCount = afetYonetimSistemi.getDbUserCount();
-        VolunteerFoundation.tearDown();
+    public static ResponseSpecification expectTotalElementCountForAYS(int totalElementCount) {
         return new ResponseSpecBuilder()
                 .expectBody("response.totalElementCount", equalTo(totalElementCount))
                 .build();

@@ -139,4 +139,15 @@ public class DatabaseUtility {
         }
         return usersFilter;
     }
+
+    public static String getUserCountQuery(String institutionName) {
+        return "SELECT COUNT(DISTINCT USER.EMAIL_ADDRESS) AS user_count " +
+                "FROM AYS_USER USER " +
+                "JOIN ays.AYS_USER_ROLE_RELATION USER_ROLE_RELATION ON USER.ID = USER_ROLE_RELATION.USER_ID " +
+                "JOIN AYS_ROLE ROLE ON USER_ROLE_RELATION.ROLE_ID = ROLE.ID " +
+                "JOIN AYS_ROLE_PERMISSION_RELATION ON ROLE.ID = AYS_ROLE_PERMISSION_RELATION.ROLE_ID " +
+                "JOIN AYS_PERMISSION PERMISSION ON AYS_ROLE_PERMISSION_RELATION.PERMISSION_ID = PERMISSION.ID " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+    }
 }

@@ -43,10 +43,7 @@ public class Authorization {
 
     public static String loginAndGetAdminTwoAccessToken() {
 
-        AdminCredentials adminCredentials = new AdminCredentials();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserTwo.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserTwo.PASSWORD);
-        adminCredentials.setSourcePage(SourcePage.INSTITUTION);
+        AdminCredentials adminCredentials = AdminCredentials.generateForAdminTwo();
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 
