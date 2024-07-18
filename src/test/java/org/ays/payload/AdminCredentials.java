@@ -21,4 +21,13 @@ public class AdminCredentials {
         return adminCredentials;
     }
 
+    public static AdminCredentials generateForAdminTwo() {
+        AdminCredentials adminCredentials = new AdminCredentials();
+        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserTwo.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserTwo.PASSWORD);
+        adminCredentials.setSourcePage(SourcePage.INSTITUTION);
+
+        return adminCredentials;
+    }
+
 }

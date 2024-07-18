@@ -41,6 +41,19 @@ public class Authorization {
         return response.jsonPath().getString("response.accessToken");
     }
 
+    public static String loginAndGetAdminTwoAccessToken() {
+
+        AdminCredentials adminCredentials = AdminCredentials.generateForAdminTwo();
+
+        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
+
+        if (!response.jsonPath().getBoolean("isSuccess")) {
+            System.out.println(response.jsonPath().prettify());
+        }
+
+        return response.jsonPath().getString("response.accessToken");
+    }
+
     public static String loginAndGetUserAccessToken(String username, String password) {
         UserCredentials userCredentials = new UserCredentials();
         userCredentials.setEmailAddress(username);

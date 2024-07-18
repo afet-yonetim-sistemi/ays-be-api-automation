@@ -11,7 +11,9 @@ public enum ErrorMessage {
     CONTAINS_INVALID_CHARACTERS("contains invalid characters"),
     MUST_BE_ACCEPTED_VALUE("must be accepted value"),
     MUST_NOT_BE_NULL("must not be null"),
-    MUST_BE_TRUE("must be true");
+    MUST_BE_TRUE("must be true"),
+    NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE("name must not start or end with whitespace"),
+    SIZE_MUST_BE_BETWEEN_2_AND_255("size must be between 2 and 255");
 
     private final String message;
 
