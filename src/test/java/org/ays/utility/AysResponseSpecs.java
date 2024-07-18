@@ -134,21 +134,7 @@ public class AysResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification expectTotalElementCountForVolunteer(int totalElementCount) {
-        return new ResponseSpecBuilder()
-                .expectBody("response.totalElementCount", equalTo(totalElementCount))
-                .build();
-
-    }
-
-    public static ResponseSpecification expectTotalElementCountForDisaster(int totalElementCount) {
-        return new ResponseSpecBuilder()
-                .expectBody("response.totalElementCount", equalTo(totalElementCount))
-                .build();
-
-    }
-
-    public static ResponseSpecification expectTotalElementCountForAYS(int totalElementCount) {
+    public static ResponseSpecification expectTotalElementCount(int totalElementCount) {
         return new ResponseSpecBuilder()
                 .expectBody("response.totalElementCount", equalTo(totalElementCount))
                 .build();

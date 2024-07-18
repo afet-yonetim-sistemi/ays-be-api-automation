@@ -44,7 +44,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForVolunteer(totalElementCount));
+                .spec(AysResponseSpecs.expectTotalElementCount(totalElementCount));
 
     }
 
@@ -69,7 +69,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForDisaster(totalElementCount));
+                .spec(AysResponseSpecs.expectTotalElementCount(totalElementCount));
 
     }
 
@@ -94,7 +94,7 @@ public class PostUsersTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectTotalElementCountForAYS(totalElementCount));
+                .spec(AysResponseSpecs.expectTotalElementCount(totalElementCount));
 
     }
 
