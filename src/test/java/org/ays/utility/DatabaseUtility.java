@@ -1,6 +1,7 @@
 package org.ays.utility;
 
 import lombok.extern.slf4j.Slf4j;
+import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.UsersFilter;
 
@@ -141,13 +142,36 @@ public class DatabaseUtility {
     }
 
     public static String getUserCountQuery(String institutionName) {
-        return "SELECT COUNT(DISTINCT USER.EMAIL_ADDRESS) AS user_count " +
-                "FROM AYS_USER USER " +
-                "JOIN ays.AYS_USER_ROLE_RELATION USER_ROLE_RELATION ON USER.ID = USER_ROLE_RELATION.USER_ID " +
-                "JOIN AYS_ROLE ROLE ON USER_ROLE_RELATION.ROLE_ID = ROLE.ID " +
-                "JOIN AYS_ROLE_PERMISSION_RELATION ON ROLE.ID = AYS_ROLE_PERMISSION_RELATION.ROLE_ID " +
-                "JOIN AYS_PERMISSION PERMISSION ON AYS_ROLE_PERMISSION_RELATION.PERMISSION_ID = PERMISSION.ID " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
+        return "SELECT COUNT(*) AS user_count\n" +
+                "FROM AYS_USER USER\n" +
+                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID\n" +
                 "WHERE INSTITUTION.NAME = '" + institutionName + "'";
     }
+
+    public static String fetchFirstUserEmailAddress() {
+
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
+        String query = "SELECT EMAIL_ADDRESS FROM AYS_USER LIMIT 1";
+        String emailAddress = null;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                emailAddress = resultSet.getString("EMAIL_ADDRESS");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch user data due to database error");
+        } finally {
+            DBConnectionClose();
+        }
+        return emailAddress;
+    }
+
 }
