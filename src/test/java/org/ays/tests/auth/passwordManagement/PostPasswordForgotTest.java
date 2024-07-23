@@ -12,8 +12,11 @@ import org.testng.annotations.Test;
 public class PostPasswordForgotTest {
     @Test(groups = {"Smoke", "Regression"})
     public void postPasswordForgotPositive() {
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         String emailAddress = DatabaseUtility.fetchFirstUserEmailAddress();
-        Response response = InstitutionAuthEndpoints.postPasswordForgot(emailAddress);
+        passwordForgotPayload.setEmailAddress(emailAddress);
+
+        Response response = InstitutionAuthEndpoints.postPasswordForgot(passwordForgotPayload);
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -23,7 +26,7 @@ public class PostPasswordForgotTest {
     public void postPasswordForgotNegative(String emailAddress, ErrorMessage errorMessage, String field, String type) {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         passwordForgotPayload.setEmailAddress(emailAddress);
-        Response response = InstitutionAuthEndpoints.postPasswordForgot(emailAddress);
+        Response response = InstitutionAuthEndpoints.postPasswordForgot(passwordForgotPayload);
 
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

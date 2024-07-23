@@ -53,9 +53,7 @@ public class InstitutionAuthEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postPasswordForgot(String emailAddress) {
-        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
-        passwordForgotPayload.setEmailAddress(emailAddress);
+    public static Response postPasswordForgot(PasswordForgotPayload passwordForgotPayload) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
