@@ -3,6 +3,7 @@ package org.ays.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.payload.AdminCredentials;
+import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.SuperAdminCredentials;
 import org.ays.payload.TokenRefreshPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
@@ -50,6 +51,19 @@ public class InstitutionAuthEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response postPasswordForgot(PasswordForgotPayload passwordForgotPayload) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/authentication/password/forgot")
+                .body(passwordForgotPayload)
+                .token(Authorization.loginAndGetAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+
     }
 
 }

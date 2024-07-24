@@ -459,5 +459,15 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddress")
+    public static Object[][] invalidEmailAddress() {
+        return new Object[][]{
+                {null, ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
+                {"invalid", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"     ", ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
+                {"abcgmail.com", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"abc@gmail", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
+        };
+    }
 
 }
