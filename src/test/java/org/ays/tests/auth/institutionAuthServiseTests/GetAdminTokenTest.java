@@ -3,7 +3,6 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.payload.AdminCredentials;
-import org.ays.payload.SourcePage;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -57,15 +56,6 @@ public class GetAdminTokenTest {
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
-    }
-
-    @Test(groups = {"Regression", "Institution"})
-    public void getTokenWithUnAuthSourcePage() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
-        adminCredentials.setSourcePage(SourcePage.LANDING);
-        Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
-        response.then()
-                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
 

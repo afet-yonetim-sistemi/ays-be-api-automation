@@ -34,6 +34,9 @@ public class AysConfigurationProperty {
         public static final String URL = PROPERTIES.getProperty("database.url");
         public static final String USERNAME = PROPERTIES.getProperty("database.username");
         public static final String PASSWORD = PROPERTIES.getProperty("database.password");
+        public static final String VOLUNTEER_FOUNDATION_ID = PROPERTIES.getProperty("volunteer_foundation_id");
+        public static final String AFET_YONETIM_SISTEMI_ID = PROPERTIES.getProperty("afet_yonetim_sistemi_id");
+        public static final String DISASTER_FOUNDATION_ID = PROPERTIES.getProperty("disaster_foundation_id");
     }
 
     public static class SuperAdminUserOne {

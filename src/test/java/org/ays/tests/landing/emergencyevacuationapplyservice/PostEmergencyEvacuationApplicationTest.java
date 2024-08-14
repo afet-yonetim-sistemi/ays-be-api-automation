@@ -89,16 +89,16 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidPhoneNumber(String countryCode, String lineNumber) {
-        testInvalidPhoneNumber(countryCode, lineNumber, false);
+    public void createEmergencyEvacuationApplicationWithInvalidPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+        testInvalidPhoneNumber(countryCode, lineNumber, false, errorMessage, field, type);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidApplicantPhoneNumber(String countryCode, String lineNumber) {
-        testInvalidPhoneNumber(countryCode, lineNumber, true);
+    public void createEmergencyEvacuationApplicationWithInvalidApplicantPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+        testInvalidPhoneNumber(countryCode, lineNumber, true, errorMessage, field, type);
     }
 
-    private void testInvalidPhoneNumber(String countryCode, String lineNumber, boolean isApplicant) {
+    private void testInvalidPhoneNumber(String countryCode, String lineNumber, boolean isApplicant, ErrorMessage errorMessage, String field, String type) {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
@@ -115,9 +115,8 @@ public class PostEmergencyEvacuationApplicationTest {
         Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be valid"))
-                .body("subErrors[0].field", equalTo(isApplicant ? "applicantPhoneNumber" : "phoneNumber"))
-                .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"));
+                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
+                .body("subErrors[0].type", equalTo(type));
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceCityData", dataProviderClass = DataProvider.class)

@@ -174,4 +174,32 @@ public class DatabaseUtility {
         return emailAddress;
     }
 
+    public static String getRoleId(String institutionId) {
+        String query = "SELECT ID FROM AYS_USER WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
+        String roleId = null;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, institutionId);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        roleId = resultSet.getString("ID");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error fetching role ID: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch role ID due to database error");
+        } finally {
+            DBConnectionClose();
+        }
+
+        return roleId;
+
+    }
+
 }

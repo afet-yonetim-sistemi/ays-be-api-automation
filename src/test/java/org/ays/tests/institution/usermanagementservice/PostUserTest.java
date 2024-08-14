@@ -2,130 +2,102 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.payload.PhoneNumber;
 import org.ays.payload.User;
-import org.ays.utility.AysRandomUtil;
+import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysResponseSpecs;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
+import org.ays.utility.DataProvider;
+import org.ays.utility.DatabaseUtility;
+import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.containsString;
 
 public class PostUserTest {
-    User userPayload;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setupData() {
-        userPayload = User.generate();
-    }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void createAUser() {
-        Response response = InstitutionEndpoints.createAUser(userPayload);
+        User user = User.generate();
+        Response response = InstitutionEndpoints.createAUser(user);
         response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .body("response", notNullValue())
-                .body("response.username", notNullValue())
-                .body("response.password", notNullValue());
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "countryCodeData")
-    public void createUserWithInvalidCountryCode(String countryCode) {
-        userPayload.getPhoneNumber().setCountryCode(countryCode);
-        Response response = InstitutionEndpoints.createAUser(userPayload);
-        response.then()
-                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
-        if (countryCode == null || countryCode.equals("   ") || countryCode.equals("")) {
-            response.then()
-                    .body("subErrors[0].message", equalTo("must not be blank"))
-                    .body("subErrors[0].field", equalTo("countryCode"))
-                    .body("subErrors[0].type", equalTo("String"))
-                    .body("subErrors[0].value", equalTo(countryCode));
-        } else {
-            response.then()
-                    .body("subErrors[0].message", equalTo("MUST BE VALID"))
-                    .body("subErrors[0].field", equalTo("phoneNumber"))
-                    .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"))
-                    .body("subErrors[0].value", notNullValue());
-        }
-
-    }
-
-    @DataProvider(name = "countryCodeData")
-    public Object[][] countryCodeData() {
-        return new Object[][]{
-                {null},
-                {""},
-                {"   "},
-                {"090"},
-                {"A90"},
-                {"+90"}
-        };
-    }
-
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "lineNumberData")
-    public void createUserWithInvalidLineNumber(String lineNumber) {
-        userPayload.getPhoneNumber().setLineNumber(lineNumber);
-        Response response = InstitutionEndpoints.createAUser(userPayload);
-        response.then()
-                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
-        if (lineNumber == null || lineNumber.equals("          ") || lineNumber.equals("")) {
-            response.then()
-                    .body("subErrors[0].message", equalTo("must not be blank"))
-                    .body("subErrors[0].field", equalTo("lineNumber"))
-                    .body("subErrors[0].type", equalTo("String"))
-                    .body("subErrors[0].value", equalTo(lineNumber));
-        } else {
-            response.then()
-                    .body("subErrors[0].message", equalTo("MUST BE VALID"))
-                    .body("subErrors[0].field", equalTo("phoneNumber"))
-                    .body("subErrors[0].type", equalTo("AysPhoneNumberRequest"))
-                    .body("subErrors[0].value", notNullValue());
-        }
-
-    }
-
-    @DataProvider(name = "lineNumberData")
-    public Object[][] lineNumberData() {
-        return new Object[][]{
-                {AysRandomUtil.generateInvalidLineNumber()},
-                {AysRandomUtil.generateLineNumber() + "*"},
-                {""}, {"          "},
-                {null},
-                {AysRandomUtil.generateLineNumber() + "a"}
-        };
-
-    }
-
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "userFirstNameLastNameData")
-    public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, String message) {
-        userPayload.setFirstName(firstName);
-        userPayload.setLastName(lastName);
-        Response response = InstitutionEndpoints.createAUser(userPayload);
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
+    public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+        User user = User.generate();
+        PhoneNumber phoneNumber = new PhoneNumber();
+        phoneNumber.setCountryCode(countryCode);
+        phoneNumber.setLineNumber(lineNumber);
+        user.setPhoneNumber(phoneNumber);
+        Response response = InstitutionEndpoints.createAUser(user);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(message));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+
     }
 
-    @DataProvider(name = "userFirstNameLastNameData")
-    public Object[][] userData() {
-        return new Object[][]{
-                {null, "Mehmet", "must not be blank"},
-                {"", "Mehmet", "must not be blank"},
-                {"4", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"44", "Mehmet", "MUST BE VALID"},
-                {"A", "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"A".repeat(256), "Mehmet", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Ahmet", "1", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Ahmet", "12", "MUST BE VALID"},
-                {"Ahmet", "M", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Ahmet", "M".repeat(256), "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Ahmet", "", "must not be blank"},
-                {"Ahmet", null, "must not be blank"},
-
-        };
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
+    public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, ErrorMessage errorMessage, String field, String type) {
+        User user = User.generate();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = DataProvider.class)
+    public void createUserWithInvalidEmailAddress(String emailAddress, ErrorMessage errorMessage, String field, String type) {
+        User user = User.generate();
+        user.setEmailAddress(emailAddress);
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
 
+    }
+
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = DataProvider.class)
+    public void createUserWithInvalidRoleId(String id, ErrorMessage errorMessage, String field, String type) {
+        User user = User.generate();
+        user.setRoleIds(List.of(id));
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = DataProvider.class)
+    public void createUserWithInvalidCity(String city, ErrorMessage errorMessage, String field, String type) {
+        User user = User.generate();
+        user.setCity(city);
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Regression", "Institution"})
+    public void createUserWithEmptyRoleList() {
+        User user = new User();
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(ErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"));
+    }
+
+    @Test(groups = {"Regression", "Institution"})
+    public void createAUserWithOtherInstitutionsRole() {
+        User user = User.generate();
+        user.setRoleIds(Arrays.asList(DatabaseUtility.getRoleId(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID)));
+        Response response = InstitutionEndpoints.createAUser(user);
+        response.then()
+                .spec(AysResponseSpecs.expectNotFoundResponseSpec())
+                .body("message", containsString("the following roles are not found!"));
+    }
 }

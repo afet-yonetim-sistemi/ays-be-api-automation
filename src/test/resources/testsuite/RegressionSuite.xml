@@ -21,6 +21,7 @@
             <class name="org.ays.tests.landing.emergencyevacuationapplyservice.PostEmergencyEvacuationApplicationTest"/>
             <class name="org.ays.tests.institution.emergencyevacuationapplicationmanagementservice.PostEmergencyEvacuationApplicationsTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
+            <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
         </classes>
     </test>
 </suite>

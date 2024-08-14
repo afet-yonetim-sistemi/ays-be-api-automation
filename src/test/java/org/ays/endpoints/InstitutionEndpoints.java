@@ -127,7 +127,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin/registration-applications")
+                .url("/api/v1/admin-registration-applications")
                 .body(requestBodyInstitution)
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
@@ -177,7 +177,7 @@ public class InstitutionEndpoints {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin/registration-application")
+                .url("/api/v1/admin-registration-application")
                 .body(applicationRegistration)
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
