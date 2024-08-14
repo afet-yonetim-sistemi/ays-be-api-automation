@@ -31,7 +31,8 @@ public class PostEmergencyEvacuationApplicationsTest {
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(list);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .spec(AysResponseSpecs.expectUnfilteredListResponseSpec())
+                .spec(AysResponseSpecs.expectUnfilteredListResponseSpecForEmergencyEvacuationApplications())
+                .spec(AysResponseSpecs.expectDefaultListingDetails())
                 .body("response.content.id", everyItem(notNullValue()))
                 .body("response.content.referenceNumber", everyItem(notNullValue()))
                 .body("response.content.firstName", everyItem(notNullValue()))
@@ -41,7 +42,8 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .body("response.content.seatingCount", everyItem(notNullValue()))
                 .body("response.content.status", everyItem(notNullValue()))
                 .body("response.content.isInPerson", everyItem(notNullValue()))
-                .body("response.content.createdAt", everyItem(notNullValue()));
+                .body("response.content.createdAt", everyItem(notNullValue()))
+                .body("response.filteredBy.institutionId", notNullValue());
     }
 
     @Test(groups = {"Smoke", "Regression"})

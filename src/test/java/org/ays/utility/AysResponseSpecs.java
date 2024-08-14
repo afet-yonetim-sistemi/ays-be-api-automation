@@ -3,18 +3,18 @@ package org.ays.utility;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
-import org.ays.tests.database.aysInstitutionName.AfetYonetimSistemi;
-import org.ays.tests.database.aysInstitutionName.DisasterFoundation;
-import org.ays.tests.database.aysInstitutionName.VolunteerFoundation;
 import org.hamcrest.Matchers;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.AllOf.allOf;
 
 @UtilityClass
 public class AysResponseSpecs {
@@ -84,14 +84,21 @@ public class AysResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification expectUnfilteredListResponseSpec() {
+    public static ResponseSpecification expectUnfilteredListResponseSpecForEmergencyEvacuationApplications() {
         return new ResponseSpecBuilder()
                 .expectBody("response.content", instanceOf(List.class))
                 .expectBody("response.pageNumber", notNullValue())
                 .expectBody("response.totalPageCount", notNullValue())
                 .expectBody("response.totalElementCount", notNullValue())
                 .expectBody("response.sortedBy", equalTo(null))
-                .expectBody("response.filteredBy", equalTo(null))
+                .expectBody("response.filteredBy.referenceNumber", equalTo(null))
+                .expectBody("response.filteredBy.sourceCity", equalTo(null))
+                .expectBody("response.filteredBy.sourceDistrict", equalTo(null))
+                .expectBody("response.filteredBy.seatingCount", equalTo(null))
+                .expectBody("response.filteredBy.targetCity", equalTo(null))
+                .expectBody("response.filteredBy.targetDistrict", equalTo(null))
+                .expectBody("response.filteredBy.statuses", equalTo(null))
+                .expectBody("response.filteredBy.isInPerson", equalTo(null))
                 .build();
     }
 
@@ -126,12 +133,14 @@ public class AysResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification subErrorsSpec(ErrorMessage message, String field, String type) {
+    public static ResponseSpecification subErrorsSpec(ErrorMessage errorMessage, String field, String type) {
         return new ResponseSpecBuilder()
-                .expectBody("subErrors[0].message", equalTo(message.getMessage()))
-                .expectBody("subErrors[0].field", equalTo(field))
-                .expectBody("subErrors[0].type", equalTo(type))
-                .build();
+                .expectBody("subErrors", hasItems(
+                        allOf(
+                                hasEntry("message", errorMessage.getMessage()),
+                                hasEntry("field", field),
+                                hasEntry("type", type)
+                        ))).build();
     }
 
     public static ResponseSpecification expectTotalElementCount(int totalElementCount) {

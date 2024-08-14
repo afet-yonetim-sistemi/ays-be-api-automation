@@ -71,21 +71,29 @@ public class DataProvider {
                 {"@#$%", "Johnson", ErrorMessage.MUST_BE_VALID, "firstName", "String"},
                 {"Alice", "@#$%", ErrorMessage.MUST_BE_VALID, "lastName", "String"},
                 {"123", "Smith", ErrorMessage.MUST_BE_VALID, "firstName", "String"},
-                {"A".repeat(256), "Doe", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "firstName", "String"},
-                {"Jane", "B".repeat(256), ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "lastName", "String"},
-                {"", "Doe", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "firstName", "String"},
-                {"Jane", "", ErrorMessage.SIZE_MUST_BE_BETWEEN_2_AND_255, "lastName", "String"}
+                {"A".repeat(101), "Doe", ErrorMessage.SIZE_BETWEEN_2_100, "firstName", "String"},
+                {"A", "Doe", ErrorMessage.SIZE_BETWEEN_2_100, "firstName", "String"},
+                {"Jane", "B".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "lastName", "String"},
+                {"Jane", "B", ErrorMessage.SIZE_BETWEEN_2_100, "lastName", "String"},
+                {"", "Doe", ErrorMessage.SIZE_BETWEEN_2_100, "firstName", "String"},
+                {"Jane", "", ErrorMessage.SIZE_BETWEEN_2_100, "lastName", "String"}
         };
     }
 
     @org.testng.annotations.DataProvider
     public static Object[][] invalidPhoneNumberData() {
         return new Object[][]{
-                {"90", "2105346789"},
-                {"90", " 2367894534"},
-                {"90", "005457568956"},
-                {"+90", "5457568956"},
-                {"90", "+5457568956"},
+                {"90", "2105346789", ErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", " 2367894534", ErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "005457568956", ErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"+90", "5457568956", ErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "+5457568956", ErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"", "5457568956", ErrorMessage.MUST_NOT_BE_BLANK, "countryCode", "String"},
+                {"90", "", ErrorMessage.MUST_NOT_BE_BLANK, "lineNumber", "String"},
+                {"  ", "5457568956", ErrorMessage.MUST_NOT_BE_BLANK, "countryCode", "String"},
+                {"90", "          ", ErrorMessage.MUST_NOT_BE_BLANK, "lineNumber", "String"},
+                {"90", null, ErrorMessage.MUST_NOT_BE_BLANK, "lineNumber", "String"},
+                {null, "5457568956", ErrorMessage.MUST_NOT_BE_BLANK, "countryCode", "String"},
 
         };
     }
@@ -236,6 +244,18 @@ public class DataProvider {
                 {"abcgmail.com", "must be valid"},
                 {"abc@gmail", "must be valid"}
 
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidEmail")
+    public Object[][] invalidEmail() {
+        return new Object[][]{
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
+                {"  ", ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
+                {"abc", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"abcgmail.com", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"abc@gmail", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {null, ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"}
         };
     }
 
@@ -415,7 +435,6 @@ public class DataProvider {
         return new Object[][]{
                 {List.of("PENDING"), List.of("PENDING")},
                 {List.of("IN_REVIEW"), List.of("IN_REVIEW")},
-                {List.of("IN_PROGRESS"), List.of("IN_PROGRESS")},
                 {List.of("RECEIVED_FIRST_APPROVE"), List.of("RECEIVED_FIRST_APPROVE")},
                 {List.of("RECEIVED_SECOND_APPROVE"), List.of("RECEIVED_SECOND_APPROVE")},
                 {List.of("RECEIVED_THIRD_APPROVE"), List.of("RECEIVED_THIRD_APPROVE")},
@@ -467,6 +486,31 @@ public class DataProvider {
                 {"     ", ErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"abcgmail.com", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"abc@gmail", ErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidIdData")
+    public static Object[][] invalidIdData() {
+        return new Object[][]{
+                {"12345", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"abcdefghij", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e27Z", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e27", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e2711", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {"", ErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidCityDataForCreateUser")
+    public static Object[][] invalidCityDataForCreateUser() {
+        return new Object[][]{
+                {"City$Name", ErrorMessage.MUST_BE_VALID, "city", "String"},
+                {"C".repeat(101), ErrorMessage.SIZE_BETWEEN_2_100, "city", "String"},
+                {"City  ", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "city", "String"},
+                {"  City", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "city", "String"},
+                {"", ErrorMessage.MUST_NOT_BE_BLANK, "city", "String"},
+                {null, ErrorMessage.MUST_NOT_BE_BLANK, "city", "String"}
         };
     }
 

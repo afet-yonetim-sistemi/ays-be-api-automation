@@ -13,7 +13,9 @@ public enum ErrorMessage {
     MUST_NOT_BE_NULL("must not be null"),
     MUST_BE_TRUE("must be true"),
     NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE("name must not start or end with whitespace"),
-    SIZE_MUST_BE_BETWEEN_2_AND_255("size must be between 2 and 255");
+    MUST_BE_VALID_UUID("must be a valid UUID"),
+    MUST_NOT_BE_EMPTY("must not be empty");
+
 
     private final String message;
 

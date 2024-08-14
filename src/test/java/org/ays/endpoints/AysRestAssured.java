@@ -43,6 +43,7 @@ public class AysRestAssured {
             case POST -> requestSpecification.post(url);
             case PUT -> requestSpecification.put(url);
             case DELETE -> requestSpecification.delete(url);
+            case PATCH -> requestSpecification.patch(url);
             default -> throw new UnsupportedOperationException();
         }).then()
                 .log().all()

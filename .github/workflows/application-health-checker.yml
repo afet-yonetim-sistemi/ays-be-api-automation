@@ -70,6 +70,15 @@ jobs:
       - name: Replace landing.user_one.password in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.password in configuration.properties
         run: sed 's|'{LANDING_USER_ONE_PASSWORD}'|'${{ secrets.AYS_LANDING_USER_ONE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
+      - name: Replace volunteer_foundation_id in configuration.properties # Step to replace the placeholder volunteer_foundation_id in configuration.properties
+        run: sed 's|'{VOLUNTEER_FOUNDATION_ID}'|'${{ secrets.AYS_VOLUNTEER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+      - name: Replace afet_yonetim_sistemi_id in configuration.properties # Step to replace the placeholder afet_yonetim_sistemi_id in configuration.properties
+        run: sed 's|'{AFET_YONETIM_SISTEMI_ID}'|'${{ secrets.AYS_AFET_YONETIM_SISTEMI_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+      - name: Replace disaster_foundation_id in configuration.properties # Step to replace the placeholder disaster_foundation_id in configuration.properties
+        run: sed 's|'{DISASTER_FOUNDATION_ID}'|'${{ secrets.AYS_DISASTER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
 
       - name: Build with Maven # Step to build the project with Maven
         run: mvn clean test -P weekly
