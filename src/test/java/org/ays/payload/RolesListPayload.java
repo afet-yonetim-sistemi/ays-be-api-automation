@@ -18,10 +18,10 @@ public class RolesListPayload {
         return rolesListPayload;
     }
 
-    public static RolesListPayload generateWithFilter() {
+    public static RolesListPayload generateWithFilter(RoleCreatePayload roleCreatePayload) {
         RolesListPayload rolesListPayload = new RolesListPayload();
         rolesListPayload.setPageable(Pageable.generate(1, 10));
-        rolesListPayload.setFilter(RolesListFilter.generate("Kurum Yöneticisi", RolesListStatus.ACTIVE));
+        rolesListPayload.setFilter(RolesListFilter.generate(roleCreatePayload.getName(), RolesListStatus.ACTIVE));
         return rolesListPayload;
     }
 

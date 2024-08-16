@@ -30,4 +30,13 @@ public class AdminCredentials {
         return adminCredentials;
     }
 
+    public static AdminCredentials generateForTestAdmin() {
+        AdminCredentials adminCredentials = new AdminCredentials();
+        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.TestAdmin.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.TestAdmin.PASSWORD);
+        adminCredentials.setSourcePage(SourcePage.INSTITUTION);
+
+        return adminCredentials;
+    }
+
 }

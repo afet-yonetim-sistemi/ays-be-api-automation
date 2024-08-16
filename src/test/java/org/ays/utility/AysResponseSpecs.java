@@ -150,4 +150,13 @@ public class AysResponseSpecs {
 
     }
 
+    public static ResponseSpecification expectRolesListInContent() {
+        return new ResponseSpecBuilder()
+                .expectBody("response.content[0].id", notNullValue())
+                .expectBody("response.content[0].name", notNullValue())
+                .expectBody("response.content[0].status", notNullValue())
+                .expectBody("response.content[0].createdAt", notNullValue())
+                .build();
+    }
+
 }

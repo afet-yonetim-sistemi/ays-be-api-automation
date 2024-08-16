@@ -1,10 +1,13 @@
 package org.ays.utility;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.UsersFilter;
 
+import java.security.Permission;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class DatabaseUtility {
@@ -207,6 +211,63 @@ public class DatabaseUtility {
                 "FROM AYS_ROLE ROLE\n" +
                 "         JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID\n" +
                 "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+    }
+
+    public static List<Permission> fetchPermissionsFromDatabase() {
+        List<Permission> permissions = new ArrayList<>();
+        String query = "SELECT ID, CATEGORY FROM AYS_PERMISSION";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID");
+                String category = resultSet.getString("CATEGORY");
+                permissions.add(new Permission(id, category));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch permissions due to database error");
+        } finally {
+            DBConnectionClose();
+        }
+
+        return permissions;
+    }
+
+    public static List<String> getPermissionsId() {
+        String category = "ROLE_MANAGEMENT";
+
+        List<Permission> permissions = fetchPermissionsFromDatabase();
+
+        List<Permission> filteredPermissions = permissions.stream()
+                .filter(permission -> category.equals(permission.getCategory()))
+                .collect(Collectors.toList());
+
+        Collections.shuffle(filteredPermissions);
+        List<String> randomPermissionIds = filteredPermissions.stream()
+                .limit(2)
+                .map(Permission::getId)
+                .collect(Collectors.toList());
+
+        return randomPermissionIds;
+    }
+
+    @Getter
+    @Setter
+    static class Permission {
+        private String id;
+        private String category;
+
+        public Permission(String id, String category) {
+            this.id = id;
+            this.category = category;
+        }
     }
 
 }
