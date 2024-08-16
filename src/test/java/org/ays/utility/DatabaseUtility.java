@@ -202,4 +202,11 @@ public class DatabaseUtility {
 
     }
 
+    public static String getRoleCountQuery(String institutionName) {
+        return "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT\n" +
+                "FROM AYS_ROLE ROLE\n" +
+                "         JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID\n" +
+                "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+    }
+
 }

@@ -13,7 +13,7 @@
             <class name="org.ays.tests.institution.usermanagementservice.GetUserTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PutUserTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
         </classes>
     </test>
 </suite>

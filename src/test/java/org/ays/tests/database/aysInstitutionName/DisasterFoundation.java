@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 @Slf4j
 public class DisasterFoundation extends DatabaseUtility {
 
@@ -28,6 +29,26 @@ public class DisasterFoundation extends DatabaseUtility {
             if (resultSet.next()) {
                 dbUserCount = resultSet.getInt("user_count");
                 //System.out.println(dbUserCount);
+            }
+
+            resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to execute test due to database error");
+        }
+    }
+
+    @Test(description = "Verify Disaster Foundation role count")
+    public void testDisasterFoundationRoleCount() {
+        try {
+            String query = DatabaseUtility.getRoleCountQuery("Disaster Foundation");
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                dbUserCount = resultSet.getInt("ROLE_COUNT");
+
             }
 
             resultSet.close();

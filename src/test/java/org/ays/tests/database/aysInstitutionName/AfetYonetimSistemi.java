@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 @Slf4j
 public class AfetYonetimSistemi extends DatabaseUtility {
 
@@ -28,6 +29,26 @@ public class AfetYonetimSistemi extends DatabaseUtility {
             if (resultSet.next()) {
                 dbUserCount = resultSet.getInt("user_count");
                 //System.out.println(dbUserCount);
+            }
+
+            resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to execute test due to database error");
+        }
+    }
+
+    @Test(description = "Verify AYS role count")
+    public void testAYSRoleCount() {
+        try {
+            String query = DatabaseUtility.getRoleCountQuery("Afet Yönetim Sistemi");
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                dbUserCount = resultSet.getInt("ROLE_COUNT");
+
             }
 
             resultSet.close();

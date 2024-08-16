@@ -50,7 +50,6 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void usersListForAdminTwo() {
-        AdminCredentials adminCredentials = AdminCredentials.generateForAdminTwo();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
 
@@ -60,7 +59,7 @@ public class PostUsersTest {
         int totalElementCount = disasterFoundation.getDbUserCount();
         DisasterFoundation.tearDown();
 
-        Response response = InstitutionEndpoints.listUsersTwo(requestBodyUsers, adminCredentials);
+        Response response = InstitutionEndpoints.listUsersTwo(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -75,7 +74,6 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void usersListForSuperAdmin() {
-        SuperAdminCredentials superAdminCredentials = SuperAdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
 
@@ -85,7 +83,7 @@ public class PostUsersTest {
         int totalElementCount = afetYonetimSistemi.getDbUserCount();
         AfetYonetimSistemi.tearDown();
 
-        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers, superAdminCredentials);
+        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -100,11 +98,10 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
     public void usersListWithAllFilter() {
-        SuperAdminCredentials superAdminCredentials = SuperAdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(DatabaseUtility.fetchFirstUserData());
-        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers, superAdminCredentials);
+        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");

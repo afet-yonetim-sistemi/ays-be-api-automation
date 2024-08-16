@@ -39,6 +39,26 @@ public class VolunteerFoundation extends DatabaseUtility {
         }
     }
 
+    @Test(description = "Verify Volunteer Foundation role count")
+    public void testVolunteerFoundationRoleCount() {
+        try {
+            String query = DatabaseUtility.getRoleCountQuery("Volunteer Foundation");
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                dbUserCount = resultSet.getInt("ROLE_COUNT");
+
+            }
+
+            resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to execute test due to database error");
+        }
+    }
+
     @AfterClass
     public static void tearDown() {
         DBConnectionClose();
