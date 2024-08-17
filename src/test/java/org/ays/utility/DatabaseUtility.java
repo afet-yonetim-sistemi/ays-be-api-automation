@@ -7,7 +7,6 @@ import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.UsersFilter;
 
-import java.security.Permission;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -145,11 +144,11 @@ public class DatabaseUtility {
         return usersFilter;
     }
 
-    public static String getUserCountQuery(String institutionName) {
+    public static String getUserCountQuery() {
         return "SELECT COUNT(*) AS user_count\n" +
                 "FROM AYS_USER USER\n" +
                 "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID\n" +
-                "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+                "WHERE INSTITUTION.NAME = ?";
     }
 
     public static String fetchFirstUserEmailAddress() {
@@ -206,11 +205,11 @@ public class DatabaseUtility {
 
     }
 
-    public static String getRoleCountQuery(String institutionName) {
-        return "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT\n" +
-                "FROM AYS_ROLE ROLE\n" +
-                "         JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID\n" +
-                "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+    public static String getRoleCountQuery() {
+        return "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT " +
+                "FROM AYS_ROLE ROLE " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = ?";
     }
 
     public static List<Permission> fetchPermissionsFromDatabase() {
@@ -268,6 +267,62 @@ public class DatabaseUtility {
             this.id = id;
             this.category = category;
         }
+    }
+
+    public static int verifyUserCountForFoundation(String foundationName) {
+        String query = DatabaseUtility.getUserCountQuery();
+        int dbUserCount = 0;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, foundationName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        dbUserCount = resultSet.getInt("user_count");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error verifying user count for foundation: ", e);
+            throw new RuntimeException("Failed to verify user count due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return dbUserCount;
+    }
+
+    public static int verifyRoleCountForFoundation(String foundationName) {
+        String query = DatabaseUtility.getRoleCountQuery();
+        int dbRoleCount = 0;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, foundationName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        dbRoleCount = resultSet.getInt("ROLE_COUNT");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error verifying role count for foundation: ", e);
+            throw new RuntimeException("Failed to verify role count due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return dbRoleCount;
     }
 
 }

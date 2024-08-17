@@ -1,24 +1,22 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.endpoints.Authorization;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
 import org.ays.payload.RoleCreatePayload;
 import org.ays.payload.RolesListFilter;
 import org.ays.payload.RolesListPayload;
-import org.ays.tests.database.aysInstitutionName.AfetYonetimSistemi;
-import org.ays.tests.database.aysInstitutionName.DisasterFoundation;
-import org.ays.tests.database.aysInstitutionName.VolunteerFoundation;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
+import org.ays.utility.DatabaseUtility;
 import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -28,16 +26,12 @@ public class PostRolesTest {
     public void rolesListForAdminOne() {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        VolunteerFoundation volunteerFoundation = new VolunteerFoundation();
-        VolunteerFoundation.setUp();
-        volunteerFoundation.testVolunteerFoundationRoleCount();
-        int totalElementCount = volunteerFoundation.getDbUserCount();
-        VolunteerFoundation.tearDown();
+        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Volunteer Foundation");
 
-        Response response = InstitutionEndpoints.listRoles(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetAdminAccessToken());
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
-            AysLogUtil.info("No users under this institution.");
+            AysLogUtil.info("No roles under this institution.");
             return;
         }
 
@@ -54,16 +48,12 @@ public class PostRolesTest {
     public void rolesListForAdminTwo() {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        DisasterFoundation disasterFoundation = new DisasterFoundation();
-        DisasterFoundation.setUp();
-        disasterFoundation.testDisasterFoundationRoleCount();
-        int totalElementCount = disasterFoundation.getDbUserCount();
-        DisasterFoundation.tearDown();
+        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Disaster Foundation");
 
-        Response response = InstitutionEndpoints.listRolesForAdminTwo(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetAdminTwoAccessToken());
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
-            AysLogUtil.info("No users under this institution.");
+            AysLogUtil.info("No roles under this institution.");
             return;
         }
 
@@ -80,16 +70,12 @@ public class PostRolesTest {
     public void rolesListForSuperAdmin() {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        AfetYonetimSistemi afetYonetimSistemi = new AfetYonetimSistemi();
-        AfetYonetimSistemi.setUp();
-        afetYonetimSistemi.testAYSRoleCount();
-        int totalElementCount = afetYonetimSistemi.getDbUserCount();
-        AfetYonetimSistemi.tearDown();
+        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Afet Yönetim Sistemi");
 
-        Response response = InstitutionEndpoints.listRolesForSuperAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetSuperAdminAccessToken());
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
-            AysLogUtil.info("No users under this institution.");
+            AysLogUtil.info("No roles under this institution.");
             return;
         }
 
@@ -111,10 +97,10 @@ public class PostRolesTest {
 
         RolesListPayload rolesListPayload = RolesListPayload.generateWithFilter(roleCreatePayload);
 
-        Response response = InstitutionEndpoints.listRolesForTestAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
-            AysLogUtil.info("No users under this institution.");
+            AysLogUtil.info("No roles under this institution.");
             return;
         }
 
@@ -133,7 +119,7 @@ public class PostRolesTest {
         Pageable pageable = Pageable.generate(page, pageSize);
         rolesListPayload.setPageable(pageable);
 
-        Response response = InstitutionEndpoints.listRolesForTestAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -148,7 +134,7 @@ public class PostRolesTest {
         List<Orders> orders = Orders.generate(property, direction);
         rolesListPayload.getPageable().setOrders(orders);
 
-        Response response = InstitutionEndpoints.listRolesForTestAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -164,7 +150,7 @@ public class PostRolesTest {
 
         rolesListPayload.setFilter(rolesListFilter);
 
-        Response response = InstitutionEndpoints.listRolesForTestAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -181,7 +167,7 @@ public class PostRolesTest {
         rolesListPayload.setFilter(rolesListFilter);
 
 
-        Response response = InstitutionEndpoints.listRolesForTestAdmin(rolesListPayload);
+        Response response = InstitutionEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
