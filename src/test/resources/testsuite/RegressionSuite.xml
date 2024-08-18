@@ -22,6 +22,7 @@
             <class name="org.ays.tests.institution.emergencyevacuationapplicationmanagementservice.PostEmergencyEvacuationApplicationsTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
         </classes>
     </test>
 </suite>

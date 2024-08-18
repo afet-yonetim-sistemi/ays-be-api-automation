@@ -13,7 +13,8 @@ import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.SuperAdminCredentials;
+import org.ays.payload.RoleCreatePayload;
+import org.ays.payload.RolesListPayload;
 import org.ays.payload.User;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysConfigurationProperty;
@@ -61,7 +62,7 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response listUsersTwo(RequestBodyUsers requestBodyUsers, AdminCredentials adminCredentials) {
+    public static Response listUsersTwo(RequestBodyUsers requestBodyUsers) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
@@ -73,7 +74,7 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response listUsersSuperAdmin(RequestBodyUsers requestBodyUsers, SuperAdminCredentials superAdminCredentials) {
+    public static Response listUsersSuperAdmin(RequestBodyUsers requestBodyUsers) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.POST)
@@ -294,7 +295,30 @@ public class InstitutionEndpoints {
                 .build();
         return AysRestAssured.perform(restAssuredRequest);
 
+    }
 
+    public static Response listRoles(RolesListPayload rolesListPayload, String token) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/roles")
+                .body(rolesListPayload)
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response createRole(RoleCreatePayload roleCreatePayload) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/role")
+                .body(roleCreatePayload)
+                .token(Authorization.loginAndGetTestAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
     }
 
 }

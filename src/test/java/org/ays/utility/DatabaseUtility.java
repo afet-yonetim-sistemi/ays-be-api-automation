@@ -1,5 +1,7 @@
 package org.ays.utility;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.PhoneNumber;
@@ -14,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class DatabaseUtility {
@@ -141,11 +144,11 @@ public class DatabaseUtility {
         return usersFilter;
     }
 
-    public static String getUserCountQuery(String institutionName) {
+    public static String getUserCountQuery() {
         return "SELECT COUNT(*) AS user_count\n" +
                 "FROM AYS_USER USER\n" +
                 "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID\n" +
-                "WHERE INSTITUTION.NAME = '" + institutionName + "'";
+                "WHERE INSTITUTION.NAME = ?";
     }
 
     public static String fetchFirstUserEmailAddress() {
@@ -200,6 +203,126 @@ public class DatabaseUtility {
 
         return roleId;
 
+    }
+
+    public static String getRoleCountQuery() {
+        return "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT " +
+                "FROM AYS_ROLE ROLE " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = ?";
+    }
+
+    public static List<Permission> fetchPermissionsFromDatabase() {
+        List<Permission> permissions = new ArrayList<>();
+        String query = "SELECT ID, CATEGORY FROM AYS_PERMISSION";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID");
+                String category = resultSet.getString("CATEGORY");
+                permissions.add(new Permission(id, category));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch permissions due to database error");
+        } finally {
+            DBConnectionClose();
+        }
+
+        return permissions;
+    }
+
+    public static List<String> getPermissionsId() {
+        String category = "ROLE_MANAGEMENT";
+
+        List<Permission> permissions = fetchPermissionsFromDatabase();
+
+        List<Permission> filteredPermissions = permissions.stream()
+                .filter(permission -> category.equals(permission.getCategory()))
+                .collect(Collectors.toList());
+
+        Collections.shuffle(filteredPermissions);
+        List<String> randomPermissionIds = filteredPermissions.stream()
+                .limit(2)
+                .map(Permission::getId)
+                .collect(Collectors.toList());
+
+        return randomPermissionIds;
+    }
+
+    @Getter
+    @Setter
+    static class Permission {
+        private String id;
+        private String category;
+
+        public Permission(String id, String category) {
+            this.id = id;
+            this.category = category;
+        }
+    }
+
+    public static int verifyUserCountForFoundation(String foundationName) {
+        String query = DatabaseUtility.getUserCountQuery();
+        int dbUserCount = 0;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, foundationName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        dbUserCount = resultSet.getInt("user_count");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error verifying user count for foundation: ", e);
+            throw new RuntimeException("Failed to verify user count due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return dbUserCount;
+    }
+
+    public static int verifyRoleCountForFoundation(String foundationName) {
+        String query = DatabaseUtility.getRoleCountQuery();
+        int dbRoleCount = 0;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, foundationName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        dbRoleCount = resultSet.getInt("ROLE_COUNT");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error verifying role count for foundation: ", e);
+            throw new RuntimeException("Failed to verify role count due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return dbRoleCount;
     }
 
 }

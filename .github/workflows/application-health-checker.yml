@@ -64,6 +64,12 @@ jobs:
       - name: Replace institution_one.admin_user_two.password in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.password in configuration.properties
         run: sed 's|'{INSTITUTION_ONE_ADMIN_USER_TWO_PASSWORD}'|'${{ secrets.AYS_INSTITUTION_ONE_ADMIN_USER_TWO_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
+      - name: Replace institution.test_admin.email_address in configuration.properties # Step to replace the placeholder institution.test_admin.email_address in configuration.properties
+        run: sed 's|'{INSTITUTION_TEST_ADMIN_EMAIL_ADDRESS}'|'${{ secrets.AYS_INSTITUTION_TEST_ADMIN_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+      - name: Replace institution.test_admin.password in configuration.properties # Step to replace the placeholder institution.test_admin.password in configuration.properties
+        run: sed 's|'{INSTITUTION_TEST_ADMIN_PASSWORD}'|'${{ secrets.AYS_INSTITUTION_TEST_ADMIN_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
       - name: Replace landing.user_one.emailAddress in configuration.properties # Step to replace the placeholder institution_one.admin_user_one.username in configuration.properties
         run: sed 's|'{LANDING_USER_ONE_EMAIL_ADDRESS}'|'${{ secrets.AYS_LANDING_USER_ONE_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 

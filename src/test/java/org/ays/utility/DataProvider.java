@@ -33,6 +33,19 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidPageableData")
+    public static Object[][] invalidPageableData() {
+        return new Object[][]{
+                {-1, 10, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "page", "int"},
+                {100000000, 10, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "page", "int"},
+                {1, -10, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+                {1, 1000000000, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+                {-100, 100000000, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+                {-5, -5, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+                {100000000, 100000000, ErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+        };
+    }
+
     @org.testng.annotations.DataProvider(name = "invalidOrdersData")
     public static Object[][] invalidOrdersData() {
         return new Object[][]{
@@ -457,6 +470,17 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidOrderData")
+    public static Object[][] invalidOrderData() {
+        return new Object[][]{
+                {null, "ASC", ErrorMessage.MUST_NOT_BE_BLANK, "property", "String"},
+                {"createdAt", null, ErrorMessage.MUST_NOT_BE_NULL, "direction", "AysSort.Direction"},
+                {"", "ASC", ErrorMessage.MUST_NOT_BE_BLANK, "property", "String"},
+                {"createdAt", "invalid", ErrorMessage.MUST_BE_ACCEPTED_VALUE, "direction", "AysSort.Direction"},
+                {"createdAt", "", ErrorMessage.MUST_BE_ACCEPTED_VALUE, "direction", "AysSort.Direction"}
+        };
+    }
+
     @org.testng.annotations.DataProvider(name = "negativeReferenceNumberData")
     public static Object[][] negativeReferenceNumberData() {
         return new Object[][]{
@@ -511,6 +535,39 @@ public class DataProvider {
                 {"  City", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "city", "String"},
                 {"", ErrorMessage.MUST_NOT_BE_BLANK, "city", "String"},
                 {null, ErrorMessage.MUST_NOT_BE_BLANK, "city", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidRoleName")
+    public Object[][] invalidRoleName() {
+        return new Object[][]{
+                {"", ErrorMessage.SIZE_BETWEEN_2_255, "name", "String"},
+                {"   Gönüllü", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "name", "String"},
+                {"Gönüllü     ", ErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE, "name", "String"},
+                {"123", ErrorMessage.MUST_BE_VALID, "name", "String"},
+                {"?!'++", ErrorMessage.MUST_BE_VALID, "name", "String"},
+                {"!Gönüllü", ErrorMessage.MUST_BE_VALID, "name", "String"},
+                {"Gönüllü?", ErrorMessage.MUST_BE_VALID, "name", "String"},
+                {"Gönüllü1", ErrorMessage.MUST_BE_VALID, "name", "String"},
+                {"1Gönüllü", ErrorMessage.MUST_BE_VALID, "name", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidStatusesDataForRoleList")
+    public static Object[][] invalidStatusesDataForRoleList() {
+        return new Object[][]{
+                {Arrays.asList("INVALID_STATUS"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("ACTIVE1"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("1ACTIVE"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("ACTIVE?"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("?ACTIVE"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("ACTIVE".repeat(10)), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("$%^&*"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("active"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {Arrays.asList("      "), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"}
+
+
         };
     }
 
