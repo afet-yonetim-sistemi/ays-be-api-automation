@@ -14,11 +14,13 @@ import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.RoleCreatePayload;
+import org.ays.payload.RoleUpdatePayload;
 import org.ays.payload.RolesListPayload;
 import org.ays.payload.User;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
+import org.ays.utility.DatabaseUtility;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
@@ -315,6 +317,30 @@ public class InstitutionEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
+                .token(Authorization.loginAndGetTestAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static String generateRoleId() {
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        Response response = createRole(roleCreatePayload);
+
+        if (response.getStatusCode() == 200) {
+            return DatabaseUtility.getLastCreatedRoleId();
+        } else {
+            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
+        }
+    }
+
+    public static Response updateRole(String roleId, RoleUpdatePayload roleUpdatePayload) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.PUT)
+                .url("/api/v1/role/{id}")
+                .pathParameter(Map.of("id", roleId))
+                .body(roleUpdatePayload)
                 .token(Authorization.loginAndGetTestAdminAccessToken())
                 .build();
 
