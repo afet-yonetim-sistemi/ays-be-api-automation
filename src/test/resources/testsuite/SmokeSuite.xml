@@ -30,6 +30,7 @@
             <class name="org.ays.tests.landing.emergencyevacuationapplyservice.PostEmergencyEvacuationApplicationTest"/>
             <class name="org.ays.tests.institution.emergencyevacuationapplicationmanagementservice.PostEmergencyEvacuationApplicationsTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
         </classes>
     </test>
 </suite>

@@ -18,4 +18,11 @@ public class RoleUpdatePayload {
         roleUpdatePayload.setPermissionIds(roleCreatePayload.getPermissionIds());
         return roleUpdatePayload;
     }
+
+    public static RoleUpdatePayload generate() {
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        roleUpdatePayload.setName(RoleCreatePayload.generate().getName());
+        roleUpdatePayload.setPermissionIds(RoleCreatePayload.generate().getPermissionIds());
+        return roleUpdatePayload;
+    }
 }
