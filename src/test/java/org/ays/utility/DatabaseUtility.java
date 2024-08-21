@@ -325,4 +325,65 @@ public class DatabaseUtility {
         return dbRoleCount;
     }
 
+    public static String getLastCreatedRoleId() {
+        String query = "SELECT ID FROM AYS_ROLE ORDER BY CREATED_AT DESC LIMIT 1";
+        String roleId = null;
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        roleId = resultSet.getString("ID");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error fetching role ID: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch role ID due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        if (roleId == null) {
+            throw new RuntimeException("No roles found for the given institution ID");
+        }
+
+        return roleId;
+    }
+
+    public static String getRoleIdForInstitution(String institutionName) {
+        String query = "SELECT ROL.ID " +
+                "FROM AYS_ROLE ROL " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = ? " +
+                "LIMIT 1";
+        String roleId = "";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, institutionName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        roleId = resultSet.getString("ID");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error retrieving role ID for institution: ", e);
+            throw new RuntimeException("Failed to retrieve role ID due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return roleId;
+    }
+
 }

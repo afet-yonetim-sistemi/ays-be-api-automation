@@ -567,6 +567,17 @@ public class DataProvider {
                 {Arrays.asList("active"), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
                 {Arrays.asList("      "), ErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"}
 
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidPermissionIds")
+    public static Object[][] invalidPermissionIds() {
+        return new Object[][]{
+                {Arrays.asList(""), ErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
+                {Arrays.asList("        "), ErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
+                {Arrays.asList("123"), ErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
+                {Arrays.asList("$%^&*"), ErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
+                {Arrays.asList("invalid"), ErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"}
 
         };
     }
