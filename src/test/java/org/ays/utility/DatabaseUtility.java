@@ -386,4 +386,37 @@ public class DatabaseUtility {
         return roleId;
     }
 
+    public static String getDeletedRoleIdForInstitution(String institutionName) {
+        String query = "SELECT ROL.ID " +
+                "FROM AYS_ROLE ROL " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = ? AND ROL.STATUS = 'DELETED' " +
+                "LIMIT 1";
+        String roleId = "";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                DBConnection();
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, institutionName);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        roleId = resultSet.getString("ID");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error retrieving deleted role ID for institution: ", e);
+            throw new RuntimeException("Failed to retrieve deleted role ID due to database error", e);
+        } finally {
+            DBConnectionClose();
+        }
+
+        return roleId;
+    }
+
+
 }

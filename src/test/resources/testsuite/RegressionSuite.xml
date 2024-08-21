@@ -24,6 +24,7 @@
             <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.DeleteRoleTest"/>
         </classes>
     </test>
 </suite>
