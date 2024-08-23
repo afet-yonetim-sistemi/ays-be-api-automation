@@ -347,4 +347,16 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response deleteRole(String roleId) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.DELETE)
+                .url("/api/v1/role/{id}")
+                .pathParameter(Map.of("id", roleId))
+                .token(Authorization.loginAndGetTestAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
 }

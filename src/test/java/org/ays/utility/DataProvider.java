@@ -582,4 +582,14 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidRoleId")
+    public Object[][] invalidRoleId() {
+        return new Object[][]{
+                {"123", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+                {"invalid", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+                {"       ", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+
+        };
+    }
+
 }
