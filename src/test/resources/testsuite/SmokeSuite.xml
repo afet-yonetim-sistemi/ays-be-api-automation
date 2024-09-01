@@ -32,6 +32,8 @@
             <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
             <class name="org.ays.tests.institution.roleManagementService.DeleteRoleTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PatchRoleActivateTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PatchRolePassivateTest"/>
         </classes>
     </test>
 </suite>

@@ -27,4 +27,15 @@ public class User {
         return user;
     }
 
+    public static User generateUserWithARole(String roleId) {
+        User user = new User();
+        user.setFirstName(AysRandomUtil.generateFirstName());
+        user.setLastName(AysRandomUtil.generateLastName());
+        user.setPhoneNumber(PhoneNumber.generateForTurkey());
+        user.setEmailAddress(AysRandomUtil.generateEmailAddress());
+        user.setCity(AysRandomUtil.generateRandomCity());
+        user.setRoleIds(List.of(roleId));
+        return user;
+    }
+
 }
