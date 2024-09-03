@@ -52,6 +52,18 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response createAUser(User userPayload, String token) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/user")
+                .body(userPayload)
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
     public static Response listUsers(RequestBodyUsers requestBodyUsers, AdminCredentials adminCredentials) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
@@ -354,6 +366,30 @@ public class InstitutionEndpoints {
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
                 .token(Authorization.loginAndGetTestAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response patchActivateRole(String roleId, String token) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/role/{id}/activate")
+                .pathParameter(Map.of("id", roleId))
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response patchPassivateRole(String roleId, String token) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/role/{id}/passivate")
+                .pathParameter(Map.of("id", roleId))
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
