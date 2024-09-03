@@ -98,7 +98,7 @@ public class AysRandomUtil {
         return RANDOM.nextInt(999) + 1;
     }
 
-    public static String generateRandomAlphaSuffix() {
+    public static String generateAlphaSuffix() {
         String uuid = UUID.randomUUID().toString().replaceAll("[^a-zA-Z]", "");
         return uuid.substring(0, 6);
     }

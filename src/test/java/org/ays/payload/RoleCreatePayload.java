@@ -16,7 +16,7 @@ public class RoleCreatePayload {
 
     public static RoleCreatePayload generate() {
         RoleCreatePayload roleCreatePayload = new RoleCreatePayload();
-        roleCreatePayload.setName(AysRandomUtil.generateFirstName() + " Rol " + AysRandomUtil.generateRandomAlphaSuffix());
+        roleCreatePayload.setName(AysRandomUtil.generateFirstName() + " Rol " + AysRandomUtil.generateAlphaSuffix());
         roleCreatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
         return roleCreatePayload;
     }
