@@ -3,7 +3,6 @@ package org.ays.payload;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -17,8 +16,7 @@ public class Orders {
         Orders orders = new Orders();
         orders.setDirection(direction);
         orders.setProperty(property);
-        List<Orders> ordersList = Arrays.asList(orders);
-        return ordersList;
+        return List.of(orders);
     }
 
 }
