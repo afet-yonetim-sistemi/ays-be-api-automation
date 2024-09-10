@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
 
 import java.util.Random;
+import java.util.UUID;
 
 @UtilityClass
 public class AysRandomUtil {
@@ -95,6 +96,11 @@ public class AysRandomUtil {
 
     public static int generateSeatingCount() {
         return RANDOM.nextInt(999) + 1;
+    }
+
+    public static String generateAlphaSuffix() {
+        String uuid = UUID.randomUUID().toString().replaceAll("[^a-zA-Z]", "");
+        return uuid.substring(0, 6);
     }
 
 }

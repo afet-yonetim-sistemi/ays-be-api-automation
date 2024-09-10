@@ -3,8 +3,8 @@ package org.ays.tests.institution.roleManagementService;
 import io.restassured.response.Response;
 import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.RoleCreatePayload;
 import org.ays.payload.RoleUpdatePayload;
+import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -19,9 +19,10 @@ public class PutRoleTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateRolPositiveScenario() {
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
         String roleId = InstitutionEndpoints.generateRoleId();
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate(roleCreatePayload);
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
+        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -31,8 +32,9 @@ public class PutRoleTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = DataProvider.class)
     public void updateRolWithInvalidRoleName(String name, ErrorMessage errorMessage, String field, String type) {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(name);
+        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -43,8 +45,9 @@ public class PutRoleTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNullRoleName() {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(null);
+        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -55,7 +58,8 @@ public class PutRoleTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = DataProvider.class)
     public void updateRolWithInvalidPermissionIds(List<String> permissionIds, ErrorMessage errorMessage, String field, String type) {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(permissionIds);
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
@@ -67,7 +71,8 @@ public class PutRoleTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNullPermissionIds() {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(null);
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
@@ -79,7 +84,9 @@ public class PutRoleTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNonInstitutionRol() {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Disaster Foundation");
-        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
+        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
         Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()

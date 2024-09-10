@@ -589,7 +589,10 @@ public class DataProvider {
                 {"123", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
                 {"invalid", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
                 {"       ", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
-
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e27Z", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e27", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804e2711", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
+                {"02fe9d68-70b7-4b53-abb4-3e18e804", ErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
         };
     }
 
