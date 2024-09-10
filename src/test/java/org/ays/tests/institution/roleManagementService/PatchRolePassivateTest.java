@@ -1,12 +1,12 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.Authorization;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.User;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
