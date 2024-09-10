@@ -242,12 +242,11 @@ public class DatabaseUtility {
                 .collect(Collectors.toList());
 
         Collections.shuffle(filteredPermissions);
-        List<String> randomPermissionIds = filteredPermissions.stream()
+
+        return filteredPermissions.stream()
                 .limit(2)
                 .map(Permission::getId)
                 .collect(Collectors.toList());
-
-        return randomPermissionIds;
     }
 
     @Getter
