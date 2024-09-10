@@ -1,17 +1,15 @@
 package org.ays.tests.landing.emergencyevacuationapplyservice;
 
 import io.restassured.response.Response;
+import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.LandingEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.PhoneNumber;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class PostEmergencyEvacuationApplicationTest {

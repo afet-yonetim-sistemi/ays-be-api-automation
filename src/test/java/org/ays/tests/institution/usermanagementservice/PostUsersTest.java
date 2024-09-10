@@ -1,17 +1,13 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.payload.AdminCredentials;
-import org.ays.payload.Orders;
-import org.ays.payload.Pageable;
-import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.UsersFilter;
+import org.ays.payload.*;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
-import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
 import java.util.List;

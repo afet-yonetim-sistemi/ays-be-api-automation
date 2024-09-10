@@ -1,12 +1,12 @@
 package org.ays.tests.auth.passwordManagement;
 
 import io.restassured.response.Response;
+import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.payload.PasswordForgotPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
-import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
 public class PostPasswordForgotTest {

@@ -1,6 +1,7 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.common.enums.ErrorMessage;
 import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.User;
@@ -8,7 +9,6 @@ import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
-import org.ays.utility.ErrorMessage;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
