@@ -1,6 +1,12 @@
 package org.ays.utility;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ErrorMessage {
+
     MUST_NOT_BE_BLANK("must not be blank"),
     MUST_BE_VALID("must be valid"),
     SIZE_BETWEEN("size must be between 20 and 250"),
@@ -18,14 +24,6 @@ public enum ErrorMessage {
     MUST_NOT_BE_EMPTY("must not be empty"),
     MUST_BE_BETWEEN_1_AND_99999999("must be between 1 and 99999999");
 
-
     private final String message;
 
-    ErrorMessage(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
