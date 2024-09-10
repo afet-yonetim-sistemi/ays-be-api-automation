@@ -3,16 +3,10 @@ package org.ays.utility;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ays.payload.PasswordForgotPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.UsersFilter;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -153,7 +147,6 @@ public class DatabaseUtility {
 
     public static String fetchFirstUserEmailAddress() {
 
-        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         String query = "SELECT EMAIL_ADDRESS FROM AYS_USER LIMIT 1";
         String emailAddress = null;
 
