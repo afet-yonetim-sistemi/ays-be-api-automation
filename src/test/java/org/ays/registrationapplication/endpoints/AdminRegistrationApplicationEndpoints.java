@@ -6,10 +6,10 @@ import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
+import org.ays.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Filter;
 import org.ays.payload.Pageable;
-import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.utility.AysConfigurationProperty;
@@ -117,7 +117,7 @@ public class AdminRegistrationApplicationEndpoints {
         }
     }
 
-    public static Response postRegistrationApplicationIDComplete(String applicationID, RegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
+    public static Response postRegistrationApplicationIDComplete(String applicationID, AdminRegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)

@@ -1,8 +1,8 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.payload.PhoneNumber;
-import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -17,7 +17,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void completeApplicationRegistrationPositive() {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
@@ -27,7 +27,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         completePayload.setFirstName(invalidFirstName);
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
@@ -41,7 +41,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         completePayload.setLastName(invalidFLastName);
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
@@ -55,7 +55,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         completePayload.setEmail(invalidEmail);
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
@@ -69,7 +69,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
@@ -87,7 +87,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeApplicationRegistrationWithInvalidFormatID() {
         String applicationID = "invalidID";
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
@@ -98,7 +98,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeApplicationRegistrationWithIDCompletedStatus() {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationIDForCompletedStatus();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
@@ -109,12 +109,12 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistEmail() {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
 
         String email = completePayload.getEmail();
         String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload newRegistrationIDComplete = AdminRegistrationApplicationCompletePayload.generate();
         newRegistrationIDComplete.setEmail(email);
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
@@ -126,12 +126,12 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistPhoneNumber() {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
 
         PhoneNumber phoneNumber = completePayload.getPhoneNumber();
         String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
+        AdminRegistrationApplicationCompletePayload newRegistrationIDComplete = AdminRegistrationApplicationCompletePayload.generate();
         newRegistrationIDComplete.setPhoneNumber(phoneNumber);
 
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);

@@ -3,7 +3,7 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.emergencyapplication.model.enums.AdminUserRegistrationApplicationStatus;
-import org.ays.payload.RegistrationApplicationCompletePayload;
+import org.ays.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -15,7 +15,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void rejectApplicationPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -27,7 +27,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"}, enabled = false)
     public void rejectARejectedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
@@ -37,7 +37,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void rejectAnApprovedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()

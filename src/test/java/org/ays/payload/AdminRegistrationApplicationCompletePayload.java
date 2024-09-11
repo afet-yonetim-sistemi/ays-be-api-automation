@@ -7,7 +7,7 @@ import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
-public class RegistrationApplicationCompletePayload {
+public class AdminRegistrationApplicationCompletePayload {
 
     private String username;
     private String email;
@@ -16,9 +16,9 @@ public class RegistrationApplicationCompletePayload {
     private String lastName;
     private PhoneNumber phoneNumber;
 
-    public static RegistrationApplicationCompletePayload generate() {
+    public static AdminRegistrationApplicationCompletePayload generate() {
 
-        RegistrationApplicationCompletePayload completePayload = new RegistrationApplicationCompletePayload();
+        AdminRegistrationApplicationCompletePayload completePayload = new AdminRegistrationApplicationCompletePayload();
         completePayload.setUsername(AysRandomUtil.generateUsername());
         completePayload.setEmail(AysRandomUtil.generateEmailAddress());
         completePayload.setPassword(AysRandomUtil.generatePassword());
