@@ -2,8 +2,8 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.emergencyapplication.model.enums.AdminUserRegistrationApplicationStatus;
+import org.ays.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.payload.RegistrationApplicationCompletePayload;
-import org.ays.payload.RejectReason;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -16,7 +16,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     public void rejectApplicationPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
         Response getStatus = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
@@ -28,8 +28,8 @@ public class PostAdminRegistrationApplicationRejectTest {
     public void rejectARejectedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -39,7 +39,7 @@ public class PostAdminRegistrationApplicationRejectTest {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
@@ -48,7 +48,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void rejectANotCompletedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
@@ -56,7 +56,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidRejectReason", dataProviderClass = DataProvider.class)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RejectReason reason = new RejectReason();
+        AdminRegistrationApplicationRejectPayload reason = new AdminRegistrationApplicationRejectPayload();
         reason.setRejectReason(invalidRejectReason);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, reason);
         response.then()
@@ -70,7 +70,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void rejectAnApplicationWithInvalidApplicationId() {
         String applicationId = "invalidApplicationID";
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be a valid UUID"))
@@ -82,7 +82,7 @@ public class PostAdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void rejectAnApplicationWithMissingReasonField() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        RejectReason reason = new RejectReason();
+        AdminRegistrationApplicationRejectPayload reason = new AdminRegistrationApplicationRejectPayload();
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, reason);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

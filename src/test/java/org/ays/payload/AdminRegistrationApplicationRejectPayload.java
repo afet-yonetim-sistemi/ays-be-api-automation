@@ -6,12 +6,12 @@ import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
-public class RejectReason {
+public class AdminRegistrationApplicationRejectPayload {
 
     private String rejectReason;
 
-    public static RejectReason generate() {
-        RejectReason reason = new RejectReason();
+    public static AdminRegistrationApplicationRejectPayload generate() {
+        AdminRegistrationApplicationRejectPayload reason = new AdminRegistrationApplicationRejectPayload();
         reason.setRejectReason(AysRandomUtil.generateRejectionReason());
         return reason;
     }

@@ -5,11 +5,11 @@ import lombok.experimental.UtilityClass;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
+import org.ays.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Filter;
 import org.ays.payload.Pageable;
 import org.ays.payload.RegistrationApplicationCompletePayload;
-import org.ays.payload.RejectReason;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.utility.AysConfigurationProperty;
@@ -84,13 +84,13 @@ public class AdminRegistrationApplicationEndpoints {
 
     }
 
-    public static Response postRegistrationApplicationReject(String applicationID, RejectReason rejectReason) {
+    public static Response postRegistrationApplicationReject(String applicationID, AdminRegistrationApplicationRejectPayload adminRegistrationApplicationRejectPayload) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application/{id}/reject")
                 .pathParameter(Map.of("id", applicationID))
-                .body(rejectReason)
+                .body(adminRegistrationApplicationRejectPayload)
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 

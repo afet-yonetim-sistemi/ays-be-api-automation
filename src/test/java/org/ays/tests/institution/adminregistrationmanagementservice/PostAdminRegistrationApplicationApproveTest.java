@@ -1,8 +1,8 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.payload.RegistrationApplicationCompletePayload;
-import org.ays.payload.RejectReason;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
@@ -37,7 +37,7 @@ public class PostAdminRegistrationApplicationApproveTest {
     public void approveARejectedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
