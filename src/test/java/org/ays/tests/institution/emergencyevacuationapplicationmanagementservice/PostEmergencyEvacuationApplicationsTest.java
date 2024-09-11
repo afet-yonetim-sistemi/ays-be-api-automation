@@ -2,8 +2,8 @@ package org.ays.tests.institution.emergencyevacuationapplicationmanagementservic
 
 import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.model.payload.AysPageable;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
-import org.ays.payload.AysPageable;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
 import org.ays.payload.Orders;

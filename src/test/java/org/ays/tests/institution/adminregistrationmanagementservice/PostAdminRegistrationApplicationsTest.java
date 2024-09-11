@@ -5,7 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.ays.payload.AysPageable;
+import org.ays.common.model.payload.AysPageable;
 import org.ays.payload.Filter;
 import org.ays.payload.Orders;
 import org.ays.payload.RequestBodyInstitution;
