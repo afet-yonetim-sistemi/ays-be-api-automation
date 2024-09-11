@@ -1,9 +1,9 @@
 package org.ays.tests.auth.passwordManagement;
 
 import io.restassured.response.Response;
+import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.payload.PasswordForgotPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
