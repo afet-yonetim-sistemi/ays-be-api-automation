@@ -2,8 +2,8 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.model.enums.SourcePage;
 import org.ays.payload.AdminCredentials;
-import org.ays.payload.SourcePage;
 import org.ays.utility.AysConfigurationProperty;
 
 @UtilityClass

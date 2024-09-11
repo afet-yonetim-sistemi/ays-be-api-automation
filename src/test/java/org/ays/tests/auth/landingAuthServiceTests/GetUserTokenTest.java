@@ -1,8 +1,8 @@
 package org.ays.tests.auth.landingAuthServiceTests;
 
 import io.restassured.response.Response;
+import org.ays.auth.model.enums.SourcePage;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.SourcePage;
 import org.ays.payload.UserCredentials;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;

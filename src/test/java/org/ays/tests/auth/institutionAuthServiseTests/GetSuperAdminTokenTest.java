@@ -1,8 +1,8 @@
 package org.ays.tests.auth.institutionAuthServiseTests;
 
 import io.restassured.response.Response;
+import org.ays.auth.model.enums.SourcePage;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.payload.SourcePage;
 import org.ays.payload.SuperAdminCredentials;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
