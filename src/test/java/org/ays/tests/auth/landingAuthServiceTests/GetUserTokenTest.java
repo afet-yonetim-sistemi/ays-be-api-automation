@@ -14,7 +14,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getTokenForValidUser() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -23,7 +23,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setEmailAddress(emailAddress);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -35,7 +35,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthUserEmailAddress() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setEmailAddress("email@gmail.com");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -44,7 +44,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithInvalidPassword() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -53,7 +53,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithNullPassword() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -63,7 +63,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthSourcePage() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setSourcePage(SourcePage.INSTITUTION);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()

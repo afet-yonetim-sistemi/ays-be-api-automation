@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class PostUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userInvalidateToken() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         Token token = Token.generateUserToken(userCredentials);
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());

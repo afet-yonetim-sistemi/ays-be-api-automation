@@ -45,7 +45,7 @@ public class LoginPayload {
         return adminCredentials;
     }
 
-    public static LoginPayload generate() {
+    public static LoginPayload generateAsUserOne() {
         LoginPayload userCredentials = new LoginPayload();
         userCredentials.setEmailAddress(AysConfigurationProperty.LandingUserOne.EMAIL_ADDRESS);
         userCredentials.setPassword(AysConfigurationProperty.LandingUserOne.PASSWORD);

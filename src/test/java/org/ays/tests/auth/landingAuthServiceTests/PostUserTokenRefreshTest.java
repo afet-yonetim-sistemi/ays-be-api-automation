@@ -13,7 +13,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userTokenRefresh() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         Response loginResponse = UserAuthEndpoints.getUserToken(userCredentials);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -27,7 +27,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Regression", "User"})
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
-        LoginPayload userCredentials = LoginPayload.generate();
+        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         Token token = Token.generateUserToken(userCredentials);
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
