@@ -1,8 +1,9 @@
-package org.ays.payload;
+package org.ays.emergencyapplication.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.payload.PhoneNumber;
 import org.ays.utility.DatabaseUtility;
 
 import java.util.Collections;
