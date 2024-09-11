@@ -2,11 +2,11 @@ package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
-import org.ays.payload.RoleCreatePayload;
 import org.ays.payload.RolesListFilter;
 import org.ays.payload.RolesListPayload;
 import org.ays.utility.AysLogUtil;
