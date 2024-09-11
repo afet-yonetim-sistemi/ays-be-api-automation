@@ -3,7 +3,7 @@ package org.ays.tests.landing.emergencyevacuationapplyservice;
 import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
-import org.ays.payload.EmergencyEvacuationApplication;
+import org.ays.payload.EmergencyEvacuationApplicationPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -18,31 +18,31 @@ public class PostEmergencyEvacuationApplicationTest {
 
     @Test(groups = {"Smoke", "Regression", "Landing"})
     public void createEmergencyEvacuationApplicationForMe() {
-        EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Smoke", "Regression", "Landing"})
     public void createEmergencyEvacuationApplicationForOtherPerson() {
-        EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidName", dataProviderClass = DataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidName(String field, String value, AysErrorMessage errorMessage, String type) {
-        EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
 
         if ("firstName".equals(field)) {
-            emergencyEvacuationApplication.setFirstName(value);
+            emergencyEvacuationApplicationPayload.setFirstName(value);
         } else if ("lastName".equals(field)) {
-            emergencyEvacuationApplication.setLastName(value);
+            emergencyEvacuationApplicationPayload.setLastName(value);
         }
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors", hasItem(
@@ -53,15 +53,15 @@ public class PostEmergencyEvacuationApplicationTest {
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "blankApplicantName", dataProviderClass = DataProvider.class)
     public void createEmergencyEvacuationApplicationWithBlankApplicantName(String field, String value, AysErrorMessage errorMessage) {
-        EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
 
         if ("applicantFirstName".equals(field)) {
-            emergencyEvacuationApplication.setApplicantFirstName(value);
+            emergencyEvacuationApplicationPayload.setApplicantFirstName(value);
         } else if ("applicantLastName".equals(field)) {
-            emergencyEvacuationApplication.setApplicantLastName(value);
+            emergencyEvacuationApplicationPayload.setApplicantLastName(value);
         }
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors", hasItem(
@@ -72,15 +72,15 @@ public class PostEmergencyEvacuationApplicationTest {
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "applicantName", dataProviderClass = DataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidApplicantName(String field, String value, AysErrorMessage errorMessage, String type) {
-        EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
 
         if ("applicantFirstName".equals(field)) {
-            emergencyEvacuationApplication.setApplicantFirstName(value);
+            emergencyEvacuationApplicationPayload.setApplicantFirstName(value);
         } else if ("applicantLastName".equals(field)) {
-            emergencyEvacuationApplication.setApplicantLastName(value);
+            emergencyEvacuationApplicationPayload.setApplicantLastName(value);
         }
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
@@ -103,16 +103,16 @@ public class PostEmergencyEvacuationApplicationTest {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
 
-        EmergencyEvacuationApplication emergencyEvacuationApplication;
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload;
         if (isApplicant) {
-            emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
-            emergencyEvacuationApplication.setApplicantPhoneNumber(phoneNumber);
+            emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
+            emergencyEvacuationApplicationPayload.setApplicantPhoneNumber(phoneNumber);
         } else {
-            emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
-            emergencyEvacuationApplication.setPhoneNumber(phoneNumber);
+            emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
+            emergencyEvacuationApplicationPayload.setPhoneNumber(phoneNumber);
         }
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplicationPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
@@ -131,7 +131,7 @@ public class PostEmergencyEvacuationApplicationTest {
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidAddressData", dataProviderClass = DataProvider.class)
     public void testInvalidAddress(String value, AysErrorMessage errorMessage, String field, String fieldType) {
-        EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
+        EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         application.setAddress(value);
 
         Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(application);
@@ -161,7 +161,7 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     private void validateField(String fieldName, Object value, AysErrorMessage errorMessage, String fieldType) {
-        EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
+        EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         switch (fieldName) {
             case "sourceCity" -> application.setSourceCity((String) value);
             case "sourceDistrict" -> application.setSourceDistrict((String) value);

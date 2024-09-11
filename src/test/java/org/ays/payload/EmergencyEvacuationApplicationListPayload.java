@@ -15,10 +15,10 @@ public class EmergencyEvacuationApplicationListPayload {
     private AysPageable pageable;
     private EmergencyEvacuationApplicationsFilter filter;
 
-    public static EmergencyEvacuationApplicationListPayload generate(EmergencyEvacuationApplication emergencyEvacuationApplication) {
+    public static EmergencyEvacuationApplicationListPayload generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
         EmergencyEvacuationApplicationListPayload emergencyEvacuationApplicationListPayload = new EmergencyEvacuationApplicationListPayload();
         emergencyEvacuationApplicationListPayload.setPageable(AysPageable.generate(1, 10));
-        emergencyEvacuationApplicationListPayload.setFilter(EmergencyEvacuationApplicationsFilter.generate(emergencyEvacuationApplication));
+        emergencyEvacuationApplicationListPayload.setFilter(EmergencyEvacuationApplicationsFilter.generate(emergencyEvacuationApplicationPayload));
         return emergencyEvacuationApplicationListPayload;
     }
 
@@ -36,15 +36,15 @@ public class EmergencyEvacuationApplicationListPayload {
         private List<String> statuses;
         private Boolean isInPerson;
 
-        public static EmergencyEvacuationApplicationsFilter generate(EmergencyEvacuationApplication emergencyEvacuationApplication) {
+        public static EmergencyEvacuationApplicationsFilter generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
             EmergencyEvacuationApplicationsFilter filter = new EmergencyEvacuationApplicationsFilter();
             filter.setReferenceNumber(DatabaseUtility.getLatestReferenceNumber());
-            filter.setPhoneNumber(emergencyEvacuationApplication.getPhoneNumber());
-            filter.setSourceCity(emergencyEvacuationApplication.getSourceCity());
-            filter.setSourceDistrict(emergencyEvacuationApplication.getSourceDistrict());
-            filter.setSeatingCount(emergencyEvacuationApplication.getSeatingCount());
-            filter.setTargetCity(emergencyEvacuationApplication.getTargetCity());
-            filter.setTargetDistrict(emergencyEvacuationApplication.getTargetDistrict());
+            filter.setPhoneNumber(emergencyEvacuationApplicationPayload.getPhoneNumber());
+            filter.setSourceCity(emergencyEvacuationApplicationPayload.getSourceCity());
+            filter.setSourceDistrict(emergencyEvacuationApplicationPayload.getSourceDistrict());
+            filter.setSeatingCount(emergencyEvacuationApplicationPayload.getSeatingCount());
+            filter.setTargetCity(emergencyEvacuationApplicationPayload.getTargetCity());
+            filter.setTargetDistrict(emergencyEvacuationApplicationPayload.getTargetDistrict());
             filter.setStatuses(Collections.singletonList("PENDING"));
             filter.setIsInPerson(true);
             return filter;

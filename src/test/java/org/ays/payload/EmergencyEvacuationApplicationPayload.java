@@ -6,7 +6,8 @@ import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
-public class EmergencyEvacuationApplication {
+public class EmergencyEvacuationApplicationPayload {
+
     private String applicantFirstName;
     private String applicantLastName;
     private PhoneNumber applicantPhoneNumber;
@@ -21,16 +22,16 @@ public class EmergencyEvacuationApplication {
     private String targetDistrict;
 
 
-    public static EmergencyEvacuationApplication generateForMe() {
+    public static EmergencyEvacuationApplicationPayload generateForMe() {
         return generate(false);
     }
 
-    public static EmergencyEvacuationApplication generateForOtherPerson() {
+    public static EmergencyEvacuationApplicationPayload generateForOtherPerson() {
         return generate(true);
     }
 
-    private static EmergencyEvacuationApplication generate(boolean forOtherPerson) {
-        EmergencyEvacuationApplication application = new EmergencyEvacuationApplication();
+    private static EmergencyEvacuationApplicationPayload generate(boolean forOtherPerson) {
+        EmergencyEvacuationApplicationPayload application = new EmergencyEvacuationApplicationPayload();
 
         if (forOtherPerson) {
             application.setApplicantFirstName(AysRandomUtil.generateFirstName());
