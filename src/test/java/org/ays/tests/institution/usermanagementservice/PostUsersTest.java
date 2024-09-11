@@ -1,8 +1,8 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.auth.user.endpoints.UserEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
@@ -27,7 +27,7 @@ public class PostUsersTest {
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Volunteer Foundation");
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -47,7 +47,7 @@ public class PostUsersTest {
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Disaster Foundation");
 
-        Response response = InstitutionEndpoints.listUsersTwo(requestBodyUsers);
+        Response response = UserEndpoints.listUsersTwo(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -67,7 +67,7 @@ public class PostUsersTest {
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Afet Yönetim Sistemi");
 
-        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers);
+        Response response = UserEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -85,7 +85,7 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(DatabaseUtility.fetchFirstUserData());
-        Response response = InstitutionEndpoints.listUsersSuperAdmin(requestBodyUsers);
+        Response response = UserEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -107,7 +107,7 @@ public class PostUsersTest {
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
 
         List<Object> contentList = response.jsonPath().getList("response.content");
 
@@ -131,7 +131,7 @@ public class PostUsersTest {
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
 
         List<Object> contentList = response.jsonPath().getList("response.content");
 
@@ -153,7 +153,7 @@ public class PostUsersTest {
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, firstName, lastName, null, null));
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -166,7 +166,7 @@ public class PostUsersTest {
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, city, null));
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -179,7 +179,7 @@ public class PostUsersTest {
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, statuses));
 
-        Response response = InstitutionEndpoints.listUsers(requestBodyUsers, adminCredentials);
+        Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));

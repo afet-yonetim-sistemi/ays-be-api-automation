@@ -1,6 +1,7 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.user.endpoints.UserEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
 import org.ays.endpoints.Authorization;
 import org.ays.endpoints.InstitutionEndpoints;
@@ -42,7 +43,7 @@ public class PatchRolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAnAssignedRole() {
         String roleId = InstitutionEndpoints.generateRoleId();
-        InstitutionEndpoints.createAUser(User.generateUserWithARole(roleId), Authorization.loginAndGetTestAdminAccessToken());
+        UserEndpoints.createAUser(User.generateUserWithARole(roleId), Authorization.loginAndGetTestAdminAccessToken());
         Response response = InstitutionEndpoints.patchPassivateRole(roleId, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())

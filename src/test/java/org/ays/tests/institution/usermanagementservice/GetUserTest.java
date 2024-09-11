@@ -1,7 +1,7 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.auth.user.endpoints.UserEndpoints;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RequestBodyUsers;
@@ -17,13 +17,13 @@ public class GetUserTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getUser() {
         User user = User.generate();
-        InstitutionEndpoints.createAUser(user);
+        UserEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = InstitutionEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
+        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), AdminCredentials.generate());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
-        Response response = InstitutionEndpoints.getUser(userID);
+        Response response = UserEndpoints.getUser(userID);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.createdUser", notNullValue())
