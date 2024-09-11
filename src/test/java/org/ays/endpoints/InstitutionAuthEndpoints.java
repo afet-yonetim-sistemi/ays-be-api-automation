@@ -2,7 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.common.model.request.AysRestAssuredPayload;
+import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.PasswordForgotPayload;
