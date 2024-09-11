@@ -2,6 +2,7 @@ package org.ays.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.auth.model.enums.RoleStatus;
 
 @Getter
 @Setter
