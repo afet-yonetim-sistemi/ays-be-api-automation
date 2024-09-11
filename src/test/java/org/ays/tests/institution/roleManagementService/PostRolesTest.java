@@ -144,10 +144,10 @@ public class PostRolesTest {
     public void rolesListUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        RoleListPayload.RolesListFilter rolesListFilter = new RoleListPayload.RolesListFilter();
-        rolesListFilter.setName(name);
+        RoleListPayload.Filter filter = new RoleListPayload.Filter();
+        filter.setName(name);
 
-        roleListPayload.setFilter(rolesListFilter);
+        roleListPayload.setFilter(filter);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
@@ -160,10 +160,10 @@ public class PostRolesTest {
     public void rolesListUsingInvalidStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        RoleListPayload.RolesListFilter rolesListFilter = new RoleListPayload.RolesListFilter();
-        rolesListFilter.setStatuses(statuses);
+        RoleListPayload.Filter filter = new RoleListPayload.Filter();
+        filter.setStatuses(statuses);
 
-        roleListPayload.setFilter(rolesListFilter);
+        roleListPayload.setFilter(filter);
 
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());

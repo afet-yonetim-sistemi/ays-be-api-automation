@@ -14,7 +14,7 @@ import java.util.List;
 public class RoleListPayload {
 
     private AysPageable pageable;
-    private RolesListFilter filter;
+    private Filter filter;
 
     public static RoleListPayload generate() {
         RoleListPayload roleListPayload = new RoleListPayload();
@@ -25,19 +25,19 @@ public class RoleListPayload {
     public static RoleListPayload generateWithFilter(RoleCreatePayload roleCreatePayload) {
         RoleListPayload roleListPayload = new RoleListPayload();
         roleListPayload.setPageable(AysPageable.generate(1, 10));
-        roleListPayload.setFilter(RolesListFilter.generate(roleCreatePayload.getName(), RoleStatus.ACTIVE));
+        roleListPayload.setFilter(Filter.generate(roleCreatePayload.getName(), RoleStatus.ACTIVE));
         return roleListPayload;
     }
 
     @Getter
     @Setter
-    public static class RolesListFilter {
+    public static class Filter {
 
         private String name;
         private List<String> statuses;
 
-        public static RolesListFilter generate(String name, RoleStatus statuses) {
-            RolesListFilter rolesFilter = new RolesListFilter();
+        public static Filter generate(String name, RoleStatus statuses) {
+            Filter rolesFilter = new Filter();
             rolesFilter.setName(name);
             rolesFilter.setStatuses(Collections.singletonList(statuses.toString()));
             return rolesFilter;
