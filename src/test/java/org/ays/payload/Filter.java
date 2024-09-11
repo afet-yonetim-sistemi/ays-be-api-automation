@@ -12,7 +12,7 @@ public class Filter {
 
     private List<String> statuses;
 
-    public static Filter generate(ApplicationRegistrationSupportStatus status) {
+    public static Filter generate(AdminRegistrationApplicationStatus status) {
         Filter filter = new Filter();
         filter.setStatuses(Collections.singletonList(status.toString()));
         return filter;
