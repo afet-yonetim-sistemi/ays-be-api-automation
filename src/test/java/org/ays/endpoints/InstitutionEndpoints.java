@@ -2,6 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.common.configuration.AysRestAssured;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;

@@ -1,4 +1,4 @@
-package org.ays.endpoints;
+package org.ays.common.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,6 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
+import org.ays.endpoints.AysRestAssuredRequest;
 import org.ays.utility.AysConfigurationProperty;
 import org.testng.Reporter;
 
