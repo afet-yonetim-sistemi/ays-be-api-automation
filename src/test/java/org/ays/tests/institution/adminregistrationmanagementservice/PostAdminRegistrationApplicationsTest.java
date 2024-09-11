@@ -5,11 +5,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.Filter;
 import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyInstitution;
+import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -45,7 +45,7 @@ public class PostAdminRegistrationApplicationsTest {
         requestBodyInstitution.setPageable(pageable);
 
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
@@ -61,7 +61,7 @@ public class PostAdminRegistrationApplicationsTest {
         requestBodyInstitution.setPageable(pageable);
 
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be between 1 and 99999999"));
@@ -80,7 +80,7 @@ public class PostAdminRegistrationApplicationsTest {
         filter.setStatuses(newStatuses);
         requestBodyInstitution.setFilter(filter);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
@@ -100,7 +100,7 @@ public class PostAdminRegistrationApplicationsTest {
         statuses.add("WAIT");
         filter.setStatuses(statuses);
         requestBodyInstitution.setFilter(filter);
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
@@ -120,7 +120,7 @@ public class PostAdminRegistrationApplicationsTest {
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
@@ -143,7 +143,7 @@ public class PostAdminRegistrationApplicationsTest {
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
@@ -168,7 +168,7 @@ public class PostAdminRegistrationApplicationsTest {
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content", notNullValue())
@@ -196,7 +196,7 @@ public class PostAdminRegistrationApplicationsTest {
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
-        Response response = InstitutionEndpoints.postRegistrationApplications(requestBodyInstitution);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplications(requestBodyInstitution);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }

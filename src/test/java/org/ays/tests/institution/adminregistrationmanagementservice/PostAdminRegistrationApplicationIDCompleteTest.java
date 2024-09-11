@@ -1,9 +1,9 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RegistrationApplicationCompletePayload;
+import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -16,21 +16,21 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void completeApplicationRegistrationPositive() {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, String errorMessage) {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
         completePayload.setFirstName(invalidFirstName);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -40,11 +40,11 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, String errorMessage) {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
         completePayload.setLastName(invalidFLastName);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -54,11 +54,11 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, String errorMessage) {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
         completePayload.setEmail(invalidEmail);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -68,7 +68,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = DataProvider.class)
     public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
 
         PhoneNumber phoneNumber = new PhoneNumber();
@@ -76,7 +76,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
         phoneNumber.setLineNumber(lineNumber);
         completePayload.setPhoneNumber(phoneNumber);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -89,7 +89,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
         String applicationID = "invalidID";
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
 
@@ -97,10 +97,10 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeApplicationRegistrationWithIDCompletedStatus() {
-        String applicationID = InstitutionEndpoints.generateApplicationIDForCompletedStatus();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationIDForCompletedStatus();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("ADMIN USER REGISTER APPLICATION NOT EXIST!"));
@@ -108,16 +108,16 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistEmail() {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
-        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
 
         String email = completePayload.getEmail();
-        String newApplicationID = InstitutionEndpoints.generateApplicationID();
+        String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
         newRegistrationIDComplete.setEmail(email);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("ADMIN USER ALREADY EXIST!"));
@@ -125,16 +125,16 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistPhoneNumber() {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload completePayload = RegistrationApplicationCompletePayload.generate();
-        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
 
         PhoneNumber phoneNumber = completePayload.getPhoneNumber();
-        String newApplicationID = InstitutionEndpoints.generateApplicationID();
+        String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         RegistrationApplicationCompletePayload newRegistrationIDComplete = RegistrationApplicationCompletePayload.generate();
         newRegistrationIDComplete.setPhoneNumber(phoneNumber);
 
-        Response response = InstitutionEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(newApplicationID, newRegistrationIDComplete);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("ADMIN USER ALREADY EXIST!"));
