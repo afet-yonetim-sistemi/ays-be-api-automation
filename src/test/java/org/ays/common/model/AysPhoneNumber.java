@@ -1,4 +1,4 @@
-package org.ays.payload;
+package org.ays.common.model;
 
 import lombok.Getter;
 import lombok.Setter;

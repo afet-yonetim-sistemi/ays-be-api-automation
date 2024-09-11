@@ -3,7 +3,7 @@ package org.ays.utility;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ays.payload.AysPhoneNumber;
+import org.ays.common.model.AysPhoneNumber;
 import org.ays.payload.UsersFilter;
 
 import java.sql.Connection;

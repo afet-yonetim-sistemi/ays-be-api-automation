@@ -1,10 +1,10 @@
 package org.ays.tests.landing.emergencyevacuationapplyservice;
 
 import io.restassured.response.Response;
+import org.ays.common.model.AysPhoneNumber;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
-import org.ays.payload.AysPhoneNumber;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
