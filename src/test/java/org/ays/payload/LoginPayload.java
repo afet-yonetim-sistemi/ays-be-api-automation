@@ -22,12 +22,11 @@ public class LoginPayload {
         return adminCredentials;
     }
 
-    public static LoginPayload generateForAdminTwo() {
+    public static LoginPayload generateAsAdminUserTwo() {
         LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserTwo.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserTwo.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
-
         return adminCredentials;
     }
 

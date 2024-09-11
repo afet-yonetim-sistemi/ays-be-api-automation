@@ -42,7 +42,7 @@ public class Authorization {
 
     public static String loginAndGetAdminTwoAccessToken() {
 
-        LoginPayload adminCredentials = LoginPayload.generateForAdminTwo();
+        LoginPayload adminCredentials = LoginPayload.generateAsAdminUserTwo();
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 
