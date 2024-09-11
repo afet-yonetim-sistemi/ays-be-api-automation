@@ -20,12 +20,4 @@ public class RequestBodyUsers {
         return requestBodyUsers;
     }
 
-    public static RequestBodyUsers generate2(AysPageable pageable, UsersFilter usersFilter) {
-        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(pageable);
-        requestBodyUsers.setFilter(usersFilter);
-
-        return requestBodyUsers;
-    }
-
 }
