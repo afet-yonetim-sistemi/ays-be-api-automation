@@ -5,12 +5,12 @@ import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.EmergencyEvacuationApplication;
-import org.ays.payload.ListEmergencyEvacuationApplications;
+import org.ays.payload.EmergencyEvacuationApplicationListPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 public class EmergencyEvacuationApplicationEndpoints {
 
-    public static Response postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications list) {
+    public static Response postEmergencyEvacuationApplications(EmergencyEvacuationApplicationListPayload list) {
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/emergency-evacuation-applications")
