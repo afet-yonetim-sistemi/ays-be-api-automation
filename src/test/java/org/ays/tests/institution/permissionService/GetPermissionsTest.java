@@ -1,7 +1,7 @@
 package org.ays.tests.institution.permissionService;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.auth.permission.endpoints.PermissionEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DatabaseUtility;
 import org.testng.Assert;
@@ -18,7 +18,7 @@ public class GetPermissionsTest {
     @Test(groups = {"Smoke", "Regression"})
     public void nonSuperUsersShouldNotSeeSuperPermissions() {
 
-        Response response = InstitutionEndpoints.getAdminsPermissions();
+        Response response = PermissionEndpoints.getAdminsPermissions();
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
@@ -33,7 +33,7 @@ public class GetPermissionsTest {
     @Test(groups = {"Regression"})
     public void nonSuperUsersShouldSeeNonSuperPermissions() {
 
-        Response response = InstitutionEndpoints.getAdminsPermissions();
+        Response response = PermissionEndpoints.getAdminsPermissions();
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
@@ -48,7 +48,7 @@ public class GetPermissionsTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void superUsersShouldSeeAllPermissions() {
 
-        Response response = InstitutionEndpoints.getSuperAdminsPermissions();
+        Response response = PermissionEndpoints.getSuperAdminsPermissions();
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 

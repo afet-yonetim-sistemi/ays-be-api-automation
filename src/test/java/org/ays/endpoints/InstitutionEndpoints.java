@@ -26,28 +26,6 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response getAdminsPermissions() {
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.GET)
-                .url("/api/v1/permissions")
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response getSuperAdminsPermissions() {
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.GET)
-                .url("/api/v1/permissions")
-                .token(Authorization.loginAndGetSuperAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
     public static Response postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications list) {
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
