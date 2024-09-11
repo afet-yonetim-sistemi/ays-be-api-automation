@@ -14,18 +14,18 @@ import java.util.List;
 public class EmergencyEvacuationApplicationListPayload {
 
     private AysPageable pageable;
-    private EmergencyEvacuationApplicationsFilter filter;
+    private Filter filter;
 
     public static EmergencyEvacuationApplicationListPayload generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
         EmergencyEvacuationApplicationListPayload emergencyEvacuationApplicationListPayload = new EmergencyEvacuationApplicationListPayload();
         emergencyEvacuationApplicationListPayload.setPageable(AysPageable.generate(1, 10));
-        emergencyEvacuationApplicationListPayload.setFilter(EmergencyEvacuationApplicationsFilter.generate(emergencyEvacuationApplicationPayload));
+        emergencyEvacuationApplicationListPayload.setFilter(Filter.generate(emergencyEvacuationApplicationPayload));
         return emergencyEvacuationApplicationListPayload;
     }
 
     @Getter
     @Setter
-    public static class EmergencyEvacuationApplicationsFilter {
+    public static class Filter {
 
         private String referenceNumber;
         private String sourceCity;
@@ -37,8 +37,8 @@ public class EmergencyEvacuationApplicationListPayload {
         private List<String> statuses;
         private Boolean isInPerson;
 
-        public static EmergencyEvacuationApplicationsFilter generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
-            EmergencyEvacuationApplicationsFilter filter = new EmergencyEvacuationApplicationsFilter();
+        public static Filter generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
+            Filter filter = new Filter();
             filter.setReferenceNumber(DatabaseUtility.getLatestReferenceNumber());
             filter.setPhoneNumber(emergencyEvacuationApplicationPayload.getPhoneNumber());
             filter.setSourceCity(emergencyEvacuationApplicationPayload.getSourceCity());
