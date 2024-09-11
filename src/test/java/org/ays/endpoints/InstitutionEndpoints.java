@@ -2,7 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.common.model.request.AysRestAssuredRequest;
+import org.ays.common.model.request.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.AdminsListPayload;
@@ -31,7 +31,7 @@ public class InstitutionEndpoints {
 
     public static Response listAdmins(AdminsListPayload adminsListPayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admins")
                 .body(adminsListPayload)
@@ -43,7 +43,7 @@ public class InstitutionEndpoints {
 
     public static Response createAUser(User userPayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user")
                 .body(userPayload)
@@ -55,7 +55,7 @@ public class InstitutionEndpoints {
 
     public static Response createAUser(User userPayload, String token) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user")
                 .body(userPayload)
@@ -67,7 +67,7 @@ public class InstitutionEndpoints {
 
     public static Response listUsers(RequestBodyUsers requestBodyUsers, AdminCredentials adminCredentials) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
                 .body(requestBodyUsers)
@@ -79,7 +79,7 @@ public class InstitutionEndpoints {
 
     public static Response listUsersTwo(RequestBodyUsers requestBodyUsers) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
                 .body(requestBodyUsers)
@@ -91,7 +91,7 @@ public class InstitutionEndpoints {
 
     public static Response listUsersSuperAdmin(RequestBodyUsers requestBodyUsers) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
                 .body(requestBodyUsers)
@@ -103,7 +103,7 @@ public class InstitutionEndpoints {
 
     public static Response getUser(String userId) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
@@ -116,7 +116,7 @@ public class InstitutionEndpoints {
 
     public static Response updateUser(String userId, User userPayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
@@ -129,7 +129,7 @@ public class InstitutionEndpoints {
 
     public static Response deleteUser(String userId) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
@@ -141,7 +141,7 @@ public class InstitutionEndpoints {
 
     public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-applications")
                 .body(requestBodyInstitution)
@@ -154,7 +154,7 @@ public class InstitutionEndpoints {
 
     public static Response getRegistrationApplicationId(String applicationID) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin/registration-application/{id}")
                 .pathParameter(Map.of("id", applicationID))
@@ -167,7 +167,7 @@ public class InstitutionEndpoints {
 
     public static Response getRegistrationApplicationsIdSummary(String applicationID) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin/registration-application/{id}/summary")
                 .pathParameter(Map.of("id", applicationID))
@@ -179,7 +179,7 @@ public class InstitutionEndpoints {
 
     public static Response postRegistrationApplicationApprove(String applicationID) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-application/{id}/approve")
                 .pathParameter(Map.of("id", applicationID))
@@ -191,7 +191,7 @@ public class InstitutionEndpoints {
 
     public static Response postRegistrationAdminApplication(ApplicationRegistration applicationRegistration) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application")
                 .body(applicationRegistration)
@@ -204,7 +204,7 @@ public class InstitutionEndpoints {
 
     public static Response postRegistrationApplicationReject(String applicationID, RejectReason rejectReason) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-application/{id}/reject")
                 .pathParameter(Map.of("id", applicationID))
@@ -216,7 +216,7 @@ public class InstitutionEndpoints {
     }
 
     public static Response getInstitutionsSummary() {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/institutions/summary")
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
@@ -247,7 +247,7 @@ public class InstitutionEndpoints {
 
     public static Response postRegistrationApplicationIDComplete(String applicationID, RegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin/registration-application/{id}/complete")
                 .pathParameter(Map.of("id", applicationID))
@@ -260,7 +260,7 @@ public class InstitutionEndpoints {
 
     public static Response getAdminsPermissions() {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/permissions")
                 .token(Authorization.loginAndGetAdminAccessToken())
@@ -271,7 +271,7 @@ public class InstitutionEndpoints {
 
     public static Response getSuperAdminsPermissions() {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/permissions")
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
@@ -281,7 +281,7 @@ public class InstitutionEndpoints {
     }
 
     public static Response postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications list) {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/emergency-evacuation-applications")
                 .body(list)
@@ -293,7 +293,7 @@ public class InstitutionEndpoints {
 
     public static Response listRoles(RolesListPayload rolesListPayload, String token) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/roles")
                 .body(rolesListPayload)
@@ -305,7 +305,7 @@ public class InstitutionEndpoints {
 
     public static Response createRole(RoleCreatePayload roleCreatePayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
@@ -328,7 +328,7 @@ public class InstitutionEndpoints {
 
     public static Response updateRole(String roleId, RoleUpdatePayload roleUpdatePayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
@@ -341,7 +341,7 @@ public class InstitutionEndpoints {
 
     public static Response deleteRole(String roleId) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
@@ -353,7 +353,7 @@ public class InstitutionEndpoints {
 
     public static Response patchActivateRole(String roleId, String token) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/activate")
                 .pathParameter(Map.of("id", roleId))
@@ -365,7 +365,7 @@ public class InstitutionEndpoints {
 
     public static Response patchPassivateRole(String roleId, String token) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/passivate")
                 .pathParameter(Map.of("id", roleId))

@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Getter
 @Builder
-public class AysRestAssuredRequest {
+public class AysRestAssuredPayload {
 
     private HttpMethod httpMethod;
     private String url;

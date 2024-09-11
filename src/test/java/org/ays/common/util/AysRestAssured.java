@@ -7,7 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
-import org.ays.common.model.request.AysRestAssuredRequest;
+import org.ays.common.model.request.AysRestAssuredPayload;
 import org.ays.utility.AysConfigurationProperty;
 import org.testng.Reporter;
 
@@ -16,7 +16,7 @@ public class AysRestAssured {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static Response perform(AysRestAssuredRequest restAssuredRequest) {
+    public static Response perform(AysRestAssuredPayload restAssuredRequest) {
 
         Reporter.log("---- Rest Assured Request ----");
         Reporter.log(GSON.toJson(restAssuredRequest));

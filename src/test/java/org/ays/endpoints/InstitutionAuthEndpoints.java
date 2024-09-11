@@ -2,7 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.common.model.request.AysRestAssuredRequest;
+import org.ays.common.model.request.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.PasswordForgotPayload;
@@ -14,7 +14,7 @@ import org.openqa.selenium.remote.http.HttpMethod;
 public class InstitutionAuthEndpoints {
 
     public static Response getAdminToken(AdminCredentials adminCredentials) {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token")
                 .body(adminCredentials)
@@ -24,7 +24,7 @@ public class InstitutionAuthEndpoints {
     }
 
     public static Response getSuperAdminToken(SuperAdminCredentials superAdminCredentials) {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token")
                 .body(superAdminCredentials)
@@ -34,7 +34,7 @@ public class InstitutionAuthEndpoints {
     }
 
     public static Response adminTokenRefresh(TokenRefreshPayload tokenRefreshPayload) {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token/refresh")
                 .body(tokenRefreshPayload)
@@ -45,7 +45,7 @@ public class InstitutionAuthEndpoints {
 
 
     public static Response adminInvalidateToken(String accessToken, TokenRefreshPayload tokenRefreshPayload) {
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token/invalidate")
                 .body(tokenRefreshPayload)
@@ -57,7 +57,7 @@ public class InstitutionAuthEndpoints {
 
     public static Response postPasswordForgot(PasswordForgotPayload passwordForgotPayload) {
 
-        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/password/forgot")
                 .body(passwordForgotPayload)
