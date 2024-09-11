@@ -2,8 +2,8 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 
 import io.restassured.response.Response;
 import org.ays.auth.model.enums.SourcePage;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.payload.LoginPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;

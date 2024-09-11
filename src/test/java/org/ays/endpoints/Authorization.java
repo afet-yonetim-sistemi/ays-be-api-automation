@@ -3,7 +3,7 @@ package org.ays.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.model.enums.SourcePage;
-import org.ays.payload.LoginPayload;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.utility.AysConfigurationProperty;
 
 @UtilityClass

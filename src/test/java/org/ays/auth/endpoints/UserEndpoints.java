@@ -2,10 +2,10 @@ package org.ays.auth.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.LoginPayload;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;

@@ -2,10 +2,10 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
-import org.ays.payload.LoginPayload;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;

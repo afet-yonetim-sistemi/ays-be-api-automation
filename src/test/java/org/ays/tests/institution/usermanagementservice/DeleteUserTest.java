@@ -2,7 +2,7 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.payload.LoginPayload;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;

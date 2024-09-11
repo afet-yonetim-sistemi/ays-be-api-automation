@@ -3,6 +3,7 @@ package org.ays.payload;
 import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 

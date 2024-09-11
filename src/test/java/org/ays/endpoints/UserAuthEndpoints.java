@@ -2,9 +2,9 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
-import org.ays.payload.LoginPayload;
 import org.ays.payload.TokenRefreshPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
 
