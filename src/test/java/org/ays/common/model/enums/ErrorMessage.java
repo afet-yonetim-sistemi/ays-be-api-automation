@@ -1,4 +1,4 @@
-package org.ays.common.enums;
+package org.ays.common.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
