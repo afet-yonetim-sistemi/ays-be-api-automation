@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class EmergencyEvacuationApplicationsFilter {
+
     private String referenceNumber;
     private String sourceCity;
     private String sourceDistrict;
@@ -18,15 +19,7 @@ public class EmergencyEvacuationApplicationsFilter {
     private String targetCity;
     private String targetDistrict;
     private List<String> statuses;
-    private boolean isInPerson;
-
-    public void setIsInPerson(boolean isInPerson) {
-        this.isInPerson = isInPerson;
-    }
-
-    public boolean getIsInPerson() {
-        return isInPerson;
-    }
+    private Boolean isInPerson;
 
     public static EmergencyEvacuationApplicationsFilter generate(EmergencyEvacuationApplication emergencyEvacuationApplication) {
         EmergencyEvacuationApplicationsFilter filter = new EmergencyEvacuationApplicationsFilter();
@@ -41,6 +34,5 @@ public class EmergencyEvacuationApplicationsFilter {
         filter.setIsInPerson(true);
         return filter;
     }
-
 
 }
