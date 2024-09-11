@@ -30,12 +30,11 @@ public class LoginPayload {
         return adminCredentials;
     }
 
-    public static LoginPayload generateForTestAdmin() {
+    public static LoginPayload generateAsTestAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.TestAdmin.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.TestAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
-
         return adminCredentials;
     }
 

@@ -55,7 +55,7 @@ public class Authorization {
 
     public static String loginAndGetTestAdminAccessToken() {
 
-        LoginPayload adminCredentials = LoginPayload.generateForTestAdmin();
+        LoginPayload adminCredentials = LoginPayload.generateAsTestAdmin();
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 
