@@ -14,7 +14,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidSuperAdmin() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -23,7 +23,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         superAdminCredentials.setEmailAddress(emailAddress);
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()
@@ -35,7 +35,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthUserEmailAddress() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         superAdminCredentials.setEmailAddress("email@gmail.com");
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()
@@ -44,7 +44,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithInvalidPassword() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         superAdminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()
@@ -53,7 +53,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithNullPassword() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         superAdminCredentials.setPassword(null);
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()
@@ -62,7 +62,7 @@ public class GetSuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthSourcePage() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         superAdminCredentials.setSourcePage(SourcePage.LANDING);
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         response.then()

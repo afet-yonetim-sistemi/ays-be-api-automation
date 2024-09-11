@@ -12,7 +12,7 @@ public class PostSuperAdminInvalidateTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void superAdminInvalidateToken() {
-        Token token = Token.generateSuperAdminToken(LoginPayload.generate());
+        Token token = Token.generateSuperAdminToken(LoginPayload.generateAsSuperAdminUserOne());
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
         Response response = InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), tokenRefreshPayload);

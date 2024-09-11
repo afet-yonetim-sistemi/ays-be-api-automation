@@ -12,7 +12,7 @@ public class PostSuperAdminTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void superAdminTokenRefresh() {
-        LoginPayload superAdminCredentials = LoginPayload.generate();
+        LoginPayload superAdminCredentials = LoginPayload.generateAsSuperAdminUserOne();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         Response loginResponse = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -26,7 +26,7 @@ public class PostSuperAdminTokenRefreshTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void testSuperAdminInvalidRefreshTokenForAccessTokenCreation() {
-        Token token = Token.generateSuperAdminToken(LoginPayload.generate());
+        Token token = Token.generateSuperAdminToken(LoginPayload.generateAsSuperAdminUserOne());
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
         InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), tokenRefreshPayload);

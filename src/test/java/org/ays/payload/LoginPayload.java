@@ -13,7 +13,7 @@ public class LoginPayload {
     private String password;
     private SourcePage sourcePage;
 
-    public static LoginPayload generate() {
+    public static LoginPayload generateAsSuperAdminUserOne() {
         LoginPayload superAdminCredentials = new LoginPayload();
         superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL_ADDRESS);
         superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
