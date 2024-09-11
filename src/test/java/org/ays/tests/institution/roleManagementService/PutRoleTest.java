@@ -1,8 +1,8 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.role.enpoints.RoleEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.RoleUpdatePayload;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
@@ -19,12 +19,12 @@ public class PutRoleTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateRolPositiveScenario() {
-        String roleId = InstitutionEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.generateRoleId();
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -36,7 +36,7 @@ public class PutRoleTest {
         roleUpdatePayload.setName(name);
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -49,7 +49,7 @@ public class PutRoleTest {
         roleUpdatePayload.setName(null);
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"));
@@ -62,7 +62,7 @@ public class PutRoleTest {
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(permissionIds);
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -75,7 +75,7 @@ public class PutRoleTest {
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(null);
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be empty"));
@@ -88,7 +88,7 @@ public class PutRoleTest {
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
 
-        Response response = InstitutionEndpoints.updateRole(roleId, roleUpdatePayload);
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));

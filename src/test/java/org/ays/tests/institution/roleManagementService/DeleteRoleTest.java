@@ -1,8 +1,8 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.role.enpoints.RoleEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -14,9 +14,9 @@ public class DeleteRoleTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteRolPositiveScenario() {
-        String roleId = InstitutionEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.generateRoleId();
 
-        Response response = InstitutionEndpoints.deleteRole(roleId);
+        Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -25,7 +25,7 @@ public class DeleteRoleTest {
     public void deleteRolWithNonInstitutionRol() {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Disaster Foundation");
 
-        Response response = InstitutionEndpoints.deleteRole(roleId);
+        Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));
@@ -35,7 +35,7 @@ public class DeleteRoleTest {
     public void deleteRolWithDeletedStatus() {
         String roleId = DatabaseUtility.getDeletedRoleIdForInstitution("Test Foundation");
 
-        Response response = InstitutionEndpoints.deleteRole(roleId);
+        Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("role is already deleted!"));
@@ -44,7 +44,7 @@ public class DeleteRoleTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = DataProvider.class)
     public void deleteRolWithInvalidId(String roleId, ErrorMessage errorMessage, String field, String type) {
 
-        Response response = InstitutionEndpoints.deleteRole(roleId);
+        Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
