@@ -21,7 +21,7 @@ public class DeleteUserTest {
         UserEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response response = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generate());
+        Response response = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
         userID = response.jsonPath().getString("response.content[0].id");
 
         Response deleteResponse = UserEndpoints.deleteUser(userID);
@@ -42,7 +42,7 @@ public class DeleteUserTest {
         UserEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generate());
+        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         UserEndpoints.deleteUser(userID);

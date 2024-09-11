@@ -13,7 +13,7 @@ public class LoginPayload {
     private String password;
     private SourcePage sourcePage;
 
-    public static LoginPayload generate() {
+    public static LoginPayload generateAsAdminUserOne() {
         LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);

@@ -20,7 +20,7 @@ public class GetUserTest {
         UserEndpoints.createAUser(user);
 
         PhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generate());
+        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         Response response = UserEndpoints.getUser(userID);

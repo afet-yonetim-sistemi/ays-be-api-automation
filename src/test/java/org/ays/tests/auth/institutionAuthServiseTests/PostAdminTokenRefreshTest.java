@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class PostAdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminTokenRefresh() {
-        LoginPayload adminCredentials = LoginPayload.generate();
+        LoginPayload adminCredentials = LoginPayload.generateAsAdminUserOne();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         Response loginResponse = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         String  refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -24,7 +24,7 @@ public class PostAdminTokenRefreshTest {
     }
     @Test(groups = {"Regression", "Institution"})
     public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
-        Token token = Token.generateAdminToken(LoginPayload.generate());
+        Token token = Token.generateAdminToken(LoginPayload.generateAsAdminUserOne());
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
         InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), tokenRefreshPayload);
