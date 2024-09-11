@@ -2,6 +2,7 @@ package org.ays.endpoints;
 
 import io.restassured.response.Response;
 import org.ays.common.configuration.AysRestAssured;
+import org.ays.common.model.request.AysRestAssuredRequest;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.openqa.selenium.remote.http.HttpMethod;
 

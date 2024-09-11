@@ -1,4 +1,4 @@
-package org.ays.endpoints;
+package org.ays.common.model.request;
 
 import io.restassured.http.ContentType;
 import lombok.Builder;

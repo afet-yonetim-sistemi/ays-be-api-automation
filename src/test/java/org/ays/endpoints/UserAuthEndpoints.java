@@ -3,6 +3,7 @@ package org.ays.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.common.configuration.AysRestAssured;
+import org.ays.common.model.request.AysRestAssuredRequest;
 import org.ays.payload.TokenRefreshPayload;
 import org.ays.payload.UserCredentials;
 import org.openqa.selenium.remote.http.HttpMethod;

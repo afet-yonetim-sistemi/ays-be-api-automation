@@ -7,7 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
-import org.ays.endpoints.AysRestAssuredRequest;
+import org.ays.common.model.request.AysRestAssuredRequest;
 import org.ays.utility.AysConfigurationProperty;
 import org.testng.Reporter;
 
