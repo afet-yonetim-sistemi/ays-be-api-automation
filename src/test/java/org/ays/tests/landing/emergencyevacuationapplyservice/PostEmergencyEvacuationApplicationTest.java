@@ -2,7 +2,7 @@ package org.ays.tests.landing.emergencyevacuationapplyservice;
 
 import io.restassured.response.Response;
 import org.ays.common.model.enums.ErrorMessage;
-import org.ays.endpoints.LandingEndpoints;
+import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.PhoneNumber;
 import org.ays.utility.AysResponseSpecs;
@@ -19,7 +19,7 @@ public class PostEmergencyEvacuationApplicationTest {
     @Test(groups = {"Smoke", "Regression", "Landing"})
     public void createEmergencyEvacuationApplicationForMe() {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -27,7 +27,7 @@ public class PostEmergencyEvacuationApplicationTest {
     @Test(groups = {"Smoke", "Regression", "Landing"})
     public void createEmergencyEvacuationApplicationForOtherPerson() {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -42,7 +42,7 @@ public class PostEmergencyEvacuationApplicationTest {
             emergencyEvacuationApplication.setLastName(value);
         }
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors", hasItem(
@@ -61,7 +61,7 @@ public class PostEmergencyEvacuationApplicationTest {
             emergencyEvacuationApplication.setApplicantLastName(value);
         }
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors", hasItem(
@@ -80,7 +80,7 @@ public class PostEmergencyEvacuationApplicationTest {
             emergencyEvacuationApplication.setApplicantLastName(value);
         }
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
@@ -112,7 +112,7 @@ public class PostEmergencyEvacuationApplicationTest {
             emergencyEvacuationApplication.setPhoneNumber(phoneNumber);
         }
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(emergencyEvacuationApplication);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
@@ -134,7 +134,7 @@ public class PostEmergencyEvacuationApplicationTest {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         application.setAddress(value);
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(application);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(application);
 
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -171,7 +171,7 @@ public class PostEmergencyEvacuationApplicationTest {
             case "targetDistrict" -> application.setTargetDistrict((String) value);
         }
 
-        Response response = LandingEndpoints.postEmergencyEvacuationApplication(application);
+        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors", hasItem(

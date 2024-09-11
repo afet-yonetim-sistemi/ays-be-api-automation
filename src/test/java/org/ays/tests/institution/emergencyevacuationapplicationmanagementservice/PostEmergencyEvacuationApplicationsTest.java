@@ -2,8 +2,8 @@ package org.ays.tests.institution.emergencyevacuationapplicationmanagementservic
 
 import io.restassured.response.Response;
 import org.ays.common.model.enums.ErrorMessage;
+import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.endpoints.InstitutionEndpoints;
-import org.ays.endpoints.LandingEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
 import org.ays.payload.Orders;
@@ -49,7 +49,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     @Test(groups = {"Smoke", "Regression"})
     public void testFilteringEvacuationApplicationsWithAnExistingApplicationData() {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
-        LandingEndpoints.postEmergencyEvacuationApplication(application);
+        EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(application);
 
         Response response = InstitutionEndpoints.postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications.generate(application));
         response.then()
