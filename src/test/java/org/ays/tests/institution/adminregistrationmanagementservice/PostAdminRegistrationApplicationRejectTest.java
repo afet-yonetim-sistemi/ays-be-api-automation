@@ -1,7 +1,7 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.payload.AdminUserRegistrationApplicationStatus;
+import org.ays.emergencyapplication.model.enums.AdminUserRegistrationApplicationStatus;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;

@@ -1,4 +1,4 @@
-package org.ays.payload;
+package org.ays.emergencyapplication.model.enums;
 
 public enum AdminUserRegistrationApplicationStatus {
     REJECTED,
