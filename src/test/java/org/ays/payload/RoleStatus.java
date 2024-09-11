@@ -1,6 +1,6 @@
 package org.ays.payload;
 
-public enum RolesListStatus {
+public enum RoleStatus {
     ACTIVE,
     PASSIVE,
     DELETED

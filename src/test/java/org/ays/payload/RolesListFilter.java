@@ -13,7 +13,7 @@ public class RolesListFilter {
     private String name;
     private List<String> statuses;
 
-    public static RolesListFilter generate(String name, RolesListStatus statuses) {
+    public static RolesListFilter generate(String name, RoleStatus statuses) {
         RolesListFilter rolesFilter = new RolesListFilter();
         rolesFilter.setName(name);
         rolesFilter.setStatuses(Collections.singletonList(statuses.toString()));
