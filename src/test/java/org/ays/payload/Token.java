@@ -22,7 +22,7 @@ public class Token {
         return token;
     }
 
-    public static Token generateAdminToken(AdminCredentials adminCredentials) {
+    public static Token generateAdminToken(LoginPayload adminCredentials) {
         Token token = new Token();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         token.setAccessToken(response.jsonPath().getString("response.accessToken"));

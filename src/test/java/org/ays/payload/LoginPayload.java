@@ -7,14 +7,14 @@ import org.ays.utility.AysConfigurationProperty;
 
 @Getter
 @Setter
-public class AdminCredentials {
+public class LoginPayload {
 
     private String emailAddress;
     private String password;
     private SourcePage sourcePage;
 
-    public static AdminCredentials generate() {
-        AdminCredentials adminCredentials = new AdminCredentials();
+    public static LoginPayload generate() {
+        LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
@@ -22,8 +22,8 @@ public class AdminCredentials {
         return adminCredentials;
     }
 
-    public static AdminCredentials generateForAdminTwo() {
-        AdminCredentials adminCredentials = new AdminCredentials();
+    public static LoginPayload generateForAdminTwo() {
+        LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserTwo.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserTwo.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
@@ -31,8 +31,8 @@ public class AdminCredentials {
         return adminCredentials;
     }
 
-    public static AdminCredentials generateForTestAdmin() {
-        AdminCredentials adminCredentials = new AdminCredentials();
+    public static LoginPayload generateForTestAdmin() {
+        LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.TestAdmin.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.TestAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);

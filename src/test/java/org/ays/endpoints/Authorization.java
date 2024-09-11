@@ -3,14 +3,14 @@ package org.ays.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.model.enums.SourcePage;
-import org.ays.payload.AdminCredentials;
+import org.ays.payload.LoginPayload;
 import org.ays.utility.AysConfigurationProperty;
 
 @UtilityClass
 public class Authorization {
 
     public static String loginAndGetSuperAdminAccessToken() {
-        AdminCredentials superAdminCredentials = new AdminCredentials();
+        LoginPayload superAdminCredentials = new LoginPayload();
         superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL_ADDRESS);
         superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
         superAdminCredentials.setSourcePage(SourcePage.INSTITUTION);
@@ -26,7 +26,7 @@ public class Authorization {
 
     public static String loginAndGetAdminAccessToken() {
 
-        AdminCredentials adminCredentials = new AdminCredentials();
+        LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
@@ -42,7 +42,7 @@ public class Authorization {
 
     public static String loginAndGetAdminTwoAccessToken() {
 
-        AdminCredentials adminCredentials = AdminCredentials.generateForAdminTwo();
+        LoginPayload adminCredentials = LoginPayload.generateForAdminTwo();
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 
@@ -55,7 +55,7 @@ public class Authorization {
 
     public static String loginAndGetTestAdminAccessToken() {
 
-        AdminCredentials adminCredentials = AdminCredentials.generateForTestAdmin();
+        LoginPayload adminCredentials = LoginPayload.generateForTestAdmin();
 
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
 

@@ -2,7 +2,7 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.payload.AdminCredentials;
+import org.ays.payload.LoginPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class GetAdminTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidAdmin() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -21,7 +21,7 @@ public class GetAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         adminCredentials.setEmailAddress(emailAddress);
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
@@ -33,7 +33,7 @@ public class GetAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthUserEmailAddress() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         adminCredentials.setEmailAddress("email@gmail.com");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
@@ -42,7 +42,7 @@ public class GetAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithInvalidPassword() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         adminCredentials.setPassword("1234");
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()
@@ -51,7 +51,7 @@ public class GetAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithNullPassword() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         adminCredentials.setPassword(null);
         Response response = InstitutionAuthEndpoints.getAdminToken(adminCredentials);
         response.then()

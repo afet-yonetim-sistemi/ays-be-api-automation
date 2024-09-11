@@ -5,7 +5,7 @@ import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
-import org.ays.payload.AdminCredentials;
+import org.ays.payload.LoginPayload;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
@@ -21,7 +21,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void usersListForAdminOne() {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
@@ -100,7 +100,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
     public void usersListForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         AysPageable pageable = AysPageable.generate(1, 10);
         List<AysOrder> ordersList = AysOrder.generate(property, "ASC");
@@ -124,7 +124,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
     public void usersListForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         AysPageable pageable = AysPageable.generate(1, 10);
         List<AysOrder> ordersList = AysOrder.generate("createdAt", direction);
@@ -148,7 +148,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
     public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, firstName, lastName, null, null));
@@ -161,7 +161,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = DataProvider.class)
     public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, city, null));
@@ -174,7 +174,7 @@ public class PostUsersTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = DataProvider.class)
     public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
-        AdminCredentials adminCredentials = AdminCredentials.generate();
+        LoginPayload adminCredentials = LoginPayload.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, statuses));

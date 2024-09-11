@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.AdminCredentials;
+import org.ays.payload.LoginPayload;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;
@@ -51,7 +51,7 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response listUsers(RequestBodyUsers requestBodyUsers, AdminCredentials adminCredentials) {
+    public static Response listUsers(RequestBodyUsers requestBodyUsers, LoginPayload adminCredentials) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
