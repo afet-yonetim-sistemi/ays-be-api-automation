@@ -4,9 +4,9 @@ import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
+import org.ays.payload.AysOrder;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
-import org.ays.payload.Orders;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -223,7 +223,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     public void testListingEvacuationApplicationsWithInvalidSortData(String property, String direction, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
-        list.getPageable().setOrders(Orders.generate(property, direction));
+        list.getPageable().setOrders(AysOrder.generate(property, direction));
 
         Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
         response.then()

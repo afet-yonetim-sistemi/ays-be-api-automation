@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class RequestBodyInstitution {
     private AysPageable pageable;
-    private List<Orders> orders;
+    private List<AysOrder> orders;
     private Filter filter;
 
     public static RequestBodyInstitution generateFilter(AysPageable pageable, Filter filter) {

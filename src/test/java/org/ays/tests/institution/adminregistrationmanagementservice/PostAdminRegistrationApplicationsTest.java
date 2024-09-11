@@ -6,8 +6,8 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.payload.AysOrder;
 import org.ays.payload.Filter;
-import org.ays.payload.Orders;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
@@ -26,14 +26,14 @@ public class PostAdminRegistrationApplicationsTest {
     RequestBodyInstitution requestBodyInstitution;
     AysPageable pageable;
     Filter filter;
-    Orders orders;
+    AysOrder orders;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyInstitution = new RequestBodyInstitution();
         pageable = new AysPageable();
         filter = new Filter();
-        orders = new Orders();
+        orders = new AysOrder();
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
@@ -116,7 +116,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         orders.setProperty("createdAt");
         orders.setDirection("ASC");
-        List<Orders> newOrders = new ArrayList<>();
+        List<AysOrder> newOrders = new ArrayList<>();
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
@@ -139,7 +139,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         orders.setProperty("created");
         orders.setDirection("ASC");
-        List<Orders> newOrders = new ArrayList<>();
+        List<AysOrder> newOrders = new ArrayList<>();
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
@@ -164,7 +164,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         orders.setProperty("createdAt");
         orders.setDirection("ASC");
-        List<Orders> newOrders = new ArrayList<>();
+        List<AysOrder> newOrders = new ArrayList<>();
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 
@@ -192,7 +192,7 @@ public class PostAdminRegistrationApplicationsTest {
 
         orders.setProperty("");
         orders.setDirection("ASC");
-        List<Orders> newOrders = new ArrayList<>();
+        List<AysOrder> newOrders = new ArrayList<>();
         newOrders.add(orders);
         requestBodyInstitution.setOrders(newOrders);
 

@@ -6,7 +6,7 @@ import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.Orders;
+import org.ays.payload.AysOrder;
 import org.ays.payload.RolesListFilter;
 import org.ays.payload.RolesListPayload;
 import org.ays.utility.AysLogUtil;
@@ -131,7 +131,7 @@ public class PostRolesTest {
     public void rolesListUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        List<Orders> orders = Orders.generate(property, direction);
+        List<AysOrder> orders = AysOrder.generate(property, direction);
         rolesListPayload.getPageable().setOrders(orders);
 
         Response response = RoleEndpoints.listRoles(rolesListPayload, Authorization.loginAndGetTestAdminAccessToken());

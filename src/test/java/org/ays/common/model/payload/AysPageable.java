@@ -2,7 +2,7 @@ package org.ays.common.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.payload.Orders;
+import org.ays.payload.AysOrder;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class AysPageable {
 
     private int page;
     private int pageSize;
-    private List<Orders> orders;
+    private List<AysOrder> orders;
 
     public static AysPageable generateFirstPage() {
         AysPageable pageable = new AysPageable();
@@ -25,7 +25,7 @@ public class AysPageable {
         AysPageable pageable = new AysPageable();
         pageable.setPageSize(pageSize);
         pageable.setPage(page);
-        pageable.setOrders(Orders.generate("createdAt", "DESC"));
+        pageable.setOrders(AysOrder.generate("createdAt", "DESC"));
         return pageable;
     }
 

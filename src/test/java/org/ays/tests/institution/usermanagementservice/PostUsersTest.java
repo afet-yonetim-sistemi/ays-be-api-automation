@@ -5,7 +5,7 @@ import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.payload.AdminCredentials;
-import org.ays.payload.Orders;
+import org.ays.payload.AysOrder;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
@@ -103,7 +103,7 @@ public class PostUsersTest {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         AysPageable pageable = AysPageable.generate(1, 10);
-        List<Orders> ordersList = Orders.generate(property, "ASC");
+        List<AysOrder> ordersList = AysOrder.generate(property, "ASC");
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
 
@@ -127,7 +127,7 @@ public class PostUsersTest {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         AysPageable pageable = AysPageable.generate(1, 10);
-        List<Orders> ordersList = Orders.generate("createdAt", direction);
+        List<AysOrder> ordersList = AysOrder.generate("createdAt", direction);
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
 
