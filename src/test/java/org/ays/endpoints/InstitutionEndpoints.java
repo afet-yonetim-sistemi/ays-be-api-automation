@@ -113,14 +113,14 @@ public class InstitutionEndpoints {
 
     }
 
-    public static Response updateUser(String userId, User userPayload) {
+    public static Response updateUser(String userId, User userPayload, String token) {
 
         AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .body(userPayload)
-                .token(Authorization.loginAndGetAdminAccessToken())
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
@@ -136,6 +136,16 @@ public class InstitutionEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static String generateUserId(User user) {
+        Response response = createAUser(user, Authorization.loginAndGetTestAdminAccessToken());
+
+        if (response.getStatusCode() == 200) {
+            return DatabaseUtility.getLatestCreatedUserId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
+        } else {
+            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
+        }
     }
 
     public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution) {
@@ -330,6 +340,18 @@ public class InstitutionEndpoints {
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
                 .token(Authorization.loginAndGetTestAdminAccessToken())
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response createRole(RoleCreatePayload roleCreatePayload, String token) {
+
+        AysRestAssuredRequest restAssuredRequest = AysRestAssuredRequest.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/role")
+                .body(roleCreatePayload)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);

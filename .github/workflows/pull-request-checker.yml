@@ -91,5 +91,9 @@ jobs:
       - name: Replace disaster_foundation_id in configuration.properties # Step to replace the placeholder disaster_foundation_id in configuration.properties
         run: sed 's|'{DISASTER_FOUNDATION_ID}'|'${{ secrets.AYS_DISASTER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
+      - name: Replace test_foundation_id in configuration.properties # Step to replace the placeholder test_foundation_id in configuration.properties
+        run: sed 's|'{TEST_FOUNDATION_ID}'|'${{ secrets.AYS_TEST_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
+
       - name: Build with Maven # Step to build the project with Maven
         run: mvn clean test -P weekly
