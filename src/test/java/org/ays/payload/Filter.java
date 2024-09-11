@@ -2,6 +2,7 @@ package org.ays.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 
 import java.util.Collections;
 import java.util.List;

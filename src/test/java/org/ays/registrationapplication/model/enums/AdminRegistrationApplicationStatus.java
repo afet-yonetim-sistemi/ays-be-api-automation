@@ -1,4 +1,4 @@
-package org.ays.payload;
+package org.ays.registrationapplication.model.enums;
 
 public enum AdminRegistrationApplicationStatus {
     WAITING,
