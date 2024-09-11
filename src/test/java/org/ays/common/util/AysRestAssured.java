@@ -16,10 +16,10 @@ public class AysRestAssured {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static Response perform(AysRestAssuredPayload restAssuredRequest) {
+    public static Response perform(AysRestAssuredPayload restAssuredPayload) {
 
         Reporter.log("---- Rest Assured Request ----");
-        Reporter.log(GSON.toJson(restAssuredRequest));
+        Reporter.log(GSON.toJson(restAssuredPayload));
 
         RequestSpecification requestSpecification = RestAssured
                 .given()
@@ -27,19 +27,19 @@ public class AysRestAssured {
                 .contentType(ContentType.JSON)
                 .when();
 
-        if (restAssuredRequest.isTokenExist()) {
+        if (restAssuredPayload.isTokenExist()) {
             requestSpecification
-                    .header("Authorization", "Bearer ".concat(restAssuredRequest.getToken()));
+                    .header("Authorization", "Bearer ".concat(restAssuredPayload.getToken()));
         }
 
-        restAssuredRequest.getPathParameter().forEach(requestSpecification::pathParam);
+        restAssuredPayload.getPathParameter().forEach(requestSpecification::pathParam);
 
-        if (restAssuredRequest.isRequestBodyExist()) {
-            requestSpecification.body(restAssuredRequest.getBody());
+        if (restAssuredPayload.isRequestBodyExist()) {
+            requestSpecification.body(restAssuredPayload.getBody());
         }
 
-        String url = AysConfigurationProperty.Api.URL.concat(restAssuredRequest.getUrl());
-        Response response = (switch (restAssuredRequest.getHttpMethod()) {
+        String url = AysConfigurationProperty.Api.URL.concat(restAssuredPayload.getUrl());
+        Response response = (switch (restAssuredPayload.getHttpMethod()) {
             case GET -> requestSpecification.get(url);
             case POST -> requestSpecification.post(url);
             case PUT -> requestSpecification.put(url);

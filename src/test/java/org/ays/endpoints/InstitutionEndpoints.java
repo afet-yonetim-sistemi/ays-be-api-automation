@@ -17,82 +17,82 @@ import java.util.Map;
 public class InstitutionEndpoints {
 
     public static Response getInstitutionsSummary() {
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/institutions/summary")
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response getAdminsPermissions() {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/permissions")
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response getSuperAdminsPermissions() {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/permissions")
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response postEmergencyEvacuationApplications(ListEmergencyEvacuationApplications list) {
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/emergency-evacuation-applications")
                 .body(list)
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
 
     }
 
     public static Response listRoles(RolesListPayload rolesListPayload, String token) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/roles")
                 .body(rolesListPayload)
                 .token(token)
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response createRole(RoleCreatePayload roleCreatePayload) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
                 .token(Authorization.loginAndGetTestAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response createRole(RoleCreatePayload roleCreatePayload, String token) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
                 .token(token)
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static String generateRoleId() {
@@ -108,7 +108,7 @@ public class InstitutionEndpoints {
 
     public static Response updateRole(String roleId, RoleUpdatePayload roleUpdatePayload) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
@@ -116,43 +116,43 @@ public class InstitutionEndpoints {
                 .token(Authorization.loginAndGetTestAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response deleteRole(String roleId) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
                 .token(Authorization.loginAndGetTestAdminAccessToken())
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response patchActivateRole(String roleId, String token) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/activate")
                 .pathParameter(Map.of("id", roleId))
                 .token(token)
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
     public static Response patchPassivateRole(String roleId, String token) {
 
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/passivate")
                 .pathParameter(Map.of("id", roleId))
                 .token(token)
                 .build();
 
-        return AysRestAssured.perform(restAssuredRequest);
+        return AysRestAssured.perform(restAssuredPayload);
     }
 
 }
