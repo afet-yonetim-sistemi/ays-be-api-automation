@@ -3,7 +3,7 @@ package org.ays.tests.auth.landingAuthServiceTests;
 import io.restassured.response.Response;
 import org.ays.auth.model.enums.SourcePage;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.UserCredentials;
+import org.ays.payload.LoginPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getTokenForValidUser() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -23,7 +23,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         userCredentials.setEmailAddress(emailAddress);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -35,7 +35,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthUserEmailAddress() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         userCredentials.setEmailAddress("email@gmail.com");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -44,7 +44,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithInvalidPassword() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         userCredentials.setPassword("wrongPassword");
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -53,7 +53,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithNullPassword() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         userCredentials.setPassword(null);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()
@@ -63,7 +63,7 @@ public class GetUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthSourcePage() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         userCredentials.setSourcePage(SourcePage.INSTITUTION);
         Response response = UserAuthEndpoints.getUserToken(userCredentials);
         response.then()

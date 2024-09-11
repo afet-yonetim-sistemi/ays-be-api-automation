@@ -3,9 +3,9 @@ package org.ays.tests.auth.landingAuthServiceTests;
 import io.restassured.response.Response;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
+import org.ays.payload.LoginPayload;
 import org.ays.payload.Token;
 import org.ays.payload.TokenRefreshPayload;
-import org.ays.payload.UserCredentials;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
@@ -13,7 +13,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userTokenRefresh() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         Response loginResponse = UserAuthEndpoints.getUserToken(userCredentials);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -27,7 +27,7 @@ public class PostUserTokenRefreshTest {
 
     @Test(groups = {"Regression", "User"})
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
-        UserCredentials userCredentials = UserCredentials.generate();
+        LoginPayload userCredentials = LoginPayload.generate();
         Token token = Token.generateUserToken(userCredentials);
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
