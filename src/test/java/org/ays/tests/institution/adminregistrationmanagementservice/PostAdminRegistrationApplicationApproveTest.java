@@ -1,7 +1,7 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.payload.AdminRegistrationApplicationRejectPayload;
+import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
