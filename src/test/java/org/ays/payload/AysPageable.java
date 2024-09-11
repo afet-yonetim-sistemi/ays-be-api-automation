@@ -7,21 +7,21 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Pageable {
+public class AysPageable {
 
     private int page;
     private int pageSize;
     private List<Orders> orders;
 
-    public static Pageable generateFirstPage() {
-        Pageable pageable = new Pageable();
+    public static AysPageable generateFirstPage() {
+        AysPageable pageable = new AysPageable();
         pageable.setPage(1);
         pageable.setPageSize(10);
         return pageable;
     }
 
-    public static Pageable generate(int page, int pageSize) {
-        Pageable pageable = new Pageable();
+    public static AysPageable generate(int page, int pageSize) {
+        AysPageable pageable = new AysPageable();
         pageable.setPageSize(pageSize);
         pageable.setPage(page);
         pageable.setOrders(Orders.generate("createdAt", "DESC"));

@@ -3,10 +3,10 @@ package org.ays.tests.institution.emergencyevacuationapplicationmanagementservic
 import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
+import org.ays.payload.AysPageable;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
 import org.ays.payload.Orders;
-import org.ays.payload.Pageable;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -25,7 +25,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     @Test(groups = {"Smoke", "Regression"})
     public void testListingEmergencyEvacuationApplications() {
         ListEmergencyEvacuationApplications list = new ListEmergencyEvacuationApplications();
-        list.setPageable(Pageable.generateFirstPage());
+        list.setPageable(AysPageable.generateFirstPage());
 
         Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
         response.then()

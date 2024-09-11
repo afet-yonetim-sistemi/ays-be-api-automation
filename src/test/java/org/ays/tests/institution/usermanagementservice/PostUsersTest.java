@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.payload.AdminCredentials;
+import org.ays.payload.AysPageable;
 import org.ays.payload.Orders;
-import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
@@ -23,7 +23,7 @@ public class PostUsersTest {
     public void usersListForAdminOne() {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Volunteer Foundation");
 
@@ -43,7 +43,7 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void usersListForAdminTwo() {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Disaster Foundation");
 
@@ -63,7 +63,7 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void usersListForSuperAdmin() {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
         int totalElementCount = DatabaseUtility.verifyUserCountForFoundation("Afet Yönetim Sistemi");
 
@@ -83,7 +83,7 @@ public class PostUsersTest {
     @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
     public void usersListWithAllFilter() {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(DatabaseUtility.fetchFirstUserData());
         Response response = UserEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
@@ -102,7 +102,7 @@ public class PostUsersTest {
     public void usersListForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        Pageable pageable = Pageable.generate(1, 10);
+        AysPageable pageable = AysPageable.generate(1, 10);
         List<Orders> ordersList = Orders.generate(property, "ASC");
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
@@ -126,7 +126,7 @@ public class PostUsersTest {
     public void usersListForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        Pageable pageable = Pageable.generate(1, 10);
+        AysPageable pageable = AysPageable.generate(1, 10);
         List<Orders> ordersList = Orders.generate("createdAt", direction);
         pageable.setOrders(ordersList);
         requestBodyUsers.setPageable(pageable);
@@ -150,7 +150,7 @@ public class PostUsersTest {
     public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, firstName, lastName, null, null));
 
         Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
@@ -163,7 +163,7 @@ public class PostUsersTest {
     public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, city, null));
 
         Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);
@@ -176,7 +176,7 @@ public class PostUsersTest {
     public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(Pageable.generate(1, 10));
+        requestBodyUsers.setPageable(AysPageable.generate(1, 10));
         requestBodyUsers.setFilter(UsersFilter.generate(null, null, null, null, statuses));
 
         Response response = UserEndpoints.listUsers(requestBodyUsers, adminCredentials);

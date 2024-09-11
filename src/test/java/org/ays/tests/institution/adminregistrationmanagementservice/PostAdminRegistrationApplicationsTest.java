@@ -5,9 +5,9 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.ays.payload.AysPageable;
 import org.ays.payload.Filter;
 import org.ays.payload.Orders;
-import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
@@ -24,14 +24,14 @@ import static org.hamcrest.Matchers.nullValue;
 
 public class PostAdminRegistrationApplicationsTest {
     RequestBodyInstitution requestBodyInstitution;
-    Pageable pageable;
+    AysPageable pageable;
     Filter filter;
     Orders orders;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         requestBodyInstitution = new RequestBodyInstitution();
-        pageable = new Pageable();
+        pageable = new AysPageable();
         filter = new Filter();
         orders = new Orders();
     }

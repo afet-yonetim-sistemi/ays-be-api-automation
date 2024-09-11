@@ -8,8 +8,8 @@ import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.AysPageable;
 import org.ays.payload.Filter;
-import org.ays.payload.Pageable;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.utility.AysConfigurationProperty;
@@ -108,7 +108,7 @@ public class AdminRegistrationApplicationEndpoints {
     }
 
     public static String generateApplicationIDForCompletedStatus() {
-        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(Pageable.generateFirstPage(), Filter.generate(AdminRegistrationApplicationStatus.COMPLETED));
+        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(AysPageable.generateFirstPage(), Filter.generate(AdminRegistrationApplicationStatus.COMPLETED));
         Response response = postRegistrationApplications(requestBodyInstitution);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.content[0].id");
