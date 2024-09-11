@@ -13,12 +13,19 @@ public class LoginPayload {
     private String password;
     private SourcePage sourcePage;
 
+    public static LoginPayload generate() {
+        LoginPayload superAdminCredentials = new LoginPayload();
+        superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL_ADDRESS);
+        superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
+        superAdminCredentials.setSourcePage(SourcePage.INSTITUTION);
+        return superAdminCredentials;
+    }
+
     public static LoginPayload generateAsAdminUserOne() {
         LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
         adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
-
         return adminCredentials;
     }
 

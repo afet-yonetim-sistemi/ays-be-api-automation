@@ -6,7 +6,6 @@ import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.payload.LoginPayload;
-import org.ays.payload.SuperAdminCredentials;
 import org.ays.payload.TokenRefreshPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
 
@@ -23,7 +22,7 @@ public class InstitutionAuthEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response getSuperAdminToken(SuperAdminCredentials superAdminCredentials) {
+    public static Response getSuperAdminToken(LoginPayload superAdminCredentials) {
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token")

@@ -30,7 +30,7 @@ public class Token {
         return token;
     }
 
-    public static Token generateSuperAdminToken(SuperAdminCredentials superAdminCredentials) {
+    public static Token generateSuperAdminToken(LoginPayload superAdminCredentials) {
         Token token = new Token();
         Response response = InstitutionAuthEndpoints.getSuperAdminToken(superAdminCredentials);
         token.setAccessToken(response.jsonPath().getString("response.accessToken"));
