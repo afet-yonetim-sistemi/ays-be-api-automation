@@ -4,7 +4,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
@@ -19,16 +19,16 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class PostAdminRegistrationApplicationTest {
-    ApplicationRegistration application;
+    AdminRegistrationApplicationCreatePayload application;
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
-        application = new ApplicationRegistration();
+        application = new AdminRegistrationApplicationCreatePayload();
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
-        application = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -37,7 +37,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
-        application = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -48,7 +48,7 @@ public class PostAdminRegistrationApplicationTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
-        application = ApplicationRegistration.generate("invalidId", AysRandomUtil.generateReasonString());
+        application = AdminRegistrationApplicationCreatePayload.generate("invalidId", AysRandomUtil.generateReasonString());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
@@ -59,7 +59,7 @@ public class PostAdminRegistrationApplicationTest {
     @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
     @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
-        application = ApplicationRegistration.generate(null, AysRandomUtil.generateReasonString());
+        application = AdminRegistrationApplicationCreatePayload.generate(null, AysRandomUtil.generateReasonString());
         application.setInstitutionId(null);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()

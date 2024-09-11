@@ -8,7 +8,7 @@ import org.ays.common.model.payload.AysPageable;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.ApplicationRegistration;
+import org.ays.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.payload.Filter;
 import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
@@ -71,12 +71,12 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postRegistrationAdminApplication(ApplicationRegistration applicationRegistration) {
+    public static Response postRegistrationAdminApplication(AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application")
-                .body(applicationRegistration)
+                .body(adminRegistrationApplicationCreatePayload)
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 
@@ -98,8 +98,8 @@ public class AdminRegistrationApplicationEndpoints {
     }
 
     public static String generateApplicationID() {
-        ApplicationRegistration applicationRegistration = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
-        Response response = postRegistrationAdminApplication(applicationRegistration);
+        AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
+        Response response = postRegistrationAdminApplication(adminRegistrationApplicationCreatePayload);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.id");
         } else {
