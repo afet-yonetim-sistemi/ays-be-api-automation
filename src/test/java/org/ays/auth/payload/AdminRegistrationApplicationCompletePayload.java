@@ -1,7 +1,8 @@
-package org.ays.payload;
+package org.ays.auth.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.payload.PhoneNumber;
 import org.ays.utility.AysRandomUtil;
 
 

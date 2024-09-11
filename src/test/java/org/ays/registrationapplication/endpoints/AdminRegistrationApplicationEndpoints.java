@@ -2,11 +2,11 @@ package org.ays.registrationapplication.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.Filter;
 import org.ays.payload.Pageable;
