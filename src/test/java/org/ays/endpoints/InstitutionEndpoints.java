@@ -19,7 +19,6 @@ import org.ays.payload.RoleCreatePayload;
 import org.ays.payload.RoleUpdatePayload;
 import org.ays.payload.RolesListPayload;
 import org.ays.payload.User;
-import org.ays.payload.UserCredentials;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.DatabaseUtility;
@@ -243,27 +242,6 @@ public class InstitutionEndpoints {
             return response.then().extract().jsonPath().getString("response.content[0].id");
         } else {
             throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static UserCredentials generateANewUser() {
-        User user = User.generate();
-        Response response = createAUser(user);
-        if (response.getStatusCode() == 200) {
-            return response.then()
-                    .extract().jsonPath().getObject("response", UserCredentials.class);
-        } else {
-            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static UserCredentials generateANewUser(User userPayload) {
-        Response response = createAUser(userPayload);
-        if (response.getStatusCode() == 200) {
-            return response.then()
-                    .extract().jsonPath().getObject("response", UserCredentials.class);
-        } else {
-            throw new RuntimeException("User creation failed with status code: " + response.getStatusCode());
         }
     }
 
