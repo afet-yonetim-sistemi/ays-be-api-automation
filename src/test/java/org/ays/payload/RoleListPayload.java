@@ -11,22 +11,22 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RolesListPayload {
+public class RoleListPayload {
 
     private AysPageable pageable;
     private RolesListFilter filter;
 
-    public static RolesListPayload generate() {
-        RolesListPayload rolesListPayload = new RolesListPayload();
-        rolesListPayload.setPageable(AysPageable.generate(1, 10));
-        return rolesListPayload;
+    public static RoleListPayload generate() {
+        RoleListPayload roleListPayload = new RoleListPayload();
+        roleListPayload.setPageable(AysPageable.generate(1, 10));
+        return roleListPayload;
     }
 
-    public static RolesListPayload generateWithFilter(RoleCreatePayload roleCreatePayload) {
-        RolesListPayload rolesListPayload = new RolesListPayload();
-        rolesListPayload.setPageable(AysPageable.generate(1, 10));
-        rolesListPayload.setFilter(RolesListFilter.generate(roleCreatePayload.getName(), RoleStatus.ACTIVE));
-        return rolesListPayload;
+    public static RoleListPayload generateWithFilter(RoleCreatePayload roleCreatePayload) {
+        RoleListPayload roleListPayload = new RoleListPayload();
+        roleListPayload.setPageable(AysPageable.generate(1, 10));
+        roleListPayload.setFilter(RolesListFilter.generate(roleCreatePayload.getName(), RoleStatus.ACTIVE));
+        return roleListPayload;
     }
 
     @Getter

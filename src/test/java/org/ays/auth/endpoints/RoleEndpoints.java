@@ -7,7 +7,7 @@ import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.RolesListPayload;
+import org.ays.payload.RoleListPayload;
 import org.ays.utility.DatabaseUtility;
 import org.openqa.selenium.remote.http.HttpMethod;
 
@@ -16,12 +16,12 @@ import java.util.Map;
 @UtilityClass
 public class RoleEndpoints {
 
-    public static Response listRoles(RolesListPayload rolesListPayload, String token) {
+    public static Response listRoles(RoleListPayload roleListPayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/roles")
-                .body(rolesListPayload)
+                .body(roleListPayload)
                 .token(token)
                 .build();
 
