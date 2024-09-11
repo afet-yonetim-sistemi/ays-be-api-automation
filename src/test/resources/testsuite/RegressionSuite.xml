@@ -22,10 +22,12 @@
             <class name="org.ays.tests.institution.emergencyevacuationapplicationmanagementservice.PostEmergencyEvacuationApplicationsTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
+            <class name="org.ays.tests.institution.usermanagementservice.PutUserTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
             <class name="org.ays.tests.institution.roleManagementService.DeleteRoleTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PatchRoleActivateTest"/>
+            <class name="org.ays.tests.institution.roleManagementService.PatchRolePassivateTest"/>
             <class name="org.ays.tests.institution.roleManagementService.PatchRolePassivateTest"/>
         </classes>
     </test>

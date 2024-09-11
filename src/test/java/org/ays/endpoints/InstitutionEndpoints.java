@@ -83,6 +83,18 @@ public class InstitutionEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response createRole(RoleCreatePayload roleCreatePayload, String token) {
+
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/role")
+                .body(roleCreatePayload)
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
     public static String generateRoleId() {
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
         Response response = createRole(roleCreatePayload);
