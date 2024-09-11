@@ -8,7 +8,6 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.institution.adminmanagementservice.PostAdminsTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.DeleteUserTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.GetUserTest"/>
             <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>

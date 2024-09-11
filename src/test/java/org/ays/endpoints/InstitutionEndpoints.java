@@ -5,7 +5,6 @@ import lombok.experimental.UtilityClass;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.payload.AdminCredentials;
-import org.ays.payload.AdminsListPayload;
 import org.ays.payload.ApplicationRegistration;
 import org.ays.payload.ApplicationRegistrationSupportStatus;
 import org.ays.payload.Filter;
@@ -28,18 +27,6 @@ import java.util.Map;
 
 @UtilityClass
 public class InstitutionEndpoints {
-
-    public static Response listAdmins(AdminsListPayload adminsListPayload) {
-
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admins")
-                .body(adminsListPayload)
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
 
     public static Response createAUser(User userPayload) {
 
@@ -112,19 +99,6 @@ public class InstitutionEndpoints {
 
         return AysRestAssured.perform(restAssuredRequest);
 
-    }
-
-    public static Response updateUser(String userId, User userPayload) {
-
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.PUT)
-                .url("/api/v1/user/{id}")
-                .pathParameter(Map.of("id", userId))
-                .body(userPayload)
-                .token(Authorization.loginAndGetAdminAccessToken())
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
     }
 
     public static Response deleteUser(String userId) {
