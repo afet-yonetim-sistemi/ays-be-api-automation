@@ -1,7 +1,7 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.auth.user.endpoints.UserEndpoints;
+import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.Orders;

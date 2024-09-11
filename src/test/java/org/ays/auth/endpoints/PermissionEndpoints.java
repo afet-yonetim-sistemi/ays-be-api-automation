@@ -1,4 +1,4 @@
-package org.ays.auth.permission.endpoints;
+package org.ays.auth.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;

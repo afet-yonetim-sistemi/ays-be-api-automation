@@ -1,7 +1,7 @@
 package org.ays.tests.institution.permissionService;
 
 import io.restassured.response.Response;
-import org.ays.auth.permission.endpoints.PermissionEndpoints;
+import org.ays.auth.endpoints.PermissionEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DatabaseUtility;
 import org.testng.Assert;

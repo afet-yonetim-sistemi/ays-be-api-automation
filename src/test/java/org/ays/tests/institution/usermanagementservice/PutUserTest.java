@@ -1,8 +1,8 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.auth.role.enpoints.RoleEndpoints;
-import org.ays.auth.user.endpoints.UserEndpoints;
+import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.ErrorMessage;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.RoleCreatePayload;
