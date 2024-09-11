@@ -4,7 +4,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
@@ -16,8 +16,8 @@ public class GetAdminRegistrationApplicationTest {
     @Story("As a super admin I want to get detailed information about administrator registration applications when I use valid ID")
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIDPositive() {
-        String applicationId = InstitutionEndpoints.generateApplicationID();
-        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationId);
+        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.createdAt", notNullValue())
@@ -32,7 +32,7 @@ public class GetAdminRegistrationApplicationTest {
     @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationInvalidID() {
         String applicationID = "invalid-id";
-        Response response = InstitutionEndpoints.getRegistrationApplicationId(applicationID);
+        Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationID);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));

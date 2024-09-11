@@ -4,8 +4,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.ApplicationRegistration;
+import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
@@ -29,7 +29,7 @@ public class PostAdminRegistrationApplicationTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
         application = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
-        Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response", hasKey("id"));
@@ -38,7 +38,7 @@ public class PostAdminRegistrationApplicationTest {
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
         application = ApplicationRegistration.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
-        Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", anyOf(containsString(message), containsString("must not be blank")))
@@ -49,7 +49,7 @@ public class PostAdminRegistrationApplicationTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
         application = ApplicationRegistration.generate("invalidId", AysRandomUtil.generateReasonString());
-        Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("INSTITUTION NOT EXIST!"));
@@ -61,7 +61,7 @@ public class PostAdminRegistrationApplicationTest {
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
         application = ApplicationRegistration.generate(null, AysRandomUtil.generateReasonString());
         application.setInstitutionId(null);
-        Response response = InstitutionEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"))

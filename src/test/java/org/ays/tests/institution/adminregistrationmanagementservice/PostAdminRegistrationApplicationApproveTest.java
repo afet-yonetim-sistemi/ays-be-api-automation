@@ -1,9 +1,9 @@
 package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
 import org.ays.payload.RegistrationApplicationCompletePayload;
 import org.ays.payload.RejectReason;
+import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
@@ -12,33 +12,33 @@ import static org.hamcrest.Matchers.equalTo;
 public class PostAdminRegistrationApplicationApproveTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void approveApplicationPositive() {
-        String applicationId = InstitutionEndpoints.generateApplicationID();
-        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        Response response = InstitutionEndpoints.postRegistrationApplicationApprove(applicationId);
+        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        Response getStatus = InstitutionEndpoints.getRegistrationApplicationId(applicationId);
+        Response getStatus = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
         getStatus.then()
                 .body("response.status", equalTo("VERIFIED"));
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveAnAlreadyApprovedApplication() {
-        String applicationId = InstitutionEndpoints.generateApplicationID();
-        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        InstitutionEndpoints.postRegistrationApplicationApprove(applicationId);
-        Response response = InstitutionEndpoints.postRegistrationApplicationApprove(applicationId);
+        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveARejectedApplication() {
-        String applicationId = InstitutionEndpoints.generateApplicationID();
-        InstitutionEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
-        InstitutionEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
-        Response response = InstitutionEndpoints.postRegistrationApplicationApprove(applicationId);
+        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, RegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, RejectReason.generate());
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
@@ -46,15 +46,15 @@ public class PostAdminRegistrationApplicationApproveTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveANotCompletedApplication() {
-        String applicationID = InstitutionEndpoints.generateApplicationID();
-        Response response = InstitutionEndpoints.postRegistrationApplicationApprove(applicationID);
+        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationID);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void approveApplicationWithInvalidId() {
-        Response response = InstitutionEndpoints.postRegistrationApplicationApprove("invalidApplicationID");
+        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove("invalidApplicationID");
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be a valid UUID"))
