@@ -3,7 +3,7 @@ package org.ays.utility;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.hamcrest.Matchers;
 
 import java.util.List;
@@ -134,7 +134,7 @@ public class AysResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification subErrorsSpec(ErrorMessage errorMessage, String field, String type) {
+    public static ResponseSpecification subErrorsSpec(AysErrorMessage errorMessage, String field, String type) {
         return new ResponseSpecBuilder()
                 .expectBody("subErrors", hasItems(
                         allOf(

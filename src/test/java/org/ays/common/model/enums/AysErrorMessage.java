@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ErrorMessage {
+public enum AysErrorMessage {
 
     MUST_NOT_BE_BLANK("must not be blank"),
     MUST_BE_VALID("must be valid"),

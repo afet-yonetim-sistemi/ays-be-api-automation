@@ -2,7 +2,7 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.payload.AdminCredentials;
 import org.ays.payload.Orders;
 import org.ays.payload.Pageable;
@@ -99,7 +99,7 @@ public class PostUsersTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
-    public void usersListForInvalidPropertyValue(String property, ErrorMessage errorMessage, String field, String type) {
+    public void usersListForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         Pageable pageable = Pageable.generate(1, 10);
@@ -123,7 +123,7 @@ public class PostUsersTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
-    public void usersListForInvalidDirectionValue(String direction, ErrorMessage errorMessage, String field, String type) {
+    public void usersListForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         Pageable pageable = Pageable.generate(1, 10);
@@ -147,7 +147,7 @@ public class PostUsersTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
-    public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, ErrorMessage errorMessage, String field, String type) {
+    public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
@@ -160,7 +160,7 @@ public class PostUsersTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = DataProvider.class)
-    public void usersListForInvalidCityData(String city, ErrorMessage errorMessage, String field, String type) {
+    public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));
@@ -173,7 +173,7 @@ public class PostUsersTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = DataProvider.class)
-    public void usersListForInvalidStatusesData(List<String> statuses, ErrorMessage errorMessage, String field, String type) {
+    public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         AdminCredentials adminCredentials = AdminCredentials.generate();
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(Pageable.generate(1, 10));

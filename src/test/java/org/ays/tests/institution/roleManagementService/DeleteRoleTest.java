@@ -2,7 +2,7 @@ package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.RoleEndpoints;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.ays.utility.DatabaseUtility;
@@ -42,7 +42,7 @@ public class DeleteRoleTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = DataProvider.class)
-    public void deleteRolWithInvalidId(String roleId, ErrorMessage errorMessage, String field, String type) {
+    public void deleteRolWithInvalidId(String roleId, AysErrorMessage errorMessage, String field, String type) {
 
         Response response = RoleEndpoints.deleteRole(roleId);
         response.then()

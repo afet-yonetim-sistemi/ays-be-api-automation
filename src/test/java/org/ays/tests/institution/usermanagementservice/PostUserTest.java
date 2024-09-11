@@ -2,7 +2,7 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.payload.PhoneNumber;
 import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;
@@ -27,7 +27,7 @@ public class PostUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
@@ -41,7 +41,7 @@ public class PostUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
-    public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, ErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -52,7 +52,7 @@ public class PostUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = DataProvider.class)
-    public void createUserWithInvalidEmailAddress(String emailAddress, ErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
         user.setEmailAddress(emailAddress);
         Response response = UserEndpoints.createAUser(user);
@@ -63,7 +63,7 @@ public class PostUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = DataProvider.class)
-    public void createUserWithInvalidRoleId(String id, ErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
         user.setRoleIds(List.of(id));
         Response response = UserEndpoints.createAUser(user);
@@ -73,7 +73,7 @@ public class PostUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = DataProvider.class)
-    public void createUserWithInvalidCity(String city, ErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
         user.setCity(city);
         Response response = UserEndpoints.createAUser(user);
@@ -88,7 +88,7 @@ public class PostUserTest {
         Response response = UserEndpoints.createAUser(user);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.subErrorsSpec(ErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"));
+                .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"));
     }
 
     @Test(groups = {"Regression", "Institution"})

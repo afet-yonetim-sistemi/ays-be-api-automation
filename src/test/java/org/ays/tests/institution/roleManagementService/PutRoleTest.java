@@ -2,7 +2,7 @@ package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.RoleEndpoints;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.payload.RoleUpdatePayload;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
@@ -30,7 +30,7 @@ public class PutRoleTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = DataProvider.class)
-    public void updateRolWithInvalidRoleName(String name, ErrorMessage errorMessage, String field, String type) {
+    public void updateRolWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(name);
@@ -56,7 +56,7 @@ public class PutRoleTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = DataProvider.class)
-    public void updateRolWithInvalidPermissionIds(List<String> permissionIds, ErrorMessage errorMessage, String field, String type) {
+    public void updateRolWithInvalidPermissionIds(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
         String roleId = DatabaseUtility.getRoleIdForInstitution("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");

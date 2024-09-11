@@ -1,7 +1,7 @@
 package org.ays.tests.landing.emergencyevacuationapplyservice;
 
 import io.restassured.response.Response;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.PhoneNumber;
@@ -33,7 +33,7 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidName", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidName(String field, String value, ErrorMessage errorMessage, String type) {
+    public void createEmergencyEvacuationApplicationWithInvalidName(String field, String value, AysErrorMessage errorMessage, String type) {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForMe();
 
         if ("firstName".equals(field)) {
@@ -52,7 +52,7 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "blankApplicantName", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithBlankApplicantName(String field, String value, ErrorMessage errorMessage) {
+    public void createEmergencyEvacuationApplicationWithBlankApplicantName(String field, String value, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
 
         if ("applicantFirstName".equals(field)) {
@@ -71,7 +71,7 @@ public class PostEmergencyEvacuationApplicationTest {
 
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "applicantName", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidApplicantName(String field, String value, ErrorMessage errorMessage, String type) {
+    public void createEmergencyEvacuationApplicationWithInvalidApplicantName(String field, String value, AysErrorMessage errorMessage, String type) {
         EmergencyEvacuationApplication emergencyEvacuationApplication = EmergencyEvacuationApplication.generateForOtherPerson();
 
         if ("applicantFirstName".equals(field)) {
@@ -89,16 +89,16 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+    public void createEmergencyEvacuationApplicationWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         testInvalidPhoneNumber(countryCode, lineNumber, false, errorMessage, field, type);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void createEmergencyEvacuationApplicationWithInvalidApplicantPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+    public void createEmergencyEvacuationApplicationWithInvalidApplicantPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         testInvalidPhoneNumber(countryCode, lineNumber, true, errorMessage, field, type);
     }
 
-    private void testInvalidPhoneNumber(String countryCode, String lineNumber, boolean isApplicant, ErrorMessage errorMessage, String field, String type) {
+    private void testInvalidPhoneNumber(String countryCode, String lineNumber, boolean isApplicant, AysErrorMessage errorMessage, String field, String type) {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
@@ -120,17 +120,17 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceCityData", dataProviderClass = DataProvider.class)
-    public void testInvalidSourceCity(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidSourceCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceDistrictData", dataProviderClass = DataProvider.class)
-    public void testInvalidSourceDistrict(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidSourceDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidAddressData", dataProviderClass = DataProvider.class)
-    public void testInvalidAddress(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidAddress(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         application.setAddress(value);
 
@@ -146,21 +146,21 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSeatingCountData", dataProviderClass = DataProvider.class)
-    public void testInvalidSeatingCount(Integer value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidSeatingCount(Integer value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetCityData", dataProviderClass = DataProvider.class)
-    public void testInvalidTargetCity(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
     @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetDistrictData", dataProviderClass = DataProvider.class)
-    public void testInvalidTargetDistrict(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
-    private void validateField(String fieldName, Object value, ErrorMessage errorMessage, String fieldType) {
+    private void validateField(String fieldName, Object value, AysErrorMessage errorMessage, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         switch (fieldName) {
             case "sourceCity" -> application.setSourceCity((String) value);

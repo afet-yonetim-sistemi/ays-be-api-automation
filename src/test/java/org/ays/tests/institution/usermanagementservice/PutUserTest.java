@@ -3,7 +3,7 @@ package org.ays.tests.institution.usermanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.RoleCreatePayload;
 import org.ays.payload.User;
@@ -37,7 +37,7 @@ public class PutUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidUserId(String id, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidUserId(String id, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         Response response = UserEndpoints.updateUser(id, user, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
@@ -46,7 +46,7 @@ public class PutUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidName(String firstName, String lastName, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidName(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         user.setFirstName(firstName);
@@ -58,7 +58,7 @@ public class PutUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidEmail(String emailAddress, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidEmail(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         user.setEmailAddress(emailAddress);
@@ -69,7 +69,7 @@ public class PutUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidRoleList(String id, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         user.setRoleIds(List.of(id));
@@ -99,11 +99,11 @@ public class PutUserTest {
         Response response = UserEndpoints.updateUser(userId, user, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.subErrorsSpec(ErrorMessage.MUST_NOT_BE_BLANK, "lastName", "String"));
+                .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_BLANK, "lastName", "String"));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidPhoneNumber(String countryCode, String lineNumber, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         user.getPhoneNumber().setCountryCode(countryCode);
@@ -115,7 +115,7 @@ public class PutUserTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = DataProvider.class)
-    public void updateUserWithInvalidCity(String city, ErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         user.setCity(city);

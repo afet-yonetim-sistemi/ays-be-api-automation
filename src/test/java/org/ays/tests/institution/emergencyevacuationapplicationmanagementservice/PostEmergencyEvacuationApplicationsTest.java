@@ -1,7 +1,7 @@
 package org.ays.tests.institution.emergencyevacuationapplicationmanagementservice;
 
 import io.restassured.response.Response;
-import org.ays.common.model.enums.ErrorMessage;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.payload.EmergencyEvacuationApplication;
 import org.ays.payload.ListEmergencyEvacuationApplications;
@@ -80,7 +80,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber(String field, String value, String type, ErrorMessage errorMessage) {
+    public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber(String field, String value, String type, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setReferenceNumber(value);
@@ -118,7 +118,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidCity(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testFilteringEvacuationApplicationsWithInvalidCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceCity(value);
@@ -130,7 +130,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
-    public void testFilteringApplicationsWithInvalidSourceDistrict(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testFilteringApplicationsWithInvalidSourceDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceDistrict(value);
@@ -142,7 +142,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidSeatingCountData", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidSeatingCount(Integer value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testFilteringEvacuationApplicationsWithInvalidSeatingCount(Integer value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSeatingCount(value);
@@ -154,7 +154,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceDistrict(value);
@@ -166,7 +166,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidTargetCity(String value, ErrorMessage errorMessage, String field, String fieldType) {
+    public void testFilteringEvacuationApplicationsWithInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setSourceCity(value);
@@ -178,7 +178,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
-    public void testFilteringEvacuationApplicationsWithInvalidStatuses(List<String> statuses, ErrorMessage expectedMessage, String field, String type) {
+    public void testFilteringEvacuationApplicationsWithInvalidStatuses(List<String> statuses, AysErrorMessage expectedMessage, String field, String type) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getFilter().setStatuses(statuses);
@@ -220,7 +220,7 @@ public class PostEmergencyEvacuationApplicationsTest {
     }
 
     @Test(groups = {"Institution", "Regression"}, dataProvider = "negativeOrderData", dataProviderClass = DataProvider.class)
-    public void testListingEvacuationApplicationsWithInvalidSortData(String property, String direction, ErrorMessage errorMessage) {
+    public void testListingEvacuationApplicationsWithInvalidSortData(String property, String direction, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplication application = EmergencyEvacuationApplication.generateForMe();
         ListEmergencyEvacuationApplications list = ListEmergencyEvacuationApplications.generate(application);
         list.getPageable().setOrders(Orders.generate(property, direction));
