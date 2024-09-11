@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -99,7 +99,7 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
     private void testInvalidPhoneNumber(String countryCode, String lineNumber, boolean isApplicant, AysErrorMessage errorMessage, String field, String type) {
-        PhoneNumber phoneNumber = new PhoneNumber();
+        AysPhoneNumber phoneNumber = new AysPhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
 

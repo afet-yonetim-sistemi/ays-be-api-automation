@@ -2,7 +2,7 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -71,7 +71,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
-        PhoneNumber phoneNumber = new PhoneNumber();
+        AysPhoneNumber phoneNumber = new AysPhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         completePayload.setPhoneNumber(phoneNumber);
@@ -129,7 +129,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationID, completePayload);
 
-        PhoneNumber phoneNumber = completePayload.getPhoneNumber();
+        AysPhoneNumber phoneNumber = completePayload.getPhoneNumber();
         String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload newRegistrationIDComplete = AdminRegistrationApplicationCompletePayload.generate();
         newRegistrationIDComplete.setPhoneNumber(phoneNumber);

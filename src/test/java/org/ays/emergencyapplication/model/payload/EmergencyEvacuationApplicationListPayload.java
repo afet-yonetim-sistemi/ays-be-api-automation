@@ -3,7 +3,7 @@ package org.ays.emergencyapplication.model.payload;
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.common.model.payload.AysPageable;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.utility.DatabaseUtility;
 
 import java.util.Collections;
@@ -31,7 +31,7 @@ public class EmergencyEvacuationApplicationListPayload {
         private String sourceCity;
         private String sourceDistrict;
         private int seatingCount;
-        private PhoneNumber phoneNumber;
+        private AysPhoneNumber phoneNumber;
         private String targetCity;
         private String targetDistrict;
         private List<String> statuses;

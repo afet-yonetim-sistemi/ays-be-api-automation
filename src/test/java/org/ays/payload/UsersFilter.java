@@ -12,9 +12,9 @@ public class UsersFilter {
     private String lastName;
     private String city;
     private List<String> statuses;
-    private PhoneNumber phoneNumber;
+    private AysPhoneNumber phoneNumber;
 
-    public static UsersFilter generate(PhoneNumber phoneNumber, String firstname, String lastname, String city, List<String> statuses) {
+    public static UsersFilter generate(AysPhoneNumber phoneNumber, String firstname, String lastname, String city, List<String> statuses) {
         UsersFilter filters = new UsersFilter();
         filters.setPhoneNumber(phoneNumber);
         filters.setFirstName(firstname);

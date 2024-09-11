@@ -12,7 +12,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private PhoneNumber phoneNumber;
+    private AysPhoneNumber phoneNumber;
     private String city;
     private List<String> roleIds;
 
@@ -20,7 +20,7 @@ public class User {
         User user = new User();
         user.setFirstName(AysRandomUtil.generateFirstName());
         user.setLastName(AysRandomUtil.generateLastName());
-        user.setPhoneNumber(PhoneNumber.generateForTurkey());
+        user.setPhoneNumber(AysPhoneNumber.generateForTurkey());
         user.setEmailAddress(AysRandomUtil.generateEmailAddress());
         user.setCity(AysRandomUtil.generateRandomCity());
         user.setRoleIds(List.of("42fe288d-be87-4169-875e-e721a75cc833"));
@@ -31,7 +31,7 @@ public class User {
         User user = new User();
         user.setFirstName(AysRandomUtil.generateFirstName());
         user.setLastName(AysRandomUtil.generateLastName());
-        user.setPhoneNumber(PhoneNumber.generateForTurkey());
+        user.setPhoneNumber(AysPhoneNumber.generateForTurkey());
         user.setEmailAddress(AysRandomUtil.generateEmailAddress());
         user.setCity(AysRandomUtil.generateRandomCity());
         user.setRoleIds(List.of(roleId));

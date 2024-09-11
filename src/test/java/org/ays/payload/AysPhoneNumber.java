@@ -6,13 +6,13 @@ import org.ays.utility.AysRandomUtil;
 
 @Getter
 @Setter
-public class PhoneNumber {
+public class AysPhoneNumber {
 
     private String countryCode;
     private String lineNumber;
 
-    public static PhoneNumber generateForTurkey() {
-        PhoneNumber phoneNumber = new PhoneNumber();
+    public static AysPhoneNumber generateForTurkey() {
+        AysPhoneNumber phoneNumber = new AysPhoneNumber();
         phoneNumber.setLineNumber(AysRandomUtil.generateLineNumber());
         phoneNumber.setCountryCode("90");
         return phoneNumber;

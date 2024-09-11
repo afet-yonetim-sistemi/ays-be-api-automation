@@ -3,7 +3,7 @@ package org.ays.tests.institution.usermanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysResponseSpecs;
@@ -29,7 +29,7 @@ public class PostUserTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
     public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         User user = User.generate();
-        PhoneNumber phoneNumber = new PhoneNumber();
+        AysPhoneNumber phoneNumber = new AysPhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         user.setPhoneNumber(phoneNumber);

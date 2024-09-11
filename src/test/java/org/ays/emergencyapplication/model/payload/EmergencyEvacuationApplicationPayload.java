@@ -2,7 +2,7 @@ package org.ays.emergencyapplication.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.utility.AysRandomUtil;
 
 @Getter
@@ -11,10 +11,10 @@ public class EmergencyEvacuationApplicationPayload {
 
     private String applicantFirstName;
     private String applicantLastName;
-    private PhoneNumber applicantPhoneNumber;
+    private AysPhoneNumber applicantPhoneNumber;
     private String firstName;
     private String lastName;
-    private PhoneNumber phoneNumber;
+    private AysPhoneNumber phoneNumber;
     private String sourceCity;
     private String sourceDistrict;
     private String address;
@@ -37,12 +37,12 @@ public class EmergencyEvacuationApplicationPayload {
         if (forOtherPerson) {
             application.setApplicantFirstName(AysRandomUtil.generateFirstName());
             application.setApplicantLastName(AysRandomUtil.generateLastName());
-            application.setApplicantPhoneNumber(PhoneNumber.generateForTurkey());
+            application.setApplicantPhoneNumber(AysPhoneNumber.generateForTurkey());
         }
 
         application.setFirstName(AysRandomUtil.generateFirstName());
         application.setLastName(AysRandomUtil.generateLastName());
-        application.setPhoneNumber(PhoneNumber.generateForTurkey());
+        application.setPhoneNumber(AysPhoneNumber.generateForTurkey());
         application.setSourceCity(AysRandomUtil.generateRandomCity());
         application.setSourceDistrict(AysRandomUtil.generateRandomDistrict());
         application.setAddress(AysRandomUtil.generateRandomAddress());

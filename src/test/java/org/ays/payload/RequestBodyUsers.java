@@ -10,7 +10,7 @@ public class RequestBodyUsers {
     private AysPageable pageable;
     private UsersFilter filter;
 
-    public static RequestBodyUsers generate(PhoneNumber phoneNumber) {
+    public static RequestBodyUsers generate(AysPhoneNumber phoneNumber) {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generateFirstPage());
         UsersFilter filters = new UsersFilter();

@@ -3,7 +3,7 @@ package org.ays.tests.institution.usermanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.LoginPayload;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
 import org.ays.utility.AysResponseSpecs;
@@ -19,7 +19,7 @@ public class GetUserTest {
         User user = User.generate();
         UserEndpoints.createAUser(user);
 
-        PhoneNumber phoneNumber = user.getPhoneNumber();
+        AysPhoneNumber phoneNumber = user.getPhoneNumber();
         Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 

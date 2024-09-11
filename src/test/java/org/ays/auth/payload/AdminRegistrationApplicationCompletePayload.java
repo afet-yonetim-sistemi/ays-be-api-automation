@@ -2,7 +2,7 @@ package org.ays.auth.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.utility.AysRandomUtil;
 
 
@@ -15,7 +15,7 @@ public class AdminRegistrationApplicationCompletePayload {
     private String password;
     private String firstName;
     private String lastName;
-    private PhoneNumber phoneNumber;
+    private AysPhoneNumber phoneNumber;
 
     public static AdminRegistrationApplicationCompletePayload generate() {
 
@@ -25,7 +25,7 @@ public class AdminRegistrationApplicationCompletePayload {
         completePayload.setPassword(AysRandomUtil.generatePassword());
         completePayload.setFirstName(AysRandomUtil.generateFirstName());
         completePayload.setLastName(AysRandomUtil.generateLastName());
-        completePayload.setPhoneNumber(PhoneNumber.generateForTurkey());
+        completePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
 
         return completePayload;
     }

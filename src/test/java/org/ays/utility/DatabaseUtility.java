@@ -3,7 +3,7 @@ package org.ays.utility;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.ays.payload.PhoneNumber;
+import org.ays.payload.AysPhoneNumber;
 import org.ays.payload.UsersFilter;
 
 import java.sql.Connection;
@@ -86,7 +86,7 @@ public class DatabaseUtility {
                 usersFilter.setCity(resultSet.getString("CITY"));
                 usersFilter.setStatuses(Collections.singletonList(resultSet.getString("STATUS")));
 
-                PhoneNumber phoneNumber = new PhoneNumber();
+                AysPhoneNumber phoneNumber = new AysPhoneNumber();
                 phoneNumber.setCountryCode(resultSet.getString("COUNTRY_CODE"));
                 phoneNumber.setLineNumber(resultSet.getString("LINE_NUMBER"));
 
