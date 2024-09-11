@@ -2,8 +2,8 @@ package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
-import org.ays.payload.RoleUpdatePayload;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
