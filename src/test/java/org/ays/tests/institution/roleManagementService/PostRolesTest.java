@@ -7,7 +7,6 @@ import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.RolesListFilter;
 import org.ays.payload.RolesListPayload;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
@@ -145,7 +144,7 @@ public class PostRolesTest {
     public void rolesListUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        RolesListFilter rolesListFilter = new RolesListFilter();
+        RolesListPayload.RolesListFilter rolesListFilter = new RolesListPayload.RolesListFilter();
         rolesListFilter.setName(name);
 
         rolesListPayload.setFilter(rolesListFilter);
@@ -161,7 +160,7 @@ public class PostRolesTest {
     public void rolesListUsingInvalidStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         RolesListPayload rolesListPayload = RolesListPayload.generate();
 
-        RolesListFilter rolesListFilter = new RolesListFilter();
+        RolesListPayload.RolesListFilter rolesListFilter = new RolesListPayload.RolesListFilter();
         rolesListFilter.setStatuses(statuses);
 
         rolesListPayload.setFilter(rolesListFilter);
