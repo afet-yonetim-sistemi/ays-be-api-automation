@@ -1,7 +1,7 @@
 package org.ays.tests.institution.institutionservice;
 
 import io.restassured.response.Response;
-import org.ays.endpoints.InstitutionEndpoints;
+import org.ays.institution.endpoints.InstitutionEndpoints;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;

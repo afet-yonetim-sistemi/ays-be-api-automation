@@ -1,9 +1,10 @@
-package org.ays.endpoints;
+package org.ays.institution.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
+import org.ays.endpoints.Authorization;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 @UtilityClass
