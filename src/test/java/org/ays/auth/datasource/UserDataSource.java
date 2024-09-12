@@ -65,19 +65,19 @@ public class UserDataSource {
         }
     }
 
-    public static int verifyUserCountForFoundation(String foundationName) {
-        String query = "SELECT COUNT(*) AS user_count\n" +
-                "FROM AYS_USER USER\n" +
-                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID\n" +
+    public static int findUserCountByInstitutionName(String institutionName) {
+        String query = "SELECT COUNT(*) AS USER_COUNT " +
+                "FROM AYS_USER USER " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
                 "WHERE INSTITUTION.NAME = ?";
 
         try (Connection connection = AysDataSource.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, foundationName);
+            preparedStatement.setString(1, institutionName);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("user_count");
+                    return resultSet.getInt("USER_COUNT");
                 }
             }
 

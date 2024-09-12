@@ -23,7 +23,7 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.verifyUserCountForFoundation("Volunteer Foundation");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Volunteer Foundation");
 
         Response response = UserEndpoints.listUsers(requestBodyUsers);
 
@@ -43,7 +43,7 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.verifyUserCountForFoundation("Disaster Foundation");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Disaster Foundation");
 
         Response response = UserEndpoints.listUsersTwo(requestBodyUsers);
 
@@ -63,7 +63,7 @@ public class PostUsersTest {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.verifyUserCountForFoundation("Afet Yönetim Sistemi");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Afet Yönetim Sistemi");
 
         Response response = UserEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
