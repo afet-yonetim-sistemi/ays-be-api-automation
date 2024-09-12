@@ -6,6 +6,7 @@ import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
+import org.ays.auth.payload.UserUpdatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysRestAssured;
@@ -117,13 +118,13 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response updateUser(String userId, UserCreatePayload userCreatePayloadPayload, String token) {
+    public static Response updateUser(String id, UserUpdatePayload updatePayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user/{id}")
-                .pathParameter(Map.of("id", userId))
-                .body(userCreatePayloadPayload)
+                .pathParameter(Map.of("id", id))
+                .body(updatePayload)
                 .token(token)
                 .build();
 
