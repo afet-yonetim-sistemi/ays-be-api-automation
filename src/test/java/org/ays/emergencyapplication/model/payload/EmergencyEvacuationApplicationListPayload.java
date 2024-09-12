@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.common.model.payload.AysPhoneNumber;
-import org.ays.utility.DatabaseUtility;
+import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDataSource;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +39,7 @@ public class EmergencyEvacuationApplicationListPayload {
 
         public static Filter generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
             Filter filter = new Filter();
-            filter.setReferenceNumber(DatabaseUtility.getLatestReferenceNumber());
+            filter.setReferenceNumber(EmergencyEvacuationApplicationDataSource.getLatestReferenceNumber());
             filter.setPhoneNumber(emergencyEvacuationApplicationPayload.getPhoneNumber());
             filter.setSourceCity(emergencyEvacuationApplicationPayload.getSourceCity());
             filter.setSourceDistrict(emergencyEvacuationApplicationPayload.getSourceDistrict());

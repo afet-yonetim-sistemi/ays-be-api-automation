@@ -4,12 +4,12 @@ import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDataSource;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class PostEmergencyEvacuationApplicationsTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content[0].id", notNullValue())
-                .body("response.content[0].referenceNumber", equalTo(DatabaseUtility.getLatestReferenceNumber()))
+                .body("response.content[0].referenceNumber", equalTo(EmergencyEvacuationApplicationDataSource.getLatestReferenceNumber()))
                 .body("response.content[0].firstName", equalTo(application.getFirstName()))
                 .body("response.content[0].lastName", equalTo(application.getLastName()))
                 .body("response.content[0].phoneNumber.countryCode", equalTo(application.getPhoneNumber().getCountryCode()))
@@ -69,7 +69,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .body("response.totalElementCount", equalTo(1))
                 .body("response.orderedBy[0].property", equalTo("createdAt"))
                 .body("response.orderedBy[0].direction", equalTo("DESC"))
-                .body("response.filteredBy.referenceNumber", equalTo(DatabaseUtility.getLatestReferenceNumber()))
+                .body("response.filteredBy.referenceNumber", equalTo(EmergencyEvacuationApplicationDataSource.getLatestReferenceNumber()))
                 .body("response.filteredBy.sourceCity", equalTo(application.getSourceCity()))
                 .body("response.filteredBy.sourceDistrict", equalTo(application.getSourceDistrict()))
                 .body("response.filteredBy.seatingCount", equalTo(application.getSeatingCount()))

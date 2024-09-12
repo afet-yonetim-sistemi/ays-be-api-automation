@@ -44,21 +44,4 @@ public class DatabaseUtility {
         }
     }
 
-    public static String getLatestReferenceNumber() {
-        String query = "SELECT REFERENCE_NUMBER FROM AYS_EMERGENCY_EVACUATION_APPLICATION ORDER BY CREATED_AT DESC LIMIT 1";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            if (resultSet.next()) {
-                return resultSet.getString("REFERENCE_NUMBER");
-            }
-
-            return null;
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
 }
