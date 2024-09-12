@@ -7,7 +7,7 @@ import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.RequestBodyUsers;
+import org.ays.payload.UserListPayload;
 import org.ays.utility.AysConfigurationProperty;
 import org.openqa.selenium.remote.http.HttpMethod;
 
@@ -50,36 +50,36 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response listUsers(RequestBodyUsers requestBodyUsers) {
+    public static Response listUsers(UserListPayload userListPayload) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
-                .body(requestBodyUsers)
+                .body(userListPayload)
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response listUsersTwo(RequestBodyUsers requestBodyUsers) {
+    public static Response listUsersTwo(UserListPayload userListPayload) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
-                .body(requestBodyUsers)
+                .body(userListPayload)
                 .token(Authorization.loginAndGetAdminTwoAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response listUsersSuperAdmin(RequestBodyUsers requestBodyUsers) {
+    public static Response listUsersSuperAdmin(UserListPayload userListPayload) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/users")
-                .body(requestBodyUsers)
+                .body(userListPayload)
                 .token(Authorization.loginAndGetSuperAdminAccessToken())
                 .build();
 

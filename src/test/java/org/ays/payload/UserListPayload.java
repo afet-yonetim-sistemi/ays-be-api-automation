@@ -7,17 +7,18 @@ import org.ays.common.model.payload.AysPhoneNumber;
 
 @Getter
 @Setter
-public class RequestBodyUsers {
+public class UserListPayload {
+
     private AysPageable pageable;
     private UsersFilter filter;
 
-    public static RequestBodyUsers generate(AysPhoneNumber phoneNumber) {
-        RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
-        requestBodyUsers.setPageable(AysPageable.generateFirstPage());
+    public static UserListPayload generate(AysPhoneNumber phoneNumber) {
+        UserListPayload userListPayload = new UserListPayload();
+        userListPayload.setPageable(AysPageable.generateFirstPage());
         UsersFilter filters = new UsersFilter();
         filters.setPhoneNumber(phoneNumber);
-        requestBodyUsers.setFilter(filters);
-        return requestBodyUsers;
+        userListPayload.setFilter(filters);
+        return userListPayload;
     }
 
 }
