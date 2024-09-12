@@ -2,7 +2,6 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.payload.RequestBodyUsers;
 import org.ays.payload.User;
@@ -21,7 +20,7 @@ public class DeleteUserTest {
         UserEndpoints.createAUser(user);
 
         AysPhoneNumber phoneNumber = user.getPhoneNumber();
-        Response response = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
+        Response response = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID = response.jsonPath().getString("response.content[0].id");
 
         Response deleteResponse = UserEndpoints.deleteUser(userID);
@@ -42,7 +41,7 @@ public class DeleteUserTest {
         UserEndpoints.createAUser(user);
 
         AysPhoneNumber phoneNumber = user.getPhoneNumber();
-        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber), LoginPayload.generateAsAdminUserOne());
+        Response userIDResponse = UserEndpoints.listUsers(RequestBodyUsers.generate(phoneNumber));
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         UserEndpoints.deleteUser(userID);
