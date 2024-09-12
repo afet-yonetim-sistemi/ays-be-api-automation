@@ -7,7 +7,7 @@ import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.User;
+import org.ays.payload.UserCreatePayload;
 import org.ays.utility.AysConfigurationProperty;
 import org.openqa.selenium.remote.http.HttpMethod;
 
@@ -16,8 +16,8 @@ import java.util.Map;
 @UtilityClass
 public class UserEndpoints {
 
-    public static String generateUserId(User user) {
-        Response response = createAUser(user, Authorization.loginAndGetTestAdminAccessToken());
+    public static String generateUserId(UserCreatePayload userCreatePayload) {
+        Response response = createAUser(userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
 
         if (response.getStatusCode() == 200) {
             return UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
@@ -26,24 +26,24 @@ public class UserEndpoints {
         }
     }
 
-    public static Response createAUser(User userPayload) {
+    public static Response createAUser(UserCreatePayload userCreatePayloadPayload) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user")
-                .body(userPayload)
+                .body(userCreatePayloadPayload)
                 .token(Authorization.loginAndGetAdminAccessToken())
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response createAUser(User userPayload, String token) {
+    public static Response createAUser(UserCreatePayload userCreatePayloadPayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/user")
-                .body(userPayload)
+                .body(userCreatePayloadPayload)
                 .token(token)
                 .build();
 
@@ -98,13 +98,13 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response updateUser(String userId, User userPayload, String token) {
+    public static Response updateUser(String userId, UserCreatePayload userCreatePayloadPayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .body(userPayload)
+                .body(userCreatePayloadPayload)
                 .token(token)
                 .build();
 

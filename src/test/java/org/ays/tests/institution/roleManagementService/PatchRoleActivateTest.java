@@ -5,7 +5,7 @@ import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.User;
+import org.ays.payload.UserCreatePayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -43,7 +43,7 @@ public class PatchRoleActivateTest {
     @Test(groups = {"Regression", "Institution"}, enabled = true)
     public void activateAnAssignedRole() {
         String roleId = RoleEndpoints.generateRoleId();
-        UserEndpoints.createAUser(User.generateUserWithARole(roleId));
+        UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId));
         Response response = RoleEndpoints.patchActivateRole(roleId, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())

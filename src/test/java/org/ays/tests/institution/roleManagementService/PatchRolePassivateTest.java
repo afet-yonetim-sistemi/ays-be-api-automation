@@ -5,7 +5,7 @@ import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.User;
+import org.ays.payload.UserCreatePayload;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -43,7 +43,7 @@ public class PatchRolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAnAssignedRole() {
         String roleId = RoleEndpoints.generateRoleId();
-        UserEndpoints.createAUser(User.generateUserWithARole(roleId), Authorization.loginAndGetTestAdminAccessToken());
+        UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), Authorization.loginAndGetTestAdminAccessToken());
         Response response = RoleEndpoints.patchPassivateRole(roleId, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
