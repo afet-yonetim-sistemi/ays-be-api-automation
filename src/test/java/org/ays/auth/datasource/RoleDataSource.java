@@ -11,8 +11,8 @@ import java.sql.SQLException;
 @UtilityClass
 public class RoleDataSource {
 
-    public static int verifyRoleCountForFoundation(String foundationName) {
-        String query = "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT " +
+    public static int findRoleCountByInstitutionName(String foundationName) {
+        String query = "SELECT COUNT(*) AS ROLE_COUNT " +
                 "FROM AYS_ROLE ROLE " +
                 "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
                 "WHERE INSTITUTION.NAME = ?";

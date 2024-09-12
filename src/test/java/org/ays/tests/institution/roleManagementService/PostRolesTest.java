@@ -25,7 +25,7 @@ public class PostRolesTest {
     public void rolesListForAdminOne() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Volunteer Foundation");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Volunteer Foundation");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminAccessToken());
 
@@ -47,7 +47,7 @@ public class PostRolesTest {
     public void rolesListForAdminTwo() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Disaster Foundation");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Disaster Foundation");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminTwoAccessToken());
 
@@ -69,7 +69,7 @@ public class PostRolesTest {
     public void rolesListForSuperAdmin() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Afet Yönetim Sistemi");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Afet Yönetim Sistemi");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetSuperAdminAccessToken());
 
