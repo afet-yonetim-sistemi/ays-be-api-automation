@@ -3,8 +3,8 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
-import org.ays.emergencyapplication.model.enums.AdminUserRegistrationApplicationStatus;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
@@ -21,7 +21,7 @@ public class PostAdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
         Response getStatus = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
         getStatus.then()
-                .body("response.status", equalTo(AdminUserRegistrationApplicationStatus.REJECTED.toString()));
+                .body("response.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.toString()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"}, enabled = false)
