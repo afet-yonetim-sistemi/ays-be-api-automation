@@ -1,9 +1,9 @@
 package org.ays.auth.datasource;
 
 import lombok.experimental.UtilityClass;
+import org.ays.auth.model.entity.UserEntity;
 import org.ays.common.datasource.AysDataSource;
 import org.ays.common.model.payload.AysPhoneNumber;
-import org.ays.payload.UsersFilter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.util.Collections;
 @UtilityClass
 public class UserDataSource {
 
-    public static UsersFilter findAnyUser() {
+    public static UserEntity findAnyUser() {
         String query = "SELECT USER.FIRST_NAME, USER.LAST_NAME, " +
                 "USER.COUNTRY_CODE, USER.LINE_NUMBER, USER.CITY, USER.STATUS " +
                 "FROM AYS_USER USER " +
@@ -25,7 +25,7 @@ public class UserDataSource {
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            UsersFilter usersFilter = new UsersFilter();
+            UserEntity usersFilter = new UserEntity();
 
             if (resultSet.next()) {
 

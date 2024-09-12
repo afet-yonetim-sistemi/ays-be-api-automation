@@ -3,6 +3,7 @@ package org.ays.tests.institution.usermanagementservice;
 import io.restassured.response.Response;
 import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.endpoints.UserEndpoints;
+import org.ays.auth.model.entity.UserEntity;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
@@ -82,7 +83,10 @@ public class PostUsersTest {
     public void usersListWithAllFilter() {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
-        userListPayload.setFilter(UserDataSource.findAnyUser());
+
+        UserEntity userEntity = UserDataSource.findAnyUser();
+        UsersFilter usersFilter = UsersFilter.from(userEntity);
+        userListPayload.setFilter(usersFilter);
         Response response = UserEndpoints.listUsersSuperAdmin(userListPayload);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
