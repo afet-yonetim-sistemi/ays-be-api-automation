@@ -1,6 +1,7 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
@@ -8,10 +9,8 @@ import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -94,7 +93,9 @@ public class PostUserTest {
     @Test(groups = {"Regression", "Institution"})
     public void createAUserWithOtherInstitutionsRole() {
         User user = User.generate();
-        user.setRoleIds(Arrays.asList(DatabaseUtility.getRoleId(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID)));
+        user.setRoleIds(
+                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID))
+        );
         Response response = UserEndpoints.createAUser(user);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
