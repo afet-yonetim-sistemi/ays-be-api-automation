@@ -34,7 +34,7 @@ public class RoleDataSource {
 
     }
 
-    public static String getLastCreatedRoleId() {
+    public static String findLastRoleId() {
         String query = "SELECT ID FROM AYS_ROLE ORDER BY CREATED_AT DESC LIMIT 1";
 
         try (Connection connection = AysDataSource.createConnection();

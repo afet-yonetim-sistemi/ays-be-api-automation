@@ -57,7 +57,7 @@ public class RoleEndpoints {
         Response response = createRole(roleCreatePayload);
 
         if (response.getStatusCode() == 200) {
-            return RoleDataSource.getLastCreatedRoleId();
+            return RoleDataSource.findLastRoleId();
         } else {
             throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
         }

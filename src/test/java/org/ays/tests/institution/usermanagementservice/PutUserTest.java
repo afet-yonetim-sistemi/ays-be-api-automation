@@ -84,7 +84,7 @@ public class PutUserTest {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         RoleEndpoints.createRole(RoleCreatePayload.generate(), Authorization.loginAndGetAdminTwoAccessToken());
-        user.setRoleIds(List.of(RoleDataSource.getLastCreatedRoleId()));
+        user.setRoleIds(List.of(RoleDataSource.findLastRoleId()));
         Response response = UserEndpoints.updateUser(userId, user, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
