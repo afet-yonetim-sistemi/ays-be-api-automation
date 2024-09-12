@@ -76,11 +76,10 @@ public class RoleDataSource {
     }
 
     public static String findLastDeletedRoleIdByInstitutionName(String institutionName) {
-        String query = "SELECT ROL.ID " +
-                "FROM AYS_ROLE ROL " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ? " +
-                "AND ROL.STATUS = 'DELETED' " +
+        String query = "SELECT ROLE.ID " +
+                "FROM AYS_ROLE ROLE " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
+                "WHERE INSTITUTION.NAME = ? AND ROLE.STATUS = 'DELETED' " +
                 "LIMIT 1";
 
         try (Connection connection = AysDataSource.createConnection();
