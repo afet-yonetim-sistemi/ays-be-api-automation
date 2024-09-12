@@ -20,7 +20,7 @@ public class UserEndpoints {
         Response response = createAUser(user, Authorization.loginAndGetTestAdminAccessToken());
 
         if (response.getStatusCode() == 200) {
-            return UserDataSource.getLatestCreatedUserId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
+            return UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
         } else {
             throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
         }

@@ -88,7 +88,7 @@ public class UserDataSource {
 
     }
 
-    public static String getLatestCreatedUserId(String institutionId) {
+    public static String findLastCreatedUserIdByInstitutionId(String institutionId) {
         String query = "SELECT ID FROM AYS_USER WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
 
         try (Connection connection = AysDataSource.createConnection();
