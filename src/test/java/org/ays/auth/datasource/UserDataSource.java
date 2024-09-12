@@ -14,11 +14,11 @@ import java.util.Collections;
 @UtilityClass
 public class UserDataSource {
 
-    public static UsersFilter fetchFirstUserData() {
-        String query = "SELECT USER.FIRST_NAME, USER.LAST_NAME,\n" +
-                "USER.COUNTRY_CODE, USER.LINE_NUMBER, USER.CITY, USER.STATUS\n" +
-                "FROM AYS_USER USER\n" +
-                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID\n" +
+    public static UsersFilter findAnyUser() {
+        String query = "SELECT USER.FIRST_NAME, USER.LAST_NAME, " +
+                "USER.COUNTRY_CODE, USER.LINE_NUMBER, USER.CITY, USER.STATUS " +
+                "FROM AYS_USER USER " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
                 "LIMIT 1";
 
         try (Connection connection = AysDataSource.createConnection();

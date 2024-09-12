@@ -82,7 +82,7 @@ public class PostUsersTest {
     public void usersListWithAllFilter() {
         RequestBodyUsers requestBodyUsers = new RequestBodyUsers();
         requestBodyUsers.setPageable(AysPageable.generate(1, 10));
-        requestBodyUsers.setFilter(UserDataSource.fetchFirstUserData());
+        requestBodyUsers.setFilter(UserDataSource.findAnyUser());
         Response response = UserEndpoints.listUsersSuperAdmin(requestBodyUsers);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
