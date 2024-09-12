@@ -1,4 +1,4 @@
-package org.ays.utility;
+package org.ays.auth.tests;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ays.common.datasource.AysDataSource;
