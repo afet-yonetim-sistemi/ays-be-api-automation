@@ -8,7 +8,6 @@ import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.payload.UserListPayload;
-import org.ays.payload.UsersFilter;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
@@ -85,8 +84,8 @@ public class PostUsersTest {
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
         UserEntity userEntity = UserDataSource.findAnyUser();
-        UsersFilter usersFilter = UsersFilter.from(userEntity);
-        userListPayload.setFilter(usersFilter);
+        UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity);
+        userListPayload.setFilter(filter);
         Response response = UserEndpoints.listUsersSuperAdmin(userListPayload);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
@@ -150,7 +149,11 @@ public class PostUsersTest {
     public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
-        userListPayload.setFilter(UsersFilter.generate(null, firstName, lastName, null, null));
+
+        UserListPayload.Filter filter = new UserListPayload.Filter();
+        filter.setFirstName(firstName);
+        filter.setLastName(lastName);
+        userListPayload.setFilter(filter);
 
         Response response = UserEndpoints.listUsers(userListPayload);
         response.then()
@@ -162,7 +165,10 @@ public class PostUsersTest {
     public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
-        userListPayload.setFilter(UsersFilter.generate(null, null, null, city, null));
+
+        UserListPayload.Filter filter = new UserListPayload.Filter();
+        filter.setCity(city);
+        userListPayload.setFilter(filter);
 
         Response response = UserEndpoints.listUsers(userListPayload);
         response.then()
@@ -174,7 +180,10 @@ public class PostUsersTest {
     public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
-        userListPayload.setFilter(UsersFilter.generate(null, null, null, null, statuses));
+
+        UserListPayload.Filter filter = new UserListPayload.Filter();
+        filter.setStatuses(statuses);
+        userListPayload.setFilter(filter);
 
         Response response = UserEndpoints.listUsers(userListPayload);
         response.then()
