@@ -2,7 +2,9 @@ package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
+import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
@@ -11,7 +13,6 @@ import org.ays.common.model.payload.AysPageable;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
-import org.ays.endpoints.Authorization;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -23,11 +24,14 @@ public class PostRolesTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void rolesListForAdminOne() {
-        RoleListPayload roleListPayload = RoleListPayload.generate();
 
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Volunteer Foundation");
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No roles under this institution.");
@@ -45,11 +49,14 @@ public class PostRolesTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void rolesListForAdminTwo() {
-        RoleListPayload roleListPayload = RoleListPayload.generate();
 
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Disaster Foundation");
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminTwoAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No roles under this institution.");
@@ -67,11 +74,14 @@ public class PostRolesTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void rolesListForSuperAdmin() {
-        RoleListPayload roleListPayload = RoleListPayload.generate();
 
+        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Afet Yönetim Sistemi");
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetSuperAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No roles under this institution.");
@@ -89,14 +99,18 @@ public class PostRolesTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void rolesListWithFilter() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(roleCreatePayload);
+        RoleEndpoints.createRole(roleCreatePayload, accessToken);
 
         String name = roleCreatePayload.getName();
 
         RoleListPayload roleListPayload = RoleListPayload.generateWithFilter(roleCreatePayload);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No roles under this institution.");
@@ -114,11 +128,15 @@ public class PostRolesTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         RoleListPayload roleListPayload = RoleListPayload.generate();
         AysPageable pageable = AysPageable.generate(page, pageSize);
         roleListPayload.setPageable(pageable);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -128,12 +146,16 @@ public class PostRolesTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
         List<AysOrder> orders = AysOrder.generate(property, direction);
         roleListPayload.getPageable().setOrders(orders);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -142,14 +164,16 @@ public class PostRolesTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
-        RoleListPayload roleListPayload = RoleListPayload.generate();
 
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleListPayload roleListPayload = RoleListPayload.generate();
         RoleListPayload.Filter filter = new RoleListPayload.Filter();
         filter.setName(name);
-
         roleListPayload.setFilter(filter);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -158,19 +182,24 @@ public class PostRolesTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
-        RoleListPayload roleListPayload = RoleListPayload.generate();
 
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleListPayload roleListPayload = RoleListPayload.generate();
         RoleListPayload.Filter filter = new RoleListPayload.Filter();
         filter.setStatuses(statuses);
-
         roleListPayload.setFilter(filter);
 
-
-        Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
 
+    }
+
+    private String loginAndGetAccessToken(LoginPayload loginPayload) {
+        return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
     }
 
 }

@@ -1,10 +1,10 @@
 package org.ays.tests.auth.institutionAuthServiseTests;
 
 import io.restassured.response.Response;
+import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.LoginPayload;
-import org.ays.auth.payload.TokenRefreshPayload;
+import org.ays.auth.payload.TokenInvalidatePayload;
 import org.ays.common.util.AysResponseSpecs;
-import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.testng.annotations.Test;
 
 public class PostAdminInvalidateTokenTest {
@@ -12,13 +12,14 @@ public class PostAdminInvalidateTokenTest {
     public void adminInvalidateToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
-        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(loginPayload);
+        Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
-        TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
-        tokenRefreshPayload.setRefreshToken(refreshToken);
-        Response response = InstitutionAuthEndpoints.adminInvalidateToken(accessToken, tokenRefreshPayload);
+        TokenInvalidatePayload invalidatePayload = new TokenInvalidatePayload();
+        invalidatePayload.setAccessToken(accessToken);
+        invalidatePayload.setRefreshToken(refreshToken);
+        Response response = AuthEndpoints.invalidateTokens(invalidatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }

@@ -2,14 +2,15 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
+import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
-import org.ays.endpoints.Authorization;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -17,12 +18,17 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 
 public class PutUserTest {
+
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateUserSuccessfully() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setFirstName("updatedName");
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -38,8 +44,12 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidUserId(String id, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        Response response = UserEndpoints.updateUser(id, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(id, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -47,11 +57,15 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidName(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setFirstName(firstName);
         userCreatePayload.setLastName(lastName);
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -59,10 +73,14 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidEmail(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setEmailAddress(emailAddress);
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -70,10 +88,14 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setRoleIds(List.of(id));
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -81,11 +103,20 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithInvalidRoleForInstitution() {
+
+        LoginPayload loginPayloadAdminTwo = LoginPayload.generateAsAdminUserTwo();
+        String accessTokenAdminTwo = this.loginAndGetAccessToken(loginPayloadAdminTwo);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
-        RoleEndpoints.createRole(RoleCreatePayload.generate(), Authorization.loginAndGetAdminTwoAccessToken());
+        RoleEndpoints.createRole(RoleCreatePayload.generate(), accessTokenAdminTwo);
+
+
+        LoginPayload loginPayloadTestAdmin = LoginPayload.generateAsTestAdmin();
+        String accessTokenTestAdmin = this.loginAndGetAccessToken(loginPayloadTestAdmin);
+
         userCreatePayload.setRoleIds(List.of(RoleDataSource.findLastRoleId()));
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessTokenTestAdmin);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("the following roles are not found!"));
@@ -93,10 +124,14 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithMissingField() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setLastName(null);
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_BLANK, "lastName", "String"));
@@ -104,11 +139,15 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.getPhoneNumber().setCountryCode(countryCode);
         userCreatePayload.getPhoneNumber().setLineNumber(lineNumber);
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -116,14 +155,21 @@ public class PutUserTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(userCreatePayload);
         userCreatePayload.setCity(city);
-        Response response = UserEndpoints.updateUser(userId, userCreatePayload, Authorization.loginAndGetTestAdminAccessToken());
+        Response response = UserEndpoints.updateUser(userId, userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
+    private String loginAndGetAccessToken(LoginPayload loginPayload) {
+        return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    }
 
 }

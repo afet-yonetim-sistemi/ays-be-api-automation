@@ -1,11 +1,11 @@
 package org.ays.tests.auth.landingAuthServiceTests;
 
 import io.restassured.response.Response;
+import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.TokenInvalidatePayload;
 import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.common.util.AysResponseSpecs;
-import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.endpoints.UserAuthEndpoints;
 import org.testng.annotations.Test;
 
 public class PostUserTokenRefreshTest {
@@ -14,12 +14,12 @@ public class PostUserTokenRefreshTest {
     public void userTokenRefresh() {
 
         LoginPayload loginPayload = LoginPayload.generateAsUserOne();
-        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(loginPayload);
+        Response loginResponse = AuthEndpoints.token(loginPayload);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(refreshToken);
-        Response response = UserAuthEndpoints.userTokenRefresh(tokenRefreshPayload);
+        Response response = AuthEndpoints.refreshAccessToken(tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
@@ -29,14 +29,18 @@ public class PostUserTokenRefreshTest {
     public void testUserInvalidRefreshTokenForAccessTokenCreation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsUserOne();
-        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(loginPayload);
+        Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
+        TokenInvalidatePayload invalidatePayload = new TokenInvalidatePayload();
+        invalidatePayload.setAccessToken(accessToken);
+        invalidatePayload.setRefreshToken(refreshToken);
+        AuthEndpoints.invalidateTokens(invalidatePayload);
+
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(refreshToken);
-        UserAuthEndpoints.userInvalidateToken(accessToken, tokenRefreshPayload);
-        Response response = InstitutionAuthEndpoints.adminTokenRefresh(tokenRefreshPayload);
+        Response response = AuthEndpoints.refreshAccessToken(tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
