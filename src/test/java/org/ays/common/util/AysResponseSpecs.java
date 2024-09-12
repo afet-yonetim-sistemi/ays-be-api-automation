@@ -1,4 +1,4 @@
-package org.ays.utility;
+package org.ays.common.util;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;

@@ -1,4 +1,4 @@
-package org.ays.utility;
+package org.ays.common.util;
 
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;

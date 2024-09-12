@@ -4,12 +4,12 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.ays.common.util.AysConfigurationProperty;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysRandomUtil;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
-import org.ays.utility.AysConfigurationProperty;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysRandomUtil;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

@@ -6,9 +6,9 @@ import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysRandomUtil;
-import org.ays.utility.AysResponseSpecs;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysRandomUtil;
+import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import java.util.List;

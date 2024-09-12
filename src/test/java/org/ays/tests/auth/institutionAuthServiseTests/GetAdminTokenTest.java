@@ -2,9 +2,9 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 
 import io.restassured.response.Response;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;

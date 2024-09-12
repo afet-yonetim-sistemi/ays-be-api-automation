@@ -4,8 +4,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;

@@ -5,13 +5,13 @@ import lombok.experimental.UtilityClass;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
+import org.ays.common.util.AysConfigurationProperty;
+import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationListPayload;
-import org.ays.utility.AysConfigurationProperty;
-import org.ays.utility.AysRandomUtil;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;

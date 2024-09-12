@@ -5,7 +5,7 @@ import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.payload.AysPhoneNumber;
-import org.ays.utility.AysResponseSpecs;
+import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.notNullValue;

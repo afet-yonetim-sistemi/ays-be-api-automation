@@ -4,9 +4,9 @@ import io.restassured.response.Response;
 import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 public class PostPasswordForgotTest {

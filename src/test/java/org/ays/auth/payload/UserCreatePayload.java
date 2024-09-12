@@ -3,7 +3,7 @@ package org.ays.auth.payload;
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.common.model.payload.AysPhoneNumber;
-import org.ays.utility.AysRandomUtil;
+import org.ays.common.util.AysRandomUtil;
 
 import java.util.List;
 

@@ -4,12 +4,12 @@ import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDataSource;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import java.util.List;

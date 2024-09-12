@@ -3,7 +3,7 @@ package org.ays.tests.institution.permissionService;
 import io.restassured.response.Response;
 import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.endpoints.PermissionEndpoints;
-import org.ays.utility.AysResponseSpecs;
+import org.ays.common.util.AysResponseSpecs;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

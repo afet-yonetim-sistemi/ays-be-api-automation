@@ -8,10 +8,10 @@ import org.ays.auth.payload.RoleListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysLogUtil;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.endpoints.Authorization;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysLogUtil;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import java.util.List;

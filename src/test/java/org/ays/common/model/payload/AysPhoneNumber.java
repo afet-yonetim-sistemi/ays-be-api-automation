@@ -2,7 +2,7 @@ package org.ays.common.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.utility.AysRandomUtil;
+import org.ays.common.util.AysRandomUtil;
 
 @Getter
 @Setter

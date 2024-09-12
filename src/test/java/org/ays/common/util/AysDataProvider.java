@@ -1,4 +1,4 @@
-package org.ays.utility;
+package org.ays.common.util;
 
 import lombok.experimental.UtilityClass;
 import org.ays.common.model.enums.AysErrorMessage;

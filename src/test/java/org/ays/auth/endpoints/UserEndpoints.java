@@ -6,9 +6,9 @@ import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.utility.AysConfigurationProperty;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;

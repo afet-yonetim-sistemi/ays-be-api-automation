@@ -5,9 +5,9 @@ import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.endpoints.Authorization;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;

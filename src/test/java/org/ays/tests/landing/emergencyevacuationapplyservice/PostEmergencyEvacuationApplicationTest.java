@@ -3,10 +3,10 @@ package org.ays.tests.landing.emergencyevacuationapplyservice;
 import io.restassured.response.Response;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
+import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysResponseSpecs;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
-import org.ays.utility.AysDataProvider;
-import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;

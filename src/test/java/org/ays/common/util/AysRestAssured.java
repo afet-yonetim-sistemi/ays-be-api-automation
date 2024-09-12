@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
 import org.ays.common.model.payload.AysRestAssuredPayload;
-import org.ays.utility.AysConfigurationProperty;
 import org.testng.Reporter;
 
 @UtilityClass

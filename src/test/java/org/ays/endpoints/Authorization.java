@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.model.enums.SourcePage;
 import org.ays.auth.payload.LoginPayload;
-import org.ays.utility.AysConfigurationProperty;
+import org.ays.common.util.AysConfigurationProperty;
 
 @UtilityClass
 public class Authorization {

@@ -3,7 +3,7 @@ package org.ays.auth.payload;
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.auth.model.enums.SourcePage;
-import org.ays.utility.AysConfigurationProperty;
+import org.ays.common.util.AysConfigurationProperty;
 
 @Getter
 @Setter
