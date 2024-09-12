@@ -75,7 +75,7 @@ public class RoleDataSource {
         }
     }
 
-    public static String getDeletedRoleIdForInstitution(String institutionName) {
+    public static String findLastDeletedRoleIdByInstitutionName(String institutionName) {
         String query = "SELECT ROL.ID " +
                 "FROM AYS_ROLE ROL " +
                 "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +

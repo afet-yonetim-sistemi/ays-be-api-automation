@@ -33,7 +33,7 @@ public class DeleteRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteRolWithDeletedStatus() {
-        String roleId = RoleDataSource.getDeletedRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.findLastDeletedRoleIdByInstitutionName("Test Foundation");
 
         Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
