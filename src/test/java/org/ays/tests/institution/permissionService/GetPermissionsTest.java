@@ -1,17 +1,13 @@
 package org.ays.tests.institution.permissionService;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.endpoints.PermissionEndpoints;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DatabaseUtility;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static org.ays.utility.DatabaseUtility.getColumNameFromTableWhereValueIs;
 
 public class GetPermissionsTest {
 
@@ -23,7 +19,7 @@ public class GetPermissionsTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
         List<String> listOfNameValuesFromResponse = response.jsonPath().getList("response.name");
-        List<String> listOfNameValuesFromDB = getColumNameFromTableWhereValueIs("name", "AYS_PERMISSION", "IS_SUPER", "1");
+        List<String> listOfNameValuesFromDB = PermissionDataSource.findAllPermissionNamesByIsSuper(true);
 
         for (String dbName : listOfNameValuesFromDB) {
             Assert.assertFalse(listOfNameValuesFromResponse.contains(dbName), "Name from database found in response: " + dbName);
@@ -38,7 +34,7 @@ public class GetPermissionsTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
         List<String> listOfNameValuesFromResponse = response.jsonPath().getList("response.name");
-        List<String> listOfNameValuesFromDB = getColumNameFromTableWhereValueIs("name", "AYS_PERMISSION", "IS_SUPER", "0");
+        List<String> listOfNameValuesFromDB = PermissionDataSource.findAllPermissionNamesByIsSuper(false);
 
         for (String dbName : listOfNameValuesFromDB) {
             Assert.assertTrue(listOfNameValuesFromResponse.contains(dbName), "Name from database found in response: " + dbName);
@@ -52,9 +48,13 @@ public class GetPermissionsTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        Set<String> setOfNameValuesFromResponse = new HashSet<>(response.jsonPath().getList("response.name"));
-        Set<String> setOfNameValuesFromDB = new HashSet<>(DatabaseUtility.getColumNameFromTableWhereValueIs("name", "AYS_PERMISSION"));
+        List<String> setOfNameValuesFromResponse = response.jsonPath().getList("response.name");
+        List<String> setOfNameValuesFromDB = PermissionDataSource.findAllPermissionNames();
 
-        Assert.assertEquals(setOfNameValuesFromResponse, setOfNameValuesFromDB, "The names from the response and the database do not match.");
+        Assert.assertEquals(
+                setOfNameValuesFromResponse,
+                setOfNameValuesFromDB,
+                "The names from the response and the database do not match."
+        );
     }
 }

@@ -45,4 +45,48 @@ public class PermissionDataSource {
         }
     }
 
+    public static List<String> findAllPermissionNames() {
+
+        String query = "SELECT NAME FROM AYS_PERMISSION";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            List<String> permissions = new ArrayList<>();
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID");
+                permissions.add(id);
+            }
+            return permissions;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public static List<String> findAllPermissionNamesByIsSuper(boolean isSuper) {
+
+        String query = "SELECT NAME FROM AYS_PERMISSION";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+
+
+            preparedStatement.setBoolean(1, isSuper);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                List<String> permissions = new ArrayList<>();
+                while (resultSet.next()) {
+                    String id = resultSet.getString("ID");
+                    permissions.add(id);
+                }
+                return permissions;
+            }
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
 }
