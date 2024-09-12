@@ -3,11 +3,11 @@ package org.ays.auth.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.datasource.UserDataSource;
+import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
 import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.UserCreatePayload;
 import org.ays.utility.AysConfigurationProperty;
 import org.openqa.selenium.remote.http.HttpMethod;
 

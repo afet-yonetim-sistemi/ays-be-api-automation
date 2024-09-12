@@ -2,9 +2,9 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
+import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.payload.RequestBodyUsers;
-import org.ays.payload.UserCreatePayload;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
