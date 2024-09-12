@@ -32,7 +32,7 @@ public class PutRoleTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = DataProvider.class)
     public void updateRolWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(name);
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
@@ -45,7 +45,7 @@ public class PutRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNullRoleName() {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(null);
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
@@ -58,7 +58,7 @@ public class PutRoleTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = DataProvider.class)
     public void updateRolWithInvalidPermissionIds(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(permissionIds);
@@ -71,7 +71,7 @@ public class PutRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNullPermissionIds() {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(null);
@@ -84,7 +84,7 @@ public class PutRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNonInstitutionRol() {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Disaster Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());

@@ -23,7 +23,7 @@ public class DeleteRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteRolWithNonInstitutionRol() {
-        String roleId = RoleDataSource.getRoleIdForInstitution("Disaster Foundation");
+        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
 
         Response response = RoleEndpoints.deleteRole(roleId);
         response.then()

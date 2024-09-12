@@ -51,10 +51,10 @@ public class RoleDataSource {
         }
     }
 
-    public static String getRoleIdForInstitution(String institutionName) {
-        String query = "SELECT ROL.ID " +
-                "FROM AYS_ROLE ROL " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
+    public static String findLastRoleIdByInstitutionName(String institutionName) {
+        String query = "SELECT ROLE.ID " +
+                "FROM AYS_ROLE ROLE " +
+                "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
                 "WHERE INSTITUTION.NAME = ? " +
                 "LIMIT 1";
 
