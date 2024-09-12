@@ -2,8 +2,8 @@ package org.ays.auth.payload;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.utility.AysRandomUtil;
-import org.ays.utility.DatabaseUtility;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class RoleCreatePayload {
     public static RoleCreatePayload generate() {
         RoleCreatePayload roleCreatePayload = new RoleCreatePayload();
         roleCreatePayload.setName(AysRandomUtil.generateFirstName() + " Rol " + AysRandomUtil.generateAlphaSuffix());
-        roleCreatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
+        roleCreatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
         return roleCreatePayload;
     }
 

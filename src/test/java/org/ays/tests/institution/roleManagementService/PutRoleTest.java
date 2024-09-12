@@ -1,6 +1,7 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.RoleUpdatePayload;
@@ -8,7 +9,6 @@ import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class PutRoleTest {
         String roleId = RoleEndpoints.generateRoleId();
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -35,7 +35,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(name);
-        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -48,7 +48,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(null);
-        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -87,7 +87,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(DatabaseUtility.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
