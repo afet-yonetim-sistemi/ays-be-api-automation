@@ -1,4 +1,6 @@
-package org.ays.utility;
+package org.ays.common.datasource;
+
+import org.ays.utility.AysConfigurationProperty;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
