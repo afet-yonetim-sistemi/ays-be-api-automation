@@ -2,13 +2,13 @@ package org.ays.auth.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleListPayload;
 import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.utility.DatabaseUtility;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;
@@ -57,7 +57,7 @@ public class RoleEndpoints {
         Response response = createRole(roleCreatePayload);
 
         if (response.getStatusCode() == 200) {
-            return DatabaseUtility.getLastCreatedRoleId();
+            return RoleDataSource.getLastCreatedRoleId();
         } else {
             throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
         }

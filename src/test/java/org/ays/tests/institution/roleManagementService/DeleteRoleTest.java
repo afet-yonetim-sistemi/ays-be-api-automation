@@ -1,11 +1,11 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -23,7 +23,7 @@ public class DeleteRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteRolWithNonInstitutionRol() {
-        String roleId = DatabaseUtility.getRoleIdForInstitution("Disaster Foundation");
+        String roleId = RoleDataSource.getRoleIdForInstitution("Disaster Foundation");
 
         Response response = RoleEndpoints.deleteRole(roleId);
         response.then()
@@ -33,7 +33,7 @@ public class DeleteRoleTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteRolWithDeletedStatus() {
-        String roleId = DatabaseUtility.getDeletedRoleIdForInstitution("Test Foundation");
+        String roleId = RoleDataSource.getDeletedRoleIdForInstitution("Test Foundation");
 
         Response response = RoleEndpoints.deleteRole(roleId);
         response.then()

@@ -210,46 +210,6 @@ public class DatabaseUtility {
 
     }
 
-    public static int verifyRoleCountForFoundation(String foundationName) {
-        String query = "SELECT COUNT(ROLE.NAME) AS ROLE_COUNT " +
-                "FROM AYS_ROLE ROLE " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ?";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, foundationName);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("ROLE_COUNT");
-                }
-            }
-
-            return 0;
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-
-    }
-
-    public static String getLastCreatedRoleId() {
-        String query = "SELECT ID FROM AYS_ROLE ORDER BY CREATED_AT DESC LIMIT 1";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            if (resultSet.next()) {
-                return resultSet.getString("ID");
-            }
-
-            throw new RuntimeException("No roles found for the given institution ID");
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     public static String getLatestCreatedUserId(String institutionId) {
         String query = "SELECT ID FROM AYS_USER WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
 
@@ -267,56 +227,6 @@ public class DatabaseUtility {
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
-    }
-
-    public static String getRoleIdForInstitution(String institutionName) {
-        String query = "SELECT ROL.ID " +
-                "FROM AYS_ROLE ROL " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ? " +
-                "LIMIT 1";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, institutionName);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getString("ID");
-                }
-            }
-
-            return "";
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    // findLastDeletedRoleIdByInstitutionName
-    public static String getDeletedRoleIdForInstitution(String institutionName) {
-        String query = "SELECT ROL.ID " +
-                "FROM AYS_ROLE ROL " +
-                "JOIN AYS_INSTITUTION INSTITUTION ON ROL.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ? " +
-                "AND ROL.STATUS = 'DELETED' " +
-                "LIMIT 1";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, institutionName);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getString("ID");
-                }
-            }
-
-            return "";
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-
     }
 
 }

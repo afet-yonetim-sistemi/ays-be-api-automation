@@ -1,6 +1,7 @@
 package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.RoleCreatePayload;
@@ -9,7 +10,6 @@ import org.ays.endpoints.Authorization;
 import org.ays.payload.User;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -84,7 +84,7 @@ public class PutUserTest {
         User user = User.generateUserWithARole(RoleEndpoints.generateRoleId());
         String userId = UserEndpoints.generateUserId(user);
         RoleEndpoints.createRole(RoleCreatePayload.generate(), Authorization.loginAndGetAdminTwoAccessToken());
-        user.setRoleIds(List.of(DatabaseUtility.getLastCreatedRoleId()));
+        user.setRoleIds(List.of(RoleDataSource.getLastCreatedRoleId()));
         Response response = UserEndpoints.updateUser(userId, user, Authorization.loginAndGetTestAdminAccessToken());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())

@@ -1,6 +1,7 @@
 package org.ays.tests.institution.roleManagementService;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleListPayload;
@@ -11,7 +12,6 @@ import org.ays.endpoints.Authorization;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;
-import org.ays.utility.DatabaseUtility;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class PostRolesTest {
     public void rolesListForAdminOne() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Volunteer Foundation");
+        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Volunteer Foundation");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminAccessToken());
 
@@ -47,7 +47,7 @@ public class PostRolesTest {
     public void rolesListForAdminTwo() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Disaster Foundation");
+        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Disaster Foundation");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetAdminTwoAccessToken());
 
@@ -69,7 +69,7 @@ public class PostRolesTest {
     public void rolesListForSuperAdmin() {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
-        int totalElementCount = DatabaseUtility.verifyRoleCountForFoundation("Afet Yönetim Sistemi");
+        int totalElementCount = RoleDataSource.verifyRoleCountForFoundation("Afet Yönetim Sistemi");
 
         Response response = RoleEndpoints.listRoles(roleListPayload, Authorization.loginAndGetSuperAdminAccessToken());
 
