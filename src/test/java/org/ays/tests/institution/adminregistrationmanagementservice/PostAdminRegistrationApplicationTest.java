@@ -7,9 +7,9 @@ import io.restassured.response.Response;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.utility.AysConfigurationProperty;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -35,7 +35,7 @@ public class PostAdminRegistrationApplicationTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = DataProvider.class, enabled = false)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
         application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);

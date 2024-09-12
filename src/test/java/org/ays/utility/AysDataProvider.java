@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @UtilityClass
-public class DataProvider {
+public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "positivePageableData")
     public static Object[][] positivePageableData() {
         return new Object[][]{

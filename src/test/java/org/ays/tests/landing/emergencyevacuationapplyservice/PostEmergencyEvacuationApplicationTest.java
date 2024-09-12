@@ -5,8 +5,8 @@ import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -32,7 +32,7 @@ public class PostEmergencyEvacuationApplicationTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidName", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidName", dataProviderClass = AysDataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidName(String field, String value, AysErrorMessage errorMessage, String type) {
         EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
 
@@ -51,7 +51,7 @@ public class PostEmergencyEvacuationApplicationTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "blankApplicantName", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "blankApplicantName", dataProviderClass = AysDataProvider.class)
     public void createEmergencyEvacuationApplicationWithBlankApplicantName(String field, String value, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
 
@@ -70,7 +70,7 @@ public class PostEmergencyEvacuationApplicationTest {
     }
 
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "applicantName", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "applicantName", dataProviderClass = AysDataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidApplicantName(String field, String value, AysErrorMessage errorMessage, String type) {
         EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
 
@@ -88,12 +88,12 @@ public class PostEmergencyEvacuationApplicationTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         testInvalidPhoneNumber(countryCode, lineNumber, false, errorMessage, field, type);
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void createEmergencyEvacuationApplicationWithInvalidApplicantPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         testInvalidPhoneNumber(countryCode, lineNumber, true, errorMessage, field, type);
     }
@@ -119,17 +119,17 @@ public class PostEmergencyEvacuationApplicationTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceCityData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceCityData", dataProviderClass = AysDataProvider.class)
     public void testInvalidSourceCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceDistrictData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSourceDistrictData", dataProviderClass = AysDataProvider.class)
     public void testInvalidSourceDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidAddressData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidAddressData", dataProviderClass = AysDataProvider.class)
     public void testInvalidAddress(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         application.setAddress(value);
@@ -145,17 +145,17 @@ public class PostEmergencyEvacuationApplicationTest {
                 )));
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSeatingCountData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidSeatingCountData", dataProviderClass = AysDataProvider.class)
     public void testInvalidSeatingCount(Integer value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetCityData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetCityData", dataProviderClass = AysDataProvider.class)
     public void testInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }
 
-    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetDistrictData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Landing"}, dataProvider = "invalidTargetDistrictData", dataProviderClass = AysDataProvider.class)
     public void testInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         validateField(field, value, errorMessage, fieldType);
     }

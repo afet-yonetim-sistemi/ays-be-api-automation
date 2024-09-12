@@ -6,8 +6,8 @@ import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.Authorization;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -23,7 +23,7 @@ public class PatchRoleActivateTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
     public void activateRoleWithInvalidId(String id, AysErrorMessage errorMessage, String field, String type) {
         Response response = RoleEndpoints.patchActivateRole(id, Authorization.loginAndGetTestAdminAccessToken());
         response.then()

@@ -8,9 +8,9 @@ import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -99,7 +99,7 @@ public class PostUsersTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = AysDataProvider.class)
     public void usersListForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         AysPageable pageable = AysPageable.generate(1, 10);
@@ -122,7 +122,7 @@ public class PostUsersTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = AysDataProvider.class)
     public void usersListForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         AysPageable pageable = AysPageable.generate(1, 10);
@@ -145,7 +145,7 @@ public class PostUsersTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
@@ -161,7 +161,7 @@ public class PostUsersTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
@@ -176,7 +176,7 @@ public class PostUsersTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));

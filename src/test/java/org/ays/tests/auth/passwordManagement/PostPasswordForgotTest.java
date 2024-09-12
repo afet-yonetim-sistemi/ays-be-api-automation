@@ -5,8 +5,8 @@ import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.endpoints.InstitutionAuthEndpoints;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 public class PostPasswordForgotTest {
@@ -23,7 +23,7 @@ public class PostPasswordForgotTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void postPasswordForgotNegative(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         passwordForgotPayload.setEmailAddress(emailAddress);

@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.ays.auth.model.enums.SourcePage;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.endpoints.UserAuthEndpoints;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -21,7 +21,7 @@ public class GetUserTokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
         LoginPayload userCredentials = LoginPayload.generateAsUserOne();
         userCredentials.setEmailAddress(emailAddress);

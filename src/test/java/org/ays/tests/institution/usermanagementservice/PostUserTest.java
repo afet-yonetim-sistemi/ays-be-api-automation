@@ -7,8 +7,8 @@ import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.utility.AysConfigurationProperty;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class PostUserTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         AysPhoneNumber phoneNumber = new AysPhoneNumber();
@@ -39,7 +39,7 @@ public class PostUserTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setFirstName(firstName);
@@ -50,7 +50,7 @@ public class PostUserTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setEmailAddress(emailAddress);
@@ -61,7 +61,7 @@ public class PostUserTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setRoleIds(List.of(id));
@@ -71,7 +71,7 @@ public class PostUserTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setCity(city);

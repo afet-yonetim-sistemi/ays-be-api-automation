@@ -9,9 +9,9 @@ import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.endpoints.Authorization;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysLogUtil;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -112,7 +112,7 @@ public class PostRolesTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
         AysPageable pageable = AysPageable.generate(page, pageSize);
@@ -126,7 +126,7 @@ public class PostRolesTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
@@ -140,7 +140,7 @@ public class PostRolesTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 
@@ -156,7 +156,7 @@ public class PostRolesTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = AysDataProvider.class)
     public void rolesListUsingInvalidStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
         RoleListPayload roleListPayload = RoleListPayload.generate();
 

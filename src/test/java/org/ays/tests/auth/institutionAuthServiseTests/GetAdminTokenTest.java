@@ -3,8 +3,8 @@ package org.ays.tests.auth.institutionAuthServiseTests;
 import io.restassured.response.Response;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.endpoints.InstitutionAuthEndpoints;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -19,7 +19,7 @@ public class GetAdminTokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
         LoginPayload adminCredentials = LoginPayload.generateAsAdminUserOne();
         adminCredentials.setEmailAddress(emailAddress);

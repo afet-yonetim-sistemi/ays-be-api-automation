@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -24,7 +24,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
@@ -38,7 +38,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
@@ -52,7 +52,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, String errorMessage) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
@@ -66,7 +66,7 @@ public class PostAdminRegistrationApplicationIDCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
         String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();

@@ -6,9 +6,9 @@ import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysRandomUtil;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class PutRoleTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void updateRolWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
@@ -56,7 +56,7 @@ public class PutRoleTest {
                 .body("subErrors[0].message", equalTo("must not be blank"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = AysDataProvider.class)
     public void updateRolWithInvalidPermissionIds(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();

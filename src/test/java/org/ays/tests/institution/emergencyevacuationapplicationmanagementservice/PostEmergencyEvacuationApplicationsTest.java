@@ -8,8 +8,8 @@ import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDat
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -79,7 +79,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .body("response.filteredBy.isInPerson", equalTo(true));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber(String field, String value, String type, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -92,7 +92,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .body("subErrors[0].value", equalTo(value));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithInvalidPageable(int page, int pageSize) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -105,7 +105,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.expectInvalidPageableErrors());
     }
 
-    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithValidPageable(int page, int pageSize) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -117,7 +117,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -129,7 +129,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringApplicationsWithInvalidSourceDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -141,7 +141,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidSeatingCountData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidSeatingCountData", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidSeatingCount(Integer value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -153,7 +153,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -165,7 +165,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -177,7 +177,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidStatuses(List<String> statuses, AysErrorMessage expectedMessage, String field, String type) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -189,7 +189,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 .spec(AysResponseSpecs.subErrorsSpec(expectedMessage, field, type));
     }
 
-    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithValidStatusesField(List<String> statuses, List<String> expectedStatuses) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
@@ -219,7 +219,7 @@ public class PostEmergencyEvacuationApplicationsTest {
                 ));
     }
 
-    @Test(groups = {"Institution", "Regression"}, dataProvider = "negativeOrderData", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Institution", "Regression"}, dataProvider = "negativeOrderData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithInvalidSortData(String property, String direction, AysErrorMessage errorMessage) {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);

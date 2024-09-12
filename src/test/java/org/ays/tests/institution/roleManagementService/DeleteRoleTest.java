@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.utility.AysDataProvider;
 import org.ays.utility.AysResponseSpecs;
-import org.ays.utility.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -41,7 +41,7 @@ public class DeleteRoleTest {
                 .body("message", containsString("role is already deleted!"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = DataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
     public void deleteRolWithInvalidId(String roleId, AysErrorMessage errorMessage, String field, String type) {
 
         Response response = RoleEndpoints.deleteRole(roleId);
