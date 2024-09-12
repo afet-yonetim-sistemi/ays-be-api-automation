@@ -582,4 +582,16 @@ public class DataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "paginationScenarios")
+    public Object[][] paginationScenarios() {
+        return new Object[][]{
+                {0, 10},
+                {1, 0},
+                {-1, 10},
+                {1, -1},
+                {-1, -1}
+        };
+
+    }
+
 }

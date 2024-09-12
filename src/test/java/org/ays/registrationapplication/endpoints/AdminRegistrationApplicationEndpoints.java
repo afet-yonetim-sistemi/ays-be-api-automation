@@ -4,14 +4,12 @@ import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
-import org.ays.common.model.payload.AysPageable;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.endpoints.Authorization;
-import org.ays.payload.Filter;
-import org.ays.payload.RequestBodyInstitution;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationListPayload;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysRandomUtil;
 import org.openqa.selenium.remote.http.HttpMethod;
@@ -21,7 +19,7 @@ import java.util.Map;
 @UtilityClass
 public class AdminRegistrationApplicationEndpoints {
 
-    public static Response postRegistrationApplications(RequestBodyInstitution requestBodyInstitution) {
+    public static Response postRegistrationApplications(AdminRegistrationApplicationListPayload requestBodyInstitution) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -108,8 +106,11 @@ public class AdminRegistrationApplicationEndpoints {
     }
 
     public static String generateApplicationIDForCompletedStatus() {
-        RequestBodyInstitution requestBodyInstitution = RequestBodyInstitution.generateFilter(AysPageable.generateFirstPage(), Filter.generate(AdminRegistrationApplicationStatus.COMPLETED));
-        Response response = postRegistrationApplications(requestBodyInstitution);
+        AdminRegistrationApplicationListPayload.Filter filter = AdminRegistrationApplicationListPayload.Filter
+                .generate(AdminRegistrationApplicationStatus.COMPLETED);
+        AdminRegistrationApplicationListPayload applicationListPayload = AdminRegistrationApplicationListPayload
+                .generate(filter);
+        Response response = postRegistrationApplications(applicationListPayload);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.content[0].id");
         } else {
