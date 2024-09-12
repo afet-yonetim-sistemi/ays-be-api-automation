@@ -99,4 +99,24 @@ public class RoleDataSource {
 
     }
 
+    public static String findRoleIdByInstitutionId(String institutionId) {
+
+        String query = "SELECT ID FROM AYS_ROLE WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, institutionId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("ID");
+                }
+            }
+
+            throw new RuntimeException("No roles found for the given institution ID");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
 }
