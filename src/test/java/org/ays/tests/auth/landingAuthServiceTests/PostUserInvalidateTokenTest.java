@@ -4,18 +4,22 @@ import io.restassured.response.Response;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.common.util.AysResponseSpecs;
+import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
-import org.ays.payload.Token;
 import org.testng.annotations.Test;
 
 public class PostUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void userInvalidateToken() {
-        LoginPayload userCredentials = LoginPayload.generateAsUserOne();
-        Token token = Token.generateUserToken(userCredentials);
+
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(loginPayload);
+        String accessToken = loginResponse.jsonPath().getString("response.accessToken");
+        String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
+
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
-        tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
-        Response response = UserAuthEndpoints.userInvalidateToken(token.getAccessToken(), tokenRefreshPayload);
+        tokenRefreshPayload.setRefreshToken(refreshToken);
+        Response response = UserAuthEndpoints.userInvalidateToken(accessToken, tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }

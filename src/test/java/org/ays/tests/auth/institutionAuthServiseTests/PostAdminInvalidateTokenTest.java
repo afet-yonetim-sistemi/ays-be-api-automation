@@ -5,16 +5,20 @@ import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.endpoints.InstitutionAuthEndpoints;
-import org.ays.payload.Token;
 import org.testng.annotations.Test;
 
 public class PostAdminInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void adminInvalidateToken() {
-        Token token = Token.generateAdminToken(LoginPayload.generateAsAdminUserOne());
+
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        Response loginResponse = InstitutionAuthEndpoints.getAdminToken(loginPayload);
+        String accessToken = loginResponse.jsonPath().getString("response.accessToken");
+        String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
+
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
-        tokenRefreshPayload.setRefreshToken(token.getRefreshToken());
-        Response response = InstitutionAuthEndpoints.adminInvalidateToken(token.getAccessToken(), tokenRefreshPayload);
+        tokenRefreshPayload.setRefreshToken(refreshToken);
+        Response response = InstitutionAuthEndpoints.adminInvalidateToken(accessToken, tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
