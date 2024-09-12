@@ -23,7 +23,7 @@ public class PutRoleTest {
         String roleId = RoleEndpoints.generateRoleId();
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -35,7 +35,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(name);
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -48,7 +48,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(null);
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()
@@ -87,7 +87,7 @@ public class PutRoleTest {
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.getPermissionsId());
+        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload);
         response.then()

@@ -1,8 +1,7 @@
 package org.ays.auth.datasource;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.UtilityClass;
+import org.ays.auth.model.enums.PermissionCategory;
 import org.ays.common.datasource.AysDataSource;
 
 import java.sql.Connection;
@@ -12,58 +11,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class PermissionDataSource {
 
-    public static List<String> getPermissionsId() {
-        String category = "ROLE_MANAGEMENT";
-
-        List<Permission> permissions = fetchPermissionsFromDatabase();
-
-        List<Permission> filteredPermissions = permissions.stream()
-                .filter(permission -> category.equals(permission.getCategory()))
-                .collect(Collectors.toList());
-
-        Collections.shuffle(filteredPermissions);
-
-        return filteredPermissions.stream()
+    public static List<String> findRandomPermissionIdsAsRoleManagementCategory() {
+        List<String> permissionIds = findPermissionIdsByCategory(PermissionCategory.ROLE_MANAGEMENT);
+        Collections.shuffle(permissionIds);
+        return permissionIds.stream()
                 .limit(2)
-                .map(Permission::getId)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    private static List<Permission> fetchPermissionsFromDatabase() {
+    private static List<String> findPermissionIdsByCategory(PermissionCategory permissionCategory) {
 
-        String query = "SELECT ID, CATEGORY FROM AYS_PERMISSION";
+        String query = "SELECT ID FROM AYS_PERMISSION WHERE CATEGORY = ?";
 
         try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            List<Permission> permissions = new ArrayList<>();
-            while (resultSet.next()) {
-                String id = resultSet.getString("ID");
-                String category = resultSet.getString("CATEGORY");
-                permissions.add(new Permission(id, category));
+            preparedStatement.setString(1, permissionCategory.name());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                List<String> permissions = new ArrayList<>();
+                while (resultSet.next()) {
+                    String id = resultSet.getString("ID");
+                    permissions.add(id);
+                }
+                return permissions;
             }
-
-            return permissions;
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
-        }
-    }
-
-    @Getter
-    @Setter
-    static class Permission {
-        private String id;
-        private String category;
-
-        public Permission(String id, String category) {
-            this.id = id;
-            this.category = category;
         }
     }
 
