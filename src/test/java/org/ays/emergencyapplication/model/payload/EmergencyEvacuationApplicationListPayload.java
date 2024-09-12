@@ -39,7 +39,7 @@ public class EmergencyEvacuationApplicationListPayload {
 
         public static Filter generate(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
             Filter filter = new Filter();
-            filter.setReferenceNumber(EmergencyEvacuationApplicationDataSource.getLatestReferenceNumber());
+            filter.setReferenceNumber(EmergencyEvacuationApplicationDataSource.findLastCreatedReferenceNumber());
             filter.setPhoneNumber(emergencyEvacuationApplicationPayload.getPhoneNumber());
             filter.setSourceCity(emergencyEvacuationApplicationPayload.getSourceCity());
             filter.setSourceDistrict(emergencyEvacuationApplicationPayload.getSourceDistrict());
