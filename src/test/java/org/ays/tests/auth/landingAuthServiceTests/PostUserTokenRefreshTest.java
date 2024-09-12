@@ -2,10 +2,10 @@ package org.ays.tests.auth.landingAuthServiceTests;
 
 import io.restassured.response.Response;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.endpoints.InstitutionAuthEndpoints;
 import org.ays.endpoints.UserAuthEndpoints;
 import org.ays.payload.Token;
-import org.ays.payload.TokenRefreshPayload;
 import org.ays.utility.AysResponseSpecs;
 import org.testng.annotations.Test;
 
