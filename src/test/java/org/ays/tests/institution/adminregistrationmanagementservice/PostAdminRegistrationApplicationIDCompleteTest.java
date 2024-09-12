@@ -2,7 +2,7 @@ package org.ays.tests.institution.adminregistrationmanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
-import org.ays.common.model.AysPhoneNumber;
+import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
 import org.ays.utility.AysResponseSpecs;
 import org.ays.utility.DataProvider;

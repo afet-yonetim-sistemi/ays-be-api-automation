@@ -2,8 +2,8 @@ package org.ays.tests.institution.usermanagementservice;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.UserEndpoints;
-import org.ays.common.model.AysPhoneNumber;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.payload.User;
 import org.ays.utility.AysConfigurationProperty;
 import org.ays.utility.AysResponseSpecs;

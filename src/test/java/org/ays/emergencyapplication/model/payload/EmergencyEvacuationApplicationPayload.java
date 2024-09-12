@@ -2,7 +2,7 @@ package org.ays.emergencyapplication.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.common.model.AysPhoneNumber;
+import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.utility.AysRandomUtil;
 
 @Getter

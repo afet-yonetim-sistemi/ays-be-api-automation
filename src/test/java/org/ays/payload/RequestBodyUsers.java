@@ -2,8 +2,8 @@ package org.ays.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.ays.common.model.AysPhoneNumber;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.common.model.payload.AysPhoneNumber;
 
 @Getter
 @Setter
