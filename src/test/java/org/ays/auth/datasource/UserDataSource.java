@@ -47,7 +47,7 @@ public class UserDataSource {
         }
     }
 
-    public static String fetchFirstUserEmailAddress() {
+    public static String findAnyEmailAddress() {
 
         String query = "SELECT EMAIL_ADDRESS FROM AYS_USER LIMIT 1";
 

@@ -14,7 +14,7 @@ public class PostPasswordForgotTest {
     @Test(groups = {"Smoke", "Regression"})
     public void postPasswordForgotPositive() {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
-        String emailAddress = UserDataSource.fetchFirstUserEmailAddress();
+        String emailAddress = UserDataSource.findAnyEmailAddress();
         passwordForgotPayload.setEmailAddress(emailAddress);
 
         Response response = InstitutionAuthEndpoints.postPasswordForgot(passwordForgotPayload);
