@@ -17,87 +17,13 @@ import java.util.Map;
 @UtilityClass
 public class UserEndpoints {
 
-    public static String generateUserId(UserCreatePayload userCreatePayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        Response response = createAUser(userCreatePayload, accessToken);
-
-        if (response.getStatusCode() == 200) {
-            return UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
-        } else {
-            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
-    public static Response createAUser(UserCreatePayload userCreatePayloadPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response listUsers(UserListPayload userListPayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/user")
-                .body(userCreatePayloadPayload)
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response createAUser(UserCreatePayload userCreatePayloadPayload, String token) {
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/user")
-                .body(userCreatePayloadPayload)
+                .url("/api/v1/users")
+                .body(userListPayload)
                 .token(token)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response listUsers(UserListPayload userListPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/users")
-                .body(userListPayload)
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response listUsersTwo(UserListPayload userListPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/users")
-                .body(userListPayload)
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response listUsersSuperAdmin(UserListPayload userListPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/users")
-                .body(userListPayload)
-                .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
@@ -113,6 +39,18 @@ public class UserEndpoints {
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredPayload);
+    }
+
+    public static Response createAUser(UserCreatePayload userCreatePayloadPayload, String token) {
+
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/user")
+                .body(userCreatePayloadPayload)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
@@ -144,6 +82,20 @@ public class UserEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
+    }
+
+    public static String generateUserId(UserCreatePayload userCreatePayload) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+
+        Response response = createAUser(userCreatePayload, accessToken);
+
+        if (response.getStatusCode() == 200) {
+            return UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
+        } else {
+            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
+        }
     }
 
 }

@@ -61,7 +61,7 @@ public class PatchRoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.generateRoleId();
-        UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId));
+        UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())

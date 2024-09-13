@@ -1,7 +1,9 @@
 package org.ays.auth.tests.usermanagementservice;
 
 import io.restassured.response.Response;
+import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.payload.AysPhoneNumber;
@@ -16,11 +18,15 @@ public class DeleteUserTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteUser() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
-        UserEndpoints.createAUser(userCreatePayload);
+        UserEndpoints.createAUser(userCreatePayload, accessToken);
 
         AysPhoneNumber phoneNumber = userCreatePayload.getPhoneNumber();
-        Response response = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber));
+        Response response = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber), accessToken);
         userID = response.jsonPath().getString("response.content[0].id");
 
         Response deleteResponse = UserEndpoints.deleteUser(userID);
@@ -37,11 +43,15 @@ public class DeleteUserTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void deleteUserNegative() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
-        UserEndpoints.createAUser(userCreatePayload);
+        UserEndpoints.createAUser(userCreatePayload, accessToken);
 
         AysPhoneNumber phoneNumber = userCreatePayload.getPhoneNumber();
-        Response userIDResponse = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber));
+        Response userIDResponse = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber), accessToken);
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
         UserEndpoints.deleteUser(userID);
@@ -50,6 +60,10 @@ public class DeleteUserTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("USER IS ALREADY DELETED!"));
 
+    }
+
+    private String loginAndGetAccessToken(LoginPayload loginPayload) {
+        return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
     }
 
 }
