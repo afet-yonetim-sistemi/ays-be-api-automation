@@ -23,8 +23,8 @@ public class PatchRoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.generateRoleId();
-        RoleEndpoints.patchPassivateRole(roleId, accessToken);
-        Response response = RoleEndpoints.patchActivateRole(roleId, accessToken);
+        RoleEndpoints.updatePassivateRole(roleId, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -35,7 +35,7 @@ public class PatchRoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = RoleEndpoints.patchActivateRole(id, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -48,7 +48,7 @@ public class PatchRoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.generateRoleId();
-        Response response = RoleEndpoints.patchActivateRole(roleId, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_PASSIVE.getMessage()));
@@ -62,7 +62,7 @@ public class PatchRoleActivateTest {
 
         String roleId = RoleEndpoints.generateRoleId();
         UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId));
-        Response response = RoleEndpoints.patchActivateRole(roleId, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_PASSIVE.getMessage()));
@@ -76,7 +76,7 @@ public class PatchRoleActivateTest {
 
         String roleId = RoleEndpoints.generateRoleId();
         RoleEndpoints.deleteRole(roleId);
-        Response response = RoleEndpoints.patchActivateRole(roleId, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_PASSIVE.getMessage()));
@@ -89,8 +89,8 @@ public class PatchRoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.generateRoleId();
-        RoleEndpoints.patchPassivateRole(roleId, accessToken);
-        Response response = RoleEndpoints.patchActivateRole(roleId, accessToken);
+        RoleEndpoints.updatePassivateRole(roleId, accessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString(AysErrorMessage.ROLE_DOES_NOT_EXIST.getMessage()));

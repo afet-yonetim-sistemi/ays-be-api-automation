@@ -68,6 +68,30 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
+    public static Response updateActivateRole(String roleId, String token) {
+
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/role/{id}/activate")
+                .pathParameter(Map.of("id", roleId))
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredPayload);
+    }
+
+    public static Response updatePassivateRole(String roleId, String token) {
+
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/role/{id}/passivate")
+                .pathParameter(Map.of("id", roleId))
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredPayload);
+    }
+
     public static Response deleteRole(String roleId) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
@@ -83,28 +107,6 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response patchActivateRole(String roleId, String token) {
 
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/role/{id}/activate")
-                .pathParameter(Map.of("id", roleId))
-                .token(token)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response patchPassivateRole(String roleId, String token) {
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/role/{id}/passivate")
-                .pathParameter(Map.of("id", roleId))
-                .token(token)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
 
 }
