@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.AllOf.allOf;
 
-public class PostEmergencyEvacuationApplicationTest {
+public class EmergencyEvacuationApplicationCreateTest {
 
     @Test(groups = {"Smoke", "Regression", "Landing"})
     public void createEmergencyEvacuationApplicationForMe() {

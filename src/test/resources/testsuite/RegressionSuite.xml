@@ -18,8 +18,8 @@
             <class name="org.ays.auth.tests.LandingUserInvalidateTokenTest"/>
             <class name="org.ays.auth.tests.LandingUserTokenRefreshTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
-            <class name="org.ays.emergencyapplication.tests.PostEmergencyEvacuationApplicationTest"/>
-            <class name="org.ays.emergencyapplication.tests.PostEmergencyEvacuationApplicationsTest"/>
+            <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationCreateTest"/>
+            <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationsListTest"/>
             <class name="org.ays.auth.tests.UsersListTest"/>
             <class name="org.ays.auth.tests.UserCreateTest"/>
             <class name="org.ays.auth.tests.UserUpdateTest"/>

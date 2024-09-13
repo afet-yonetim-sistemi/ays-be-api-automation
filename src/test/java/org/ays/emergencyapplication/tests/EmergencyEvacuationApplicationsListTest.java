@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class PostEmergencyEvacuationApplicationsTest {
+public class EmergencyEvacuationApplicationsListTest {
 
     @Test(groups = {"Smoke", "Regression"})
     public void testListingEmergencyEvacuationApplications() {
