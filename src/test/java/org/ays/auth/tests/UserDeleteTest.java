@@ -1,4 +1,4 @@
-package org.ays.auth.tests.usermanagementservice;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class DeleteUserTest {
+public class UserDeleteTest {
     String userID;
 
     @Test(groups = {"Smoke", "Regression", "Institution"})

@@ -1,4 +1,4 @@
-package org.ays.auth.tests.institutionAuthServiseTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class GetAdminTokenTest {
+public class AdminTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidAdmin() {

@@ -1,4 +1,4 @@
-package org.ays.auth.tests.institutionAuthServiseTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -10,20 +10,20 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class GetSuperAdminTokenTest {
+public class LandingUserTokenTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void getTokenForValidSuperAdmin() {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+    @Test(groups = {"Smoke", "Regression", "User"})
+    public void getTokenForValidUser() {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
-    public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+    @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
+    public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -33,37 +33,38 @@ public class GetSuperAdminTokenTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "Institution"})
-    public void getTokenWithUnAuthUserEmailAddress() {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+    @Test(groups = {"Regression", "User"})
+    public void getUserTokenWithUnAuthUserEmailAddress() {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         loginPayload.setEmailAddress("email@gmail.com");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"})
-    public void getTokenWithInvalidPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        loginPayload.setPassword("123456");
+    @Test(groups = {"Regression", "User"})
+    public void getUserTokenWithInvalidPassword() {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        loginPayload.setPassword("wrongPassword");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"})
-    public void getTokenWithNullPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+    @Test(groups = {"Regression", "User"})
+    public void getUserTokenWithNullPassword() {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         loginPayload.setPassword(null);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
-                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.expectNullCredentialFieldErrorSpec("password"));
     }
 
-    @Test(groups = {"Regression", "Institution"})
-    public void getTokenWithUnAuthSourcePage() {
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        loginPayload.setSourcePage(SourcePage.LANDING);
+    @Test(groups = {"Regression", "User"})
+    public void getUserTokenWithUnAuthSourcePage() {
+        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        loginPayload.setSourcePage(SourcePage.INSTITUTION);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());

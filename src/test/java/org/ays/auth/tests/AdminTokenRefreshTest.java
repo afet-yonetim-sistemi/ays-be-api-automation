@@ -1,4 +1,4 @@
-package org.ays.auth.tests.landingAuthServiceTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -8,12 +8,11 @@ import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
-public class PostUserTokenRefreshTest {
+public class AdminTokenRefreshTest {
+    @Test(groups = {"Smoke", "Regression", "Institution"})
+    public void adminTokenRefresh() {
 
-    @Test(groups = {"Smoke", "Regression", "User"})
-    public void userTokenRefresh() {
-
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
@@ -25,10 +24,10 @@ public class PostUserTokenRefreshTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression", "User"})
-    public void testUserInvalidRefreshTokenForAccessTokenCreation() {
+    @Test(groups = {"Regression", "Institution"})
+    public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

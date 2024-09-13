@@ -1,4 +1,4 @@
-package org.ays.auth.tests.passwordManagement;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.UserDataSource;
@@ -9,7 +9,7 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
-public class PostPasswordForgotTest {
+public class PasswordForgotTest {
 
     @Test(groups = {"Smoke", "Regression"})
     public void postPasswordForgotPositive() {

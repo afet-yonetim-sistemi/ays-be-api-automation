@@ -1,4 +1,4 @@
-package org.ays.auth.tests.landingAuthServiceTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -7,11 +7,11 @@ import org.ays.auth.payload.TokenInvalidatePayload;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
-public class PostUserInvalidateTokenTest {
-    @Test(groups = {"Smoke", "Regression", "User"})
-    public void userInvalidateToken() {
+public class AdminInvalidateTokenTest {
+    @Test(groups = {"Smoke", "Regression", "Institution"})
+    public void adminInvalidateToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

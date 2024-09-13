@@ -1,4 +1,4 @@
-package org.ays.auth.tests.permissionService;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.PermissionDataSource;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class GetPermissionsTest {
+public class PermissionsListTest {
 
     @Test(groups = {"Smoke", "Regression"})
     public void nonSuperUsersShouldNotSeeSuperPermissions() {

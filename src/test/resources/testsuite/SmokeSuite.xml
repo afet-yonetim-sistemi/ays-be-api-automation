@@ -8,32 +8,32 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.auth.tests.institutionAuthServiseTests.GetAdminTokenTest"/>
-            <class name="org.ays.auth.tests.institutionAuthServiseTests.PostAdminInvalidateTokenTest"/>
-            <class name="org.ays.auth.tests.institutionAuthServiseTests.PostAdminTokenRefreshTest"/>
-            <class name="org.ays.auth.tests.landingAuthServiceTests.GetUserTokenTest"/>
-            <class name="org.ays.auth.tests.landingAuthServiceTests.PostUserInvalidateTokenTest"/>
-            <class name="org.ays.auth.tests.landingAuthServiceTests.PostUserTokenRefreshTest"/>
+            <class name="org.ays.auth.tests.AdminTokenTest"/>
+            <class name="org.ays.auth.tests.AdminInvalidateTokenTest"/>
+            <class name="org.ays.auth.tests.AdminTokenRefreshTest"/>
+            <class name="org.ays.auth.tests.LandingUserTokenTest"/>
+            <class name="org.ays.auth.tests.LandingUserInvalidateTokenTest"/>
+            <class name="org.ays.auth.tests.LandingUserTokenRefreshTest"/>
             <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationTest"/>
             <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationIdSummaryTest"/>
             <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationTest"/>
             <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationsTest"/>
             <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationApproveTest"/>
             <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationRejectTest"/>
-            <class name="org.ays.auth.tests.usermanagementservice.DeleteUserTest"/>
+            <class name="org.ays.auth.tests.UserDeleteTest"/>
             <class name="org.ays.auth.tests.usermanagementservice.GetUserTest"/>
-            <class name="org.ays.auth.tests.usermanagementservice.PostUserTest"/>
-            <class name="org.ays.auth.tests.usermanagementservice.PostUsersTest"/>
-            <class name="org.ays.auth.tests.usermanagementservice.PutUserTest"/>
+            <class name="org.ays.auth.tests.UserCreateTest"/>
+            <class name="org.ays.auth.tests.UsersListTest"/>
+            <class name="org.ays.auth.tests.UserUpdateTest"/>
             <class name="org.ays.institution.tests.GetInstitutionsSummaryTest"/>
-            <class name="org.ays.auth.tests.permissionService.GetPermissionsTest"/>
+            <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.emergencyapplication.tests.PostEmergencyEvacuationApplicationTest"/>
             <class name="org.ays.emergencyapplication.tests.PostEmergencyEvacuationApplicationsTest"/>
-            <class name="org.ays.auth.tests.roleManagementService.PostRolesTest"/>
-            <class name="org.ays.auth.tests.roleManagementService.PutRoleTest"/>
-            <class name="org.ays.auth.tests.roleManagementService.DeleteRoleTest"/>
-            <class name="org.ays.auth.tests.roleManagementService.PatchRoleActivateTest"/>
-            <class name="org.ays.auth.tests.roleManagementService.PatchRolePassivateTest"/>
+            <class name="org.ays.auth.tests.RolesListTest"/>
+            <class name="org.ays.auth.tests.RoleUpdateTest"/>
+            <class name="org.ays.auth.tests.RoleDeleteTest"/>
+            <class name="org.ays.auth.tests.RoleActivateTest"/>
+            <class name="org.ays.auth.tests.RolePassivateTest"/>
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package org.ays.auth.tests.roleManagementService;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class PostRolesTest {
+public class RolesListTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void rolesListForAdminOne() {

@@ -1,4 +1,4 @@
-package org.ays.auth.tests.institutionAuthServiseTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -8,7 +8,7 @@ import org.ays.auth.payload.TokenRefreshPayload;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
-public class PostSuperAdminTokenRefreshTest {
+public class SuperAdminTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void superAdminTokenRefresh() {

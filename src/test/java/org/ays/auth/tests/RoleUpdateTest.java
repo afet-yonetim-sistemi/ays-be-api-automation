@@ -1,4 +1,4 @@
-package org.ays.auth.tests.roleManagementService;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.PermissionDataSource;
@@ -18,7 +18,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PutRoleTest {
+public class RoleUpdateTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateRolPositiveScenario() {

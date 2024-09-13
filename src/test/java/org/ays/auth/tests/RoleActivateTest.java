@@ -1,4 +1,4 @@
-package org.ays.auth.tests.roleManagementService;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PatchRoleActivateTest {
+public class RoleActivateTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void activateRole() {

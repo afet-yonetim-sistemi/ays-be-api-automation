@@ -1,4 +1,4 @@
-package org.ays.auth.tests.institutionAuthServiseTests;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
@@ -7,11 +7,12 @@ import org.ays.auth.payload.TokenInvalidatePayload;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
-public class PostAdminInvalidateTokenTest {
-    @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void adminInvalidateToken() {
+public class SuperAdminInvalidateTokenTest {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+    @Test(groups = {"Smoke", "Regression", "Institution"})
+    public void superAdminInvalidateToken() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
@@ -23,4 +24,5 @@ public class PostAdminInvalidateTokenTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
+
 }

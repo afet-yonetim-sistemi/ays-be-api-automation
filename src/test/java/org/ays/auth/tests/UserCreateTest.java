@@ -1,4 +1,4 @@
-package org.ays.auth.tests.usermanagementservice;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class PostUserTest {
+public class UserCreateTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void createAUser() {

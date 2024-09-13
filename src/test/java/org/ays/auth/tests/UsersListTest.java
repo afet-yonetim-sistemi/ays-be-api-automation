@@ -1,4 +1,4 @@
-package org.ays.auth.tests.usermanagementservice;
+package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.UserDataSource;
@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 
-public class PostUsersTest {
+public class UsersListTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void usersListForAdminOne() {
