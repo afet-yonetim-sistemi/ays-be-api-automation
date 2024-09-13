@@ -25,7 +25,7 @@
             <class name="org.ays.auth.tests.UserCreateTest"/>
             <class name="org.ays.auth.tests.UsersListTest"/>
             <class name="org.ays.auth.tests.UserUpdateTest"/>
-            <class name="org.ays.institution.tests.GetInstitutionsSummaryTest"/>
+            <class name="org.ays.institution.tests.InstitutionsSummaryTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationCreateTest"/>
             <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationsListTest"/>

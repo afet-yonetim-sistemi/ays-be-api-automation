@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GetInstitutionsSummaryTest {
+public class InstitutionsSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void listInstitutionsPositive() {
