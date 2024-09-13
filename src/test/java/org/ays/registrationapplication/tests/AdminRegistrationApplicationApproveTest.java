@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class PostAdminRegistrationApplicationApproveTest {
+public class AdminRegistrationApplicationApproveTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void approveApplicationPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();

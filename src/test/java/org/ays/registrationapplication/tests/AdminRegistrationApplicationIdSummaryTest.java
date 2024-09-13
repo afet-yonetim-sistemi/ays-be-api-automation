@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GetAdminRegistrationApplicationIdSummaryTest {
+public class AdminRegistrationApplicationIdSummaryTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a user I want to get detailed information about administrator registration applications summary when I use valid ID ")

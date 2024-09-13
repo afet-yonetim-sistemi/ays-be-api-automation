@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
-public class PostAdminRegistrationApplicationTest {
+public class AdminRegistrationApplicationCreateTest {
     AdminRegistrationApplicationCreatePayload application;
 
     @BeforeMethod(alwaysRun = true)

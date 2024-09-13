@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class PostAdminRegistrationApplicationRejectTest {
+public class AdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void rejectApplicationPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();

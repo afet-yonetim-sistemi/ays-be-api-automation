@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PostAdminRegistrationApplicationsTest {
+public class AdminRegistrationApplicationsListTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     @Story("As a super admin I want to list administrator registration applications with request to pagination")

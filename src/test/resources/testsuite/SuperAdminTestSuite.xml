@@ -8,12 +8,12 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationTest"/>
-            <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationIdSummaryTest"/>
-            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationTest"/>
-            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationsTest"/>
-            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationApproveTest"/>
-            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationRejectTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationIdTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationIdSummaryTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCreateTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationsListTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationApproveTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationRejectTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.auth.tests.RolesListTest"/>
         </classes>
