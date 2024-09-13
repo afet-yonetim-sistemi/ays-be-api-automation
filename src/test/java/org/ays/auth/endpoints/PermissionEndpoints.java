@@ -10,29 +10,12 @@ import org.openqa.selenium.remote.http.HttpMethod;
 @UtilityClass
 public class PermissionEndpoints {
 
-    public static Response getAdminsPermissions() {
-
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response listPermissions(String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/permissions")
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static Response getSuperAdminsPermissions() {
-
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.GET)
-                .url("/api/v1/permissions")
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
