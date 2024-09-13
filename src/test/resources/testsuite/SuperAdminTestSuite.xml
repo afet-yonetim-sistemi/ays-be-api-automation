@@ -8,14 +8,14 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.GetAdminRegistrationApplicationIdSummaryTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationsTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationApproveTest"/>
-            <class name="org.ays.tests.institution.adminregistrationmanagementservice.PostAdminRegistrationApplicationRejectTest"/>
-            <class name="org.ays.tests.institution.permissionService.GetPermissionsTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
+            <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationTest"/>
+            <class name="org.ays.registrationapplication.tests.GetAdminRegistrationApplicationIdSummaryTest"/>
+            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationTest"/>
+            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationsTest"/>
+            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationApproveTest"/>
+            <class name="org.ays.registrationapplication.tests.PostAdminRegistrationApplicationRejectTest"/>
+            <class name="org.ays.auth.tests.permissionService.GetPermissionsTest"/>
+            <class name="org.ays.auth.tests.roleManagementService.PostRolesTest"/>
         </classes>
     </test>
 </suite>

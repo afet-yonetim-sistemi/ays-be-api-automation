@@ -8,13 +8,13 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.institution.usermanagementservice.DeleteUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.GetUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.DeleteRoleTest"/>
+            <class name="org.ays.auth.tests.usermanagementservice.DeleteUserTest"/>
+            <class name="org.ays.auth.tests.usermanagementservice.GetUserTest"/>
+            <class name="org.ays.auth.tests.usermanagementservice.PostUserTest"/>
+            <class name="org.ays.auth.tests.usermanagementservice.PostUsersTest"/>
+            <class name="org.ays.auth.tests.roleManagementService.PostRolesTest"/>
+            <class name="org.ays.auth.tests.roleManagementService.PutRoleTest"/>
+            <class name="org.ays.auth.tests.roleManagementService.DeleteRoleTest"/>
         </classes>
     </test>
 </suite>
