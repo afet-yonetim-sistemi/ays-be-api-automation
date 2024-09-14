@@ -92,21 +92,16 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response deleteRole(String roleId) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response deleteRole(String roleId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/role/{id}")
                 .pathParameter(Map.of("id", roleId))
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
-
-
 
 }

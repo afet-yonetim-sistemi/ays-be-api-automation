@@ -14,8 +14,8 @@ import java.util.Map;
 
 @UtilityClass
 public class AuthEndpoints {
-
     public static Response token(LoginPayload loginPayload) {
+
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token")
@@ -26,6 +26,7 @@ public class AuthEndpoints {
     }
 
     public static Response refreshAccessToken(TokenRefreshPayload tokenRefreshPayload) {
+
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token/refresh")
@@ -35,8 +36,8 @@ public class AuthEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-
     public static Response invalidateTokens(TokenInvalidatePayload tokenInvalidatePayload) {
+
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/token/invalidate")

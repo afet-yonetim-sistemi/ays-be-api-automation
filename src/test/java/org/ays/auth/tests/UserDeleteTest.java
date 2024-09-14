@@ -29,11 +29,11 @@ public class UserDeleteTest {
         Response response = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber), accessToken);
         userID = response.jsonPath().getString("response.content[0].id");
 
-        Response deleteResponse = UserEndpoints.deleteUser(userID);
+        Response deleteResponse = UserEndpoints.deleteUser(userID, accessToken);
         deleteResponse.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        Response getResponse = UserEndpoints.getUser(userID);
+        Response getResponse = UserEndpoints.getUser(userID, accessToken);
         getResponse.then()
                 .statusCode(200)
                 .body("response.status", equalTo("DELETED"));
@@ -54,8 +54,8 @@ public class UserDeleteTest {
         Response userIDResponse = UserEndpoints.listUsers(UserListPayload.generate(phoneNumber), accessToken);
         userID = userIDResponse.jsonPath().getString("response.content[0].id");
 
-        UserEndpoints.deleteUser(userID);
-        Response response = UserEndpoints.deleteUser(userID);
+        UserEndpoints.deleteUser(userID, accessToken);
+        Response response = UserEndpoints.deleteUser(userID, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("USER IS ALREADY DELETED!"));

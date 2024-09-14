@@ -75,7 +75,7 @@ public class RoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.generateRoleId();
-        RoleEndpoints.deleteRole(roleId);
+        RoleEndpoints.deleteRole(roleId, accessToken);
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())

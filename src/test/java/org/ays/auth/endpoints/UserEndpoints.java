@@ -29,16 +29,13 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response getUser(String userId) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response getUser(String userId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
@@ -69,16 +66,13 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response deleteUser(String userId) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response deleteUser(String userId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
