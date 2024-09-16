@@ -2,8 +2,6 @@ package org.ays.auth.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.auth.datasource.RoleDataSource;
-import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleListPayload;
 import org.ays.auth.payload.RoleUpdatePayload;
@@ -38,21 +36,6 @@ public class RoleEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
-    }
-
-    public static String generateRoleId() {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
-        Response response = createRole(roleCreatePayload, accessToken);
-
-        if (response.getStatusCode() == 200) {
-            return RoleDataSource.findLastRoleId();
-        } else {
-            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
-        }
     }
 
     public static Response updateRole(String roleId, RoleUpdatePayload roleUpdatePayload, String accessToken) {
@@ -103,5 +86,12 @@ public class RoleEndpoints {
 
         return AysRestAssured.perform(restAssuredPayload);
     }
+
+    public static String createAndReturnRoleId(RoleCreatePayload role, String token) {
+        RoleEndpoints.createRole(role, token);
+        RoleListPayload list = RoleListPayload.generateWithFilter(role);
+        return RoleEndpoints.listRoles(list, token).jsonPath().getString("response.content[0].id");
+    }
+
 
 }

@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class LandingUserTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
-    public void userTokenRefresh() {
+    public void refreshUserToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
@@ -26,7 +26,7 @@ public class LandingUserTokenRefreshTest {
     }
 
     @Test(groups = {"Regression", "User"})
-    public void testUserInvalidRefreshTokenForAccessTokenCreation() {
+    public void refreshUserAccessTokenAfterTokenInvalidation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

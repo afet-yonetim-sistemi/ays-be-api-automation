@@ -8,8 +8,8 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationIdTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationIdSummaryTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationDetailTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationSummaryTest"/>
             <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCreateTest"/>
             <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationsListTest"/>
             <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationApproveTest"/>

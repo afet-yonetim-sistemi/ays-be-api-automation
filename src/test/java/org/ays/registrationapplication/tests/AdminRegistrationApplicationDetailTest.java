@@ -1,8 +1,5 @@
 package org.ays.registrationapplication.tests;
 
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
@@ -11,10 +8,8 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AdminRegistrationApplicationIdTest {
+public class AdminRegistrationApplicationDetailTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    @Story("As a super admin I want to get detailed information about administrator registration applications when I use valid ID")
-    @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationIDPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
@@ -28,8 +23,6 @@ public class AdminRegistrationApplicationIdTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
-    @Story("As a super admin I want to get proper error message when I use invalid ID information")
-    @Severity(SeverityLevel.NORMAL)
     public void getRegistrationApplicationInvalidID() {
         String applicationID = "invalid-id";
         Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationID);

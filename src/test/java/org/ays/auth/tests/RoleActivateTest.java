@@ -5,6 +5,7 @@ import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
@@ -22,14 +23,17 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        String roleId = RoleEndpoints.createAndReturnRoleId(role, accessToken);
+
         RoleEndpoints.updatePassivateRole(roleId, accessToken);
+
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void activateRoleWithInvalidId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
@@ -47,21 +51,22 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_PASSIVE.getMessage()));
     }
 
-    @Test(groups = {"Regression", "Institution"}, enabled = true)
+    @Test(groups = {"Regression", "Institution"})
     public void activateAnAssignedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
         UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
+
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
@@ -74,8 +79,9 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
         RoleEndpoints.deleteRole(roleId, accessToken);
+
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
@@ -85,12 +91,15 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateRoleInDifferentInstitution() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
-        String accessToken = this.loginAndGetAccessToken(loginPayload);
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestAdmin();
+        String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), testAdminAccessToken);
+        RoleEndpoints.updatePassivateRole(roleId, testAdminAccessToken);
 
-        String roleId = RoleEndpoints.generateRoleId();
-        RoleEndpoints.updatePassivateRole(roleId, accessToken);
-        Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
+        LoginPayload loginPayloadForAdminTwo = LoginPayload.generateAsAdminUserTwo();
+        String adminTwoAccessToken = this.loginAndGetAccessToken(loginPayloadForAdminTwo);
+
+        Response response = RoleEndpoints.updateActivateRole(roleId, adminTwoAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString(AysErrorMessage.ROLE_DOES_NOT_EXIST.getMessage()));

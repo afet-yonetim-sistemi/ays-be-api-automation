@@ -5,6 +5,7 @@ import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
@@ -22,14 +23,14 @@ public class RolePassivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
         Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
-    public void passivateRoleWithInvalidId(String id, AysErrorMessage errorMessage, String field, String type) {
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    public void passivateRoleWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -46,7 +47,7 @@ public class RolePassivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
         RoleEndpoints.updatePassivateRole(roleId, accessToken);
         Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
         response.then()
@@ -60,7 +61,7 @@ public class RolePassivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
         UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
         Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
         response.then()
@@ -69,12 +70,12 @@ public class RolePassivateTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void passivateADeletedRole() {
+    public void passivateAnAlreadyDeletedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
         RoleEndpoints.deleteRole(roleId, accessToken);
         Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
         response.then()
@@ -85,11 +86,14 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateRoleInDifferentInstitution() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
-        String accessToken = this.loginAndGetAccessToken(loginPayload);
+        LoginPayload loginPayloadForAdminTwo = LoginPayload.generateAsAdminUserTwo();
+        String adminTwoAccessToken = this.loginAndGetAccessToken(loginPayloadForAdminTwo);
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),adminTwoAccessToken);
 
-        String roleId = RoleEndpoints.generateRoleId();
-        Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestAdmin();
+        String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
+
+        Response response = RoleEndpoints.updatePassivateRole(roleId, testAdminAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString(AysErrorMessage.ROLE_DOES_NOT_EXIST.getMessage()));

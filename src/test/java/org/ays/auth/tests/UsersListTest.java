@@ -21,7 +21,7 @@ import java.util.List;
 public class UsersListTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void usersListForAdminOne() {
+    public void listUsersForAdminOne() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -45,7 +45,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void usersListForAdminTwo() {
+    public void listUsersForAdminTwo() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -69,7 +69,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
-    public void usersListForSuperAdmin() {
+    public void listUsersForSuperAdmin() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -93,7 +93,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
-    public void usersListWithAllFilter() {
+    public void listUsersWithAllFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -118,7 +118,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = AysDataProvider.class)
-    public void usersListForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
+    public void listUsersForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -145,7 +145,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = AysDataProvider.class)
-    public void usersListForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
+    public void listUsersForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -172,7 +172,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
-    public void usersListForInvalidFirstAndLasNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
+    public void listUsersForInvalidFirstAndLastNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -192,7 +192,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)
-    public void usersListForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
+    public void listUsersForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -211,7 +211,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = AysDataProvider.class)
-    public void usersListForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
+    public void listUsersForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

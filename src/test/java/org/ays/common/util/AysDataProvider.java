@@ -500,8 +500,8 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidIdData")
-    public static Object[][] invalidIdData() {
+    @org.testng.annotations.DataProvider(name = "invalidRoleIdListData")
+    public static Object[][] invalidRoleIdListData() {
         return new Object[][]{
                 {"12345", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
                 {"abcdefghij", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
@@ -569,8 +569,8 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidRoleId")
-    public Object[][] invalidRoleId() {
+    @org.testng.annotations.DataProvider(name = "invalidIdFormat")
+    public Object[][] invalidIdFormat() {
         return new Object[][]{
                 {"123", AysErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
                 {"invalid", AysErrorMessage.MUST_BE_VALID_UUID, "id", "String"},

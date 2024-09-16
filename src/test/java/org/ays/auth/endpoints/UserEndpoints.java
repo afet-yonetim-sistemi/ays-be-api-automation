@@ -2,13 +2,10 @@ package org.ays.auth.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.auth.datasource.UserDataSource;
-import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
 import org.ays.auth.payload.UserUpdatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
-import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysRestAssured;
 import org.openqa.selenium.remote.http.HttpMethod;
 
@@ -78,18 +75,9 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static String generateUserId(UserCreatePayload userCreatePayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        Response response = createAUser(userCreatePayload, accessToken);
-
-        if (response.getStatusCode() == 200) {
-            return UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.Database.TEST_FOUNDATION_ID);
-        } else {
-            throw new RuntimeException("Role creation failed with status code: " + response.getStatusCode());
-        }
+    public static String createAndReturnUserId(UserCreatePayload user, String token) {
+        UserEndpoints.createAUser(user, token);
+        return UserEndpoints.listUsers(UserListPayload.generate(user.getPhoneNumber()), token).jsonPath().getString("response.content[0].id");
     }
 
 }

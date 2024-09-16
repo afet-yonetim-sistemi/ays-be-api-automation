@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
 
 import java.util.Random;
-import java.util.UUID;
 
 @UtilityClass
 public class AysRandomUtil {
@@ -99,8 +98,15 @@ public class AysRandomUtil {
     }
 
     public static String generateAlphaSuffix() {
-        String uuid = UUID.randomUUID().toString().replaceAll("[^a-zA-Z]", "");
-        return uuid.substring(0, 6);
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        StringBuilder suffix = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            suffix.append(alphabet.charAt(RANDOM.nextInt(alphabet.length())));
+        }
+
+        return suffix.toString();
     }
+
 
 }

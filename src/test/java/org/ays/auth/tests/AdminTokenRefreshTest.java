@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class AdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void adminTokenRefresh() {
+    public void refreshAdminAccessToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
@@ -18,6 +18,7 @@ public class AdminTokenRefreshTest {
 
         TokenRefreshPayload tokenRefreshPayload = new TokenRefreshPayload();
         tokenRefreshPayload.setRefreshToken(refreshToken);
+
         Response response = AuthEndpoints.refreshAccessToken(tokenRefreshPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -25,7 +26,7 @@ public class AdminTokenRefreshTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void testAdminInvalidRefreshTokenForAccessTokenCreation() {
+    public void freshAdminAccessTokenAfterTokenInvalidation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

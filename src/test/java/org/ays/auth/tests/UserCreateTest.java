@@ -79,7 +79,7 @@ public class UserCreateTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();

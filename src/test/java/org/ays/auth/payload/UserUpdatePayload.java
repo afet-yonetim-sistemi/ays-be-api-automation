@@ -19,25 +19,25 @@ public class UserUpdatePayload {
     private List<String> roleIds;
 
     public static UserUpdatePayload generate() {
-        UserUpdatePayload userCreatePayload = new UserUpdatePayload();
-        userCreatePayload.setFirstName(AysRandomUtil.generateFirstName());
-        userCreatePayload.setLastName(AysRandomUtil.generateLastName());
-        userCreatePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
-        userCreatePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
-        userCreatePayload.setCity(AysRandomUtil.generateRandomCity());
-        userCreatePayload.setRoleIds(List.of("42fe288d-be87-4169-875e-e721a75cc833"));
-        return userCreatePayload;
+        UserUpdatePayload userUpdatePayload = new UserUpdatePayload();
+        userUpdatePayload.setFirstName(AysRandomUtil.generateFirstName());
+        userUpdatePayload.setLastName(AysRandomUtil.generateLastName());
+        userUpdatePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
+        userUpdatePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
+        userUpdatePayload.setCity(AysRandomUtil.generateRandomCity());
+        userUpdatePayload.setRoleIds(List.of("42fe288d-be87-4169-875e-e721a75cc833"));
+        return userUpdatePayload;
     }
 
     public static UserUpdatePayload generateUserWithARole(String roleId) {
-        UserUpdatePayload userCreatePayload = new UserUpdatePayload();
-        userCreatePayload.setFirstName(AysRandomUtil.generateFirstName());
-        userCreatePayload.setLastName(AysRandomUtil.generateLastName());
-        userCreatePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
-        userCreatePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
-        userCreatePayload.setCity(AysRandomUtil.generateRandomCity());
-        userCreatePayload.setRoleIds(List.of(roleId));
-        return userCreatePayload;
+        UserUpdatePayload userUpdatePayload = new UserUpdatePayload();
+        userUpdatePayload.setFirstName(AysRandomUtil.generateFirstName());
+        userUpdatePayload.setLastName(AysRandomUtil.generateLastName());
+        userUpdatePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
+        userUpdatePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
+        userUpdatePayload.setCity(AysRandomUtil.generateRandomCity());
+        userUpdatePayload.setRoleIds(List.of(roleId));
+        return userUpdatePayload;
     }
 
     public static UserUpdatePayload from(UserCreatePayload userCreatePayload) {

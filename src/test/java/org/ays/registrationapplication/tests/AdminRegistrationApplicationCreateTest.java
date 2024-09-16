@@ -1,8 +1,5 @@
 package org.ays.registrationapplication.tests;
 
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
@@ -56,8 +53,6 @@ public class AdminRegistrationApplicationCreateTest {
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
-    @Story("As a Super Admin when I create an admin registration application with missing institution ID I want to get a proper error message")
-    @Severity(SeverityLevel.NORMAL)
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
         application = AdminRegistrationApplicationCreatePayload.generate(null, AysRandomUtil.generateReasonString());
         application.setInstitutionId(null);

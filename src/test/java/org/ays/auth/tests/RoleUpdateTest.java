@@ -6,6 +6,7 @@ import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
@@ -21,12 +22,12 @@ import static org.hamcrest.Matchers.equalTo;
 public class RoleUpdateTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void updateRolPositiveScenario() {
+    public void updateRolePositiveScenario() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
         RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
         roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
         roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
@@ -37,7 +38,7 @@ public class RoleUpdateTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
-    public void updateRolWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
+    public void updateRoleWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -54,7 +55,7 @@ public class RoleUpdateTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void updateRolWithNullRoleName() {
+    public void updateRoleWithNullRoleName() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -71,7 +72,7 @@ public class RoleUpdateTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = AysDataProvider.class)
-    public void updateRolWithInvalidPermissionIds(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
+    public void updateRoleWithInvalidPermissionIdList(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -88,7 +89,7 @@ public class RoleUpdateTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void updateRolWithNullPermissionIds() {
+    public void updateRoleWithNullPermissionIds() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -105,7 +106,7 @@ public class RoleUpdateTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void updateRolWithNonInstitutionRol() {
+    public void updateRolWithNonInstitutionRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

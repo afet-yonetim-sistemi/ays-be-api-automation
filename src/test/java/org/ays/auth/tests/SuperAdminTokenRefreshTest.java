@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class SuperAdminTokenRefreshTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void superAdminTokenRefresh() {
+    public void refreshSuperAdminToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);
@@ -26,7 +26,7 @@ public class SuperAdminTokenRefreshTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void testSuperAdminInvalidRefreshTokenForAccessTokenCreation() {
+    public void refreshSuperAdminAccessTokenAfterTokenInvalidation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

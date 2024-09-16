@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public class RolesListTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void rolesListForAdminOne() {
+    public void listRolesForAdminOne() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -48,7 +48,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void rolesListForAdminTwo() {
+    public void listRolesForAdminTwo() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -73,7 +73,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
-    public void rolesListForSuperAdmin() {
+    public void listRolesForSuperAdmin() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -98,7 +98,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void rolesListWithFilter() {
+    public void listRolesWithFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -127,7 +127,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
-    public void rolesListUsingInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
+    public void listRolesWithInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -145,7 +145,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = AysDataProvider.class)
-    public void rolesListUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
+    public void listRolesUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -163,7 +163,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
-    public void rolesListUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
+    public void listRolesUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -181,7 +181,7 @@ public class RolesListTest {
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = AysDataProvider.class)
-    public void rolesListUsingInvalidStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
+    public void listRolesUsingInvalidRoleStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

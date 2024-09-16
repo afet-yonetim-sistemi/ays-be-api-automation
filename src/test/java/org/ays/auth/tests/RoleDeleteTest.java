@@ -5,6 +5,7 @@ import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
@@ -15,12 +16,12 @@ import static org.hamcrest.Matchers.containsString;
 public class RoleDeleteTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void deleteRolPositiveScenario() {
+    public void deleteRolePositive() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.generateRoleId();
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
 
         Response response = RoleEndpoints.deleteRole(roleId, accessToken);
         response.then()
@@ -28,7 +29,7 @@ public class RoleDeleteTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void deleteRolWithNonInstitutionRol() {
+    public void deleteRoleWithNonInstitutionRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -42,7 +43,7 @@ public class RoleDeleteTest {
     }
 
     @Test(groups = {"Regression", "Institution"})
-    public void deleteRolWithDeletedStatus() {
+    public void deleteAnAlreadyDeletedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -55,8 +56,8 @@ public class RoleDeleteTest {
                 .body("message", containsString("role is already deleted!"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
-    public void deleteRolWithInvalidId(String roleId, AysErrorMessage errorMessage, String field, String type) {
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    public void deleteRoleWithInvalidRoleId(String roleId, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

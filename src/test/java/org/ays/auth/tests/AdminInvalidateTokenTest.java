@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class AdminInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void adminInvalidateToken() {
+    public void invalidateAdminToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

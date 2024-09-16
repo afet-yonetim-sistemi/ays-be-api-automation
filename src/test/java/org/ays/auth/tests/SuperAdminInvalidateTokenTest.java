@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class SuperAdminInvalidateTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void superAdminInvalidateToken() {
+    public void invalidateSuperAdminToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

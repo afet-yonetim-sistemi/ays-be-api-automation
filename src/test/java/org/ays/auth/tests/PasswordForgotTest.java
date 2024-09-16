@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 public class PasswordForgotTest {
 
     @Test(groups = {"Smoke", "Regression"})
-    public void postPasswordForgotPositive() {
+    public void forgotPasswordPositive() {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         String emailAddress = UserDataSource.findAnyEmailAddress();
         passwordForgotPayload.setEmailAddress(emailAddress);
@@ -24,7 +24,7 @@ public class PasswordForgotTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
-    public void postPasswordForgotNegative(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
+    public void forgotPasswordNegative(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         passwordForgotPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);

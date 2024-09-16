@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LandingUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
-    public void userInvalidateToken() {
+    public void invalidateUserToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsUserOne();
         Response loginResponse = AuthEndpoints.token(loginPayload);

@@ -1,7 +1,6 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
-import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
@@ -26,10 +25,11 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String userId = UserEndpoints.generateUserId(userCreatePayload);
+        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
+        String userId = UserEndpoints.createAndReturnUserId(user, accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName("updatedName");
         Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
         response.then()
@@ -39,22 +39,25 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithoutAuthorizationToken() {
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user, accessToken);
+
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, null);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleId", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidUserId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
@@ -69,10 +72,10 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user, accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName(firstName);
         userUpdatePayload.setLastName(lastName);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
@@ -87,10 +90,10 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user, accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setEmailAddress(emailAddress);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
         response.then()
@@ -98,16 +101,16 @@ public class UserUpdateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String userId = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String userId = UserEndpoints.createAndReturnUserId(user, accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(id));
         Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
         response.then()
@@ -121,15 +124,18 @@ public class UserUpdateTest {
         LoginPayload loginPayloadAdminTwo = LoginPayload.generateAsAdminUserTwo();
         String accessTokenAdminTwo = this.loginAndGetAccessToken(loginPayloadAdminTwo);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
-        RoleEndpoints.createRole(RoleCreatePayload.generate(), accessTokenAdminTwo);
+        String roleIdForInstitutionOfAdminTwo = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessTokenAdminTwo);
 
         LoginPayload loginPayloadTestAdmin = LoginPayload.generateAsTestAdmin();
         String accessTokenTestAdmin = this.loginAndGetAccessToken(loginPayloadTestAdmin);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
-        userUpdatePayload.setRoleIds(List.of(RoleDataSource.findLastRoleId()));
+        String roleIdForTestInstitution = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessTokenTestAdmin);
+
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleIdForTestInstitution);
+        String id = UserEndpoints.createAndReturnUserId(user, accessTokenTestAdmin);
+
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
+        userUpdatePayload.setRoleIds(List.of(roleIdForInstitutionOfAdminTwo));
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessTokenTestAdmin);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
@@ -142,10 +148,10 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user,accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setLastName(null);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
         response.then()
@@ -159,10 +165,10 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user,accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.getPhoneNumber().setCountryCode(countryCode);
         userUpdatePayload.getPhoneNumber().setLineNumber(lineNumber);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
@@ -177,10 +183,10 @@ public class UserUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.generateRoleId());
-        String id = UserEndpoints.generateUserId(userCreatePayload);
+        UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
+        String id = UserEndpoints.createAndReturnUserId(user,accessToken);
 
-        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setCity(city);
         Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
         response.then()

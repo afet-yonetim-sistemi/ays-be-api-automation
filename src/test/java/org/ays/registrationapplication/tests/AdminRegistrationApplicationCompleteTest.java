@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 
-public class AdminRegistrationApplicationIDCompleteTest {
+public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void completeApplicationRegistrationPositive() {
