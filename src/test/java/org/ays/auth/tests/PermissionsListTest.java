@@ -16,7 +16,7 @@ public class PermissionsListTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void superUsersShouldSeeAllPermissions() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = PermissionEndpoints.listPermissions(accessToken);
@@ -36,7 +36,7 @@ public class PermissionsListTest {
     @Test(groups = {"Smoke", "Regression"})
     public void nonSuperUsersShouldNotSeeSuperPermissions() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = PermissionEndpoints.listPermissions(accessToken);
@@ -54,7 +54,7 @@ public class PermissionsListTest {
     @Test(groups = {"Regression"})
     public void nonSuperUsersShouldSeeNonSuperPermissions() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = PermissionEndpoints.listPermissions(accessToken);

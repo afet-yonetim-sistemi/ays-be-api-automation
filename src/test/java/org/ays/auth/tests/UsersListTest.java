@@ -23,7 +23,7 @@ public class UsersListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listUsersForAdminOne() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -47,7 +47,7 @@ public class UsersListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listUsersForAdminTwo() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -71,7 +71,7 @@ public class UsersListTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void listUsersForSuperAdmin() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -95,7 +95,7 @@ public class UsersListTest {
     @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
     public void listUsersWithAllFilter() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -120,7 +120,7 @@ public class UsersListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -147,7 +147,7 @@ public class UsersListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -174,7 +174,7 @@ public class UsersListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidFirstAndLastNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -194,7 +194,7 @@ public class UsersListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();
@@ -213,7 +213,7 @@ public class UsersListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserListPayload userListPayload = new UserListPayload();

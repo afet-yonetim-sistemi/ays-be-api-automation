@@ -13,7 +13,7 @@ public class SuperAdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void refreshSuperAdminToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
@@ -28,7 +28,7 @@ public class SuperAdminTokenRefreshTest {
     @Test(groups = {"Regression", "Institution"})
     public void refreshSuperAdminAccessTokenAfterTokenInvalidation() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

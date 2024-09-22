@@ -13,7 +13,7 @@ public class AdminTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidAdmin() {
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -22,7 +22,7 @@ public class AdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -34,7 +34,7 @@ public class AdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthUserEmailAddress() {
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         loginPayload.setEmailAddress("email@gmail.com");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -43,7 +43,7 @@ public class AdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithInvalidPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         loginPayload.setPassword("123456");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -52,7 +52,7 @@ public class AdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithNullPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         loginPayload.setPassword(null);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()

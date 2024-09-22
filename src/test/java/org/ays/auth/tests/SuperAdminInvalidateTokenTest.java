@@ -12,7 +12,7 @@ public class SuperAdminInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void invalidateSuperAdminToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

@@ -24,7 +24,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateRolePositiveScenario() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
@@ -40,7 +40,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void updateRoleWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
@@ -57,7 +57,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRoleWithNullRoleName() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
@@ -74,7 +74,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPermissionIds", dataProviderClass = AysDataProvider.class)
     public void updateRoleWithInvalidPermissionIdList(List<String> permissionIds, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
@@ -91,7 +91,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRoleWithNullPermissionIds() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
@@ -108,7 +108,7 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNonInstitutionRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");

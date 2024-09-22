@@ -22,7 +22,7 @@ public class UserUpdateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateUserSuccessfully() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
@@ -39,7 +39,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithoutAuthorizationToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -54,7 +54,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidUserId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -69,7 +69,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidName(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -87,7 +87,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidEmail(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -104,7 +104,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -121,12 +121,12 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithInvalidRoleForInstitution() {
 
-        LoginPayload loginPayloadAdminTwo = LoginPayload.generateAsAdminUserTwo();
+        LoginPayload loginPayloadAdminTwo = LoginPayload.generateAsDisasterFoundationAdmin();
         String accessTokenAdminTwo = this.loginAndGetAccessToken(loginPayloadAdminTwo);
 
         String roleIdForInstitutionOfAdminTwo = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessTokenAdminTwo);
 
-        LoginPayload loginPayloadTestAdmin = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayloadTestAdmin = LoginPayload.generateAsTestFoundationAdmin();
         String accessTokenTestAdmin = this.loginAndGetAccessToken(loginPayloadTestAdmin);
 
         String roleIdForTestInstitution = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessTokenTestAdmin);
@@ -145,7 +145,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithMissingField() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -162,7 +162,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));
@@ -180,7 +180,7 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken));

@@ -25,7 +25,7 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesForAdminOne() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -50,7 +50,7 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesForAdminTwo() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserTwo();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -75,7 +75,7 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void listRolesForSuperAdmin() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -100,7 +100,7 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesWithFilter() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
@@ -129,7 +129,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
     public void listRolesWithInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -147,7 +147,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -165,7 +165,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -183,7 +183,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidRoleStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();

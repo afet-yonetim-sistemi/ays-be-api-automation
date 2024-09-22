@@ -13,42 +13,42 @@ public class LoginPayload {
     private String password;
     private SourcePage sourcePage;
 
-    public static LoginPayload generateAsSuperAdminUserOne() {
+    public static LoginPayload generateAsAfetYonetimSistemiAdmin() {
         LoginPayload superAdminCredentials = new LoginPayload();
-        superAdminCredentials.setEmailAddress(AysConfigurationProperty.SuperAdminUserOne.EMAIL_ADDRESS);
-        superAdminCredentials.setPassword(AysConfigurationProperty.SuperAdminUserOne.PASSWORD);
+        superAdminCredentials.setEmailAddress(AysConfigurationProperty.AfetYonetimSistemiAdmin.EMAIL_ADDRESS);
+        superAdminCredentials.setPassword(AysConfigurationProperty.AfetYonetimSistemiAdmin.PASSWORD);
         superAdminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return superAdminCredentials;
     }
 
-    public static LoginPayload generateAsAdminUserOne() {
+    public static LoginPayload generateAsVolunteerFoundationAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.AdminUserOne.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.AdminUserOne.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.VolunteerFoundationAdmin.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.VolunteerFoundationAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
 
-    public static LoginPayload generateAsAdminUserTwo() {
+    public static LoginPayload generateAsDisasterFoundationAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.AdminUserTwo.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.AdminUserTwo.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.DisasterFoundationAdmin.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.Database.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
 
-    public static LoginPayload generateAsTestAdmin() {
+    public static LoginPayload generateAsTestFoundationAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.TestAdmin.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.TestAdmin.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.TestFoundationAdmin.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.TestFoundationAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
 
-    public static LoginPayload generateAsUserOne() {
+    public static LoginPayload generateAsDisasterFoundationUser() {
         LoginPayload userCredentials = new LoginPayload();
-        userCredentials.setEmailAddress(AysConfigurationProperty.LandingUserOne.EMAIL_ADDRESS);
-        userCredentials.setPassword(AysConfigurationProperty.LandingUserOne.PASSWORD);
+        userCredentials.setEmailAddress(AysConfigurationProperty.DisasterFoundationUser.EMAIL_ADDRESS);
+        userCredentials.setPassword(AysConfigurationProperty.DisasterFoundationUser.PASSWORD);
         userCredentials.setSourcePage(SourcePage.LANDING);
         return userCredentials;
     }

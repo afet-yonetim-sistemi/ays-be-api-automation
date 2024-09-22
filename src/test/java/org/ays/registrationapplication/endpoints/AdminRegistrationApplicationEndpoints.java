@@ -22,7 +22,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response postRegistrationApplications(AdminRegistrationApplicationListPayload requestBodyInstitution) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -37,7 +37,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response getRegistrationApplicationId(String applicationID) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -52,7 +52,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response postRegistrationAdminApplication(AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -68,7 +68,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response postRegistrationApplicationApprove(String applicationID) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -83,7 +83,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response postRegistrationApplicationReject(String applicationID, AdminRegistrationApplicationRejectPayload adminRegistrationApplicationRejectPayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -99,7 +99,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response getRegistrationApplicationsIdSummary(String applicationID) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
@@ -114,7 +114,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static Response postRegistrationApplicationIDComplete(String applicationID, AdminRegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()

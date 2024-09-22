@@ -19,7 +19,7 @@ public class UserDeleteTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteUser() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -44,7 +44,7 @@ public class UserDeleteTest {
     @Test(groups = {"Regression", "Institution"})
     public void deleteUserNegative() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();

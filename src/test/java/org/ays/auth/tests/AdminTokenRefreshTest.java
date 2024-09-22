@@ -12,7 +12,7 @@ public class AdminTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void refreshAdminAccessToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
@@ -28,7 +28,7 @@ public class AdminTokenRefreshTest {
     @Test(groups = {"Regression", "Institution"})
     public void freshAdminAccessTokenAfterTokenInvalidation() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

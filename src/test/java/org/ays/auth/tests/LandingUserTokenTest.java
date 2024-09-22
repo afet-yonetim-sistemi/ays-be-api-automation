@@ -14,7 +14,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "User"})
     public void getTokenForValidUser() {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -23,7 +23,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Regression", "User"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -35,7 +35,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthUserEmailAddress() {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         loginPayload.setEmailAddress("email@gmail.com");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -44,7 +44,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithInvalidPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         loginPayload.setPassword("wrongPassword");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -53,7 +53,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithNullPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         loginPayload.setPassword(null);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -63,7 +63,7 @@ public class LandingUserTokenTest {
 
     @Test(groups = {"Regression", "User"})
     public void getUserTokenWithUnAuthSourcePage() {
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         loginPayload.setSourcePage(SourcePage.INSTITUTION);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()

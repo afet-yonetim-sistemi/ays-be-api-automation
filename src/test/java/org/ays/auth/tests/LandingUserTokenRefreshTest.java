@@ -13,7 +13,7 @@ public class LandingUserTokenRefreshTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void refreshUserToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");
 
@@ -28,7 +28,7 @@ public class LandingUserTokenRefreshTest {
     @Test(groups = {"Regression", "User"})
     public void refreshUserAccessTokenAfterTokenInvalidation() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsUserOne();
+        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

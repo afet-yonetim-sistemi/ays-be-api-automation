@@ -18,7 +18,7 @@ public class RoleDeleteTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteRolePositive() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
@@ -31,7 +31,7 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"})
     public void deleteRoleWithNonInstitutionRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
@@ -45,7 +45,7 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"})
     public void deleteAnAlreadyDeletedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String roleId = RoleDataSource.findLastDeletedRoleIdByInstitutionName("Test Foundation");
@@ -59,7 +59,7 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void deleteRoleWithInvalidRoleId(String roleId, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = RoleEndpoints.deleteRole(roleId, accessToken);
