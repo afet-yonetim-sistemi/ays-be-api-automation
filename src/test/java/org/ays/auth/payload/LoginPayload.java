@@ -32,7 +32,7 @@ public class LoginPayload {
     public static LoginPayload generateAsDisasterFoundationAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
         adminCredentials.setEmailAddress(AysConfigurationProperty.DisasterFoundationAdmin.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.Database.PASSWORD);
+        adminCredentials.setPassword(AysConfigurationProperty.DisasterFoundationAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
