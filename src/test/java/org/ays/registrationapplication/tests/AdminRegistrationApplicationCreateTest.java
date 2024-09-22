@@ -25,7 +25,7 @@ public class AdminRegistrationApplicationCreateTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
-        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID, AysRandomUtil.generateReasonString());
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -34,7 +34,7 @@ public class AdminRegistrationApplicationCreateTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
-        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, reason);
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID, reason);
         Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

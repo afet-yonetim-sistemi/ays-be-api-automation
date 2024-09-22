@@ -35,7 +35,6 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-
     public static Response getRegistrationApplicationId(String applicationID) {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
@@ -44,37 +43,6 @@ public class AdminRegistrationApplicationEndpoints {
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin-registration-application/{id}")
-                .pathParameter(Map.of("id", applicationID))
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-
-    public static Response getRegistrationApplicationsIdSummary(String applicationID) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.GET)
-                .url("/api/v1/admin-registration-application/{id}/summary")
-                .pathParameter(Map.of("id", applicationID))
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static Response postRegistrationApplicationApprove(String applicationID) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application/{id}/approve")
                 .pathParameter(Map.of("id", applicationID))
                 .token(accessToken)
                 .build();
@@ -98,6 +66,21 @@ public class AdminRegistrationApplicationEndpoints {
 
     }
 
+    public static Response postRegistrationApplicationApprove(String applicationID) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/admin-registration-application/{id}/approve")
+                .pathParameter(Map.of("id", applicationID))
+                .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
     public static Response postRegistrationApplicationReject(String applicationID, AdminRegistrationApplicationRejectPayload adminRegistrationApplicationRejectPayload) {
 
         LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
@@ -114,8 +97,41 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
+    public static Response getRegistrationApplicationsIdSummary(String applicationID) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsAdminUserOne();
+        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.GET)
+                .url("/api/v1/admin-registration-application/{id}/summary")
+                .pathParameter(Map.of("id", applicationID))
+                .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
+    public static Response postRegistrationApplicationIDComplete(String applicationID, AdminRegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
+
+        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
+        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/admin-registration-application/{id}/complete")
+                .pathParameter(Map.of("id", applicationID))
+                .body(requestBodyForRegistrationComplete)
+                .token(accessToken)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+    }
+
     public static String generateApplicationID() {
-        AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.InstitutionOne.ID, AysRandomUtil.generateReasonString());
+        AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload
+                .generate(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID, AysRandomUtil.generateReasonString());
+
         Response response = postRegistrationAdminApplication(adminRegistrationApplicationCreatePayload);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.id");
@@ -137,20 +153,6 @@ public class AdminRegistrationApplicationEndpoints {
         }
     }
 
-    public static Response postRegistrationApplicationIDComplete(String applicationID, AdminRegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsSuperAdminUserOne();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
-
-        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
-                .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application/{id}/complete")
-                .pathParameter(Map.of("id", applicationID))
-                .body(requestBodyForRegistrationComplete)
-                .token(accessToken)
-                .build();
-
-        return AysRestAssured.perform(restAssuredRequest);
-    }
 
 }

@@ -23,24 +23,24 @@ public class LoginPayload {
 
     public static LoginPayload generateAsAdminUserOne() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserOne.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserOne.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.AdminUserOne.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.AdminUserOne.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
 
     public static LoginPayload generateAsAdminUserTwo() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.AdminUserTwo.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.AdminUserTwo.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.AdminUserTwo.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.AdminUserTwo.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
 
     public static LoginPayload generateAsTestAdmin() {
         LoginPayload adminCredentials = new LoginPayload();
-        adminCredentials.setEmailAddress(AysConfigurationProperty.InstitutionOne.TestAdmin.EMAIL_ADDRESS);
-        adminCredentials.setPassword(AysConfigurationProperty.InstitutionOne.TestAdmin.PASSWORD);
+        adminCredentials.setEmailAddress(AysConfigurationProperty.TestAdmin.EMAIL_ADDRESS);
+        adminCredentials.setPassword(AysConfigurationProperty.TestAdmin.PASSWORD);
         adminCredentials.setSourcePage(SourcePage.INSTITUTION);
         return adminCredentials;
     }
