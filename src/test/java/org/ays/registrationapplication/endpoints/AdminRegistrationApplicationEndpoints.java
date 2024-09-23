@@ -130,7 +130,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static String generateApplicationID() {
         AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload
-                .generate(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID, AysRandomUtil.generateReasonString());
+                .generate(AysConfigurationProperty.AfetYonetimSistemi.ID, AysRandomUtil.generateReasonString());
 
         Response response = postRegistrationAdminApplication(adminRegistrationApplicationCreatePayload);
         if (response.getStatusCode() == 200) {

@@ -128,7 +128,7 @@ public class UserCreateTest {
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setRoleIds(
-                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.Database.AFET_YONETIM_SISTEMI_ID))
+                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.AfetYonetimSistemi.ID))
         );
         Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
         response.then()
