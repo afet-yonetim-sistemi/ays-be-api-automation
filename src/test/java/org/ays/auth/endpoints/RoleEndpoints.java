@@ -87,11 +87,5 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static String createAndReturnRoleId(RoleCreatePayload role, String token) {
-        RoleEndpoints.createRole(role, token);
-        RoleListPayload list = RoleListPayload.generateWithFilter(role);
-        return RoleEndpoints.listRoles(list, token).jsonPath().getString("response.content[0].id");
-    }
-
 
 }

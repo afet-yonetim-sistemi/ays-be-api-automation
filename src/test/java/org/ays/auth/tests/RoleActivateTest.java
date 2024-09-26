@@ -1,6 +1,7 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
@@ -8,6 +9,7 @@ import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
@@ -24,7 +26,8 @@ public class RoleActivateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        String roleId = RoleEndpoints.createAndReturnRoleId(role, accessToken);
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
 
         RoleEndpoints.updatePassivateRole(roleId, accessToken);
 
@@ -51,7 +54,10 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
@@ -64,7 +70,10 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
         UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
 
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
@@ -79,7 +88,10 @@ public class RoleActivateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), accessToken);
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
         RoleEndpoints.deleteRole(roleId, accessToken);
 
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
@@ -93,13 +105,17 @@ public class RoleActivateTest {
 
         LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
-        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(), testAdminAccessToken);
+
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, testAdminAccessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
         RoleEndpoints.updatePassivateRole(roleId, testAdminAccessToken);
 
-        LoginPayload loginPayloadForAdminTwo = LoginPayload.generateAsDisasterFoundationAdmin();
-        String adminTwoAccessToken = this.loginAndGetAccessToken(loginPayloadForAdminTwo);
+        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsDisasterFoundationAdmin();
+        String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
-        Response response = RoleEndpoints.updateActivateRole(roleId, adminTwoAccessToken);
+        Response response = RoleEndpoints.updateActivateRole(roleId, disasterFoundationAdminAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString(AysErrorMessage.ROLE_DOES_NOT_EXIST.getMessage()));

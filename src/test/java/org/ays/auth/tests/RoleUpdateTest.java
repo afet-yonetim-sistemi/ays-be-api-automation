@@ -1,7 +1,6 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
-import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
@@ -9,8 +8,8 @@ import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.RoleUpdatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
-import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
@@ -27,10 +26,11 @@ public class RoleUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleEndpoints.createAndReturnRoleId(RoleCreatePayload.generate(),accessToken);
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
-        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
         response.then()
@@ -43,10 +43,12 @@ public class RoleUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setName(name);
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
         response.then()
@@ -60,10 +62,12 @@ public class RoleUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setName(null);
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
         response.then()
@@ -77,9 +81,11 @@ public class RoleUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
-        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setPermissionIds(permissionIds);
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
@@ -94,9 +100,11 @@ public class RoleUpdateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Test Foundation");
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
-        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setPermissionIds(null);
 
         Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
@@ -108,15 +116,19 @@ public class RoleUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateRolWithNonInstitutionRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
-        String accessToken = this.loginAndGetAccessToken(loginPayload);
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestFoundationAdmin();
+        String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
-        String roleId = RoleDataSource.findLastRoleIdByInstitutionName("Disaster Foundation");
-        RoleUpdatePayload roleUpdatePayload = new RoleUpdatePayload();
-        roleUpdatePayload.setName(AysRandomUtil.generateFirstName() + " Rol");
-        roleUpdatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsRoleManagementCategory());
+        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleEndpoints.createRole(role, testAdminAccessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
+
+        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsDisasterFoundationAdmin();
+        String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
+
+        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, disasterFoundationAdminAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));

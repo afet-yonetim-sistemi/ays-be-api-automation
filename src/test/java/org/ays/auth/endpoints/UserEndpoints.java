@@ -74,10 +74,4 @@ public class UserEndpoints {
 
         return AysRestAssured.perform(restAssuredPayload);
     }
-
-    public static String createAndReturnUserId(UserCreatePayload user, String token) {
-        UserEndpoints.createAUser(user, token);
-        return UserEndpoints.listUsers(UserListPayload.generate(user.getPhoneNumber()), token).jsonPath().getString("response.content[0].id");
-    }
-
 }
