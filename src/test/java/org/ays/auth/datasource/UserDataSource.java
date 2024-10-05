@@ -65,16 +65,16 @@ public class UserDataSource {
         }
     }
 
-    public static int findUserCountByInstitutionName(String institutionName) {
+    public static int findUserCountByInstitutionId(String institutionId) {
         String query = "SELECT COUNT(*) AS USER_COUNT " +
                 "FROM AYS_USER USER " +
                 "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ?";
+                "WHERE INSTITUTION.ID = ?";
 
         try (Connection connection = AysDataSource.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, institutionName);
+            preparedStatement.setString(1, institutionId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt("USER_COUNT");

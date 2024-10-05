@@ -10,6 +10,7 @@ import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
@@ -29,7 +30,7 @@ public class UsersListTest {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Volunteer Foundation");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.VolunteerFoundation.ID);
 
         Response response = UserEndpoints.listUsers(userListPayload, accessToken);
 
@@ -53,7 +54,7 @@ public class UsersListTest {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Disaster Foundation");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.DisasterFoundation.ID);
 
         Response response = UserEndpoints.listUsers(userListPayload, accessToken);
 
@@ -77,7 +78,7 @@ public class UsersListTest {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        int totalElementCount = UserDataSource.findUserCountByInstitutionName("Afet Yönetim Sistemi");
+        int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.AfetYonetimSistemi.ID);
 
         Response response = UserEndpoints.listUsers(userListPayload, accessToken);
 
