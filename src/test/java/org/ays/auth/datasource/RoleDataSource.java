@@ -11,16 +11,16 @@ import java.sql.SQLException;
 @UtilityClass
 public class RoleDataSource {
 
-    public static int findRoleCountByInstitutionName(String institutionName) {
+    public static int findRoleCountByInstitutionId(String institutionId) {
         String query = "SELECT COUNT(*) AS ROLE_COUNT " +
                 "FROM AYS_ROLE ROLE " +
                 "JOIN AYS_INSTITUTION INSTITUTION ON ROLE.INSTITUTION_ID = INSTITUTION.ID " +
-                "WHERE INSTITUTION.NAME = ?";
+                "WHERE INSTITUTION.ID = ?";
 
         try (Connection connection = AysDataSource.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, institutionName);
+            preparedStatement.setString(1, institutionId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt("ROLE_COUNT");

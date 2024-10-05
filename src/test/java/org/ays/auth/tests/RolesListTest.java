@@ -10,6 +10,7 @@ import org.ays.auth.payload.RoleListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
 import org.ays.common.model.payload.AysPageable;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
@@ -29,7 +30,7 @@ public class RolesListTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Volunteer Foundation");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.VolunteerFoundation.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
@@ -54,7 +55,7 @@ public class RolesListTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Disaster Foundation");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.DisasterFoundation.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
@@ -79,7 +80,7 @@ public class RolesListTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionName("Afet Yönetim Sistemi");
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.AfetYonetimSistemi.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
