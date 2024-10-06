@@ -49,6 +49,9 @@ jobs:
       - name: Replace database.password in configuration.properties # Step to replace the placeholder database.password in configuration.properties
         run: sed 's|'{DATABASE_PASSWORD}'|'${{ secrets.AYS_DATABASE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
+      - name: Replace test_disaster_foundation.id in configuration.properties # Step to replace the placeholder test_disaster_foundation.id in configuration.properties
+        run: sed 's|'{TEST_DISASTER_FOUNDATION_ID}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+
       - name: Replace test_disaster_foundation.admin.email_address in configuration.properties # Step to replace the placeholder test_disaster_foundation.admin.email_address in configuration.properties
         run: sed 's|'{TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
 
