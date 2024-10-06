@@ -3,8 +3,12 @@ package org.ays.registrationapplication.tests;
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
+import org.ays.common.util.AysConfigurationProperty;
+import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
+import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -12,12 +16,19 @@ import static org.hamcrest.Matchers.equalTo;
 public class AdminRegistrationApplicationApproveTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void approveApplicationPositive() {
-        String id = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
 
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload
                 .generate();
-
         AdminRegistrationApplicationEndpoints.complete(id, completePayload);
+
         Response response = AdminRegistrationApplicationEndpoints.approve(id);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -30,7 +41,13 @@ public class AdminRegistrationApplicationApproveTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveAnAlreadyApprovedApplication() {
 
-        String id = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
 
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload
                 .generate();
@@ -47,7 +64,13 @@ public class AdminRegistrationApplicationApproveTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveARejectedApplication() {
 
-        String id = AdminRegistrationApplicationEndpoints.generateApplicationID();
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
 
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload
                 .generate();
@@ -65,8 +88,16 @@ public class AdminRegistrationApplicationApproveTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void approveANotCompletedApplication() {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        Response response = AdminRegistrationApplicationEndpoints.approve(applicationID);
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
+        Response response = AdminRegistrationApplicationEndpoints.approve(id);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }

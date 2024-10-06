@@ -7,8 +7,6 @@ import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
-import org.ays.common.util.AysConfigurationProperty;
-import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysRestAssured;
 import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
@@ -126,18 +124,6 @@ public class AdminRegistrationApplicationEndpoints {
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
-    }
-
-    public static String generateApplicationID() {
-        AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload
-                .generate(AysConfigurationProperty.TestVolunteerFoundation.ID, AysRandomUtil.generateReasonString());
-
-        Response response = create(adminRegistrationApplicationCreatePayload);
-        if (response.getStatusCode() == 200) {
-            return response.then().extract().jsonPath().getString("response.id");
-        } else {
-            throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
-        }
     }
 
     public static String generateApplicationIDForCompletedStatus() {

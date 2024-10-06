@@ -3,9 +3,13 @@ package org.ays.registrationapplication.tests;
 import io.restassured.response.Response;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.common.model.payload.AysPhoneNumber;
+import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
+import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
@@ -16,21 +20,37 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void completeApplicationRegistrationPositive() {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, String errorMessage) {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         completePayload.setFirstName(invalidFirstName);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -40,11 +60,19 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, String errorMessage) {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
         completePayload.setLastName(invalidFLastName);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -54,11 +82,19 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, String errorMessage) {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
-        completePayload.setEmail(invalidEmail);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
+        completePayload.setEmailAddress(invalidEmail);
+
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -68,7 +104,15 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
         AysPhoneNumber phoneNumber = new AysPhoneNumber();
@@ -76,7 +120,7 @@ public class AdminRegistrationApplicationCompleteTest {
         phoneNumber.setLineNumber(lineNumber);
         completePayload.setPhoneNumber(phoneNumber);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
@@ -108,16 +152,25 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistEmail() {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
-        AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        AdminRegistrationApplicationEndpoints.complete(id, completePayload);
 
-        String email = completePayload.getEmail();
-        String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationCompletePayload newRegistrationIDComplete = AdminRegistrationApplicationCompletePayload.generate();
-        newRegistrationIDComplete.setEmail(email);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(newApplicationID, newRegistrationIDComplete);
+        String latestId = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
+        AdminRegistrationApplicationCompletePayload latestCompletePayload = AdminRegistrationApplicationCompletePayload.generate();
+        latestCompletePayload.setEmailAddress(completePayload.getEmailAddress());
+        Response response = AdminRegistrationApplicationEndpoints.complete(latestId, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("ADMIN USER ALREADY EXIST!"));
@@ -125,16 +178,25 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeRegistrationApplicationWithExistPhoneNumber() {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
-        AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        AdminRegistrationApplicationEndpoints.complete(id, completePayload);
 
-        AysPhoneNumber phoneNumber = completePayload.getPhoneNumber();
-        String newApplicationID = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationCompletePayload newRegistrationIDComplete = AdminRegistrationApplicationCompletePayload.generate();
-        newRegistrationIDComplete.setPhoneNumber(phoneNumber);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(newApplicationID, newRegistrationIDComplete);
+        String latestId = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
+        AdminRegistrationApplicationCompletePayload latestCompletePayload = AdminRegistrationApplicationCompletePayload.generate();
+        latestCompletePayload.setPhoneNumber(completePayload.getPhoneNumber());
+        Response response = AdminRegistrationApplicationEndpoints.complete(latestId, latestCompletePayload);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("ADMIN USER ALREADY EXIST!"));

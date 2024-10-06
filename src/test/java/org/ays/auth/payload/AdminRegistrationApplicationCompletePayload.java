@@ -11,7 +11,7 @@ import org.ays.common.util.AysRandomUtil;
 public class AdminRegistrationApplicationCompletePayload {
 
     private String username;
-    private String email;
+    private String emailAddress;
     private String password;
     private String firstName;
     private String lastName;
@@ -21,7 +21,7 @@ public class AdminRegistrationApplicationCompletePayload {
 
         AdminRegistrationApplicationCompletePayload completePayload = new AdminRegistrationApplicationCompletePayload();
         completePayload.setUsername(AysRandomUtil.generateUsername());
-        completePayload.setEmail(AysRandomUtil.generateEmailAddress());
+        completePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
         completePayload.setPassword(AysRandomUtil.generatePassword());
         completePayload.setFirstName(AysRandomUtil.generateFirstName());
         completePayload.setLastName(AysRandomUtil.generateLastName());
