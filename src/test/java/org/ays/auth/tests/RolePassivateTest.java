@@ -75,7 +75,7 @@ public class RolePassivateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
 
         Response response = RoleEndpoints.updatePassivateRole(roleId, accessToken);
         response.then()

@@ -29,7 +29,7 @@ public class UserCreateTest {
                 .findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
 
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -45,7 +45,7 @@ public class UserCreateTest {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setLineNumber(lineNumber);
         userCreatePayload.setPhoneNumber(phoneNumber);
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -61,7 +61,7 @@ public class UserCreateTest {
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setFirstName(firstName);
         userCreatePayload.setLastName(lastName);
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -75,7 +75,7 @@ public class UserCreateTest {
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setEmailAddress(emailAddress);
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -90,7 +90,7 @@ public class UserCreateTest {
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setRoleIds(List.of(id));
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -104,7 +104,7 @@ public class UserCreateTest {
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setCity(city);
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -117,7 +117,7 @@ public class UserCreateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = new UserCreatePayload();
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"));
@@ -133,7 +133,7 @@ public class UserCreateTest {
         userCreatePayload.setRoleIds(
                 List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID))
         );
-        Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
+        Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("the following roles are not found!"));

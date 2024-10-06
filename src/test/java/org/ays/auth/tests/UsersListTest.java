@@ -32,7 +32,7 @@ public class UsersListTest {
 
         int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -56,7 +56,7 @@ public class UsersListTest {
 
         int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -80,7 +80,7 @@ public class UsersListTest {
 
         int totalElementCount = UserDataSource.findUserCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -105,7 +105,7 @@ public class UsersListTest {
         UserEntity userEntity = UserDataSource.findAnyUser();
         UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity);
         userListPayload.setFilter(filter);
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         if (response.jsonPath().getList("response.content").isEmpty()) {
             AysLogUtil.info("No users under this institution.");
@@ -130,7 +130,7 @@ public class UsersListTest {
         pageable.setOrders(ordersList);
         userListPayload.setPageable(pageable);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         List<Object> contentList = response.jsonPath().getList("response.content");
 
@@ -157,7 +157,7 @@ public class UsersListTest {
         pageable.setOrders(ordersList);
         userListPayload.setPageable(pageable);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
         List<Object> contentList = response.jsonPath().getList("response.content");
 
@@ -186,7 +186,7 @@ public class UsersListTest {
         filter.setLastName(lastName);
         userListPayload.setFilter(filter);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -205,7 +205,7 @@ public class UsersListTest {
         filter.setCity(city);
         userListPayload.setFilter(filter);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -224,7 +224,7 @@ public class UsersListTest {
         filter.setStatuses(statuses);
         userListPayload.setFilter(filter);
 
-        Response response = UserEndpoints.listUsers(userListPayload, accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));

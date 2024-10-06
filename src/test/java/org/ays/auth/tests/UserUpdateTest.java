@@ -34,13 +34,13 @@ public class UserUpdateTest {
                 .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName("updatedName");
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -56,12 +56,12 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, null);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, null);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
@@ -77,10 +77,10 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
-        Response response = UserEndpoints.updateUser(id, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(id, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -97,14 +97,14 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName(firstName);
         userUpdatePayload.setLastName(lastName);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -121,13 +121,13 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setEmailAddress(emailAddress);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -144,13 +144,13 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(id));
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -176,13 +176,13 @@ public class UserUpdateTest {
                 RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleIdForTestFoundation);
-        UserEndpoints.createAUser(user, accessTokenTestFoundationAdmin);
+        UserEndpoints.create(user, accessTokenTestFoundationAdmin);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(roleIdForDisasterFoundation));
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessTokenTestFoundationAdmin);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessTokenTestFoundationAdmin);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("the following roles are not found!"));
@@ -199,13 +199,13 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setLastName(null);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_BLANK, "lastName", "String"));
@@ -222,14 +222,14 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.getPhoneNumber().setCountryCode(countryCode);
         userUpdatePayload.getPhoneNumber().setLineNumber(lineNumber);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -246,13 +246,13 @@ public class UserUpdateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.createAUser(user, accessToken);
+        UserEndpoints.create(user, accessToken);
         String userId = UserDataSource
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setCity(city);
-        Response response = UserEndpoints.updateUser(userId, userUpdatePayload, accessToken);
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));

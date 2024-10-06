@@ -74,7 +74,7 @@ public class RoleActivateTest {
         RoleEndpoints.createRole(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
-        UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
+        UserEndpoints.create(UserCreatePayload.generateUserWithARole(roleId), accessToken);
 
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
