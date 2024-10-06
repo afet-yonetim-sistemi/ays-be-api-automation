@@ -15,6 +15,7 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
+import org.testng.collections.CollectionUtils;
 
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class RolesListTest {
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No roles under this institution.");
             return;
         }
@@ -59,7 +61,8 @@ public class RolesListTest {
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No roles under this institution.");
             return;
         }
@@ -84,7 +87,8 @@ public class RolesListTest {
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No roles under this institution.");
             return;
         }
@@ -113,7 +117,8 @@ public class RolesListTest {
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No roles under this institution.");
             return;
         }

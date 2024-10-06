@@ -15,6 +15,7 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
+import org.testng.collections.CollectionUtils;
 
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class UsersListTest {
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }
@@ -58,7 +60,8 @@ public class UsersListTest {
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }
@@ -82,7 +85,8 @@ public class UsersListTest {
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }
@@ -107,7 +111,8 @@ public class UsersListTest {
         userListPayload.setFilter(filter);
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        if (response.jsonPath().getList("response.content").isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }
@@ -132,9 +137,8 @@ public class UsersListTest {
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        List<Object> contentList = response.jsonPath().getList("response.content");
-
-        if (contentList == null || contentList.isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }
@@ -159,9 +163,8 @@ public class UsersListTest {
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
-        List<Object> contentList = response.jsonPath().getList("response.content");
-
-        if (contentList == null || contentList.isEmpty()) {
+        List<Object> content = response.jsonPath().getList("response.content");
+        if (!CollectionUtils.hasElements(content)) {
             AysLogUtil.info("No users under this institution.");
             return;
         }

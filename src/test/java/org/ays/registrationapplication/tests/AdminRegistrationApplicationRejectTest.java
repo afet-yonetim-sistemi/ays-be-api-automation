@@ -135,7 +135,7 @@ public class AdminRegistrationApplicationRejectTest {
 
         String id = "invalidApplicationID";
 
-        AdminRegistrationApplicationRejectPayload rejectPayload = new AdminRegistrationApplicationRejectPayload();
+        AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload.generate();
 
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload);
         response.then()

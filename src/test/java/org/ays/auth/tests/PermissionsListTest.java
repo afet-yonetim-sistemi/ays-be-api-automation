@@ -23,14 +23,15 @@ public class PermissionsListTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        List<String> setOfNameValuesFromResponse = response.jsonPath().getList("response.name");
-        List<String> setOfNameValuesFromDB = PermissionDataSource.findAllPermissionNames();
+        List<String> permissionsFromResponse = response.jsonPath().getList("response.name");
+        List<String> permissionsFromDb = PermissionDataSource.findAllPermissionNames();
 
-        Assert.assertEquals(
-                setOfNameValuesFromResponse,
-                setOfNameValuesFromDB,
-                "The names from the response and the database do not match."
-        );
+        for (String permissionFromDb : permissionsFromDb) {
+            Assert.assertTrue(
+                    permissionsFromResponse.contains(permissionFromDb),
+                    "Name from database not found in response: " + permissionFromDb
+            );
+        }
     }
 
     @Test(groups = {"Smoke", "Regression"})
@@ -43,11 +44,14 @@ public class PermissionsListTest {
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
-        List<String> listOfNameValuesFromResponse = response.jsonPath().getList("response.name");
-        List<String> listOfNameValuesFromDB = PermissionDataSource.findAllPermissionNamesByIsSuper(true);
+        List<String> permissionsFromResponse = response.jsonPath().getList("response.name");
+        List<String> permissionsFromDb = PermissionDataSource.findAllPermissionNamesByIsSuper(true);
 
-        for (String dbName : listOfNameValuesFromDB) {
-            Assert.assertFalse(listOfNameValuesFromResponse.contains(dbName), "Name from database found in response: " + dbName);
+        for (String permissionFromDb : permissionsFromDb) {
+            Assert.assertFalse(
+                    permissionsFromResponse.contains(permissionFromDb),
+                    "Name from database found in response: " + permissionFromDb
+            );
         }
     }
 

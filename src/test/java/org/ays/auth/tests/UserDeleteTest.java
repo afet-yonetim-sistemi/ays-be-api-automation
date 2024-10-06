@@ -48,17 +48,18 @@ public class UserDeleteTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generate();
+        String roleId = RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.create(userCreatePayload, accessToken);
 
         AysPhoneNumber phoneNumber = userCreatePayload.getPhoneNumber();
-        String userId = UserDataSource.findIdByPhoneNumber(phoneNumber);
+        String id = UserDataSource.findIdByPhoneNumber(phoneNumber);
 
-        UserEndpoints.delete(userId, accessToken);
-        Response response = UserEndpoints.delete(userId, accessToken);
+        UserEndpoints.delete(id, accessToken);
+        Response response = UserEndpoints.delete(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString("USER IS ALREADY DELETED!"));
+                .body("message", containsString("user is already deleted! id:" + id));
 
     }
 

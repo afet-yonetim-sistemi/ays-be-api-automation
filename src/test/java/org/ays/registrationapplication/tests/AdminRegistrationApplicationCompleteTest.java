@@ -98,7 +98,7 @@ public class AdminRegistrationApplicationCompleteTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage))
-                .body("subErrors[0].field", equalTo("email"))
+                .body("subErrors[0].field", equalTo("emailAddress"))
                 .body("subErrors[0].type", equalTo("String"));
     }
 
