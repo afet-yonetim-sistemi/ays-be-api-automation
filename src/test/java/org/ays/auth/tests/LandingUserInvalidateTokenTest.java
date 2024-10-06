@@ -11,7 +11,7 @@ public class LandingUserInvalidateTokenTest {
     @Test(groups = {"Smoke", "Regression", "User"})
     public void invalidateUserToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationUser();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
         Response loginResponse = AuthEndpoints.token(loginPayload);
         String accessToken = loginResponse.jsonPath().getString("response.accessToken");
         String refreshToken = loginResponse.jsonPath().getString("response.refreshToken");

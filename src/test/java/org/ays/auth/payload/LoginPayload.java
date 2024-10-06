@@ -13,42 +13,46 @@ public class LoginPayload {
     private String password;
     private SourcePage sourcePage;
 
-    public static LoginPayload generateAsAfetYonetimSistemiAdmin() {
+
+    public static LoginPayload generateAsTestDisasterFoundationAdmin() {
         LoginPayload loginPayload = new LoginPayload();
-        loginPayload.setEmailAddress(AysConfigurationProperty.AfetYonetimSistemi.Admin.EMAIL_ADDRESS);
-        loginPayload.setPassword(AysConfigurationProperty.AfetYonetimSistemi.Admin.PASSWORD);
+        loginPayload.setEmailAddress(AysConfigurationProperty.TestDisasterFoundation.Admin.EMAIL_ADDRESS);
+        loginPayload.setPassword(AysConfigurationProperty.TestDisasterFoundation.Admin.PASSWORD);
         loginPayload.setSourcePage(SourcePage.INSTITUTION);
         return loginPayload;
     }
 
-    public static LoginPayload generateAsVolunteerFoundationAdmin() {
+    public static LoginPayload generateAsTestDisasterFoundationUser() {
         LoginPayload loginPayload = new LoginPayload();
-        loginPayload.setEmailAddress(AysConfigurationProperty.VolunteerFoundation.Admin.EMAIL_ADDRESS);
-        loginPayload.setPassword(AysConfigurationProperty.VolunteerFoundation.Admin.PASSWORD);
+        loginPayload.setEmailAddress(AysConfigurationProperty.TestDisasterFoundation.User.EMAIL_ADDRESS);
+        loginPayload.setPassword(AysConfigurationProperty.TestDisasterFoundation.User.PASSWORD);
+        loginPayload.setSourcePage(SourcePage.LANDING);
+        return loginPayload;
+    }
+
+
+    public static LoginPayload generateAsTestVolunteerFoundationSuperAdmin() {
+        LoginPayload loginPayload = new LoginPayload();
+        loginPayload.setEmailAddress(AysConfigurationProperty.TestVolunteerFoundation.SuperAdmin.EMAIL_ADDRESS);
+        loginPayload.setPassword(AysConfigurationProperty.TestVolunteerFoundation.SuperAdmin.PASSWORD);
         loginPayload.setSourcePage(SourcePage.INSTITUTION);
         return loginPayload;
     }
 
-    public static LoginPayload generateAsDisasterFoundationAdmin() {
+
+    public static LoginPayload generateAsTestVolunteerFoundationAdmin() {
         LoginPayload loginPayload = new LoginPayload();
-        loginPayload.setEmailAddress(AysConfigurationProperty.DisasterFoundation.Admin.EMAIL_ADDRESS);
-        loginPayload.setPassword(AysConfigurationProperty.DisasterFoundation.Admin.PASSWORD);
+        loginPayload.setEmailAddress(AysConfigurationProperty.TestVolunteerFoundation.Admin.EMAIL_ADDRESS);
+        loginPayload.setPassword(AysConfigurationProperty.TestVolunteerFoundation.Admin.PASSWORD);
         loginPayload.setSourcePage(SourcePage.INSTITUTION);
         return loginPayload;
     }
 
-    public static LoginPayload generateAsTestFoundationAdmin() {
-        LoginPayload loginPayload = new LoginPayload();
-        loginPayload.setEmailAddress(AysConfigurationProperty.TestFoundation.Admin.EMAIL_ADDRESS);
-        loginPayload.setPassword(AysConfigurationProperty.TestFoundation.Admin.PASSWORD);
-        loginPayload.setSourcePage(SourcePage.INSTITUTION);
-        return loginPayload;
-    }
 
-    public static LoginPayload generateAsDisasterFoundationUser() {
+    public static LoginPayload generateAsTestVolunteerFoundationUser() {
         LoginPayload loginPayload = new LoginPayload();
-        loginPayload.setEmailAddress(AysConfigurationProperty.DisasterFoundation.User.EMAIL_ADDRESS);
-        loginPayload.setPassword(AysConfigurationProperty.DisasterFoundation.User.PASSWORD);
+        loginPayload.setEmailAddress(AysConfigurationProperty.TestVolunteerFoundation.User.EMAIL_ADDRESS);
+        loginPayload.setPassword(AysConfigurationProperty.TestVolunteerFoundation.User.PASSWORD);
         loginPayload.setSourcePage(SourcePage.LANDING);
         return loginPayload;
     }

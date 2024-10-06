@@ -13,7 +13,7 @@ public class EmergencyEvacuationApplicationEndpoints {
 
     public static Response postEmergencyEvacuationApplications(EmergencyEvacuationApplicationListPayload list) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()

@@ -20,45 +20,45 @@ import java.util.Map;
 @UtilityClass
 public class AdminRegistrationApplicationEndpoints {
 
-    public static Response postRegistrationApplications(AdminRegistrationApplicationListPayload requestBodyInstitution) {
+    public static Response findAll(AdminRegistrationApplicationListPayload listPayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-applications")
-                .body(requestBodyInstitution)
+                .body(listPayload)
                 .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response getRegistrationApplicationId(String applicationID) {
+    public static Response findById(String id) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin-registration-application/{id}")
-                .pathParameter(Map.of("id", applicationID))
+                .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postRegistrationAdminApplication(AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload) {
+    public static Response create(AdminRegistrationApplicationCreatePayload createPayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application")
-                .body(adminRegistrationApplicationCreatePayload)
+                .body(createPayload)
                 .token(accessToken)
                 .build();
 
@@ -66,62 +66,62 @@ public class AdminRegistrationApplicationEndpoints {
 
     }
 
-    public static Response postRegistrationApplicationApprove(String applicationID) {
+    public static Response approve(String id) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application/{id}/approve")
-                .pathParameter(Map.of("id", applicationID))
+                .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postRegistrationApplicationReject(String applicationID, AdminRegistrationApplicationRejectPayload adminRegistrationApplicationRejectPayload) {
+    public static Response reject(String id, AdminRegistrationApplicationRejectPayload rejectPayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application/{id}/reject")
-                .pathParameter(Map.of("id", applicationID))
-                .body(adminRegistrationApplicationRejectPayload)
+                .pathParameter(Map.of("id", id))
+                .body(rejectPayload)
                 .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response getRegistrationApplicationsIdSummary(String applicationID) {
+    public static Response findSummaryById(String id) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/admin-registration-application/{id}/summary")
-                .pathParameter(Map.of("id", applicationID))
+                .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response postRegistrationApplicationIDComplete(String applicationID, AdminRegistrationApplicationCompletePayload requestBodyForRegistrationComplete) {
+    public static Response complete(String id, AdminRegistrationApplicationCompletePayload completePayload) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/admin-registration-application/{id}/complete")
-                .pathParameter(Map.of("id", applicationID))
-                .body(requestBodyForRegistrationComplete)
+                .pathParameter(Map.of("id", id))
+                .body(completePayload)
                 .token(accessToken)
                 .build();
 
@@ -130,9 +130,9 @@ public class AdminRegistrationApplicationEndpoints {
 
     public static String generateApplicationID() {
         AdminRegistrationApplicationCreatePayload adminRegistrationApplicationCreatePayload = AdminRegistrationApplicationCreatePayload
-                .generate(AysConfigurationProperty.AfetYonetimSistemi.ID, AysRandomUtil.generateReasonString());
+                .generate(AysConfigurationProperty.TestVolunteerFoundation.ID, AysRandomUtil.generateReasonString());
 
-        Response response = postRegistrationAdminApplication(adminRegistrationApplicationCreatePayload);
+        Response response = create(adminRegistrationApplicationCreatePayload);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.id");
         } else {
@@ -145,14 +145,13 @@ public class AdminRegistrationApplicationEndpoints {
                 .generate(AdminRegistrationApplicationStatus.COMPLETED);
         AdminRegistrationApplicationListPayload applicationListPayload = AdminRegistrationApplicationListPayload
                 .generate(filter);
-        Response response = postRegistrationApplications(applicationListPayload);
+        Response response = findAll(applicationListPayload);
         if (response.getStatusCode() == 200) {
             return response.then().extract().jsonPath().getString("response.content[0].id");
         } else {
             throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
         }
     }
-
 
 
 }

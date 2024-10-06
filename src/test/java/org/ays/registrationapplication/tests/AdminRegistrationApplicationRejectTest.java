@@ -14,22 +14,40 @@ import static org.hamcrest.Matchers.equalTo;
 public class AdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"})
     public void rejectApplicationPositive() {
-        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
-        response.then()
+
+        String id = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload
+                .generate();
+        AdminRegistrationApplicationEndpoints
+                .complete(id, completePayload);
+
+        AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload
+                .generate();
+        Response completeResponse = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload);
+        completeResponse.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
-        Response getStatus = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
-        getStatus.then()
-                .body("response.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.toString()));
+
+        Response response = AdminRegistrationApplicationEndpoints.findById(id);
+        response.then()
+                .body("completeResponse.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.toString()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"}, enabled = false)
     public void rejectARejectedApplication() {
-        String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
+
+        String id = AdminRegistrationApplicationEndpoints.generateApplicationID();
+
+        AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload
+                .generate();
+
+        AdminRegistrationApplicationEndpoints.complete(id, completePayload);
+
+        AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload
+                .generate();
+        AdminRegistrationApplicationEndpoints.reject(id, rejectPayload);
+
+        Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -37,9 +55,9 @@ public class AdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void rejectAnApprovedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationIDComplete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
-        AdminRegistrationApplicationEndpoints.postRegistrationApplicationApprove(applicationId);
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
+        AdminRegistrationApplicationEndpoints.complete(applicationId, AdminRegistrationApplicationCompletePayload.generate());
+        AdminRegistrationApplicationEndpoints.approve(applicationId);
+        Response response = AdminRegistrationApplicationEndpoints.reject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
@@ -48,7 +66,7 @@ public class AdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
     public void rejectANotCompletedApplication() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
+        Response response = AdminRegistrationApplicationEndpoints.reject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
@@ -58,7 +76,7 @@ public class AdminRegistrationApplicationRejectTest {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationRejectPayload reason = new AdminRegistrationApplicationRejectPayload();
         reason.setRejectReason(invalidRejectReason);
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, reason);
+        Response response = AdminRegistrationApplicationEndpoints.reject(applicationId, reason);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("size must be between 40 and 512"))
@@ -70,7 +88,7 @@ public class AdminRegistrationApplicationRejectTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void rejectAnApplicationWithInvalidApplicationId() {
         String applicationId = "invalidApplicationID";
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
+        Response response = AdminRegistrationApplicationEndpoints.reject(applicationId, AdminRegistrationApplicationRejectPayload.generate());
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must be a valid UUID"))
@@ -83,7 +101,7 @@ public class AdminRegistrationApplicationRejectTest {
     public void rejectAnApplicationWithMissingReasonField() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
         AdminRegistrationApplicationRejectPayload reason = new AdminRegistrationApplicationRejectPayload();
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationApplicationReject(applicationId, reason);
+        Response response = AdminRegistrationApplicationEndpoints.reject(applicationId, reason);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"))

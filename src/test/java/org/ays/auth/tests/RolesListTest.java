@@ -26,11 +26,11 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesForAdminOne() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.VolunteerFoundation.ID);
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
@@ -51,11 +51,11 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesForAdminTwo() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsDisasterFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.DisasterFoundation.ID);
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
@@ -76,11 +76,11 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
     public void listRolesForSuperAdmin() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
-        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.AfetYonetimSistemi.ID);
+        int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
 
@@ -101,7 +101,7 @@ public class RolesListTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void listRolesWithFilter() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
@@ -130,7 +130,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
     public void listRolesWithInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -148,7 +148,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidOrderData", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidOrders(String property, String direction, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -166,7 +166,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();
@@ -184,7 +184,7 @@ public class RolesListTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForRoleList", dataProviderClass = AysDataProvider.class)
     public void listRolesUsingInvalidRoleStatuses(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleListPayload roleListPayload = RoleListPayload.generate();

@@ -55,8 +55,8 @@ public class PermissionDataSource {
 
             List<String> permissions = new ArrayList<>();
             while (resultSet.next()) {
-                String id = resultSet.getString("ID");
-                permissions.add(id);
+                String name = resultSet.getString("NAME");
+                permissions.add(name);
             }
             return permissions;
 
@@ -67,10 +67,10 @@ public class PermissionDataSource {
 
     public static List<String> findAllPermissionNamesByIsSuper(boolean isSuper) {
 
-        String query = "SELECT NAME FROM AYS_PERMISSION";
+        String query = "SELECT NAME FROM AYS_PERMISSION WHERE IS_SUPER = ?";
 
         try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
 
             preparedStatement.setBoolean(1, isSuper);
@@ -78,8 +78,8 @@ public class PermissionDataSource {
 
                 List<String> permissions = new ArrayList<>();
                 while (resultSet.next()) {
-                    String id = resultSet.getString("ID");
-                    permissions.add(id);
+                    String name = resultSet.getString("NAME");
+                    permissions.add(name);
                 }
                 return permissions;
             }

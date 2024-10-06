@@ -14,7 +14,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void getTokenForValidSuperAdmin() {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
@@ -23,7 +23,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -35,7 +35,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthUserEmailAddress() {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         loginPayload.setEmailAddress("email@gmail.com");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -44,7 +44,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithInvalidPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         loginPayload.setPassword("123456");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -53,7 +53,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithNullPassword() {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         loginPayload.setPassword(null);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
@@ -62,7 +62,7 @@ public class SuperAdminTokenTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void getTokenWithUnAuthSourcePage() {
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         loginPayload.setSourcePage(SourcePage.LANDING);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()

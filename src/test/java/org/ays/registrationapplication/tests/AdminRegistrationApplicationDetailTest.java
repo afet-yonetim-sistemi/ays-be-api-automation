@@ -12,7 +12,7 @@ public class AdminRegistrationApplicationDetailTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void getRegistrationApplicationIDPositive() {
         String applicationId = AdminRegistrationApplicationEndpoints.generateApplicationID();
-        Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationId);
+        Response response = AdminRegistrationApplicationEndpoints.findById(applicationId);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.createdAt", notNullValue())
@@ -25,7 +25,7 @@ public class AdminRegistrationApplicationDetailTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void getRegistrationApplicationInvalidID() {
         String applicationID = "invalid-id";
-        Response response = AdminRegistrationApplicationEndpoints.getRegistrationApplicationId(applicationID);
+        Response response = AdminRegistrationApplicationEndpoints.findById(applicationID);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));

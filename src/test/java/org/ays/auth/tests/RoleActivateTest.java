@@ -22,12 +22,12 @@ public class RoleActivateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void activateRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         RoleEndpoints.updatePassivateRole(roleId, accessToken);
 
@@ -39,7 +39,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void activateRoleWithInvalidId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = RoleEndpoints.updateActivateRole(id, accessToken);
@@ -51,12 +51,12 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateAnActiveRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         Response response = RoleEndpoints.updateActivateRole(roleId, accessToken);
         response.then()
@@ -67,12 +67,12 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateAnAssignedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserEndpoints.createAUser(UserCreatePayload.generateUserWithARole(roleId), accessToken);
 
@@ -85,12 +85,12 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateADeletedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         RoleEndpoints.deleteRole(roleId, accessToken);
 
@@ -103,16 +103,16 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateRoleInDifferentInstitution() {
 
-        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, testAdminAccessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         RoleEndpoints.updatePassivateRole(roleId, testAdminAccessToken);
 
-        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsDisasterFoundationAdmin();
+        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
         Response response = RoleEndpoints.updateActivateRole(roleId, disasterFoundationAdminAccessToken);

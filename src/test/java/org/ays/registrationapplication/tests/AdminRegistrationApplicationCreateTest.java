@@ -25,8 +25,8 @@ public class AdminRegistrationApplicationCreateTest {
 
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplication() {
-        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.AfetYonetimSistemi.ID, AysRandomUtil.generateReasonString());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.TestVolunteerFoundation.ID, AysRandomUtil.generateReasonString());
+        Response response = AdminRegistrationApplicationEndpoints.create(application);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response", hasKey("id"));
@@ -34,8 +34,8 @@ public class AdminRegistrationApplicationCreateTest {
 
     @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
-        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.AfetYonetimSistemi.ID, reason);
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
+        application = AdminRegistrationApplicationCreatePayload.generate(AysConfigurationProperty.TestVolunteerFoundation.ID, reason);
+        Response response = AdminRegistrationApplicationEndpoints.create(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", anyOf(containsString(message), containsString("must not be blank")))
@@ -46,17 +46,17 @@ public class AdminRegistrationApplicationCreateTest {
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
         application = AdminRegistrationApplicationCreatePayload.generate("invalidId", AysRandomUtil.generateReasonString());
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.create(application);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
-                .body("message", containsString("INSTITUTION NOT EXIST!"));
+                .body("message", containsString("institution does not exist! ID:invalidId"));
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
         application = AdminRegistrationApplicationCreatePayload.generate(null, AysRandomUtil.generateReasonString());
         application.setInstitutionId(null);
-        Response response = AdminRegistrationApplicationEndpoints.postRegistrationAdminApplication(application);
+        Response response = AdminRegistrationApplicationEndpoints.create(application);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"))

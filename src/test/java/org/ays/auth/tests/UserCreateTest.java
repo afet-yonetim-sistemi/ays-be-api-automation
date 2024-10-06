@@ -22,10 +22,13 @@ public class UserCreateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void createAUser() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserCreatePayload userCreatePayload = UserCreatePayload.generate();
+        String roleId = RoleDataSource
+                .findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
+
         Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -34,7 +37,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -52,7 +55,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -67,7 +70,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -82,7 +85,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -96,7 +99,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
@@ -110,7 +113,7 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"})
     public void createUserWithEmptyRoleList() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = new UserCreatePayload();
@@ -123,12 +126,12 @@ public class UserCreateTest {
     @Test(groups = {"Regression", "Institution"})
     public void createAUserWithOtherInstitutionsRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
         userCreatePayload.setRoleIds(
-                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.AfetYonetimSistemi.ID))
+                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID))
         );
         Response response = UserEndpoints.createAUser(userCreatePayload, accessToken);
         response.then()

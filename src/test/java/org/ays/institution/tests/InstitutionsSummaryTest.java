@@ -16,7 +16,7 @@ public class InstitutionsSummaryTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void listInstitutionsPositive() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsAfetYonetimSistemiAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = InstitutionEndpoints.getInstitutionsSummary(accessToken);

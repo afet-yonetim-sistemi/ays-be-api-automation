@@ -47,6 +47,27 @@ public class UserDataSource {
         }
     }
 
+    public static String findIdByPhoneNumber(AysPhoneNumber phoneNumber) {
+
+        String query = "SELECT ID FROM AYS_USER WHERE COUNTRY_CODE = ? AND LINE_NUMBER = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, phoneNumber.getCountryCode());
+            preparedStatement.setString(2, phoneNumber.getLineNumber());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("ID");
+                }
+            }
+
+            return null;
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
     public static String findAnyEmailAddress() {
 
         String query = "SELECT EMAIL_ADDRESS FROM AYS_USER LIMIT 1";

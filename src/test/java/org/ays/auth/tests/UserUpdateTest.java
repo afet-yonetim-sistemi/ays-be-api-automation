@@ -25,17 +25,18 @@ public class UserUpdateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void updateUserSuccessfully() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource
+                .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName("updatedName");
@@ -47,17 +48,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithoutAuthorizationToken() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         Response response = UserEndpoints.updateUser(userId, userUpdatePayload, null);
@@ -68,12 +69,12 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidUserId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
@@ -88,17 +89,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidName(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setFirstName(firstName);
@@ -112,17 +113,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidEmail(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setEmailAddress(emailAddress);
@@ -135,17 +136,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(id));
@@ -158,26 +159,26 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithNonInstitutionRole() {
 
-        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsDisasterFoundationAdmin();
+        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessTokenDisasterFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
         RoleCreatePayload roleForDisasterFoundation = RoleCreatePayload.generate();
         RoleEndpoints.createRole(roleForDisasterFoundation, accessTokenDisasterFoundationAdmin);
         String roleIdForDisasterFoundation =
-                RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.DisasterFoundation.ID);
+                RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        LoginPayload loginPayloadForTestFoundationAdmin = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayloadForTestFoundationAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessTokenTestFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForTestFoundationAdmin);
 
         RoleCreatePayload roleForTestFoundation = RoleCreatePayload.generate();
         RoleEndpoints.createRole(roleForTestFoundation, accessTokenTestFoundationAdmin);
         String roleIdForTestFoundation =
-                RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleIdForTestFoundation);
         UserEndpoints.createAUser(user, accessTokenTestFoundationAdmin);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(roleIdForDisasterFoundation));
@@ -190,17 +191,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"})
     public void updateUserWithMissingField() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setLastName(null);
@@ -213,17 +214,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.getPhoneNumber().setCountryCode(countryCode);
@@ -237,17 +238,17 @@ public class UserUpdateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.createAUser(user, accessToken);
         String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestFoundation.ID);
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setCity(city);

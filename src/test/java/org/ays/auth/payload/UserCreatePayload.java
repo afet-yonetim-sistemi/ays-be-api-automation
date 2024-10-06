@@ -25,7 +25,6 @@ public class UserCreatePayload {
         userCreatePayload.setPhoneNumber(AysPhoneNumber.generateForTurkey());
         userCreatePayload.setEmailAddress(AysRandomUtil.generateEmailAddress());
         userCreatePayload.setCity(AysRandomUtil.generateRandomCity());
-        userCreatePayload.setRoleIds(List.of("42fe288d-be87-4169-875e-e721a75cc833"));
         return userCreatePayload;
     }
 
