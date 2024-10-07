@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.http.HttpMethod;
 @UtilityClass
 public class InstitutionEndpoints {
 
-    public static Response getInstitutionsSummary(String accessToken) {
+    public static Response findAllSummary(String accessToken) {
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
                 .url("/api/v1/institutions/summary")

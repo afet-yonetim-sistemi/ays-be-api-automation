@@ -19,7 +19,7 @@ public class InstitutionsSummaryTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = InstitutionEndpoints.getInstitutionsSummary(accessToken);
+        Response response = InstitutionEndpoints.findAllSummary(accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
