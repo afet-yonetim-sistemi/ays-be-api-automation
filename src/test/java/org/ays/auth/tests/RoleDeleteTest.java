@@ -24,9 +24,10 @@ public class RoleDeleteTest {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.create(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        Response response = RoleEndpoints.delete(roleId, accessToken);
+        String id = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        Response response = RoleEndpoints.delete(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -39,12 +40,13 @@ public class RoleDeleteTest {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.create(role, testAdminAccessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        String id = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
-        Response response = RoleEndpoints.delete(roleId, disasterFoundationAdminAccessToken);
+        Response response = RoleEndpoints.delete(id, disasterFoundationAdminAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));
@@ -56,25 +58,26 @@ public class RoleDeleteTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.create(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        RoleCreatePayload createPayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(createPayload, accessToken);
 
-        RoleEndpoints.delete(roleId, accessToken);
+        String id = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        Response response = RoleEndpoints.delete(roleId, accessToken);
+        RoleEndpoints.delete(id, accessToken);
+
+        Response response = RoleEndpoints.delete(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", containsString("role is already deleted!"));
     }
 
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
-    public void deleteRoleWithInvalidRoleId(String roleId, AysErrorMessage errorMessage, String field, String type) {
+    public void deleteRoleWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = RoleEndpoints.delete(roleId, accessToken);
+        Response response = RoleEndpoints.delete(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }

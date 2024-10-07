@@ -4,8 +4,10 @@ import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
+import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.payload.AysPhoneNumber;
 import org.ays.common.util.AysConfigurationProperty;
@@ -23,7 +25,11 @@ public class UserDeleteTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.create(userCreatePayload, accessToken);
 
@@ -48,7 +54,11 @@ public class UserDeleteTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.create(userCreatePayload, accessToken);
 

@@ -3,8 +3,10 @@ package org.ays.auth.tests;
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
+import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
@@ -25,8 +27,10 @@ public class UserCreateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        String roleId = RoleDataSource
-                .findRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
 
         Response response = UserEndpoints.create(userCreatePayload, accessToken);
@@ -129,10 +133,11 @@ public class UserCreateTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
+        String roleId = RoleDataSource
+                .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
-        userCreatePayload.setRoleIds(
-                List.of(RoleDataSource.findRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID))
-        );
+        userCreatePayload.setRoleIds(List.of(roleId));
         Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())

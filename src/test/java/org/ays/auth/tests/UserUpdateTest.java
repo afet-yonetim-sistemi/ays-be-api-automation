@@ -167,22 +167,23 @@ public class UserUpdateTest {
         String roleIdForDisasterFoundation =
                 RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        LoginPayload loginPayloadForTestFoundationAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
-        String accessTokenTestFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForTestFoundationAdmin);
 
-        RoleCreatePayload roleForTestFoundation = RoleCreatePayload.generate();
-        RoleEndpoints.create(roleForTestFoundation, accessTokenTestFoundationAdmin);
-        String roleIdForTestFoundation =
-                RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        LoginPayload loginPayloadForTestVolunteerFoundationAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessTokenTestVolunteerFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForTestVolunteerFoundationAdmin);
+
+        RoleCreatePayload roleForTestVolunteerFoundation = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleForTestVolunteerFoundation, accessTokenTestVolunteerFoundationAdmin);
+        String roleIdForTestFoundation = RoleDataSource
+                .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleIdForTestFoundation);
-        UserEndpoints.create(user, accessTokenTestFoundationAdmin);
-        String userId = UserDataSource
-                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        UserEndpoints.create(user, accessTokenTestVolunteerFoundationAdmin);
+        String id = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
         userUpdatePayload.setRoleIds(List.of(roleIdForDisasterFoundation));
-        Response response = UserEndpoints.update(userId, userUpdatePayload, accessTokenTestFoundationAdmin);
+        Response response = UserEndpoints.update(id, userUpdatePayload, accessTokenTestVolunteerFoundationAdmin);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("the following roles are not found!"));
