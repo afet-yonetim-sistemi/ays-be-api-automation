@@ -26,61 +26,61 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response create(RoleCreatePayload roleCreatePayload, String accessToken) {
+    public static Response create(RoleCreatePayload roleCreatePayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/role")
                 .body(roleCreatePayload)
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response update(String roleId, RoleUpdatePayload roleUpdatePayload, String accessToken) {
+    public static Response update(String id, RoleUpdatePayload roleUpdatePayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
                 .url("/api/v1/role/{id}")
-                .pathParameter(Map.of("id", roleId))
+                .pathParameter(Map.of("id", id))
                 .body(roleUpdatePayload)
-                .token(accessToken)
+                .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response activate(String roleId, String token) {
+    public static Response activate(String id, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/activate")
-                .pathParameter(Map.of("id", roleId))
+                .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response passivate(String roleId, String token) {
+    public static Response passivate(String id, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
                 .url("/api/v1/role/{id}/passivate")
-                .pathParameter(Map.of("id", roleId))
+                .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
 
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response delete(String roleId, String token) {
+    public static Response delete(String id, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
                 .url("/api/v1/role/{id}")
-                .pathParameter(Map.of("id", roleId))
+                .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
 
