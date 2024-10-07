@@ -22,7 +22,7 @@ public class RolePassivateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void passivateRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -54,7 +54,7 @@ public class RolePassivateTest {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.create(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleEndpoints.passivate(roleId, accessToken);
 
@@ -67,7 +67,7 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAnAssignedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -91,7 +91,7 @@ public class RolePassivateTest {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.create(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleEndpoints.delete(roleId, accessToken);
 

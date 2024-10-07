@@ -43,10 +43,10 @@ public class RoleDeleteTest {
 
         String id = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
-        String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
+        LoginPayload loginPayloadForVolunteerFoundationAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessTokenForVolunteerFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForVolunteerFoundationAdmin);
 
-        Response response = RoleEndpoints.delete(id, disasterFoundationAdminAccessToken);
+        Response response = RoleEndpoints.delete(id, accessTokenForVolunteerFoundationAdmin);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));
