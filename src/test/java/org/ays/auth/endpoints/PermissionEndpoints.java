@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.http.HttpMethod;
 @UtilityClass
 public class PermissionEndpoints {
 
-    public static Response listPermissions(String token) {
+    public static Response findAll(String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)

@@ -19,7 +19,7 @@ public class PermissionsListTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = PermissionEndpoints.listPermissions(accessToken);
+        Response response = PermissionEndpoints.findAll(accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
@@ -40,7 +40,7 @@ public class PermissionsListTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = PermissionEndpoints.listPermissions(accessToken);
+        Response response = PermissionEndpoints.findAll(accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
@@ -61,7 +61,7 @@ public class PermissionsListTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = PermissionEndpoints.listPermissions(accessToken);
+        Response response = PermissionEndpoints.findAll(accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
