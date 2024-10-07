@@ -33,7 +33,7 @@ public class RolesListTest {
         RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
 
         List<Object> content = response.jsonPath().getList("response.content");
         if (!CollectionUtils.hasElements(content)) {
@@ -59,7 +59,7 @@ public class RolesListTest {
         RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
 
         List<Object> content = response.jsonPath().getList("response.content");
         if (!CollectionUtils.hasElements(content)) {
@@ -85,7 +85,7 @@ public class RolesListTest {
         RoleListPayload roleListPayload = RoleListPayload.generate();
         int totalElementCount = RoleDataSource.findRoleCountByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
 
         List<Object> content = response.jsonPath().getList("response.content");
         if (!CollectionUtils.hasElements(content)) {
@@ -109,13 +109,13 @@ public class RolesListTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(roleCreatePayload, accessToken);
+        RoleEndpoints.create(roleCreatePayload, accessToken);
 
         String name = roleCreatePayload.getName();
 
         RoleListPayload roleListPayload = RoleListPayload.generateWithFilter(roleCreatePayload);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
 
         List<Object> content = response.jsonPath().getList("response.content");
         if (!CollectionUtils.hasElements(content)) {
@@ -142,7 +142,7 @@ public class RolesListTest {
         AysPageable pageable = AysPageable.generate(page, pageSize);
         roleListPayload.setPageable(pageable);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -161,7 +161,7 @@ public class RolesListTest {
         List<AysOrder> orders = AysOrder.generate(property, direction);
         roleListPayload.getPageable().setOrders(orders);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -179,7 +179,7 @@ public class RolesListTest {
         filter.setName(name);
         roleListPayload.setFilter(filter);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -197,7 +197,7 @@ public class RolesListTest {
         filter.setStatuses(statuses);
         roleListPayload.setFilter(filter);
 
-        Response response = RoleEndpoints.listRoles(roleListPayload, accessToken);
+        Response response = RoleEndpoints.findAll(roleListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));

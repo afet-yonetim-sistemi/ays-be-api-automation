@@ -14,7 +14,7 @@ import java.util.Map;
 @UtilityClass
 public class RoleEndpoints {
 
-    public static Response listRoles(RoleListPayload roleListPayload, String token) {
+    public static Response findAll(RoleListPayload roleListPayload, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -26,7 +26,7 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response createRole(RoleCreatePayload roleCreatePayload, String accessToken) {
+    public static Response create(RoleCreatePayload roleCreatePayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -38,7 +38,7 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response updateRole(String roleId, RoleUpdatePayload roleUpdatePayload, String accessToken) {
+    public static Response update(String roleId, RoleUpdatePayload roleUpdatePayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
@@ -51,7 +51,7 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response updateActivateRole(String roleId, String token) {
+    public static Response activate(String roleId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
@@ -63,7 +63,7 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response updatePassivateRole(String roleId, String token) {
+    public static Response passivate(String roleId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
@@ -75,7 +75,7 @@ public class RoleEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response deleteRole(String roleId, String token) {
+    public static Response delete(String roleId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)

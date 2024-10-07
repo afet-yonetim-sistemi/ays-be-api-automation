@@ -29,7 +29,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource
                 .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
@@ -52,7 +52,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -73,7 +73,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -93,7 +93,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -117,7 +117,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -140,7 +140,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -163,7 +163,7 @@ public class UserUpdateTest {
         String accessTokenDisasterFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
         RoleCreatePayload roleForDisasterFoundation = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(roleForDisasterFoundation, accessTokenDisasterFoundationAdmin);
+        RoleEndpoints.create(roleForDisasterFoundation, accessTokenDisasterFoundationAdmin);
         String roleIdForDisasterFoundation =
                 RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
@@ -171,7 +171,7 @@ public class UserUpdateTest {
         String accessTokenTestFoundationAdmin = this.loginAndGetAccessToken(loginPayloadForTestFoundationAdmin);
 
         RoleCreatePayload roleForTestFoundation = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(roleForTestFoundation, accessTokenTestFoundationAdmin);
+        RoleEndpoints.create(roleForTestFoundation, accessTokenTestFoundationAdmin);
         String roleIdForTestFoundation =
                 RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
@@ -195,7 +195,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -218,7 +218,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);
@@ -242,7 +242,7 @@ public class UserUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserCreatePayload user = UserCreatePayload.generateUserWithARole(roleId);

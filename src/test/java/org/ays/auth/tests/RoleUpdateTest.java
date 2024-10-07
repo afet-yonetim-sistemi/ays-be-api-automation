@@ -27,12 +27,12 @@ public class RoleUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -44,13 +44,13 @@ public class RoleUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setName(name);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -63,13 +63,13 @@ public class RoleUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setName(null);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be blank"));
@@ -82,13 +82,13 @@ public class RoleUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setPermissionIds(permissionIds);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -101,13 +101,13 @@ public class RoleUpdateTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, accessToken);
+        RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
         roleUpdatePayload.setPermissionIds(null);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, accessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo("must not be empty"));
@@ -120,7 +120,7 @@ public class RoleUpdateTest {
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.createRole(role, testAdminAccessToken);
+        RoleEndpoints.create(role, testAdminAccessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleUpdatePayload roleUpdatePayload = RoleUpdatePayload.generate();
@@ -128,7 +128,7 @@ public class RoleUpdateTest {
         LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
 
-        Response response = RoleEndpoints.updateRole(roleId, roleUpdatePayload, disasterFoundationAdminAccessToken);
+        Response response = RoleEndpoints.update(roleId, roleUpdatePayload, disasterFoundationAdminAccessToken);
         response.then()
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec())
                 .body("message", containsString("role does not exist!"));
