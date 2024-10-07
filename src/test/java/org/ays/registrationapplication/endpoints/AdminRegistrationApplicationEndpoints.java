@@ -8,7 +8,6 @@ import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
-import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationListPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
@@ -125,19 +124,5 @@ public class AdminRegistrationApplicationEndpoints {
 
         return AysRestAssured.perform(restAssuredRequest);
     }
-
-    public static String generateApplicationIDForCompletedStatus() {
-        AdminRegistrationApplicationListPayload.Filter filter = AdminRegistrationApplicationListPayload.Filter
-                .generate(AdminRegistrationApplicationStatus.COMPLETED);
-        AdminRegistrationApplicationListPayload applicationListPayload = AdminRegistrationApplicationListPayload
-                .generate(filter);
-        Response response = findAll(applicationListPayload);
-        if (response.getStatusCode() == 200) {
-            return response.then().extract().jsonPath().getString("response.content[0].id");
-        } else {
-            throw new RuntimeException("Application Id creation failed with status code: " + response.getStatusCode());
-        }
-    }
-
 
 }

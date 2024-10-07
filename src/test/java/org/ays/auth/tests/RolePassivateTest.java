@@ -22,7 +22,7 @@ public class RolePassivateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void passivateRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -37,7 +37,7 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void passivateRoleWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = RoleEndpoints.updatePassivateRole(id, accessToken);
@@ -49,7 +49,7 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAPassivatedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -67,7 +67,7 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAnAssignedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -86,7 +86,7 @@ public class RolePassivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void passivateAnAlreadyDeletedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -103,7 +103,7 @@ public class RolePassivateTest {
 
     @Test(groups = {"Regression", "Institution"})
     public void passivateRoleInDifferentInstitution() {
-        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
         RoleCreatePayload role = RoleCreatePayload.generate();

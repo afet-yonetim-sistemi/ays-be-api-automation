@@ -40,7 +40,7 @@ public class AdminRegistrationApplicationRejectTest {
 
         Response response = AdminRegistrationApplicationEndpoints.findById(id);
         response.then()
-                .body("completeResponse.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.toString()));
+                .body("response.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.name()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin", "Smoke"}, enabled = false)

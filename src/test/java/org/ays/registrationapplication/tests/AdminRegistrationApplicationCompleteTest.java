@@ -141,13 +141,22 @@ public class AdminRegistrationApplicationCompleteTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void completeApplicationRegistrationWithIDCompletedStatus() {
-        String applicationID = AdminRegistrationApplicationEndpoints.generateApplicationIDForCompletedStatus();
+
+        String institutionId = AysConfigurationProperty.TestDisasterFoundation.ID;
+        String reason = AysRandomUtil.generateReasonString();
+        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
+                .generate(institutionId, reason);
+        AdminRegistrationApplicationEndpoints.create(createPayload);
+
+        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
+
         AdminRegistrationApplicationCompletePayload completePayload = AdminRegistrationApplicationCompletePayload.generate();
 
-        Response response = AdminRegistrationApplicationEndpoints.complete(applicationID, completePayload);
+        AdminRegistrationApplicationEndpoints.complete(id, completePayload);
+
+        Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec())
-                .body("message", containsString("ADMIN USER REGISTER APPLICATION NOT EXIST!"));
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
@@ -173,7 +182,7 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(latestId, completePayload);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString("ADMIN USER ALREADY EXIST!"));
+                .body("message", containsString("user already exist! emailAddress:" + completePayload.getEmailAddress()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin"})
@@ -199,7 +208,7 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(latestId, latestCompletePayload);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString("ADMIN USER ALREADY EXIST!"));
+                .body("message", containsString("user already exist! countryCode:" + completePayload.getPhoneNumber().getCountryCode() + " , lineNumber:" + completePayload.getPhoneNumber().getLineNumber()));
     }
 
 }

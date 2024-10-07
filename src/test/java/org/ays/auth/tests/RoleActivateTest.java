@@ -22,7 +22,7 @@ public class RoleActivateTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void activateRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -39,7 +39,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void activateRoleWithInvalidId(String id, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = RoleEndpoints.updateActivateRole(id, accessToken);
@@ -51,7 +51,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateAnActiveRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -67,7 +67,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateAnAssignedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -85,7 +85,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateADeletedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
@@ -103,7 +103,7 @@ public class RoleActivateTest {
     @Test(groups = {"Regression", "Institution"})
     public void activateRoleInDifferentInstitution() {
 
-        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
         RoleCreatePayload role = RoleCreatePayload.generate();

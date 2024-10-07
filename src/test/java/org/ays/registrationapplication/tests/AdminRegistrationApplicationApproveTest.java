@@ -8,6 +8,7 @@ import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationStatus;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
@@ -35,7 +36,7 @@ public class AdminRegistrationApplicationApproveTest {
 
         Response getStatus = AdminRegistrationApplicationEndpoints.findById(id);
         getStatus.then()
-                .body("response.status", equalTo("VERIFIED"));
+                .body("response.status", equalTo(AdminRegistrationApplicationStatus.APPROVED.name()));
     }
 
     @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)

@@ -178,12 +178,12 @@ public class AysDataProvider {
                 {"", "must not be blank"},
                 {null, "must not be blank"},
                 {"       ", "must not be blank"},
-                {" firstName", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"25", "MUST BE VALID"},
-                {"firstName ", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"firstName*", "MUST BE VALID"},
-                {"F", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"}
+                {" firstName", "name must not start or end with whitespace"},
+                {"25", "must be valid"},
+                {"firstName ", "name must not start or end with whitespace"},
+                {"firstName*", "must be valid"},
+                {"F", "size must be between 2 and 100"},
+                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "size must be between 2 and 100"}
 
         };
     }
@@ -223,13 +223,13 @@ public class AysDataProvider {
                 {"", "must not be blank"},
                 {null, "must not be blank"},
                 {"       ", "must not be blank"},
-                {" firstName", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"25", "MUST BE VALID"},
-                {"firstName ", "NAME MUST NOT START OR END WITH WHITESPACE"},
-                {"firstName*", "MUST BE VALID"},
-                {"F", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"},
-                {".a", "MUST BE VALID"},
-                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "NAME MUST BE BETWEEN 2 AND 255 CHARACTERS LONG"}
+                {" firstName", "name must not start or end with whitespace"},
+                {"25", "must be valid"},
+                {"firstName ", "name must not start or end with whitespace"},
+                {"firstName*", "must be valid"},
+                {"F", "size must be between 2 and 100"},
+                {".a", "must be valid"},
+                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "size must be between 2 and 100"}
 
         };
     }

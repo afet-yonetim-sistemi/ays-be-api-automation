@@ -19,12 +19,12 @@ public class RoleDeleteTest {
     @Test(groups = {"Smoke", "Regression", "Institution"})
     public void deleteRolePositive() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         Response response = RoleEndpoints.deleteRole(roleId, accessToken);
         response.then()
@@ -34,12 +34,12 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"})
     public void deleteRoleWithNonInstitutionRole() {
 
-        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, testAdminAccessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         LoginPayload loginPayloadForDisasterFoundationAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String disasterFoundationAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForDisasterFoundationAdmin);
@@ -53,12 +53,12 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"})
     public void deleteAnAlreadyDeletedRole() {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         RoleCreatePayload role = RoleCreatePayload.generate();
         RoleEndpoints.createRole(role, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         RoleEndpoints.deleteRole(roleId, accessToken);
 
@@ -71,7 +71,7 @@ public class RoleDeleteTest {
     @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void deleteRoleWithInvalidRoleId(String roleId, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         Response response = RoleEndpoints.deleteRole(roleId, accessToken);
