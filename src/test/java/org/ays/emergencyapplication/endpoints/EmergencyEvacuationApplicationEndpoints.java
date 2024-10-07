@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.http.HttpMethod;
 
 public class EmergencyEvacuationApplicationEndpoints {
 
-    public static Response postEmergencyEvacuationApplications(EmergencyEvacuationApplicationListPayload list) {
+    public static Response findAll(EmergencyEvacuationApplicationListPayload list) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
@@ -25,11 +25,11 @@ public class EmergencyEvacuationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
-    public static Response postEmergencyEvacuationApplication(EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload) {
+    public static Response create(EmergencyEvacuationApplicationPayload applicationPayload) {
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/emergency-evacuation-application")
-                .body(emergencyEvacuationApplicationPayload)
+                .body(applicationPayload)
                 .build();
         return AysRestAssured.perform(restAssuredRequest);
     }

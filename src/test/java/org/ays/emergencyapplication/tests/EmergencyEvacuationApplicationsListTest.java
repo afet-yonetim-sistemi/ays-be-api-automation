@@ -27,7 +27,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = new EmergencyEvacuationApplicationListPayload();
         list.setPageable(AysPageable.generateFirstPage());
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .spec(AysResponseSpecs.expectUnfilteredListResponseSpecForEmergencyEvacuationApplications())
@@ -48,9 +48,9 @@ public class EmergencyEvacuationApplicationsListTest {
     @Test(groups = {"Smoke", "Regression"})
     public void testFilteringEvacuationApplicationsWithAnExistingApplicationData() {
         EmergencyEvacuationApplicationPayload application = EmergencyEvacuationApplicationPayload.generateForMe();
-        EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplication(application);
+        EmergencyEvacuationApplicationEndpoints.create(application);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(EmergencyEvacuationApplicationListPayload.generate(application));
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(EmergencyEvacuationApplicationListPayload.generate(application));
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.content[0].id", notNullValue())
@@ -85,7 +85,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setReferenceNumber(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type))
@@ -99,7 +99,7 @@ public class EmergencyEvacuationApplicationsListTest {
         list.getPageable().setPage(page);
         list.getPageable().setPageSize(pageSize);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.expectInvalidPageableErrors());
@@ -112,7 +112,7 @@ public class EmergencyEvacuationApplicationsListTest {
         list.getPageable().setPage(page);
         list.getPageable().setPageSize(pageSize);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
@@ -123,7 +123,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setSourceCity(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
@@ -135,7 +135,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setSourceDistrict(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
@@ -147,7 +147,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setSeatingCount(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
@@ -159,7 +159,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setSourceDistrict(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
@@ -171,7 +171,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setSourceCity(value);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
@@ -183,7 +183,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setStatuses(statuses);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(expectedMessage, field, type));
@@ -195,7 +195,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getFilter().setStatuses(statuses);
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.filteredBy.statuses", containsInAnyOrder(expectedStatuses.toArray()));
@@ -209,7 +209,7 @@ public class EmergencyEvacuationApplicationsListTest {
         list.getPageable().setPageSize(-1);
         list.getFilter().setReferenceNumber("12345678908");
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors.message", containsInAnyOrder(
@@ -225,7 +225,7 @@ public class EmergencyEvacuationApplicationsListTest {
         EmergencyEvacuationApplicationListPayload list = EmergencyEvacuationApplicationListPayload.generate(application);
         list.getPageable().setOrders(AysOrder.generate(property, direction));
 
-        Response response = EmergencyEvacuationApplicationEndpoints.postEmergencyEvacuationApplications(list);
+        Response response = EmergencyEvacuationApplicationEndpoints.findAll(list);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(errorMessage.getMessage()));
