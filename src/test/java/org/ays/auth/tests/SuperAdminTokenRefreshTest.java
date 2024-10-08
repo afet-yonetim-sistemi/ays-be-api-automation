@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class SuperAdminTokenRefreshTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
     public void refreshSuperAdminToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -25,7 +25,7 @@ public class SuperAdminTokenRefreshTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression", "Institution", "SuperAdmin"})
     public void refreshSuperAdminAccessTokenAfterTokenInvalidation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

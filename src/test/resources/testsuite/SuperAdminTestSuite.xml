@@ -8,14 +8,18 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationDetailTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationSummaryTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCreateTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationsListTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationApproveTest"/>
-            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationRejectTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.auth.tests.RolesListTest"/>
+            <class name="org.ays.auth.tests.SuperAdminInvalidateTokenTest"/>
+            <class name="org.ays.auth.tests.SuperAdminTokenRefreshTest"/>
+            <class name="org.ays.auth.tests.SuperAdminTokenTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationApproveTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCompleteTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCreateTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationDetailTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationRejectTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationsListTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationSummaryTest"/>
         </classes>
     </test>
 </suite>

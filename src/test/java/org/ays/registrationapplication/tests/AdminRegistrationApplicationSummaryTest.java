@@ -1,6 +1,8 @@
 package org.ays.registrationapplication.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.endpoints.AuthEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
@@ -17,15 +19,18 @@ public class AdminRegistrationApplicationSummaryTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void getRegistrationApplicationIdSummaryPositive() {
 
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
         String reason = AysRandomUtil.generateReasonString();
         AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
                 .generate(institutionId, reason);
-        AdminRegistrationApplicationEndpoints.create(createPayload);
+        AdminRegistrationApplicationEndpoints.create(createPayload, accessToken);
 
         String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
 
-        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(id);
+        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.id", notNullValue())
@@ -34,8 +39,12 @@ public class AdminRegistrationApplicationSummaryTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void getRegistrationApplicationIdSummaryNegative() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         String applicationID = "invalidID";
-        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(applicationID);
+        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(applicationID, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));
@@ -44,10 +53,19 @@ public class AdminRegistrationApplicationSummaryTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void getRegistrationApplicationIdSummaryNegative2() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         String applicationID = "0d0c71be-7473-4d98-caa8-55dec809c31c";
-        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(applicationID);
+        Response response = AdminRegistrationApplicationEndpoints.findSummaryById(applicationID, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 
     }
+
+    private String loginAndGetAccessToken(LoginPayload loginPayload) {
+        return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    }
+
 }

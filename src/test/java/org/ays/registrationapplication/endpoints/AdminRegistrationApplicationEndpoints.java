@@ -2,10 +2,8 @@ package org.ays.registrationapplication.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
-import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
@@ -17,10 +15,7 @@ import java.util.Map;
 @UtilityClass
 public class AdminRegistrationApplicationEndpoints {
 
-    public static Response findAll(AdminRegistrationApplicationListPayload listPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response findAll(AdminRegistrationApplicationListPayload listPayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -32,10 +27,7 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response findById(String id) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response findById(String id, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
@@ -47,10 +39,7 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response create(AdminRegistrationApplicationCreatePayload createPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response create(AdminRegistrationApplicationCreatePayload createPayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -63,10 +52,7 @@ public class AdminRegistrationApplicationEndpoints {
 
     }
 
-    public static Response approve(String id) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response approve(String id, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -78,10 +64,7 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response reject(String id, AdminRegistrationApplicationRejectPayload rejectPayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response reject(String id, AdminRegistrationApplicationRejectPayload rejectPayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
@@ -94,10 +77,7 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response findSummaryById(String id) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response findSummaryById(String id, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
@@ -109,10 +89,7 @@ public class AdminRegistrationApplicationEndpoints {
         return AysRestAssured.perform(restAssuredRequest);
     }
 
-    public static Response complete(String id, AdminRegistrationApplicationCompletePayload completePayload) {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
+    public static Response complete(String id, AdminRegistrationApplicationCompletePayload completePayload, String accessToken) {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)

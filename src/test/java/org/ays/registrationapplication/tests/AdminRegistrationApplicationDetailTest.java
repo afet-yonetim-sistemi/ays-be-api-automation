@@ -1,6 +1,8 @@
 package org.ays.registrationapplication.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.endpoints.AuthEndpoints;
+import org.ays.auth.payload.LoginPayload;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
@@ -16,15 +18,18 @@ public class AdminRegistrationApplicationDetailTest {
     @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
     public void getRegistrationApplicationIDPositive() {
 
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
         String reason = AysRandomUtil.generateReasonString();
         AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
                 .generate(institutionId, reason);
-        AdminRegistrationApplicationEndpoints.create(createPayload);
+        AdminRegistrationApplicationEndpoints.create(createPayload, accessToken);
 
         String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
 
-        Response response = AdminRegistrationApplicationEndpoints.findById(id);
+        Response response = AdminRegistrationApplicationEndpoints.findById(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
                 .body("response.createdAt", notNullValue())
@@ -36,11 +41,19 @@ public class AdminRegistrationApplicationDetailTest {
 
     @Test(groups = {"Regression", "SuperAdmin"})
     public void getRegistrationApplicationInvalidID() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
         String applicationID = "invalid-id";
-        Response response = AdminRegistrationApplicationEndpoints.findById(applicationID);
+        Response response = AdminRegistrationApplicationEndpoints.findById(applicationID, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", containsString("must be a valid UUID"));
+    }
+
+    private String loginAndGetAccessToken(LoginPayload loginPayload) {
+        return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
     }
 
 }

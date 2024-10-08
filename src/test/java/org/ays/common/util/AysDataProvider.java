@@ -220,16 +220,16 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidFirstAndLastNamesDataForAdminRegistration")
     public Object[][] invalidFirstAndLastNamesDataForAdminRegistration() {
         return new Object[][]{
-                {"", "must not be blank"},
-                {null, "must not be blank"},
-                {"       ", "must not be blank"},
-                {" firstName", "name must not start or end with whitespace"},
-                {"25", "must be valid"},
-                {"firstName ", "name must not start or end with whitespace"},
-                {"firstName*", "must be valid"},
-                {"F", "size must be between 2 and 100"},
-                {".a", "must be valid"},
-                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", "size must be between 2 and 100"}
+                {"", AysErrorMessage.MUST_NOT_BE_BLANK},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK},
+                {"       ", AysErrorMessage.MUST_NOT_BE_BLANK},
+                {" firstName", AysErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE},
+                {"25", AysErrorMessage.MUST_BE_VALID},
+                {"firstName ", AysErrorMessage.NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE},
+                {"firstName*", AysErrorMessage.MUST_BE_VALID},
+                {"F", AysErrorMessage.SIZE_BETWEEN_2_100},
+                {".a", AysErrorMessage.MUST_BE_VALID},
+                {"Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since thes when an unknown printer took a galley of type and scrambled it to make a type specimen book It has su Letrasett", AysErrorMessage.SIZE_BETWEEN_2_100}
 
         };
     }
@@ -237,12 +237,12 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidEmailForAdminRegistration")
     public Object[][] invalidEmailForAdminRegistration() {
         return new Object[][]{
-                {"", "must not be blank"},
-                {null, "must not be blank"},
-                {"  ", "must not be blank"},
-                {"abc", "must be valid"},
-                {"abcgmail.com", "must be valid"},
-                {"abc@gmail", "must be valid"}
+                {"", AysErrorMessage.MUST_NOT_BE_BLANK},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK},
+                {"  ", AysErrorMessage.MUST_NOT_BE_BLANK},
+                {"abc", AysErrorMessage.MUST_BE_VALID},
+                {"abcgmail.com", AysErrorMessage.MUST_BE_VALID},
+                {"abc@gmail", AysErrorMessage.MUST_BE_VALID}
 
         };
     }

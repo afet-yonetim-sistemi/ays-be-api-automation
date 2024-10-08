@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class SuperAdminInvalidateTokenTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
     public void invalidateSuperAdminToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
