@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class InstitutionsSummaryTest {
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void listInstitutionsPositive() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

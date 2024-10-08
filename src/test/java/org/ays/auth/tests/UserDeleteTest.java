@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class UserDeleteTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void deleteUser() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -48,7 +48,7 @@ public class UserDeleteTest {
     }
 
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void deleteUserNegative() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

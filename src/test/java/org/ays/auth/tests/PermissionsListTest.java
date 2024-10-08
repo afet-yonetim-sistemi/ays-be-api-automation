@@ -13,8 +13,8 @@ import java.util.List;
 
 public class PermissionsListTest {
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void superUsersShouldSeeAllPermissions() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void listPermissions() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

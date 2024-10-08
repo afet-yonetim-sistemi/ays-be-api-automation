@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.hasItem;
 
 public class AdminRegistrationApplicationCompleteTest {
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void completeApplicationRegistrationPositive() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -44,7 +44,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -70,7 +70,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -96,7 +96,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -122,7 +122,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -151,7 +151,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void completeApplicationRegistrationWithInvalidFormatID() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -166,7 +166,7 @@ public class AdminRegistrationApplicationCompleteTest {
 
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void completeApplicationRegistrationWithIDCompletedStatus() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -189,7 +189,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void completeRegistrationApplicationWithExistEmail() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -218,7 +218,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("message", containsString("user already exist! emailAddress:" + completePayload.getEmailAddress()));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void completeRegistrationApplicationWithExistPhoneNumber() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

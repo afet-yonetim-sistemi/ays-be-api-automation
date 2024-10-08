@@ -15,8 +15,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class AdminRegistrationApplicationDetailTest {
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void getRegistrationApplicationIDPositive() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void detailRegistrationApplicationPositiveTest() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -39,8 +39,8 @@ public class AdminRegistrationApplicationDetailTest {
                 .body("response.institution.id", notNullValue());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
-    public void getRegistrationApplicationInvalidID() {
+    @Test(groups = {"Regression"})
+    public void detailRegistrationApplicationInvalidID() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

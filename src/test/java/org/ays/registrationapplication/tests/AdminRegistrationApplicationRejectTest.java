@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.equalTo;
 
 public class AdminRegistrationApplicationRejectTest {
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void rejectApplicationPositive() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -48,7 +48,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .body("response.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.name()));
     }
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Smoke", "Regression"}, enabled = false)
     public void rejectARejectedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -76,7 +76,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Regression"}, enabled = false)
     public void rejectAnApprovedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -102,7 +102,7 @@ public class AdminRegistrationApplicationRejectTest {
     }
 
 
-    @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Regression"}, enabled = false)
     public void rejectANotCompletedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -122,7 +122,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidRejectReason", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidRejectReason", dataProviderClass = AysDataProvider.class)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -147,7 +147,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .body("subErrors[0].value", equalTo(invalidRejectReason));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void rejectAnApplicationWithInvalidApplicationId() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -166,7 +166,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .body("subErrors[0].value", equalTo("invalidApplicationID"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void rejectAnApplicationWithMissingReasonField() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

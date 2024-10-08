@@ -3,7 +3,9 @@ package org.ays.registrationapplication.tests;
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
+import org.ays.common.model.payload.AysPageable;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
@@ -14,14 +16,13 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 public class AdminRegistrationApplicationsListTest {
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPagination() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void listRegistrationApplicationsWithPageable() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -35,9 +36,8 @@ public class AdminRegistrationApplicationsListTest {
                 .body("response.sortedBy", nullValue());
     }
 
-
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "negativePageableData", dataProviderClass = AysDataProvider.class)
-    public void postRegistrationApplicationsWithPaginationNegative(int page, int pageSize) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
+    public void listRegistrationApplicationsWithInvalidPageableData(int page, int pageSize, AysErrorMessage errorMessage, String field, String type ) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -50,12 +50,11 @@ public class AdminRegistrationApplicationsListTest {
         Response response = AdminRegistrationApplicationEndpoints.findAll(listPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", containsString("must be between 1 and 99999999"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPaginationAndFilter() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void listRegistrationApplicationsWithPageableAndFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -72,25 +71,27 @@ public class AdminRegistrationApplicationsListTest {
                 .body("response.filteredBy", notNullValue());
     }
 
-
-    @Test(groups = {"Regression", "SuperAdmin"})
-    @Ignore("Testi anlamadığım için şimdilik ignore ettim.")
-    public void postRegistrationApplicationsWithPaginationAndFilterNegative() {
+    @Test(groups = {"Regression"})
+    public void listRegistrationApplicationsWithPageableAndInvalidStatusValue() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        AdminRegistrationApplicationListPayload listPayload = AdminRegistrationApplicationListPayload.generate();
-        listPayload.getFilter().setStatuses(List.of(AdminRegistrationApplicationStatus.WAITING));
+        AdminRegistrationApplicationListPayload listPayload = new AdminRegistrationApplicationListPayload();
+        listPayload.setPageable(AysPageable.generateFirstPage());
+
+        if (listPayload.getFilter() == null) {
+            listPayload.setFilter(new AdminRegistrationApplicationListPayload.Filter());
+        }
+        listPayload.getFilter().setStatuses(List.of(AdminRegistrationApplicationStatus.INVALID_STATUS));
 
         Response response = AdminRegistrationApplicationEndpoints.findAll(listPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
-
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPaginationAndSort() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void listRegistrationApplicationsWithPageableAndOrders() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -109,15 +110,14 @@ public class AdminRegistrationApplicationsListTest {
                 .body("response.filteredBy", nullValue());
     }
 
-
-    @Test(groups = {"Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPaginationAndInvalidSort() {
+    @Test(groups = {"Regression"})
+    public void listRegistrationApplicationsWithPageableAndInvalidOrdersData() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         AdminRegistrationApplicationListPayload listPayload = AdminRegistrationApplicationListPayload.generate();
-        List<AysOrder> orders = AysOrder.generate("name", "ASC");
+        List<AysOrder> orders = AysOrder.generate("invalid", "ASC");
         listPayload.getPageable().setOrders(orders);
 
         Response response = AdminRegistrationApplicationEndpoints.findAll(listPayload, accessToken);
@@ -125,8 +125,8 @@ public class AdminRegistrationApplicationsListTest {
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec());
     }
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPaginationSortFilter() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void listRegistrationApplicationsWithPageableOrdersFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -145,8 +145,8 @@ public class AdminRegistrationApplicationsListTest {
                 .body("response.filteredBy", notNullValue());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
-    public void postRegistrationApplicationsWithPaginationInvalidSortInvalidFilter() {
+    @Test(groups = {"Regression"})
+    public void listRegistrationApplicationsWithPageableInvalidOrdersInvalidFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -154,7 +154,7 @@ public class AdminRegistrationApplicationsListTest {
         AdminRegistrationApplicationListPayload listPayload = AdminRegistrationApplicationListPayload.generate();
 
         listPayload.getFilter().setStatuses(List.of(AdminRegistrationApplicationStatus.WAITING));
-        List<AysOrder> orders = AysOrder.generate("", "ASC");
+        List<AysOrder> orders = AysOrder.generate("createdAt", "invalid");
         listPayload.getPageable().setOrders(orders);
 
         Response response = AdminRegistrationApplicationEndpoints.findAll(listPayload, accessToken);

@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.containsString;
 
 public class UserCreateTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void createAUser() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -38,7 +38,7 @@ public class UserCreateTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -56,7 +56,7 @@ public class UserCreateTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidFirstnameAndLastname(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -71,7 +71,7 @@ public class UserCreateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -86,7 +86,7 @@ public class UserCreateTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -100,7 +100,7 @@ public class UserCreateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForCreateUser", dataProviderClass = AysDataProvider.class)
     public void createUserWithInvalidCity(String city, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -114,7 +114,7 @@ public class UserCreateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void createUserWithEmptyRoleList() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -127,7 +127,7 @@ public class UserCreateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void createAUserWithOtherInstitutionsRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();

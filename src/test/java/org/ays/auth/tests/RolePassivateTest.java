@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class RolePassivateTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void passivateRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -34,7 +34,7 @@ public class RolePassivateTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void passivateRoleWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -46,7 +46,7 @@ public class RolePassivateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void passivateAPassivatedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -64,7 +64,7 @@ public class RolePassivateTest {
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_ACTIVE.getMessage()));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void passivateAnAssignedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -83,7 +83,7 @@ public class RolePassivateTest {
                 .body("message", containsString(AysErrorMessage.THE_ROLE_IS_ASSIGNED.getMessage()));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void passivateAnAlreadyDeletedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -101,7 +101,7 @@ public class RolePassivateTest {
                 .body("message", equalTo(AysErrorMessage.ROLE_STATUS_IS_NOT_ACTIVE.getMessage()));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void passivateRoleInDifferentInstitution() {
         LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String testAdminAccessToken = this.loginAndGetAccessToken(loginPayloadForTestAdmin);

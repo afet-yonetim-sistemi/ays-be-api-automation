@@ -12,6 +12,7 @@ import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDat
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -92,7 +93,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.filteredBy.isInPerson", equalTo(true));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidReferenceNumber(String field, String value, String type, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -110,7 +111,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("subErrors[0].value", equalTo(value));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "negativePageableData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "negativePageableData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithInvalidPageable(int page, int pageSize) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -127,7 +128,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.expectInvalidPageableErrors());
     }
 
-    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Smoke", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithValidPageable(int page, int pageSize) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -143,7 +144,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -159,7 +160,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringApplicationsWithInvalidSourceDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -175,7 +176,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidSeatingCountData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidSeatingCountData", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidSeatingCount(Integer value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -191,7 +192,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -207,7 +208,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -223,7 +224,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidStatuses(List<String> statuses, AysErrorMessage expectedMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -239,7 +240,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(expectedMessage, field, type));
     }
 
-    @Test(groups = {"Smoke", "Institution", "Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Smoke", "Regression"}, dataProvider = "validStatusesDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithValidStatusesField(List<String> statuses, List<String> expectedStatuses) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -255,7 +256,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.filteredBy.statuses", containsInAnyOrder(expectedStatuses.toArray()));
     }
 
-    @Test(groups = {"Institution", "Regression"})
+    @Test(groups = {"Regression"})
     public void testFilteringEvacuationApplicationsWithMultipleInvalidFields() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -277,7 +278,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 ));
     }
 
-    @Test(groups = {"Institution", "Regression"}, dataProvider = "negativeOrderData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "negativeOrderData", dataProviderClass = AysDataProvider.class)
     public void testListingEvacuationApplicationsWithInvalidSortData(String property, String direction, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();

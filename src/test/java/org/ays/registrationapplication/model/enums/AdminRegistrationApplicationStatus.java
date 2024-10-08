@@ -4,5 +4,6 @@ public enum AdminRegistrationApplicationStatus {
     WAITING,
     COMPLETED,
     REJECTED,
-    APPROVED
+    APPROVED,
+    INVALID_STATUS
 }

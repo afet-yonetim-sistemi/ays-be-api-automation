@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.equalTo;
 
 public class AdminRegistrationApplicationApproveTest {
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void approveApplicationPositive() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -44,7 +44,7 @@ public class AdminRegistrationApplicationApproveTest {
                 .body("response.status", equalTo(AdminRegistrationApplicationStatus.APPROVED.name()));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Regression"}, enabled = false)
     public void approveAnAlreadyApprovedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -70,7 +70,7 @@ public class AdminRegistrationApplicationApproveTest {
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Regression"}, enabled = false)
     public void approveARejectedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -98,7 +98,7 @@ public class AdminRegistrationApplicationApproveTest {
     }
 
 
-    @Test(groups = {"Regression", "SuperAdmin"}, enabled = false)
+    @Test(groups = {"Regression"}, enabled = false)
     public void approveANotCompletedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -117,7 +117,7 @@ public class AdminRegistrationApplicationApproveTest {
                 .spec(AysResponseSpecs.expectNotFoundResponseSpec());
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void approveApplicationWithInvalidId() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

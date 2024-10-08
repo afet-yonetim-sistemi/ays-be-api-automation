@@ -16,8 +16,8 @@ import static org.hamcrest.Matchers.containsString;
 
 public class RoleDeleteTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
-    public void deleteRolePositive() {
+    @Test(groups = {"Smoke", "Regression"})
+    public void deleteRolePositiveTest() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -32,7 +32,7 @@ public class RoleDeleteTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void deleteRoleWithNonInstitutionRole() {
 
         LoginPayload loginPayloadForTestAdmin = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -52,7 +52,7 @@ public class RoleDeleteTest {
                 .body("message", containsString("role does not exist!"));
     }
 
-    @Test(groups = {"Regression", "Institution"})
+    @Test(groups = {"Regression"})
     public void deleteAnAlreadyDeletedRole() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -71,7 +71,7 @@ public class RoleDeleteTest {
                 .body("message", containsString("role is already deleted!"));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
     public void deleteRoleWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();

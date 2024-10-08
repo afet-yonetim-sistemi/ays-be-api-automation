@@ -8,13 +8,10 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.auth.tests.AdminInvalidateTokenTest"/>
-            <class name="org.ays.auth.tests.AdminTokenRefreshTest"/>
-            <class name="org.ays.auth.tests.AdminTokenTest"/>
+            <class name="org.ays.auth.tests.TokenInvalidateTest"/>
+            <class name="org.ays.auth.tests.TokenRefreshTest"/>
+            <class name="org.ays.auth.tests.TokenTest"/>
             <class name="org.ays.auth.tests.InvalidTokensTest"/>
-            <class name="org.ays.auth.tests.LandingUserInvalidateTokenTest"/>
-            <class name="org.ays.auth.tests.LandingUserTokenRefreshTest"/>
-            <class name="org.ays.auth.tests.LandingUserTokenTest"/>
             <class name="org.ays.auth.tests.PasswordForgotTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.auth.tests.RoleActivateTest"/>
@@ -22,9 +19,6 @@
             <class name="org.ays.auth.tests.RolePassivateTest"/>
             <class name="org.ays.auth.tests.RolesListTest"/>
             <class name="org.ays.auth.tests.RoleUpdateTest"/>
-            <class name="org.ays.auth.tests.SuperAdminInvalidateTokenTest"/>
-            <class name="org.ays.auth.tests.SuperAdminTokenRefreshTest"/>
-            <class name="org.ays.auth.tests.SuperAdminTokenTest"/>
             <class name="org.ays.auth.tests.UserCreateTest"/>
             <class name="org.ays.auth.tests.UserDeleteTest"/>
             <class name="org.ays.auth.tests.UsersListTest"/>

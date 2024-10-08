@@ -22,7 +22,7 @@ import java.util.List;
 
 public class UsersListTest {
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void listUsersForAdminOne() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -47,7 +47,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Smoke", "Regression", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void listUsersForAdminTwo() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
@@ -72,7 +72,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin", "Institution"})
+    @Test(groups = {"Smoke", "Regression"})
     public void listUsersForSuperAdmin() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -97,7 +97,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Smoke", "Regression", "Institution", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void listUsersWithAllFilter() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -123,7 +123,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidPropertyData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidPropertyData", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidPropertyValue(String property, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -149,7 +149,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidDirectionData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidDirectionData", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidDirectionValue(String direction, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -175,7 +175,7 @@ public class UsersListTest {
 
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidNames", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidFirstAndLastNameValue(String firstName, String lastName, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -195,7 +195,7 @@ public class UsersListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidCityData(String city, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -214,7 +214,7 @@ public class UsersListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression", "Institution"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidStatusesDataForUsersList", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidStatusesData(List<String> statuses, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();

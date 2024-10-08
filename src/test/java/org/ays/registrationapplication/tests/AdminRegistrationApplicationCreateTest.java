@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.hasKey;
 
 public class AdminRegistrationApplicationCreateTest {
 
-    @Test(groups = {"Smoke", "Regression", "SuperAdmin"})
+    @Test(groups = {"Smoke", "Regression"})
     public void createAnAdminRegistrationApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -33,7 +33,7 @@ public class AdminRegistrationApplicationCreateTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
+    @Test(groups = {"Regression"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -50,7 +50,7 @@ public class AdminRegistrationApplicationCreateTest {
                 .body("subErrors[0].type", equalTo(type));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void createAnAdminRegistrationApplicationWithInvalidInstitutionId() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -65,7 +65,7 @@ public class AdminRegistrationApplicationCreateTest {
                 .body("message", containsString("institution does not exist! ID:invalidId"));
     }
 
-    @Test(groups = {"Regression", "SuperAdmin"})
+    @Test(groups = {"Regression"})
     public void createAnAdminRegistrationApplicationWithMissingInstitutionId() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
