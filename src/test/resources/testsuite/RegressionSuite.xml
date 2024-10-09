@@ -8,27 +8,30 @@
             </run>
         </groups>
         <classes>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.GetAdminTokenTest"/>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminInvalidateTokenTest"/>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.PostAdminTokenRefreshTest"/>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.GetSuperAdminTokenTest"/>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.PostSuperAdminInvalidateTokenTest"/>
-            <class name="org.ays.tests.auth.institutionAuthServiseTests.PostSuperAdminTokenRefreshTest"/>
-            <class name="org.ays.tests.auth.landingAuthServiceTests.GetUserTokenTest"/>
-            <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserInvalidateTokenTest"/>
-            <class name="org.ays.tests.auth.landingAuthServiceTests.PostUserTokenRefreshTest"/>
-            <class name="org.ays.tests.institution.permissionService.GetPermissionsTest"/>
-            <class name="org.ays.tests.landing.emergencyevacuationapplyservice.PostEmergencyEvacuationApplicationTest"/>
-            <class name="org.ays.tests.institution.emergencyevacuationapplicationmanagementservice.PostEmergencyEvacuationApplicationsTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUsersTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PostUserTest"/>
-            <class name="org.ays.tests.institution.usermanagementservice.PutUserTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PostRolesTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PutRoleTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.DeleteRoleTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PatchRoleActivateTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PatchRolePassivateTest"/>
-            <class name="org.ays.tests.institution.roleManagementService.PatchRolePassivateTest"/>
+            <class name="org.ays.auth.tests.TokenInvalidateTest"/>
+            <class name="org.ays.auth.tests.TokenRefreshTest"/>
+            <class name="org.ays.auth.tests.TokenTest"/>
+            <class name="org.ays.auth.tests.PasswordForgotTest"/>
+            <class name="org.ays.auth.tests.PermissionsListTest"/>
+            <class name="org.ays.auth.tests.RoleActivateTest"/>
+            <class name="org.ays.auth.tests.RoleDeleteTest"/>
+            <class name="org.ays.auth.tests.RolePassivateTest"/>
+            <class name="org.ays.auth.tests.RolesListTest"/>
+            <class name="org.ays.auth.tests.RoleUpdateTest"/>
+            <class name="org.ays.auth.tests.UserCreateTest"/>
+            <class name="org.ays.auth.tests.UserDeleteTest"/>
+            <class name="org.ays.auth.tests.UsersListTest"/>
+            <class name="org.ays.auth.tests.UserUpdateTest"/>
+            <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationCreateTest"/>
+            <class name="org.ays.emergencyapplication.tests.EmergencyEvacuationApplicationsListTest"/>
+            <class name="org.ays.institution.tests.InstitutionsSummaryTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationApproveTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCompleteTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationCreateTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationDetailTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationRejectTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationsListTest"/>
+            <class name="org.ays.registrationapplication.tests.AdminRegistrationApplicationSummaryTest"/>
         </classes>
     </test>
 </suite>
