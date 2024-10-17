@@ -3,7 +3,6 @@ package org.ays.common.util;
 import lombok.experimental.UtilityClass;
 import org.ays.common.model.enums.AysErrorMessage;
 
-import java.util.Arrays;
 import java.util.List;
 
 @UtilityClass
@@ -12,24 +11,9 @@ public class AysDataProvider {
     public static Object[][] positivePageableData() {
         return new Object[][]{
                 {1, 10},
-                {99999999, 1},
-                {50, 50},
-                {1000, 20}
-        };
-    }
-
-    @org.testng.annotations.DataProvider(name = "negativePageableData")
-    public static Object[][] negativePageableData() {
-        return new Object[][]{
-                {-1, 10},
-                {100000000, 10},
-                {-5, 10},
-                {1, -10},
-                {1, 1000000000},
-                {1, -5},
-                {-100, 100000000},
-                {-5, -5},
-                {100000000, 100000000},
+                {99999999, 10},
+                {50, 10},
+                {1000, 10}
         };
     }
 
@@ -38,11 +22,11 @@ public class AysDataProvider {
         return new Object[][]{
                 {-1, 10, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "page", "int"},
                 {100000000, 10, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "page", "int"},
-                {1, -10, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
-                {1, 1000000000, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
-                {-100, 100000000, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
-                {-5, -5, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
-                {100000000, 100000000, AysErrorMessage.MUST_BE_BETWEEN_1_AND_99999999, "pageSize", "int"},
+                {1, -10, AysErrorMessage.MUST_BE_10, "pageSize", "int"},
+                {1, 1000000000, AysErrorMessage.MUST_BE_10, "pageSize", "int"},
+                {-100, 100000000, AysErrorMessage.MUST_BE_10, "pageSize", "int"},
+                {-5, -5, AysErrorMessage.MUST_BE_10, "pageSize", "int"},
+                {100000000, 100000000, AysErrorMessage.MUST_BE_10, "pageSize", "int"},
         };
     }
 
@@ -421,12 +405,12 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidStatusesDataForFilteringEvacuationApplications")
     public static Object[][] invalidStatusesDataForFilteringEvacuationApplications() {
         return new Object[][]{
-                {Arrays.asList("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
-                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
-                {Arrays.asList("PENDING", "INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
-                {Arrays.asList("PENDING".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
-                {Arrays.asList("PENDING$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
-                {Arrays.asList("pending"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"}
+                {List.of("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {List.of("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {List.of("PENDING", "INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {List.of("PENDING".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {List.of("PENDING$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"},
+                {List.of("pending"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "EmergencyEvacuationApplicationStatus"}
         };
     }
 
@@ -480,12 +464,12 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidStatusesDataForUsersList")
     public static Object[][] invalidStatusesDataForUsersList() {
         return new Object[][]{
-                {Arrays.asList("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
-                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
-                {Arrays.asList("ACTIVE", "INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
-                {Arrays.asList("ACTIVE".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
-                {Arrays.asList("PASSIVE$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
-                {Arrays.asList("active"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"}
+                {List.of("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {List.of("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {List.of("ACTIVE", "INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {List.of("ACTIVE".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {List.of("PASSIVE$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
+                {List.of("active"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"}
         };
     }
 
@@ -543,16 +527,16 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidStatusesDataForRoleList")
     public static Object[][] invalidStatusesDataForRoleList() {
         return new Object[][]{
-                {Arrays.asList("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("ACTIVE1"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("1ACTIVE"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("ACTIVE?"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("?ACTIVE"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("ACTIVE".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("active"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
-                {Arrays.asList("      "), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"}
+                {List.of("INVALID_STATUS"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("INVALID_STATUS1", "INVALID_STATUS2"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("ACTIVE1"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("1ACTIVE"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("ACTIVE?"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("?ACTIVE"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("ACTIVE".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("active"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"},
+                {List.of("      "), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysRoleStatus"}
 
         };
     }
@@ -560,11 +544,11 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidPermissionIds")
     public static Object[][] invalidPermissionIds() {
         return new Object[][]{
-                {Arrays.asList(""), AysErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
-                {Arrays.asList("        "), AysErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
-                {Arrays.asList("123"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
-                {Arrays.asList("$%^&*"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
-                {Arrays.asList("invalid"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"}
+                {List.of(""), AysErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
+                {List.of("        "), AysErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
+                {List.of("123"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
+                {List.of("$%^&*"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
+                {List.of("invalid"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"}
 
         };
     }
@@ -580,18 +564,6 @@ public class AysDataProvider {
                 {"02fe9d68-70b7-4b53-abb4-3e18e804e2711", AysErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
                 {"02fe9d68-70b7-4b53-abb4-3e18e804", AysErrorMessage.MUST_BE_VALID_UUID, "id", "String"},
         };
-    }
-
-    @org.testng.annotations.DataProvider(name = "paginationScenarios")
-    public Object[][] paginationScenarios() {
-        return new Object[][]{
-                {0, 10},
-                {1, 0},
-                {-1, 10},
-                {1, -1},
-                {-1, -1}
-        };
-
     }
 
 }

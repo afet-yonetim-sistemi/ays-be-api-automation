@@ -26,7 +26,8 @@ public enum AysErrorMessage {
     ROLE_STATUS_IS_NOT_ACTIVE("role status is not active!"),
     ROLE_DOES_NOT_EXIST("role does not exist!"),
     ROLE_STATUS_IS_NOT_PASSIVE("role status is not passive!"),
-    THE_ROLE_IS_ASSIGNED("the role is assigned to one or more users");
+    THE_ROLE_IS_ASSIGNED("the role is assigned to one or more users"),
+    MUST_BE_10("must be 10");
 
     private final String message;
 

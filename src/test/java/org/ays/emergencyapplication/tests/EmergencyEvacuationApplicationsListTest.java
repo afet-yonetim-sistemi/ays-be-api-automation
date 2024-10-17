@@ -12,7 +12,6 @@ import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDat
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -111,8 +110,8 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("subErrors[0].value", equalTo(value));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "negativePageableData", dataProviderClass = AysDataProvider.class)
-    public void testListingEvacuationApplicationsWithInvalidPageable(int page, int pageSize) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidPageableData", dataProviderClass = AysDataProvider.class)
+    public void testListingEvacuationApplicationsWithInvalidPageable(int page, int pageSize, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -125,7 +124,7 @@ public class EmergencyEvacuationApplicationsListTest {
         Response response = EmergencyEvacuationApplicationEndpoints.findAll(listPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.expectInvalidPageableErrors());
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     @Test(groups = {"Smoke", "Regression"}, dataProvider = "positivePageableData", dataProviderClass = AysDataProvider.class)
@@ -272,7 +271,7 @@ public class EmergencyEvacuationApplicationsListTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors.message", containsInAnyOrder(
-                        "must be between 1 and 99999999",
+                        "must be 10",
                         "contains invalid characters",
                         "size must be between 1 and 10"
                 ));

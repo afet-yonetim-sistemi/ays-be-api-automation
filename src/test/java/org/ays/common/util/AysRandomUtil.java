@@ -19,10 +19,6 @@ public class AysRandomUtil {
         return FAKER.name().lastName();
     }
 
-    public static String generateUsername() {
-        return FAKER.name().username();
-    }
-
     public static String generateEmailAddress() {
         return FAKER.internet().emailAddress();
     }
@@ -63,7 +59,7 @@ public class AysRandomUtil {
         String phoneNumber;
         do {
             int firstThreeDigits = RANDOM.nextInt(900) + 100;
-            phoneNumber = String.valueOf(firstThreeDigits) + generateRandomDigits(7);
+            phoneNumber = firstThreeDigits + generateRandomDigits(7);
         } while (isPrefixInArray(Integer.parseInt(phoneNumber.substring(0, 3)), prefixesArray));
         return phoneNumber;
     }
@@ -107,6 +103,5 @@ public class AysRandomUtil {
 
         return suffix.toString();
     }
-
 
 }

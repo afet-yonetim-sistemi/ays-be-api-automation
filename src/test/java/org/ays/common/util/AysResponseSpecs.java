@@ -4,12 +4,10 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
 import org.ays.common.model.enums.AysErrorMessage;
-import org.hamcrest.Matchers;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.instanceOf;
@@ -123,14 +121,6 @@ public class AysResponseSpecs {
                 .expectBody("response.pageNumber", notNullValue())
                 .expectBody("response.totalPageCount", notNullValue())
                 .expectBody("response.totalElementCount", notNullValue())
-                .build();
-    }
-
-    public static ResponseSpecification expectInvalidPageableErrors() {
-        return new ResponseSpecBuilder()
-                .expectBody("subErrors*.message", everyItem(equalTo("must be between 1 and 99999999")))
-                .expectBody("subErrors*.field", everyItem(Matchers.anyOf(equalTo("page"), equalTo("pageSize"))))
-                .expectBody("subErrors*.type", everyItem(equalTo("int")))
                 .build();
     }
 
