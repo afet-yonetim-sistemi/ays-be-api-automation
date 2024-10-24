@@ -19,14 +19,14 @@ import static org.hamcrest.core.AllOf.allOf;
 @UtilityClass
 public class AysResponseSpecs {
 
-    public static String uuidRegex = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+    private static final String UUID_REGEX = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 
     public static ResponseSpecification expectSuccessResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("code", matchesPattern(uuidRegex))
+                .expectBody("code", matchesPattern(UUID_REGEX))
                 .expectBody("isSuccess", equalTo(true))
                 .build();
     }
@@ -36,7 +36,7 @@ public class AysResponseSpecs {
                 .expectStatusCode(400)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("code", matchesPattern(uuidRegex))
+                .expectBody("code", matchesPattern(UUID_REGEX))
                 .expectBody("header", equalTo("VALIDATION ERROR"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -47,7 +47,7 @@ public class AysResponseSpecs {
                 .expectStatusCode(404)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("code", matchesPattern(uuidRegex))
+                .expectBody("code", matchesPattern(UUID_REGEX))
                 .expectBody("header", equalTo("NOT EXIST"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -58,7 +58,7 @@ public class AysResponseSpecs {
                 .expectStatusCode(401)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("code", matchesPattern(uuidRegex))
+                .expectBody("code", matchesPattern(UUID_REGEX))
                 .expectBody("header", equalTo("AUTH ERROR"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
@@ -69,7 +69,7 @@ public class AysResponseSpecs {
                 .expectStatusCode(409)
                 .expectContentType("application/json")
                 .expectBody("time", notNullValue())
-                .expectBody("code", matchesPattern(uuidRegex))
+                .expectBody("code", matchesPattern(UUID_REGEX))
                 .expectBody("header", equalTo("ALREADY EXIST"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
