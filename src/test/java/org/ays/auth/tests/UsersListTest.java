@@ -16,8 +16,6 @@ import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 
 

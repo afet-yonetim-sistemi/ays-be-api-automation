@@ -3,7 +3,6 @@ package org.ays.auth.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.common.model.payload.AysPhoneNumber;
-
 import java.util.List;
 
 @Getter
