@@ -17,6 +17,7 @@ import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -193,6 +194,25 @@ public class UsersListTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Regression"},dataProvider = "invalidEmailAddressForUsersList", dataProviderClass = AysDataProvider.class)
+    public void listUsersForInvalidEmailAddressData(String emailAddress, AysErrorMessage errorMessage, String field, String type){
+
+        LoginPayload loginPayload=LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken=this.loginAndGetAccessToken(loginPayload);
+
+        UserListPayload userListPayload= new UserListPayload();
+        userListPayload.setPageable(AysPageable.generate(1,10));
+
+        UserListPayload.Filter filter= new UserListPayload.Filter();
+        filter.setEmailAddress(emailAddress);
+        userListPayload.setFilter(filter);
+
+        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage,field,type));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)

@@ -15,7 +15,7 @@ import java.util.Collections;
 public class UserDataSource {
 
     public static UserEntity findAnyUser() {
-        String query = "SELECT USER.FIRST_NAME, USER.LAST_NAME, " +
+        String query = "SELECT USER.FIRST_NAME, USER.LAST_NAME, USER.EMAIL_ADDRESS, " +
                 "USER.COUNTRY_CODE, USER.LINE_NUMBER, USER.CITY, USER.STATUS " +
                 "FROM AYS_USER USER " +
                 "JOIN AYS_INSTITUTION INSTITUTION ON USER.INSTITUTION_ID = INSTITUTION.ID " +
@@ -31,6 +31,7 @@ public class UserDataSource {
 
                 usersFilter.setFirstName(resultSet.getString("FIRST_NAME"));
                 usersFilter.setLastName(resultSet.getString("LAST_NAME"));
+                usersFilter.setEmailAddress(resultSet.getString("EMAIL_ADDRESS"));
                 usersFilter.setCity(resultSet.getString("CITY"));
                 usersFilter.setStatuses(Collections.singletonList(resultSet.getString("STATUS")));
 

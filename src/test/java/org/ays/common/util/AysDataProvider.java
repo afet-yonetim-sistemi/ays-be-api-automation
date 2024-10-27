@@ -360,6 +360,15 @@ public class AysDataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddressForUsersList")
+    public static Object[][] invalidEmailAddressDataForUsersList(){
+        return new Object[][]{
+                {"", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"E",AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"E".repeat(256), AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+        };
+    }
+
     @org.testng.annotations.DataProvider(name = "invalidCityDataForUsersList")
     public static Object[][] invalidCityDataForUsersList() {
         return new Object[][]{
