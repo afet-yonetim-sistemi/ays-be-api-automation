@@ -96,8 +96,8 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailForAdminRegistration", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, AysErrorMessage errorMessage) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
+    public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, AysErrorMessage errorMessage,String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -116,10 +116,7 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors", hasItem(
-                        hasEntry("message", errorMessage.getMessage())))
-                .body("subErrors[0].field", equalTo("emailAddress"))
-                .body("subErrors[0].type", equalTo("String"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)

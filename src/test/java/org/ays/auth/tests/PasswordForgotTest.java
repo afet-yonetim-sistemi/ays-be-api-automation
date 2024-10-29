@@ -23,7 +23,7 @@ public class PasswordForgotTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
     public void forgotPasswordNegativeTest(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         passwordForgotPayload.setEmailAddress(emailAddress);

@@ -4,11 +4,10 @@ import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.model.enums.SourcePage;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
-
-import static org.hamcrest.Matchers.equalTo;
 
 public class TokenTest {
 
@@ -21,16 +20,14 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
-    public void getTokenWithInvalidEmailAddress(String emailAddress, String errorMessage, String field, String type) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
+    public void getTokenWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(type));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage,field,type));
     }
 
     @Test(groups = {"Regression"})
@@ -69,16 +66,14 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddressForGetAdminToken", dataProviderClass = AysDataProvider.class)
-    public void getUserTokenWithInvalidUsername(String emailAddress, String errorMessage, String field, String type) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmail", dataProviderClass = AysDataProvider.class)
+    public void getUserTokenWithInvalidUsername(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
         loginPayload.setEmailAddress(emailAddress);
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(type));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage,field,type));
     }
 
     @Test(groups = {"Regression"})
