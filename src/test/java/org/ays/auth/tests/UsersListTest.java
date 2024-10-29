@@ -7,6 +7,7 @@ import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.model.entity.UserEntity;
+import org.ays.auth.model.enums.UserStatus;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
@@ -21,7 +22,6 @@ import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -114,7 +114,8 @@ public class UsersListTest {
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
         UserEntity userEntity = UserDataSource.findAnyUser();
-        UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity);
+        UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity,
+                List.of(UserStatus.ACTIVE, UserStatus.PASSIVE));
         userListPayload.setFilter(filter);
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
@@ -203,7 +204,7 @@ public class UsersListTest {
     }
 
     @Test(groups = {"Regression"})
-    public void listUserByEmailAddress(){
+    public void listUserByEmailAddress() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -219,26 +220,23 @@ public class UsersListTest {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        UserListPayload.Filter filter= new UserListPayload.Filter();
+        UserListPayload.Filter filter = new UserListPayload.Filter();
         filter.setEmailAddress(emailAddress);
 
-        List<String> statuses = new ArrayList<>();
-        statuses.add("ACTIVE");
-        statuses.add("PASSIVE");
-        filter.setStatuses(statuses);
+        filter.setStatuses(List.of(UserStatus.ACTIVE.name(), UserStatus.PASSIVE.name()));
 
         userListPayload.setFilter(filter);
 
-        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .body("response.content[0].emailAddress",equalTo(emailAddress))
-                .body("response.content[0].id",notNullValue());
+                .body("response.content[0].emailAddress", equalTo(emailAddress))
+                .body("response.content[0].id", notNullValue());
 
     }
 
     @Test(groups = {"Regression"})
-    public void listAllUsersByEmailAddress(){
+    public void listAllUsersByEmailAddress() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -246,43 +244,40 @@ public class UsersListTest {
         UserListPayload userListPayload = new UserListPayload();
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        UserListPayload.Filter filter= new UserListPayload.Filter();
+        UserListPayload.Filter filter = new UserListPayload.Filter();
         filter.setEmailAddress("@gmail.com");
 
-        List<String> statuses = new ArrayList<>();
-        statuses.add("ACTIVE");
-        statuses.add("PASSIVE");
-        filter.setStatuses(statuses);
+        filter.setStatuses(List.of(UserStatus.ACTIVE.name(), UserStatus.PASSIVE.name()));
 
         userListPayload.setFilter(filter);
 
-        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec())
-                .body("response.content.size()",greaterThan(0))
-                .body("response.content[0].id",notNullValue())
-                .body("response.content[0].firstName",notNullValue())
-                .body("response.content[0].emailAddress",notNullValue());
+                .body("response.content.size()", greaterThan(0))
+                .body("response.content[0].id", notNullValue())
+                .body("response.content[0].firstName", notNullValue())
+                .body("response.content[0].emailAddress", notNullValue());
 
     }
 
-    @Test(groups = {"Regression"},dataProvider = "invalidEmailAddressForUsersList", dataProviderClass = AysDataProvider.class)
-    public void listUsersForInvalidEmailAddressData(String emailAddress, AysErrorMessage errorMessage, String field, String type){
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddressForUsersList", dataProviderClass = AysDataProvider.class)
+    public void listUsersForInvalidEmailAddressData(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
-        LoginPayload loginPayload=LoginPayload.generateAsTestVolunteerFoundationAdmin();
-        String accessToken=this.loginAndGetAccessToken(loginPayload);
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        UserListPayload userListPayload= new UserListPayload();
-        userListPayload.setPageable(AysPageable.generate(1,10));
+        UserListPayload userListPayload = new UserListPayload();
+        userListPayload.setPageable(AysPageable.generate(1, 10));
 
-        UserListPayload.Filter filter= new UserListPayload.Filter();
+        UserListPayload.Filter filter = new UserListPayload.Filter();
         filter.setEmailAddress(emailAddress);
         userListPayload.setFilter(filter);
 
-        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        Response response = UserEndpoints.findAll(userListPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .spec(AysResponseSpecs.subErrorsSpec(errorMessage,field,type));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
 
     }
 

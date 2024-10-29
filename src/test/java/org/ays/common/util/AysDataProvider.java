@@ -218,8 +218,8 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidEmail")
-    public Object[][] invalidEmail() {
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddress")
+    public Object[][] invalidEmailAddress() {
         return new Object[][]{
                 {"", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
@@ -335,10 +335,10 @@ public class AysDataProvider {
     }
 
     @org.testng.annotations.DataProvider(name = "invalidEmailAddressForUsersList")
-    public static Object[][] invalidEmailAddressDataForUsersList(){
+    public static Object[][] invalidEmailAddressDataForUsersList() {
         return new Object[][]{
                 {"", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
-                {"E",AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"E", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
                 {"E".repeat(256), AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
         };
     }
