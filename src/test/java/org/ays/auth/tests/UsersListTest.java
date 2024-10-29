@@ -1,11 +1,15 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
+import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
 import org.ays.auth.model.entity.UserEntity;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.RoleCreatePayload;
+import org.ays.auth.payload.UserCreatePayload;
 import org.ays.auth.payload.UserListPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysOrder;
@@ -16,7 +20,11 @@ import org.ays.common.util.AysLogUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.Matchers.*;
 
 
 public class UsersListTest {
@@ -194,6 +202,70 @@ public class UsersListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
+    @Test(groups = {"Regression"})
+    public void listUserByEmailAddress(){
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
+        String emailAddress = userCreatePayload.getEmailAddress();
+        UserEndpoints.create(userCreatePayload, accessToken);
+
+        UserListPayload userListPayload = new UserListPayload();
+        userListPayload.setPageable(AysPageable.generate(1, 10));
+
+        UserListPayload.Filter filter= new UserListPayload.Filter();
+        filter.setEmailAddress(emailAddress);
+
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
+        statuses.add("PASSIVE");
+        filter.setStatuses(statuses);
+
+        userListPayload.setFilter(filter);
+
+        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .body("response.content[0].emailAddress",equalTo(emailAddress))
+                .body("response.content[0].id",notNullValue());
+
+    }
+
+    @Test(groups = {"Regression"})
+    public void listAllUsersByEmailAddress(){
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        UserListPayload userListPayload = new UserListPayload();
+        userListPayload.setPageable(AysPageable.generate(1, 10));
+
+        UserListPayload.Filter filter= new UserListPayload.Filter();
+        filter.setEmailAddress("@gmail.com");
+
+        List<String> statuses = new ArrayList<>();
+        statuses.add("ACTIVE");
+        statuses.add("PASSIVE");
+        filter.setStatuses(statuses);
+
+        userListPayload.setFilter(filter);
+
+        Response response=UserEndpoints.findAll(userListPayload,accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .body("response.content.size()",greaterThan(0))
+                .body("response.content[0].id",notNullValue())
+                .body("response.content[0].firstName",notNullValue())
+                .body("response.content[0].emailAddress",notNullValue());
+
+    }
+
     @Test(groups = {"Regression"},dataProvider = "invalidEmailAddressForUsersList", dataProviderClass = AysDataProvider.class)
     public void listUsersForInvalidEmailAddressData(String emailAddress, AysErrorMessage errorMessage, String field, String type){
 
@@ -211,6 +283,7 @@ public class UsersListTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage,field,type));
+
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForUsersList", dataProviderClass = AysDataProvider.class)

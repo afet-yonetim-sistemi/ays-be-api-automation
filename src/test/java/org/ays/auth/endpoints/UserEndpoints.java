@@ -8,6 +8,7 @@ import org.ays.auth.payload.UserUpdatePayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
 import org.openqa.selenium.remote.http.HttpMethod;
+
 import java.util.Map;
 
 @UtilityClass
