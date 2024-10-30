@@ -3,7 +3,6 @@ package org.ays.auth.payload;
 import lombok.Getter;
 import lombok.Setter;
 import org.ays.auth.model.entity.UserEntity;
-import org.ays.auth.model.enums.UserStatus;
 import org.ays.common.model.payload.AysPageable;
 import org.ays.common.model.payload.AysPhoneNumber;
 
@@ -36,16 +35,14 @@ public class UserListPayload {
         private List<String> statuses;
         private AysPhoneNumber phoneNumber;
 
-        public static Filter from(UserEntity userEntity, List<UserStatus> userStatuses) {
+        public static Filter from(UserEntity userEntity) {
             Filter filters = new Filter();
             filters.setPhoneNumber(userEntity.getPhoneNumber());
             filters.setFirstName(userEntity.getFirstName());
             filters.setLastName(userEntity.getLastName());
             filters.setEmailAddress(userEntity.getEmailAddress());
             filters.setCity(userEntity.getCity());
-            filters.setStatuses(userStatuses.stream()
-                    .map(Enum::name)
-                    .toList());
+            filters.setStatuses(userEntity.getStatuses());
             return filters;
         }
 

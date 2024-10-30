@@ -114,8 +114,8 @@ public class UsersListTest {
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
         UserEntity userEntity = UserDataSource.findAnyUser();
-        UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity,
-                List.of(UserStatus.ACTIVE, UserStatus.PASSIVE));
+        UserListPayload.Filter filter = UserListPayload.Filter.from(userEntity);
+        filter.setStatuses(List.of(UserStatus.ACTIVE.name(), UserStatus.PASSIVE.name()));
         userListPayload.setFilter(filter);
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
 
@@ -223,8 +223,6 @@ public class UsersListTest {
         UserListPayload.Filter filter = new UserListPayload.Filter();
         filter.setEmailAddress(emailAddress);
 
-        filter.setStatuses(List.of(UserStatus.ACTIVE.name(), UserStatus.PASSIVE.name()));
-
         userListPayload.setFilter(filter);
 
         Response response = UserEndpoints.findAll(userListPayload, accessToken);
@@ -246,8 +244,6 @@ public class UsersListTest {
 
         UserListPayload.Filter filter = new UserListPayload.Filter();
         filter.setEmailAddress("@gmail.com");
-
-        filter.setStatuses(List.of(UserStatus.ACTIVE.name(), UserStatus.PASSIVE.name()));
 
         userListPayload.setFilter(filter);
 
