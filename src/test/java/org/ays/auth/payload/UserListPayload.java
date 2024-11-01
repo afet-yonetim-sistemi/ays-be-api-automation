@@ -30,6 +30,7 @@ public class UserListPayload {
 
         private String firstName;
         private String lastName;
+        private String emailAddress;
         private String city;
         private List<String> statuses;
         private AysPhoneNumber phoneNumber;
@@ -39,6 +40,7 @@ public class UserListPayload {
             filters.setPhoneNumber(userEntity.getPhoneNumber());
             filters.setFirstName(userEntity.getFirstName());
             filters.setLastName(userEntity.getLastName());
+            filters.setEmailAddress(userEntity.getEmailAddress());
             filters.setCity(userEntity.getCity());
             filters.setStatuses(userEntity.getStatuses());
             return filters;

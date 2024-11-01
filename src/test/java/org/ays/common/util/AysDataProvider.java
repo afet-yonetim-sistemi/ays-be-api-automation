@@ -218,21 +218,8 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidEmailForAdminRegistration")
-    public Object[][] invalidEmailForAdminRegistration() {
-        return new Object[][]{
-                {"", AysErrorMessage.MUST_NOT_BE_BLANK},
-                {null, AysErrorMessage.MUST_NOT_BE_BLANK},
-                {"  ", AysErrorMessage.MUST_NOT_BE_BLANK},
-                {"abc", AysErrorMessage.MUST_BE_VALID},
-                {"abcgmail.com", AysErrorMessage.MUST_BE_VALID},
-                {"abc@gmail", AysErrorMessage.MUST_BE_VALID}
-
-        };
-    }
-
-    @org.testng.annotations.DataProvider(name = "invalidEmail")
-    public Object[][] invalidEmail() {
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddress")
+    public Object[][] invalidEmailAddress() {
         return new Object[][]{
                 {"", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
@@ -251,19 +238,6 @@ public class AysDataProvider {
                 {"90", "", "must not be blank", "lineNumber", "String"},
                 {"90", "12345", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
                 {"90", "1234567890123456", "must be valid", "phoneNumber", "AysPhoneNumberRequest"}
-        };
-    }
-
-    @org.testng.annotations.DataProvider(name = "invalidEmailAddressForGetAdminToken")
-    public static Object[][] invalidEmailAddressForGetAdminToken() {
-        return new Object[][]{
-                {"", "must not be blank", "emailAddress", "String"},
-                {null, "must not be blank", "emailAddress", "String"},
-                {"  ", "must not be blank", "emailAddress", "String"},
-                {"abc", "must be valid", "emailAddress", "String"},
-                {"abcgmail.com", "must be valid", "emailAddress", "String"},
-                {"abc@gmail", "must be valid", "emailAddress", "String"}
-
         };
     }
 
@@ -357,6 +331,15 @@ public class AysDataProvider {
                 {"City$Name", AysErrorMessage.MUST_BE_VALID, "targetCity", "String"},
                 {"C".repeat(101), AysErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"},
                 {"   ", AysErrorMessage.MUST_NOT_BE_BLANK, "targetCity", "String"}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidEmailAddressForUsersList")
+    public static Object[][] invalidEmailAddressDataForUsersList() {
+        return new Object[][]{
+                {"", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"E", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"E".repeat(256), AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
         };
     }
 
@@ -470,17 +453,6 @@ public class AysDataProvider {
                 {List.of("ACTIVE".repeat(10)), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
                 {List.of("PASSIVE$%^&*"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"},
                 {List.of("active"), AysErrorMessage.MUST_BE_ACCEPTED_VALUE, "statuses", "AysUserStatus"}
-        };
-    }
-
-    @org.testng.annotations.DataProvider(name = "invalidEmailAddress")
-    public static Object[][] invalidEmailAddress() {
-        return new Object[][]{
-                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"invalid", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {"     ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"abcgmail.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {"abc@gmail", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
         };
     }
 
