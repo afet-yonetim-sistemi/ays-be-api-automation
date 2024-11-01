@@ -24,7 +24,9 @@ import org.testng.collections.CollectionUtils;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 
 
 public class UsersListTest {
