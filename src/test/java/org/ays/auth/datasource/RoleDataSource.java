@@ -53,4 +53,48 @@ public class RoleDataSource {
         }
     }
 
+    public static String findLastCreatedRoleNameByInstitutionId(String institutionId) {
+
+        String query = "SELECT NAME FROM AYS_ROLE WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, institutionId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("NAME");
+                }
+            }
+
+            throw new RuntimeException("No roles found for the given institution ID");
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public static String findLastCreatedRoleStatusByInstitutionId(String institutionId) {
+
+        String query = "SELECT STATUS FROM AYS_ROLE WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, institutionId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("STATUS");
+                }
+            }
+
+            throw new RuntimeException("No roles found for the given institution ID");
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
 }

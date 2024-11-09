@@ -89,4 +89,30 @@ public class PermissionDataSource {
         }
     }
 
+    public static List<String> getPermissionIdsFromLastCreatedRole(String roleId) {
+
+        String query = "SELECT PERMISSION_ID FROM AYS_ROLE_PERMISSION_RELATION WHERE ROLE_ID = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, roleId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<String> permissions = new ArrayList<>();
+
+                while (resultSet.next()) {
+                    String permissionId = resultSet.getString("PERMISSION_ID");
+                    permissions.add(permissionId);
+                }
+
+                return permissions;
+            }
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching permission IDs for role: " + roleId, exception);
+        }
+    }
+
+
 }
