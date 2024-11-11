@@ -520,7 +520,8 @@ public class AysDataProvider {
                 {List.of("        "), AysErrorMessage.MUST_NOT_BE_BLANK, "permissionIds[]", "permissionIds"},
                 {List.of("123"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
                 {List.of("$%^&*"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
-                {List.of("invalid"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"}
+                {List.of("invalid"), AysErrorMessage.MUST_BE_VALID_UUID, "permissionIds[]", "permissionIds"},
+                {null, AysErrorMessage.MUST_NOT_BE_EMPTY, "permissionIds", "Set"}
 
         };
     }
