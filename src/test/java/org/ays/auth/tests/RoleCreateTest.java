@@ -1,9 +1,11 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.model.enums.RoleStatus;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.common.model.enums.AysErrorMessage;
@@ -47,7 +49,7 @@ public class RoleCreateTest {
         String status = RoleDataSource.findLastCreatedRoleStatusByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
-        Assert.assertEquals(status, "ACTIVE");
+        Assert.assertEquals(status, RoleStatus.ACTIVE.toString());
     }
 
     @Test(groups = {"Regression"})
@@ -102,19 +104,21 @@ public class RoleCreateTest {
     }
 
     @Test(groups = {"Regression"})
-    public void createRoleWithDuplicatePermissionIds() {
+    public void createRoleWithSamePermissionIds() {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        role.setPermissionIds(List.of("17dd50f6-61fe-4a30-a136-d9b80649e7fe", "17dd50f6-61fe-4a30-a136-d9b80649e7fe"));
+        List<String> samePermissionIds = PermissionDataSource.getTwoSamePermissionIds();
+        role.setPermissionIds(samePermissionIds);
+
         RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
-        List<String> permissionIds = RoleDataSource.getPermissionIdsFromLastCreatedRole(roleId);
-        List<String> expectedPermissionIds = List.of("17dd50f6-61fe-4a30-a136-d9b80649e7fe");
+        List<String> permissionIdsFromData = RoleDataSource.getPermissionIdsFromLastCreatedRole(roleId);
 
-        Assert.assertEquals(permissionIds.size(), 1, "Permission IDs should be unique in the database.");
-        Assert.assertEquals(permissionIds, expectedPermissionIds);
+        Assert.assertEquals(permissionIdsFromData.size(), 1, "Permission IDs should be unique in the database.");
+        Assert.assertEquals(permissionIdsFromData.get(0), samePermissionIds.get(0),
+                "Permission ID in the database should match the one set in the role.");
     }
 
     @Test(groups = {"Regression"})

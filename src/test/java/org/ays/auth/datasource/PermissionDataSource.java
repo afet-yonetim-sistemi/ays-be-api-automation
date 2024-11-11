@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @UtilityClass
 public class PermissionDataSource {
@@ -63,6 +64,43 @@ public class PermissionDataSource {
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    public static List<String> findAllPermissionIds() {
+
+        String query = "SELECT ID FROM AYS_PERMISSION";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            List<String> permissions = new ArrayList<>();
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID");
+                permissions.add(id);
+            }
+            return permissions;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public static List<String> getTwoSamePermissionIds() {
+
+        List<String> permissionIds = findAllPermissionIds();
+
+        if (permissionIds.isEmpty()) {
+            throw new IllegalStateException("No permission IDs found in the database.");
+        }
+
+        String randomPermissionId = permissionIds.get(new Random().nextInt(permissionIds.size()));
+
+        List<String> result = new ArrayList<>();
+        result.add(randomPermissionId);
+        result.add(randomPermissionId);
+
+        return result;
     }
 
     public static List<String> findAllPermissionNamesByIsSuper(boolean isSuper) {
