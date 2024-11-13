@@ -114,7 +114,7 @@ public class RoleCreateTest {
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
-        List<String> permissionIdsFromData = RoleDataSource.getPermissionIdsFromLastCreatedRole(roleId);
+        List<String> permissionIdsFromData = RoleDataSource.getPermissionIdsFromCreatedRole(roleId);
 
         Assert.assertEquals(permissionIdsFromData.size(), 1, "Permission IDs should be unique in the database.");
         Assert.assertEquals(permissionIdsFromData.get(0), samePermissionIds.get(0),
