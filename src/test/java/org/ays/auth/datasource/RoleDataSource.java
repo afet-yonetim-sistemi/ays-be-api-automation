@@ -99,7 +99,7 @@ public class RoleDataSource {
         }
     }
 
-    public static List<String> getPermissionIdsFromCreatedRole(String roleId) {
+    public static List<String> findAllPermissionIdsFromCreatedRole(String roleId) {
 
         String query = "SELECT PERMISSION_ID FROM AYS_ROLE_PERMISSION_RELATION WHERE ROLE_ID = ?";
 

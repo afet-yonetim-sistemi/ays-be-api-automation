@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -26,7 +27,7 @@ public class RoleCreateTest {
 
     @BeforeMethod
     private void setUpToken() {
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         this.accessToken = this.loginAndGetAccessToken(loginPayload);
     }
 
@@ -107,17 +108,19 @@ public class RoleCreateTest {
     public void createRoleWithSamePermissionIds() {
 
         RoleCreatePayload role = RoleCreatePayload.generate();
-        List<String> samePermissionIds = PermissionDataSource.getTwoSamePermissionIds();
-        role.setPermissionIds(samePermissionIds);
+        List<String> randomPermissionIds = PermissionDataSource.findAllPermissionIds();
+        String duplicatedPermissionId = randomPermissionIds.get(new Random().nextInt(randomPermissionIds.size()));
+
+        role.setPermissionIds(List.of(duplicatedPermissionId, duplicatedPermissionId));
 
         RoleEndpoints.create(role, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
-        List<String> permissionIdsFromData = RoleDataSource.getPermissionIdsFromCreatedRole(roleId);
+        List<String> permissionIdsFromData = RoleDataSource.findAllPermissionIdsFromCreatedRole(roleId);
 
         Assert.assertEquals(permissionIdsFromData.size(), 1, "Permission IDs should be unique in the database.");
-        Assert.assertEquals(permissionIdsFromData.get(0), samePermissionIds.get(0),
+        Assert.assertEquals(permissionIdsFromData.get(0), duplicatedPermissionId,
                 "Permission ID in the database should match the one set in the role.");
     }
 
