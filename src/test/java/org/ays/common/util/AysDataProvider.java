@@ -183,10 +183,10 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidDataForPostApplicationReasonField")
     public static Object[][] invalidDataForPostApplicationReasonField() {
         return new Object[][]{
-                {"reason less then forty", "size must be between 40 and 512", "reason", "String"},
-                {null, "must not be blank", "reason", "String"},
-                {"       ", "size must be between 40 and 512", "reason", "String"},
-                {"A".repeat(513), "size must be between 40 and 512", "reason", "String"}
+                {"reason less then forty", AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "reason", "String"},
+                {"       ", AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
+                {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"}
         };
     }
 

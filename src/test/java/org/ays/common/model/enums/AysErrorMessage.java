@@ -15,6 +15,7 @@ public enum AysErrorMessage {
     SIZE_BETWEEN_2_100("size must be between 2 and 100"),
     SIZE_BETWEEN_2_255("size must be between 2 and 255"),
     SIZE_BETWEEN_1_10("size must be between 1 and 10"),
+    SIZE_BETWEEN_40_512("size must be between 40 and 512"),
     CONTAINS_INVALID_CHARACTERS("contains invalid characters"),
     MUST_BE_ACCEPTED_VALUE("must be accepted value"),
     MUST_NOT_BE_NULL("must not be null"),
@@ -27,7 +28,10 @@ public enum AysErrorMessage {
     ROLE_DOES_NOT_EXIST("role does not exist!"),
     ROLE_STATUS_IS_NOT_PASSIVE("role status is not passive!"),
     THE_ROLE_IS_ASSIGNED("the role is assigned to one or more users"),
-    MUST_BE_10("must be 10");
+    MUST_BE_10("must be 10"),
+    STATUS_APPROVED("status:APPROVED"),
+    STATUS_REJECTED("already rejected!"),
+    STATUS_NOT_COMPLETED("is not complete!");
 
     private final String message;
 
