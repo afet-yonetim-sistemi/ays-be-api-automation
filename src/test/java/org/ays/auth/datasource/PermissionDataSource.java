@@ -65,6 +65,26 @@ public class PermissionDataSource {
         }
     }
 
+    public static List<String> findAllPermissionIds() {
+
+        String query = "SELECT ID FROM AYS_PERMISSION";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            List<String> permissions = new ArrayList<>();
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID");
+                permissions.add(id);
+            }
+            return permissions;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
     public static List<String> findAllPermissionNamesByIsSuper(boolean isSuper) {
 
         String query = "SELECT NAME FROM AYS_PERMISSION WHERE IS_SUPER = ?";
@@ -88,5 +108,6 @@ public class PermissionDataSource {
             throw new RuntimeException(exception);
         }
     }
+
 
 }
