@@ -9,6 +9,8 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertNotEquals;
+
 public class PasswordForgotTest {
 
     @Test(groups = {"Smoke", "Regression"})
@@ -32,6 +34,28 @@ public class PasswordForgotTest {
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
+    }
+
+    @Test(groups = {"Smoke", "Regression"})
+    public void forgotPasswordVerifyTimeChangeInResponse() {
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
+        String emailAddress = UserDataSource.findAnyEmailAddress();
+        passwordForgotPayload.setEmailAddress(emailAddress);
+
+        Response firstResponse = AuthEndpoints.forgotPassword(passwordForgotPayload);
+        firstResponse.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+
+        Response secondResponse = AuthEndpoints.forgotPassword(passwordForgotPayload);
+        secondResponse.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+
+        String firstResponseTime = firstResponse.jsonPath().getString("time");
+        String secondResponseTime = secondResponse.jsonPath().getString("time");
+
+        assertNotEquals(firstResponseTime, secondResponseTime,
+                "The time value is the same in the first and second response.");
+
     }
 
 }
