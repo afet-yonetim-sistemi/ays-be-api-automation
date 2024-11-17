@@ -16,8 +16,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -34,8 +34,8 @@ public class RoleCreateTest {
     @Test(groups = {"Smoke", "Regression"})
     public void createRolePositiveScenario() {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        Response response = RoleEndpoints.create(role, accessToken);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
 
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -44,8 +44,8 @@ public class RoleCreateTest {
     @Test(groups = {"Regression"})
     public void isTheCreatedRoleStatusActive() {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        RoleEndpoints.create(role, accessToken);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
 
         String status = RoleDataSource.findLastCreatedRoleStatusByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
@@ -56,12 +56,12 @@ public class RoleCreateTest {
     @Test(groups = {"Regression"})
     public void createRoleWithExistingRoleName() {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
         String existingRoleName = RoleDataSource.findLastCreatedRoleNameByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
-        role.setName(existingRoleName);
+        roleCreatePayload.setName(existingRoleName);
 
-        Response response = RoleEndpoints.create(role, accessToken);
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message", equalTo("role already exist! name:" + existingRoleName + ""));
@@ -70,10 +70,10 @@ public class RoleCreateTest {
     @Test(groups = {"Regression"}, dataProvider = "invalidRoleName", dataProviderClass = AysDataProvider.class)
     public void createRoleWithInvalidRoleName(String name, AysErrorMessage errorMessage, String field, String type) {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        role.setName(name);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        roleCreatePayload.setName(name);
 
-        Response response = RoleEndpoints.create(role, accessToken);
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -82,10 +82,10 @@ public class RoleCreateTest {
     @Test(groups = {"Regression"})
     public void createRoleWithNullRoleName() {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        role.setName(null);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        roleCreatePayload.setName(null);
 
-        Response response = RoleEndpoints.create(role, accessToken);
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .body("subErrors[0].message", equalTo(AysErrorMessage.MUST_NOT_BE_BLANK.getMessage()));
@@ -95,10 +95,10 @@ public class RoleCreateTest {
     public void createRoleWithInvalidPermissionIdList(List<String> permissionIds, AysErrorMessage errorMessage,
                                                       String field, String type) {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        role.setPermissionIds(permissionIds);
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        roleCreatePayload.setPermissionIds(permissionIds);
 
-        Response response = RoleEndpoints.create(role, accessToken);
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
@@ -107,20 +107,21 @@ public class RoleCreateTest {
     @Test(groups = {"Regression"})
     public void createRoleWithSamePermissionIds() {
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
-        List<String> randomPermissionIds = PermissionDataSource.findAllPermissionIds();
-        String duplicatedPermissionId = randomPermissionIds.get(new Random().nextInt(randomPermissionIds.size()));
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        List<String> allPermissions = PermissionDataSource.findAllPermissionIds();
+        Collections.shuffle(allPermissions);
+        String randomPermissionId = allPermissions.get(0);
 
-        role.setPermissionIds(List.of(duplicatedPermissionId, duplicatedPermissionId));
+        roleCreatePayload.setPermissionIds(List.of(randomPermissionId, randomPermissionId));
 
-        RoleEndpoints.create(role, accessToken);
+        RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
-        List<String> permissionIdsFromData = RoleDataSource.findAllPermissionIdsFromCreatedRole(roleId);
+        List<String> rolePermissions = RoleDataSource.findAllPermissionIdsFromCreatedRole(roleId);
 
-        Assert.assertEquals(permissionIdsFromData.size(), 1, "Permission IDs should be unique in the database.");
-        Assert.assertEquals(permissionIdsFromData.get(0), duplicatedPermissionId,
+        Assert.assertEquals(rolePermissions.size(), 1, "Permission IDs should be unique in the database.");
+        Assert.assertEquals(rolePermissions.get(0), randomPermissionId,
                 "Permission ID in the database should match the one set in the role.");
     }
 
@@ -130,9 +131,9 @@ public class RoleCreateTest {
         LoginPayload login = LoginPayload.generateAsTestVolunteerFoundationUser();
         String token = loginAndGetAccessToken(login);
 
-        RoleCreatePayload role = RoleCreatePayload.generate();
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
 
-        Response response = RoleEndpoints.create(role, token);
+        Response response = RoleEndpoints.create(roleCreatePayload, token);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
