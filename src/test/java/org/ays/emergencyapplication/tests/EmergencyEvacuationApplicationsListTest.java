@@ -19,8 +19,10 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 public class EmergencyEvacuationApplicationsListTest {
 
@@ -44,6 +46,10 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.content.lastName", everyItem(notNullValue()))
                 .body("response.content.phoneNumber.countryCode", everyItem(notNullValue()))
                 .body("response.content.phoneNumber.lineNumber", everyItem(notNullValue()))
+                .body("response.content", everyItem(hasKey("applicantFirstName")))
+                .body("response.content", everyItem(hasKey("applicantLastName")))
+                .body("response.content.applicantPhoneNumber", everyItem(hasKey("countryCode")))
+                .body("response.content.applicantPhoneNumber", everyItem(hasKey("lineNumber")))
                 .body("response.content.seatingCount", everyItem(notNullValue()))
                 .body("response.content.status", everyItem(notNullValue()))
                 .body("response.content.isInPerson", everyItem(notNullValue()))
@@ -52,7 +58,7 @@ public class EmergencyEvacuationApplicationsListTest {
     }
 
     @Test(groups = {"Smoke", "Regression"})
-    public void testFilteringEvacuationApplicationsWithAnExistingApplicationData() {
+    public void testFilteringEvacuationApplicationsWithAnExistingIsInPersonApplicationData() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -72,6 +78,10 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.content[0].lastName", equalTo(applicationPayload.getLastName()))
                 .body("response.content[0].phoneNumber.countryCode", equalTo(applicationPayload.getPhoneNumber().getCountryCode()))
                 .body("response.content[0].phoneNumber.lineNumber", equalTo(applicationPayload.getPhoneNumber().getLineNumber()))
+                .body("response.content[0].applicantFirstName", nullValue())
+                .body("response.content[0].applicantLastName", nullValue())
+                .body("response.content[0].applicantPhoneNumber.countryCode", nullValue())
+                .body("response.content[0].applicantPhoneNumber.lineNumber", nullValue())
                 .body("response.content[0].seatingCount", equalTo(applicationPayload.getSeatingCount()))
                 .body("response.content[0].status", equalTo("PENDING"))
                 .body("response.content[0].isInPerson", is(true))
@@ -90,6 +100,52 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.filteredBy.targetDistrict", equalTo(applicationPayload.getTargetDistrict()))
                 .body("response.filteredBy.statuses[0]", equalTo("PENDING"))
                 .body("response.filteredBy.isInPerson", equalTo(true));
+    }
+
+    @Test(groups = {"Smoke", "Regression"})
+    public void testFilteringEvacuationApplicationsWithAnExistingNotIsInPersonApplicationData() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        EmergencyEvacuationApplicationPayload applicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
+        EmergencyEvacuationApplicationEndpoints.create(applicationPayload);
+
+        EmergencyEvacuationApplicationListPayload listPayload = EmergencyEvacuationApplicationListPayload
+                .generate(applicationPayload);
+        listPayload.getFilter().setIsInPerson(false);
+        Response response = EmergencyEvacuationApplicationEndpoints
+                .findAll(listPayload, accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec())
+                .body("response.content[0].id", notNullValue())
+                .body("response.content[0].referenceNumber", equalTo(EmergencyEvacuationApplicationDataSource.findLastCreatedReferenceNumber()))
+                .body("response.content[0].firstName", equalTo(applicationPayload.getFirstName()))
+                .body("response.content[0].lastName", equalTo(applicationPayload.getLastName()))
+                .body("response.content[0].phoneNumber.countryCode", equalTo(applicationPayload.getPhoneNumber().getCountryCode()))
+                .body("response.content[0].phoneNumber.lineNumber", equalTo(applicationPayload.getPhoneNumber().getLineNumber()))
+                .body("response.content[0].applicantFirstName", equalTo(applicationPayload.getApplicantFirstName()))
+                .body("response.content[0].applicantLastName", equalTo(applicationPayload.getApplicantLastName()))
+                .body("response.content[0].applicantPhoneNumber.countryCode", equalTo(applicationPayload.getApplicantPhoneNumber().getCountryCode()))
+                .body("response.content[0].applicantPhoneNumber.lineNumber", equalTo(applicationPayload.getApplicantPhoneNumber().getLineNumber()))
+                .body("response.content[0].seatingCount", equalTo(applicationPayload.getSeatingCount()))
+                .body("response.content[0].status", equalTo("PENDING"))
+                .body("response.content[0].isInPerson", is(false))
+                .body("response.content[0].createdAt", notNullValue())
+                .body("response.pageNumber", equalTo(1))
+                .body("response.pageSize", equalTo(1))
+                .body("response.totalPageCount", equalTo(1))
+                .body("response.totalElementCount", equalTo(1))
+                .body("response.orderedBy[0].property", equalTo("createdAt"))
+                .body("response.orderedBy[0].direction", equalTo("DESC"))
+                .body("response.filteredBy.referenceNumber", equalTo(EmergencyEvacuationApplicationDataSource.findLastCreatedReferenceNumber()))
+                .body("response.filteredBy.sourceCity", equalTo(applicationPayload.getSourceCity()))
+                .body("response.filteredBy.sourceDistrict", equalTo(applicationPayload.getSourceDistrict()))
+                .body("response.filteredBy.seatingCount", equalTo(applicationPayload.getSeatingCount()))
+                .body("response.filteredBy.targetCity", equalTo(applicationPayload.getTargetCity()))
+                .body("response.filteredBy.targetDistrict", equalTo(applicationPayload.getTargetDistrict()))
+                .body("response.filteredBy.statuses[0]", equalTo("PENDING"))
+                .body("response.filteredBy.isInPerson", equalTo(false));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "negativeReferenceNumberData", dataProviderClass = AysDataProvider.class)
