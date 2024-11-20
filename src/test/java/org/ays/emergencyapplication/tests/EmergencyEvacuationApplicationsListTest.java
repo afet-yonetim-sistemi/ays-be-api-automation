@@ -58,7 +58,7 @@ public class EmergencyEvacuationApplicationsListTest {
     }
 
     @Test(groups = {"Smoke", "Regression"})
-    public void testFilteringEvacuationApplicationsWithAnExistingIsInPersonApplicationData() {
+    public void testFilteringEvacuationApplicationsByIsInPersonApplicationData() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -103,7 +103,7 @@ public class EmergencyEvacuationApplicationsListTest {
     }
 
     @Test(groups = {"Smoke", "Regression"})
-    public void testFilteringEvacuationApplicationsWithAnExistingNotIsInPersonApplicationData() {
+    public void testFilteringEvacuationApplicationsByNotIsInPersonApplicationData() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
