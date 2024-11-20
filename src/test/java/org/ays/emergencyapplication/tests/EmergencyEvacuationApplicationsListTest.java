@@ -248,7 +248,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidTargetDistrictData", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidTargetDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
