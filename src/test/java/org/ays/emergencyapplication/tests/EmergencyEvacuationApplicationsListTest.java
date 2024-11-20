@@ -10,6 +10,7 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.emergencyapplication.datasource.EmergencyEvacuationApplicationDataSource;
 import org.ays.emergencyapplication.endpoints.EmergencyEvacuationApplicationEndpoints;
+import org.ays.emergencyapplication.model.enums.EmergencyEvacuationApplicationStatus;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationListPayload;
 import org.ays.emergencyapplication.model.payload.EmergencyEvacuationApplicationPayload;
 import org.testng.annotations.Test;
@@ -83,7 +84,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.content[0].applicantPhoneNumber.countryCode", nullValue())
                 .body("response.content[0].applicantPhoneNumber.lineNumber", nullValue())
                 .body("response.content[0].seatingCount", equalTo(applicationPayload.getSeatingCount()))
-                .body("response.content[0].status", equalTo("PENDING"))
+                .body("response.content[0].status", equalTo(EmergencyEvacuationApplicationStatus.PENDING.name()))
                 .body("response.content[0].isInPerson", is(true))
                 .body("response.content[0].createdAt", notNullValue())
                 .body("response.pageNumber", equalTo(1))
@@ -98,7 +99,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.filteredBy.seatingCount", equalTo(applicationPayload.getSeatingCount()))
                 .body("response.filteredBy.targetCity", equalTo(applicationPayload.getTargetCity()))
                 .body("response.filteredBy.targetDistrict", equalTo(applicationPayload.getTargetDistrict()))
-                .body("response.filteredBy.statuses[0]", equalTo("PENDING"))
+                .body("response.filteredBy.statuses[0]", equalTo(EmergencyEvacuationApplicationStatus.PENDING.name()))
                 .body("response.filteredBy.isInPerson", equalTo(true));
     }
 
@@ -129,7 +130,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.content[0].applicantPhoneNumber.countryCode", equalTo(applicationPayload.getApplicantPhoneNumber().getCountryCode()))
                 .body("response.content[0].applicantPhoneNumber.lineNumber", equalTo(applicationPayload.getApplicantPhoneNumber().getLineNumber()))
                 .body("response.content[0].seatingCount", equalTo(applicationPayload.getSeatingCount()))
-                .body("response.content[0].status", equalTo("PENDING"))
+                .body("response.content[0].status", equalTo(EmergencyEvacuationApplicationStatus.PENDING.name()))
                 .body("response.content[0].isInPerson", is(false))
                 .body("response.content[0].createdAt", notNullValue())
                 .body("response.pageNumber", equalTo(1))
@@ -144,7 +145,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .body("response.filteredBy.seatingCount", equalTo(applicationPayload.getSeatingCount()))
                 .body("response.filteredBy.targetCity", equalTo(applicationPayload.getTargetCity()))
                 .body("response.filteredBy.targetDistrict", equalTo(applicationPayload.getTargetDistrict()))
-                .body("response.filteredBy.statuses[0]", equalTo("PENDING"))
+                .body("response.filteredBy.statuses[0]", equalTo(EmergencyEvacuationApplicationStatus.PENDING.name()))
                 .body("response.filteredBy.isInPerson", equalTo(false));
     }
 
@@ -247,7 +248,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidDistrictDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidTargetDistrictData", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetDistrict(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -255,7 +256,7 @@ public class EmergencyEvacuationApplicationsListTest {
 
         EmergencyEvacuationApplicationPayload applicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload listPayload = EmergencyEvacuationApplicationListPayload.generate(applicationPayload);
-        listPayload.getFilter().setSourceDistrict(value);
+        listPayload.getFilter().setTargetDistrict(value);
 
         Response response = EmergencyEvacuationApplicationEndpoints.findAll(listPayload, accessToken);
         response.then()
@@ -263,7 +264,7 @@ public class EmergencyEvacuationApplicationsListTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, fieldType));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidTargetCityDataForFilteringEvacuationApplications", dataProviderClass = AysDataProvider.class)
     public void testFilteringEvacuationApplicationsWithInvalidTargetCity(String value, AysErrorMessage errorMessage, String field, String fieldType) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
@@ -271,7 +272,7 @@ public class EmergencyEvacuationApplicationsListTest {
 
         EmergencyEvacuationApplicationPayload applicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
         EmergencyEvacuationApplicationListPayload listPayload = EmergencyEvacuationApplicationListPayload.generate(applicationPayload);
-        listPayload.getFilter().setSourceCity(value);
+        listPayload.getFilter().setTargetCity(value);
 
         Response response = EmergencyEvacuationApplicationEndpoints.findAll(listPayload, accessToken);
         response.then()

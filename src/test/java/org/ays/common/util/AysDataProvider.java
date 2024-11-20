@@ -357,10 +357,10 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidTargetDistrictData")
     public static Object[][] invalidTargetDistrictData() {
         return new Object[][]{
-                {"", AysErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"},
-                {"District$Name", AysErrorMessage.MUST_BE_VALID, "targetDistrict", "String"},
+                {"", AysErrorMessage.SIZE_BETWEEN_2_100, "targetDistrict", "String"},
+                {"District$Name", AysErrorMessage.CONTAINS_INVALID_CHARACTERS, "targetDistrict", "String"},
                 {"D".repeat(101), AysErrorMessage.SIZE_BETWEEN_2_100, "targetDistrict", "String"},
-                {"   ", AysErrorMessage.MUST_NOT_BE_BLANK, "targetDistrict", "String"}
+                {"D", AysErrorMessage.SIZE_BETWEEN_2_100, "targetDistrict", "String"}
         };
     }
 
@@ -371,6 +371,17 @@ public class AysDataProvider {
                 {"C".repeat(101), AysErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
                 {"C", AysErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"},
                 {"", AysErrorMessage.SIZE_BETWEEN_2_100, "sourceCity", "String"}
+
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "invalidTargetCityDataForFilteringEvacuationApplications")
+    public static Object[][] invalidTargetCityDataForFilteringEvacuationApplications() {
+        return new Object[][]{
+                {"Target$City", AysErrorMessage.CONTAINS_INVALID_CHARACTERS, "targetCity", "String"},
+                {"T".repeat(101), AysErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"},
+                {"T", AysErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"},
+                {"", AysErrorMessage.SIZE_BETWEEN_2_100, "targetCity", "String"}
 
         };
     }
