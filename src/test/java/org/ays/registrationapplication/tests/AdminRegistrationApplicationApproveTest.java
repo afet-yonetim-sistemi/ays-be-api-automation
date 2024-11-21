@@ -7,6 +7,7 @@ import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysConfigurationProperty;
+import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
@@ -122,19 +123,16 @@ public class AdminRegistrationApplicationApproveTest {
                 .body("message", containsString(AysErrorMessage.STATUS_NOT_COMPLETED.getMessage()));
     }
 
-    @Test(groups = {"Regression"})
-    public void approveApplicationWithInvalidId() {
+    @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    public void approveApplicationWithInvalidId(String invalidApplicationId, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = AdminRegistrationApplicationEndpoints.approve("invalidApplicationID", accessToken);
+        Response response = AdminRegistrationApplicationEndpoints.approve(invalidApplicationId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be a valid UUID"))
-                .body("subErrors[0].field", equalTo("id"))
-                .body("subErrors[0].type", equalTo("String"))
-                .body("subErrors[0].value", equalTo("invalidApplicationID"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     private String loginAndGetAccessToken(LoginPayload loginPayload) {
