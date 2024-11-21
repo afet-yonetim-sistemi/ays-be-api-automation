@@ -175,8 +175,9 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidRejectReason")
     public static Object[][] invalidRejectReason() {
         return new Object[][]{
-                {"A".repeat(39)},
-                {"A".repeat(513)}
+                {"A".repeat(39), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
+                {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "rejectReason", "String"}
         };
     }
 
