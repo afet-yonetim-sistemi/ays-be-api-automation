@@ -12,6 +12,7 @@ public class UserEntity {
 
     private String firstName;
     private String lastName;
+    private String emailAddress;
     private String city;
     private List<String> statuses;
     private AysPhoneNumber phoneNumber;
