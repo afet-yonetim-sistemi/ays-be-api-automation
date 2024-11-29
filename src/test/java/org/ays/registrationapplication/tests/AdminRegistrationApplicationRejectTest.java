@@ -127,7 +127,8 @@ public class AdminRegistrationApplicationRejectTest {
                 .body("message", containsString(AysErrorMessage.STATUS_NOT_COMPLETED.getMessage()));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidRejectReason", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidRejectReasonDataForAdminRegistrationApplicationReject",
+            dataProviderClass = AysDataProvider.class)
     public void rejectAnApplicationWithInvalidReason(String invalidRejectReason, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

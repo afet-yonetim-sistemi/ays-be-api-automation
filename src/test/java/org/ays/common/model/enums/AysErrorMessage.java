@@ -21,6 +21,7 @@ public enum AysErrorMessage {
     MUST_NOT_BE_NULL("must not be null"),
     MUST_BE_TRUE("must be true"),
     NAME_MUST_NOT_START_OR_END_WITH_WHITESPACE("name must not start or end with whitespace"),
+    CANNOT_START_OR_END_WITH_SPACE("cannot start or end with space"),
     MUST_BE_VALID_UUID("must be a valid UUID"),
     MUST_NOT_BE_EMPTY("must not be empty"),
     MUST_BE_BETWEEN_1_AND_99999999("must be between 1 and 99999999"),

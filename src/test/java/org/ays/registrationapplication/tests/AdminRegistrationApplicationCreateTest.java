@@ -33,7 +33,7 @@ public class AdminRegistrationApplicationCreateTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidReasonDataForAdminRegistrationApplicationCreate", dataProviderClass = AysDataProvider.class)
     public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
