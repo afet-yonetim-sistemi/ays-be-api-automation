@@ -27,7 +27,14 @@ public enum AysErrorMessage {
     ROLE_DOES_NOT_EXIST("role does not exist!"),
     ROLE_STATUS_IS_NOT_PASSIVE("role status is not passive!"),
     THE_ROLE_IS_ASSIGNED("the role is assigned to one or more users"),
-    MUST_BE_10("must be 10");
+    MUST_BE_10("must be 10"),
+    EMAIL_MUST_NOT_START_OR_END_WITH_WHITESPACE("email must not start or end with whitespace"),
+    EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER("email must contain exactly one '@' character"),
+    EMAIL_CONTAINS_INVALID_SPECIAL_CHARACTERS("email contains invalid special characters"),
+    EMAIL_LOCAL_PART_MUST_START_WITH_A_LETTER_OR_NUMBER("email local part must start with a letter or number"),
+    DOMAIN_MUST_NOT_START_OR_END_WITH_A_HYPHEN("domain must not start or end with a hyphen"),
+    EMAIL_IS_NOT_IN_A_VALID_FORMAT("email is not in a valid format");
+
 
     private final String message;
 
