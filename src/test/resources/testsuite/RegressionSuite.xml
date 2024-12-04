@@ -14,6 +14,7 @@
             <class name="org.ays.auth.tests.PasswordForgotTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.auth.tests.RoleActivateTest"/>
+            <class name="org.ays.auth.tests.RoleCreateTest"/>
             <class name="org.ays.auth.tests.RoleDeleteTest"/>
             <class name="org.ays.auth.tests.RolePassivateTest"/>
             <class name="org.ays.auth.tests.RolesListTest"/>
