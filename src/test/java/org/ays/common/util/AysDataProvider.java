@@ -224,10 +224,14 @@ public class AysDataProvider {
         return new Object[][]{
                 {"", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"abc", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {"abcgmail.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {"abc@gmail", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"}
+                {"abc", AysErrorMessage.EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER, "emailAddress", "String"},
+                {"abcgmail.com", AysErrorMessage.EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER, "emailAddress", "String"},
+                {"abc@gmail", AysErrorMessage.EMAIL_IS_NOT_IN_A_VALID_FORMAT, "emailAddress", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
+                {"  user@example.com", AysErrorMessage.EMAIL_MUST_NOT_START_OR_END_WITH_WHITESPACE, "emailAddress", "String"},
+                {"user@-example.com", AysErrorMessage.DOMAIN_MUST_NOT_START_OR_END_WITH_A_HYPHEN, "emailAddress", "String"},
+                {"-user@example.com", AysErrorMessage.EMAIL_LOCAL_PART_MUST_START_WITH_A_LETTER_OR_NUMBER, "emailAddress", "String"},
+                {"user us@example.com", AysErrorMessage.EMAIL_CONTAINS_INVALID_SPECIAL_CHARACTERS, "emailAddress", "String"}
         };
     }
 
