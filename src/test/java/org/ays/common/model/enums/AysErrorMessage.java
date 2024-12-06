@@ -32,7 +32,14 @@ public enum AysErrorMessage {
     MUST_BE_10("must be 10"),
     STATUS_APPROVED("status:APPROVED"),
     STATUS_REJECTED("already rejected!"),
-    STATUS_NOT_COMPLETED("is not complete!");
+    STATUS_NOT_COMPLETED("is not complete!"),
+    EMAIL_MUST_NOT_START_OR_END_WITH_WHITESPACE("email must not start or end with whitespace"),
+    EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER("email must contain exactly one '@' character"),
+    EMAIL_CONTAINS_INVALID_SPECIAL_CHARACTERS("email contains invalid special characters"),
+    EMAIL_LOCAL_PART_MUST_START_WITH_A_LETTER_OR_NUMBER("email local part must start with a letter or number"),
+    DOMAIN_MUST_NOT_START_OR_END_WITH_A_HYPHEN("domain must not start or end with a hyphen"),
+    EMAIL_IS_NOT_IN_A_VALID_FORMAT("email is not in a valid format");
+
 
     private final String message;
 
