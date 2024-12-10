@@ -5,7 +5,9 @@ import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysConfigurationProperty;
+import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
@@ -14,6 +16,7 @@ import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationS
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 public class AdminRegistrationApplicationApproveTest {
@@ -44,7 +47,7 @@ public class AdminRegistrationApplicationApproveTest {
                 .body("response.status", equalTo(AdminRegistrationApplicationStatus.APPROVED.name()));
     }
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void approveAnAlreadyApprovedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -67,10 +70,11 @@ public class AdminRegistrationApplicationApproveTest {
 
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message", containsString(AysErrorMessage.STATUS_APPROVED.getMessage()));
     }
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void approveARejectedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -94,11 +98,12 @@ public class AdminRegistrationApplicationApproveTest {
 
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message", containsString(AysErrorMessage.STATUS_REJECTED.getMessage()));
     }
 
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void approveANotCompletedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -114,22 +119,20 @@ public class AdminRegistrationApplicationApproveTest {
 
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message", containsString(AysErrorMessage.STATUS_NOT_COMPLETED.getMessage()));
     }
 
-    @Test(groups = {"Regression"})
-    public void approveApplicationWithInvalidId() {
+    @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    public void approveApplicationWithInvalidId(String invalidApplicationId, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        Response response = AdminRegistrationApplicationEndpoints.approve("invalidApplicationID", accessToken);
+        Response response = AdminRegistrationApplicationEndpoints.approve(invalidApplicationId, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be a valid UUID"))
-                .body("subErrors[0].field", equalTo("id"))
-                .body("subErrors[0].type", equalTo("String"))
-                .body("subErrors[0].value", equalTo("invalidApplicationID"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     private String loginAndGetAccessToken(LoginPayload loginPayload) {

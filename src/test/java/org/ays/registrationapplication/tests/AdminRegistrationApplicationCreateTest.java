@@ -3,6 +3,7 @@ package org.ays.registrationapplication.tests;
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysRandomUtil;
@@ -11,7 +12,6 @@ import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEnd
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
@@ -33,8 +33,8 @@ public class AdminRegistrationApplicationCreateTest {
                 .body("response", hasKey("id"));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidDataForPostApplicationReasonField", dataProviderClass = AysDataProvider.class, enabled = false)
-    public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, String message, String field, String type) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidReasonDataForAdminRegistrationApplicationCreate", dataProviderClass = AysDataProvider.class)
+    public void createAnAdminRegistrationApplicationWithInvalidInputs(String reason, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -45,9 +45,7 @@ public class AdminRegistrationApplicationCreateTest {
         Response response = AdminRegistrationApplicationEndpoints.create(application, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", anyOf(containsString(message), containsString("must not be blank")))
-                .body("subErrors[0].field", equalTo(field))
-                .body("subErrors[0].type", equalTo(type));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     @Test(groups = {"Regression"})
