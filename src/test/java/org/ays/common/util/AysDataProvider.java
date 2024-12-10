@@ -177,7 +177,8 @@ public class AysDataProvider {
         return new Object[][]{
                 {"A".repeat(39), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
                 {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
-                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "rejectReason", "String"}
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "rejectReason", "String"},
+                {"  Reject reason cannot start or end with space  ", AysErrorMessage.CANNOT_START_OR_END_WITH_SPACE, "rejectReason", "String"}
         };
     }
 
@@ -188,7 +189,7 @@ public class AysDataProvider {
                 {null, AysErrorMessage.MUST_NOT_BE_BLANK, "reason", "String"},
                 {"       ", AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
                 {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
-                {"  Reason cannot start or en with space  ", AysErrorMessage.CANNOT_START_OR_END_WITH_SPACE, "reason", "String"}
+                {"  Reason cannot start or end with space  ", AysErrorMessage.CANNOT_START_OR_END_WITH_SPACE, "reason", "String"}
         };
     }
 
