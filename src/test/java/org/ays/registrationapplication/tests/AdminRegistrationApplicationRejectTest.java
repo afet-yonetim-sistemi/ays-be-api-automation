@@ -76,7 +76,9 @@ public class AdminRegistrationApplicationRejectTest {
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_REJECTED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_REJECTED.getMessage()));
     }
 
     @Test(groups = {"Regression"})
@@ -102,7 +104,9 @@ public class AdminRegistrationApplicationRejectTest {
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_APPROVED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED.getMessage()));
     }
 
 
@@ -124,7 +128,9 @@ public class AdminRegistrationApplicationRejectTest {
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_NOT_COMPLETED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETED.getMessage()));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRejectReasonDataForAdminRegistrationApplicationReject",

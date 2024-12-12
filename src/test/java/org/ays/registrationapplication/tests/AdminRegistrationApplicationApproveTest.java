@@ -71,7 +71,9 @@ public class AdminRegistrationApplicationApproveTest {
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_APPROVED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED.getMessage()));
     }
 
     @Test(groups = {"Regression"})
@@ -99,7 +101,9 @@ public class AdminRegistrationApplicationApproveTest {
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_REJECTED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_REJECTED.getMessage()));
     }
 
 
@@ -120,7 +124,9 @@ public class AdminRegistrationApplicationApproveTest {
         Response response = AdminRegistrationApplicationEndpoints.approve(id, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString(AysErrorMessage.STATUS_NOT_COMPLETED.getMessage()));
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETED.getMessage()));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
