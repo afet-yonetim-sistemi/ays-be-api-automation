@@ -106,7 +106,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message",
                         containsString(
-                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED.getMessage()));
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED_OR_REJECTED.getMessage()));
     }
 
 
@@ -130,7 +130,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
                 .body("message",
                         containsString(
-                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETED.getMessage()));
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETE.getMessage()));
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRejectReasonDataForAdminRegistrationApplicationReject",
