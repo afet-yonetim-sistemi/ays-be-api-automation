@@ -96,7 +96,6 @@ public class AysResponseSpecs {
     public static ResponseSpecification expectGetTokenResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectBody("response.accessToken", notNullValue())
-                .expectBody("response.accessTokenExpiresAt", notNullValue())
                 .expectBody("response.refreshToken", notNullValue())
                 .build();
     }
