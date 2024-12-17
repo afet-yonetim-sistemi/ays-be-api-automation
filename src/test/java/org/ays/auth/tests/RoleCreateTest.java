@@ -125,7 +125,7 @@ public class RoleCreateTest {
                 "Permission ID in the database should match the one set in the role.");
     }
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void createRoleByUserWithoutRoleCreatePermission() {
 
         LoginPayload login = LoginPayload.generateAsTestVolunteerFoundationUser();
@@ -135,7 +135,7 @@ public class RoleCreateTest {
 
         Response response = RoleEndpoints.create(roleCreatePayload, token);
         response.then()
-                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
+                .spec(AysResponseSpecs.expectForbiddenResponseSpec());
     }
 
     private String loginAndGetAccessToken(LoginPayload loginPayload) {

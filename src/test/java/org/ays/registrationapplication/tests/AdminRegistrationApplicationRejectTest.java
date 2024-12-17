@@ -5,6 +5,7 @@ import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysRandomUtil;
@@ -15,6 +16,7 @@ import org.ays.registrationapplication.model.enums.AdminRegistrationApplicationS
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 public class AdminRegistrationApplicationRejectTest {
@@ -48,7 +50,7 @@ public class AdminRegistrationApplicationRejectTest {
                 .body("response.status", equalTo(AdminRegistrationApplicationStatus.REJECTED.name()));
     }
 
-    @Test(groups = {"Smoke", "Regression"}, enabled = false)
+    @Test(groups = {"Smoke", "Regression"})
     public void rejectARejectedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -73,10 +75,13 @@ public class AdminRegistrationApplicationRejectTest {
 
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_REJECTED.getMessage()));
     }
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void rejectAnApprovedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -98,11 +103,14 @@ public class AdminRegistrationApplicationRejectTest {
         AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload.generate();
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED_OR_REJECTED.getMessage()));
     }
 
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void rejectANotCompletedApplication() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -119,11 +127,15 @@ public class AdminRegistrationApplicationRejectTest {
         AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload.generate();
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
-                .spec(AysResponseSpecs.expectNotFoundResponseSpec());
+                .spec(AysResponseSpecs.expectConflictResponseSpec())
+                .body("message",
+                        containsString(
+                                AysErrorMessage.ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETE.getMessage()));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidRejectReason", dataProviderClass = AysDataProvider.class)
-    public void rejectAnApplicationWithInvalidReason(String invalidRejectReason) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidRejectReasonDataForAdminRegistrationApplicationReject",
+            dataProviderClass = AysDataProvider.class)
+    public void rejectAnApplicationWithInvalidReason(String invalidRejectReason, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -141,52 +153,21 @@ public class AdminRegistrationApplicationRejectTest {
         Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("size must be between 40 and 512"))
-                .body("subErrors[0].field", equalTo("rejectReason"))
-                .body("subErrors[0].type", equalTo("String"))
-                .body("subErrors[0].value", equalTo(invalidRejectReason));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression"})
-    public void rejectAnApplicationWithInvalidApplicationId() {
+    @Test(groups = {"Regression"}, dataProvider = "invalidIdFormat", dataProviderClass = AysDataProvider.class)
+    public void rejectAnApplicationWithInvalidApplicationId(String invalidApplicationId, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
-
-        String id = "invalidApplicationID";
 
         AdminRegistrationApplicationRejectPayload rejectPayload = AdminRegistrationApplicationRejectPayload.generate();
 
-        Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
+        Response response = AdminRegistrationApplicationEndpoints.reject(invalidApplicationId, rejectPayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must be a valid UUID"))
-                .body("subErrors[0].field", equalTo("id"))
-                .body("subErrors[0].type", equalTo("String"))
-                .body("subErrors[0].value", equalTo("invalidApplicationID"));
-    }
-
-    @Test(groups = {"Regression"})
-    public void rejectAnApplicationWithMissingReasonField() {
-
-        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
-        String accessToken = this.loginAndGetAccessToken(loginPayload);
-
-        String institutionId = AysConfigurationProperty.TestVolunteerFoundation.ID;
-        String reason = AysRandomUtil.generateReasonString();
-        AdminRegistrationApplicationCreatePayload createPayload = AdminRegistrationApplicationCreatePayload
-                .generate(institutionId, reason);
-        AdminRegistrationApplicationEndpoints.create(createPayload, accessToken);
-
-        String id = AdminRegistrationApplicationDataSource.findLastCreatedId();
-
-        AdminRegistrationApplicationRejectPayload rejectPayload = new AdminRegistrationApplicationRejectPayload();
-        Response response = AdminRegistrationApplicationEndpoints.reject(id, rejectPayload, accessToken);
-        response.then()
-                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo("must not be blank"))
-                .body("subErrors[0].field", equalTo("rejectReason"))
-                .body("subErrors[0].type", equalTo("String"));
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     private String loginAndGetAccessToken(LoginPayload loginPayload) {

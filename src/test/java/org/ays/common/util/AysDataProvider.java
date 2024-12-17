@@ -172,21 +172,24 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidRejectReason")
-    public static Object[][] invalidRejectReason() {
+    @org.testng.annotations.DataProvider(name = "invalidRejectReasonDataForAdminRegistrationApplicationReject")
+    public static Object[][] invalidRejectReasonDataForAdminRegistrationApplicationReject() {
         return new Object[][]{
-                {"A".repeat(39)},
-                {"A".repeat(513)}
+                {"A".repeat(39), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
+                {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "rejectReason", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "rejectReason", "String"},
+                {"  Reject reason cannot start or end with space  ", AysErrorMessage.CANNOT_START_OR_END_WITH_SPACE, "rejectReason", "String"}
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidDataForPostApplicationReasonField")
-    public static Object[][] invalidDataForPostApplicationReasonField() {
+    @org.testng.annotations.DataProvider(name = "invalidReasonDataForAdminRegistrationApplicationCreate")
+    public static Object[][] invalidReasonDataForAdminRegistrationApplicationCreate() {
         return new Object[][]{
-                {"reason less then forty", "size must be between 40 and 512", "reason", "String"},
-                {null, "must not be blank", "reason", "String"},
-                {"       ", "size must be between 40 and 512", "reason", "String"},
-                {"A".repeat(513), "size must be between 40 and 512", "reason", "String"}
+                {"reason less then forty", AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "reason", "String"},
+                {"       ", AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
+                {"A".repeat(513), AysErrorMessage.SIZE_BETWEEN_40_512, "reason", "String"},
+                {"  Reason cannot start or end with space  ", AysErrorMessage.CANNOT_START_OR_END_WITH_SPACE, "reason", "String"}
         };
     }
 

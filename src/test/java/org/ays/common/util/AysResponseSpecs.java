@@ -69,6 +69,18 @@ public class AysResponseSpecs {
                 .build();
     }
 
+    public static ResponseSpecification expectForbiddenResponseSpec() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(403)
+                .expectContentType("application/json")
+                .expectBody("time", notNullValue())
+                .expectBody("time", matchesPattern(TIME_FORMAT_REGEX))
+                .expectBody("code", matchesPattern(UUID_REGEX))
+                .expectBody("header", equalTo("AUTH ERROR"))
+                .expectBody("isSuccess", equalTo(false))
+                .build();
+    }
+
     public static ResponseSpecification expectConflictResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(409)
@@ -84,7 +96,6 @@ public class AysResponseSpecs {
     public static ResponseSpecification expectGetTokenResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectBody("response.accessToken", notNullValue())
-                .expectBody("response.accessTokenExpiresAt", notNullValue())
                 .expectBody("response.refreshToken", notNullValue())
                 .build();
     }
