@@ -106,6 +106,7 @@ public class EmergencyEvacuationApplicationsListTest {
     @Test(groups = {"Smoke", "Regression"})
     public void testFilteringEvacuationApplicationsByNotIsInPersonApplicationData() {
 
+
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
