@@ -19,8 +19,10 @@ public class AysRandomUtil {
         return FAKER.name().lastName();
     }
 
-    public static String generateEmailAddress() {
-        return FAKER.internet().emailAddress();
+    public String generateEmailAddress() {
+        final String firstName = FAKER.name().firstName().toLowerCase();
+        final String lastName = FAKER.name().lastName().toLowerCase();
+        return firstName + "." + lastName + "@afetyonetimsistemi.test";
     }
 
     public static String generatePassword() {
