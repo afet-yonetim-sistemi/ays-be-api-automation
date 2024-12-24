@@ -2,7 +2,6 @@ package org.ays.auth.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
-import org.ays.auth.datasource.UserDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
@@ -19,9 +18,30 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertNotEquals;
 
 public class PasswordForgotTest {
-
     @Test(groups = {"Smoke", "Regression"})
-    public void forgotPasswordPositiveTest() {
+    public void forgotPasswordForUsersWithInstPagePermissions() {
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generateRoleWithPagePermissions();
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
+        UserEndpoints.create(userCreatePayload, accessToken);
+
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
+        String emailAddress = userCreatePayload.getEmailAddress();
+        passwordForgotPayload.setEmailAddress(emailAddress);
+
+        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+    }
+
+    @Test(groups = {"Regression"})
+    public void forgotPasswordForUsersWithoutPagePermissions() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
@@ -39,7 +59,7 @@ public class PasswordForgotTest {
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
 
         response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
@@ -58,7 +78,7 @@ public class PasswordForgotTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generateRoleWithPagePermissions();
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 

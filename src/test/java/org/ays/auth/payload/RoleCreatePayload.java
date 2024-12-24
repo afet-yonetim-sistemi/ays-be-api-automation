@@ -21,4 +21,11 @@ public class RoleCreatePayload {
         return roleCreatePayload;
     }
 
+    public static RoleCreatePayload generateRoleWithPagePermissions() {
+        RoleCreatePayload roleCreatePayload = new RoleCreatePayload();
+        roleCreatePayload.setName(AysRandomUtil.generateFirstName() + " Rol " + AysRandomUtil.generateAlphaSuffix());
+        roleCreatePayload.setPermissionIds(PermissionDataSource.findRandomPermissionIdsAsPageCategory());
+        return roleCreatePayload;
+    }
+
 }
