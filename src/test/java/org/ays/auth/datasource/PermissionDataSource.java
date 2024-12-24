@@ -22,6 +22,13 @@ public class PermissionDataSource {
                 .limit(2)
                 .toList();
     }
+    public static List<String> findRandomPermissionIdsAsPageCategory() {
+        List<String> permissionIds = findPermissionIdsByCategory(PermissionCategory.PAGE);
+        Collections.shuffle(permissionIds);
+        return permissionIds.stream()
+                .limit(2)
+                .toList();
+    }
 
     private static List<String> findPermissionIdsByCategory(PermissionCategory permissionCategory) {
 
