@@ -1,6 +1,7 @@
 package org.ays.auth.datasource;
 
 import lombok.experimental.UtilityClass;
+import org.ays.auth.model.enums.Permission;
 import org.ays.auth.model.enums.PermissionCategory;
 import org.ays.common.datasource.AysDataSource;
 
@@ -17,13 +18,6 @@ public class PermissionDataSource {
 
     public static List<String> findRandomPermissionIdsAsRoleManagementCategory() {
         List<String> permissionIds = findPermissionIdsByCategory(PermissionCategory.ROLE_MANAGEMENT);
-        Collections.shuffle(permissionIds);
-        return permissionIds.stream()
-                .limit(2)
-                .toList();
-    }
-    public static List<String> findRandomPermissionIdsAsPageCategory() {
-        List<String> permissionIds = findPermissionIdsByCategory(PermissionCategory.PAGE);
         Collections.shuffle(permissionIds);
         return permissionIds.stream()
                 .limit(2)
@@ -113,6 +107,27 @@ public class PermissionDataSource {
 
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    public static String findPermissionIdByPermissionName(Permission permission) {
+        System.out.println("Looking for permission with name: " + permission.getPermission());
+        String query = "SELECT ID FROM AYS_PERMISSION WHERE NAME = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, permission.getPermission());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    return resultSet.getString("ID");
+                } else {
+                    throw new RuntimeException("Permission not found for name: " + permission);
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching permission ID for " + permission, exception);
         }
     }
 
