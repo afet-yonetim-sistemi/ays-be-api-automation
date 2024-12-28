@@ -1,7 +1,6 @@
 package org.ays.auth.datasource;
 
 import lombok.experimental.UtilityClass;
-import org.ays.auth.model.enums.Permission;
 import org.ays.auth.model.enums.PermissionCategory;
 import org.ays.common.datasource.AysDataSource;
 
@@ -110,25 +109,37 @@ public class PermissionDataSource {
         }
     }
 
-    public static String findPermissionIdByPermissionName(Permission permission) {
-        System.out.println("Looking for permission with name: " + permission.getPermission());
+    public static String findPermissionIdByName(String permissionName) {
         String query = "SELECT ID FROM AYS_PERMISSION WHERE NAME = ?";
 
         try (Connection connection = AysDataSource.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, permission.getPermission());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            preparedStatement.setString(1, permissionName);
 
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getString("ID");
-                } else {
-                    throw new RuntimeException("Permission not found for name: " + permission);
                 }
             }
         } catch (SQLException exception) {
-            throw new RuntimeException("Error fetching permission ID for " + permission, exception);
+            throw new RuntimeException("Error fetching permission ID for name: " + permissionName, exception);
         }
+
+        return null;
+    }
+
+    public static List<String> findPermissionIdsByPermissionNames(List<String> permissionNames) {
+        List<String> permissionIds = new ArrayList<>();
+
+        for (String permissionName : permissionNames) {
+            String permissionId = findPermissionIdByName(permissionName);
+            if (permissionId != null) {
+                permissionIds.add(permissionId);
+            }
+        }
+
+        return permissionIds;
     }
 
 

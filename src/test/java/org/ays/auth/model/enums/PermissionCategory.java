@@ -2,6 +2,10 @@ package org.ays.auth.model.enums;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public enum PermissionCategory {
 
@@ -42,6 +46,12 @@ public enum PermissionCategory {
 
     PermissionCategory(Permission... permissions) {
         this.permissions = permissions;
+    }
+
+    public List<String> getPermissionNames() {
+        return Arrays.stream(this.permissions)
+                .map(Permission::getPermission)
+                .collect(Collectors.toList());
     }
 
 

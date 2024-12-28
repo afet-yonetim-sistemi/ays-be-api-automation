@@ -1,6 +1,7 @@
 package org.ays.auth.tests;
 
 import io.restassured.response.Response;
+import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
@@ -16,6 +17,9 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.testng.Assert.assertNotEquals;
 
 public class PasswordForgotTest {
@@ -24,7 +28,8 @@ public class PasswordForgotTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generateRoleWithPermissions(Permission.INSTITUTION_PAGE);
+        List<String> permissionsIds = Collections.singletonList(PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission()));
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(permissionsIds);
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
@@ -42,7 +47,7 @@ public class PasswordForgotTest {
     }
 
     @Test(groups = {"Regression"})
-    public void forgotPasswordForUsersInstitutionPagePermission() {
+    public void forgotPasswordForUsersWithoutInstitutionPagePermission() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
@@ -79,7 +84,8 @@ public class PasswordForgotTest {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generateRoleWithPermissions(Permission.INSTITUTION_PAGE);
+        List<String> permissionsIds = Collections.singletonList(PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission()));
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(permissionsIds);
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 

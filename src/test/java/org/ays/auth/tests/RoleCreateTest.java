@@ -5,6 +5,8 @@ import org.ays.auth.datasource.PermissionDataSource;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
+import org.ays.auth.model.enums.Permission;
+import org.ays.auth.model.enums.PermissionCategory;
 import org.ays.auth.model.enums.RoleStatus;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.auth.payload.RoleCreatePayload;
@@ -16,6 +18,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +38,18 @@ public class RoleCreateTest {
     public void createRolePositiveScenario() {
 
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate();
+        Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+    }
+
+    @Test(groups = {"Smoke", "Regression"})
+    public void createRoleWithAPermissionAndPermissionCategory() {
+
+        List<String> permissionsList = new ArrayList<>(PermissionCategory.ROLE_MANAGEMENT.getPermissionNames());
+        permissionsList.add(Permission.INSTITUTION_PAGE.getPermission());
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(PermissionDataSource.findPermissionIdsByPermissionNames(permissionsList));
         Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
 
         response.then()
