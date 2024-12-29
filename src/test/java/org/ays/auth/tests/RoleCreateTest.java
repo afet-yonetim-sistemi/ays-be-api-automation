@@ -18,7 +18,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,9 +46,12 @@ public class RoleCreateTest {
     @Test(groups = {"Smoke", "Regression"})
     public void createRoleWithAPermissionAndPermissionCategory() {
 
-        List<String> permissionsList = new ArrayList<>(PermissionCategory.ROLE_MANAGEMENT.getPermissionNames());
-        permissionsList.add(Permission.INSTITUTION_PAGE.getPermission());
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(PermissionDataSource.findPermissionIdsByPermissionNames(permissionsList));
+        List<String> permissionNames = PermissionCategory.ROLE_MANAGEMENT.getPermissionNames();
+        permissionNames.add(Permission.INSTITUTION_PAGE.getPermission());
+        List<String> permissionIds = PermissionDataSource.findPermissionIdsByPermissionList(permissionNames);
+
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(permissionIds);
+
         Response response = RoleEndpoints.create(roleCreatePayload, accessToken);
 
         response.then()

@@ -129,14 +129,35 @@ public class PermissionDataSource {
         return null;
     }
 
-    public static List<String> findPermissionIdsByPermissionNames(List<String> permissionNames) {
+    public static List<String> findPermissionIdsByPermissionList(List<String> permissionNames) {
+        if (permissionNames == null) {
+            throw new IllegalArgumentException("Permission names list cannot be null.");
+        }
+
+        if (permissionNames.isEmpty()) {
+            System.out.println("Permission names list is empty. Returning an empty list.");
+            return Collections.emptyList();
+        }
+
+        String placeholders = String.join(",", Collections.nCopies(permissionNames.size(), "?"));
+        String query = "SELECT ID FROM AYS_PERMISSION WHERE NAME IN (" + placeholders + ")";
+
         List<String> permissionIds = new ArrayList<>();
 
-        for (String permissionName : permissionNames) {
-            String permissionId = findPermissionIdByName(permissionName);
-            if (permissionId != null) {
-                permissionIds.add(permissionId);
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (int i = 0; i < permissionNames.size(); i++) {
+                preparedStatement.setString(i + 1, permissionNames.get(i));
             }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    permissionIds.add(resultSet.getString("ID"));
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching permission IDs for names", exception);
         }
 
         return permissionIds;
