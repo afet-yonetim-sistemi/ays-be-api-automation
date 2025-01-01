@@ -129,7 +129,7 @@ public class PermissionDataSource {
         return null;
     }
 
-    public static List<String> findPermissionIdsByPermissionList(List<String> permissionNames) {
+    public static List<String> findPermissionIdsByPermissionNames(List<String> permissionNames) {
         if (permissionNames == null) {
             throw new IllegalArgumentException("Permission names list cannot be null.");
         }

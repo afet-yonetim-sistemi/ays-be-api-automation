@@ -48,7 +48,7 @@ public class RoleCreateTest {
 
         List<String> permissionNames = PermissionCategory.ROLE_MANAGEMENT.getPermissionNames();
         permissionNames.add(Permission.INSTITUTION_PAGE.getPermission());
-        List<String> permissionIds = PermissionDataSource.findPermissionIdsByPermissionList(permissionNames);
+        List<String> permissionIds = PermissionDataSource.findPermissionIdsByPermissionNames(permissionNames);
 
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(permissionIds);
 
