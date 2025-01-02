@@ -135,8 +135,7 @@ public class PermissionDataSource {
         }
 
         if (permissionNames.isEmpty()) {
-            System.out.println("Permission names list is empty. Returning an empty list.");
-            return Collections.emptyList();
+            throw new IllegalArgumentException("Permission names list is empty. No IDs can be retrieved.");
         }
 
         String placeholders = String.join(",", Collections.nCopies(permissionNames.size(), "?"));
