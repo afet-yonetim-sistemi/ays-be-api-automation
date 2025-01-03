@@ -109,5 +109,58 @@ public class PermissionDataSource {
         }
     }
 
+    public static String findPermissionIdByName(String permissionName) {
+        String query = "SELECT ID FROM AYS_PERMISSION WHERE NAME = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, permissionName);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("ID");
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching permission ID for name: " + permissionName, exception);
+        }
+
+        return null;
+    }
+
+    public static List<String> findPermissionIdsByPermissionNames(List<String> permissionNames) {
+        if (permissionNames == null) {
+            throw new IllegalArgumentException("Permission names list cannot be null.");
+        }
+
+        if (permissionNames.isEmpty()) {
+            throw new IllegalArgumentException("Permission names list is empty. No IDs can be retrieved.");
+        }
+
+        String placeholders = String.join(",", Collections.nCopies(permissionNames.size(), "?"));
+        String query = "SELECT ID FROM AYS_PERMISSION WHERE NAME IN (" + placeholders + ")";
+
+        List<String> permissionIds = new ArrayList<>();
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (int i = 0; i < permissionNames.size(); i++) {
+                preparedStatement.setString(i + 1, permissionNames.get(i));
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    permissionIds.add(resultSet.getString("ID"));
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching permission IDs for names", exception);
+        }
+
+        return permissionIds;
+    }
+
 
 }
