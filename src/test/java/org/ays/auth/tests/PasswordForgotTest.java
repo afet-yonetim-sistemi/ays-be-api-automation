@@ -126,6 +126,7 @@ public class PasswordForgotTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String institutionPermission = PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission());
+
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(List.of(institutionPermission));
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
@@ -166,9 +167,10 @@ public class PasswordForgotTest {
         String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
                 .TestVolunteerFoundation.ID);
 
+        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
+        
         Assert.assertEquals(userStatus, UserStatus.NOT_VERIFIED.name());
 
-        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 
@@ -180,12 +182,63 @@ public class PasswordForgotTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String institutionPermission = PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission());
+
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(List.of(institutionPermission));
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.create(userCreatePayload, accessToken);
+
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        UserEndpoints.passivate(userId, accessToken);
+
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
+        String passiveUserEmailAddress = userCreatePayload.getEmailAddress();
+        passwordForgotPayload.setEmailAddress(passiveUserEmailAddress);
+
+        String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
+                .TestDisasterFoundation.ID);
+
+        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
+
+        Assert.assertEquals(userStatus, UserStatus.PASSIVE.name());
+
+        response.then()
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
+
+    }
+
+    @Test(groups = {"Regression"})
+    public void forgotPasswordForDeletedUsers() {
+        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        String institutionPermission = PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission());
+
+        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(List.of(institutionPermission));
+        RoleEndpoints.create(roleCreatePayload, accessToken);
+        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
+        UserEndpoints.create(userCreatePayload, accessToken);
+
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        UserEndpoints.delete(userId, accessToken);
+
+        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
+        String passiveUserEmailAddress = userCreatePayload.getEmailAddress();
+        passwordForgotPayload.setEmailAddress(passiveUserEmailAddress);
+
+        String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
+                .TestDisasterFoundation.ID);
+
+        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
+
+        Assert.assertEquals(userStatus, UserStatus.DELETED.name());
+
+        response.then()
+                .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
 
     }
 
