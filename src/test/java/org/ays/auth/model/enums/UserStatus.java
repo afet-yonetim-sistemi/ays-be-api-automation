@@ -2,5 +2,7 @@ package org.ays.auth.model.enums;
 
 public enum UserStatus {
     ACTIVE,
-    PASSIVE
+    PASSIVE,
+    NOT_VERIFIED,
+    DELETED
 }

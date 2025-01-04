@@ -129,4 +129,24 @@ public class UserDataSource {
         }
     }
 
+    public static String findLastCreatedUserStatusByInstitutionId(String institutionId) {
+        String query = "SELECT STATUS FROM AYS_USER WHERE INSTITUTION_ID = ? ORDER BY CREATED_AT DESC LIMIT 1";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, institutionId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("STATUS");
+                }
+            }
+
+            throw new RuntimeException("No user found for the given institution ID");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+
 }
