@@ -120,7 +120,7 @@ public class PasswordForgotTest {
 
     }
 
-    @Test(groups = {"Smoke", "Regression"})
+    @Test(groups = {"Regression"})
     public void forgotPasswordForActiveUsers() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -168,7 +168,7 @@ public class PasswordForgotTest {
                 .TestVolunteerFoundation.ID);
 
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
-        
+
         Assert.assertEquals(userStatus, UserStatus.NOT_VERIFIED.name());
 
         response.then()
