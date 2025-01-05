@@ -126,7 +126,6 @@ public class PasswordForgotTest {
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         String institutionPermission = PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission());
-
         RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(List.of(institutionPermission));
         RoleEndpoints.create(roleCreatePayload, accessToken);
         String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
