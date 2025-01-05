@@ -140,7 +140,6 @@ public class PasswordForgotTest {
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
-
     }
 
     @Test(groups = {"Regression"})
@@ -163,8 +162,8 @@ public class PasswordForgotTest {
         PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
         passwordForgotPayload.setEmailAddress(notVerifiedUserEmailAddress);
 
-        String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
-                .TestVolunteerFoundation.ID);
+        String userStatus = UserDataSource
+                .findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
 
@@ -172,7 +171,6 @@ public class PasswordForgotTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
-
     }
 
     @Test(groups = {"Regression"})
@@ -196,8 +194,8 @@ public class PasswordForgotTest {
         String passiveUserEmailAddress = userCreatePayload.getEmailAddress();
         passwordForgotPayload.setEmailAddress(passiveUserEmailAddress);
 
-        String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
-                .TestDisasterFoundation.ID);
+        String userStatus = UserDataSource
+                .findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
 
@@ -205,7 +203,6 @@ public class PasswordForgotTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
-
     }
 
     @Test(groups = {"Regression"})
@@ -229,8 +226,8 @@ public class PasswordForgotTest {
         String passiveUserEmailAddress = userCreatePayload.getEmailAddress();
         passwordForgotPayload.setEmailAddress(passiveUserEmailAddress);
 
-        String userStatus = UserDataSource.findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty
-                .TestDisasterFoundation.ID);
+        String userStatus = UserDataSource
+                .findLastCreatedUserStatusByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
 
@@ -238,7 +235,6 @@ public class PasswordForgotTest {
 
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
-
     }
 
     private String loginAndGetAccessToken(LoginPayload loginPayload) {
