@@ -31,8 +31,9 @@ import java.util.List;
 import static org.testng.Assert.assertNotEquals;
 
 public class PasswordForgotTest {
+
     @Test(groups = {"Smoke", "Regression"})
-    public void forgotPasswordForUsersHavingInstitutionPagePermissions() {
+    public void forgotPasswordForActiveUsersHavingInstitutionPagePermissions() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
@@ -118,28 +119,6 @@ public class PasswordForgotTest {
         assertNotEquals(firstResponseTime, secondResponseTime,
                 "The time value is the same in the first and second response.");
 
-    }
-
-    @Test(groups = {"Regression"})
-    public void forgotPasswordForActiveUsers() {
-        LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
-        String accessToken = this.loginAndGetAccessToken(loginPayload);
-
-        String institutionPermission = PermissionDataSource.findPermissionIdByName(Permission.INSTITUTION_PAGE.getPermission());
-        RoleCreatePayload roleCreatePayload = RoleCreatePayload.generate(List.of(institutionPermission));
-        RoleEndpoints.create(roleCreatePayload, accessToken);
-        String roleId = RoleDataSource.findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
-
-        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
-        UserEndpoints.create(userCreatePayload, accessToken);
-
-        PasswordForgotPayload passwordForgotPayload = new PasswordForgotPayload();
-        String emailAddress = userCreatePayload.getEmailAddress();
-        passwordForgotPayload.setEmailAddress(emailAddress);
-
-        Response response = AuthEndpoints.forgotPassword(passwordForgotPayload);
-        response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
     @Test(groups = {"Regression"})
