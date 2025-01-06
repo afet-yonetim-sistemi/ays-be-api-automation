@@ -63,6 +63,30 @@ public class UserEndpoints {
         return AysRestAssured.perform(restAssuredPayload);
     }
 
+    public static Response passivate(String id, String token) {
+
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/user/{id}/passivate")
+                .pathParameter(Map.of("id", id))
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredPayload);
+    }
+
+    public static Response activate(String id, String token) {
+
+        AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.PATCH)
+                .url("/api/v1/user/{id}/activate")
+                .pathParameter(Map.of("id", id))
+                .token(token)
+                .build();
+
+        return AysRestAssured.perform(restAssuredPayload);
+    }
+
     public static Response delete(String userId, String token) {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
