@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @UtilityClass
 public class UserDataSource {
@@ -145,6 +147,30 @@ public class UserDataSource {
             throw new RuntimeException("No user found for the given institution ID");
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    public static List<String> findAllRoleIdsById(String id) {
+        String query = "SELECT ROLE_ID FROM AYS_USER_ROLE_RELATION WHERE USER_ID = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<String> roleIds = new ArrayList<>();
+
+                while (resultSet.next()) {
+                    String roleId = resultSet.getString("ROLE_ID");
+                    roleIds.add(roleId);
+                }
+
+                return roleIds;
+            }
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Error fetching role IDs for user: " + id, exception);
         }
     }
 

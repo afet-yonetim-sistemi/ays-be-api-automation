@@ -3,7 +3,6 @@ package org.ays.auth.tests;
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.datasource.UserDataSource;
-import org.ays.auth.datasource.UserRoleRelationDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
@@ -74,7 +73,7 @@ public class UserUpdateTest {
 
         Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
 
-        List<String> assignedRoleIds = UserRoleRelationDataSource.findAllRoleIdsByUserId(userId);
+        List<String> assignedRoleIds = UserDataSource.findAllRoleIdsById(userId);
         List<String> expectedRoleIds = List.of(firstRoleId, secondRoleId);
 
         response.then()
@@ -175,7 +174,7 @@ public class UserUpdateTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
-    public void updateUserWithInvalidRoleList(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidRoles(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);

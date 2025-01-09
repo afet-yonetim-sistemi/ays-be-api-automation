@@ -87,7 +87,7 @@ public class UserCreateTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
-    public void createUserWithInvalidRoleId(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidRoles(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
