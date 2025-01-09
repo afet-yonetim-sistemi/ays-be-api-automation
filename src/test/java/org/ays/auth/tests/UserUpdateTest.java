@@ -3,6 +3,7 @@ package org.ays.auth.tests;
 import io.restassured.response.Response;
 import org.ays.auth.datasource.RoleDataSource;
 import org.ays.auth.datasource.UserDataSource;
+import org.ays.auth.datasource.UserRoleRelationDataSource;
 import org.ays.auth.endpoints.AuthEndpoints;
 import org.ays.auth.endpoints.RoleEndpoints;
 import org.ays.auth.endpoints.UserEndpoints;
@@ -19,6 +20,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class UserUpdateTest {
 
@@ -43,6 +46,44 @@ public class UserUpdateTest {
         Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
+    }
+
+    @Test(groups = {"Smoke", "Regression"})
+    public void updateUserWithMultipleRoles() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        RoleCreatePayload firstRoleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(firstRoleCreatePayload, accessToken);
+        String firstRoleId = RoleDataSource
+                .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
+        UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(firstRoleId);
+        UserEndpoints.create(userCreatePayload, accessToken);
+        String userId = UserDataSource
+                .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
+        RoleCreatePayload secondRoleCreatePayload = RoleCreatePayload.generate();
+        RoleEndpoints.create(secondRoleCreatePayload, accessToken);
+        String secondRoleId = RoleDataSource
+                .findLastCreatedRoleIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
+
+        UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(userCreatePayload);
+        userUpdatePayload.setRoleIds(List.of(firstRoleId, secondRoleId));
+
+        Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
+
+        List<String> assignedRoleIds = UserRoleRelationDataSource.findAllRoleIdsByUserId(userId);
+        List<String> expectedRoleIds = List.of(firstRoleId, secondRoleId);
+
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+
+        assertTrue(assignedRoleIds.containsAll(expectedRoleIds), "Assigned roles do not match expected roles.");
+        assertTrue(expectedRoleIds.containsAll(assignedRoleIds), "Unexpected roles are assigned to the user.");
+        assertEquals(assignedRoleIds.size(), expectedRoleIds.size(),
+                "Unexpected number of roles assigned to the user.");
     }
 
     @Test(groups = {"Regression"})
