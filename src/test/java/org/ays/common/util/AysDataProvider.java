@@ -495,8 +495,8 @@ public class AysDataProvider {
                 {List.of("02fe9d68-70b7-4b53-abb4-3e18e804e2711"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
                 {List.of("02fe9d68-70b7-4b53-abb4-3e18e804"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
                 {List.of(""), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {null, AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"}, // null durumu
-                {List.of(), AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"} // boş liste
+                {null, AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"},
+                {List.of(), AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"}
         };
     }
 
