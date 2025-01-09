@@ -175,7 +175,7 @@ public class UserUpdateTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
-    public void updateUserWithInvalidRoleList(String id, AysErrorMessage errorMessage, String field, String type) {
+    public void updateUserWithInvalidRoleList(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -190,7 +190,7 @@ public class UserUpdateTest {
                 .findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestVolunteerFoundation.ID);
 
         UserUpdatePayload userUpdatePayload = UserUpdatePayload.from(user);
-        userUpdatePayload.setRoleIds(List.of(id));
+        userUpdatePayload.setRoleIds(roleIds);
         Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

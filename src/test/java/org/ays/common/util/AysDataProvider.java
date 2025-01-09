@@ -488,13 +488,15 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidRoleIdListData")
     public static Object[][] invalidRoleIdListData() {
         return new Object[][]{
-                {"12345", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"abcdefghij", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"02fe9d68-70b7-4b53-abb4-3e18e804e27Z", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"02fe9d68-70b7-4b53-abb4-3e18e804e27", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"02fe9d68-70b7-4b53-abb4-3e18e804e2711", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"02fe9d68-70b7-4b53-abb4-3e18e804", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
-                {"", AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"}
+                {List.of("12345"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of("abcdefghij"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of("02fe9d68-70b7-4b53-abb4-3e18e804e27Z"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of("02fe9d68-70b7-4b53-abb4-3e18e804e27"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of("02fe9d68-70b7-4b53-abb4-3e18e804e2711"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of("02fe9d68-70b7-4b53-abb4-3e18e804"), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {List.of(""), AysErrorMessage.MUST_BE_VALID_UUID, "roleIds[]", "roleIds"},
+                {null, AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"}, // null durumu
+                {List.of(), AysErrorMessage.MUST_NOT_BE_EMPTY, "roleIds", "Set"} // boş liste
         };
     }
 
