@@ -16,11 +16,11 @@ import org.ays.common.util.AysDataProvider;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class UserUpdateTest {
 
@@ -72,17 +72,16 @@ public class UserUpdateTest {
         userUpdatePayload.setRoleIds(List.of(firstRoleId, secondRoleId));
 
         Response response = UserEndpoints.update(userId, userUpdatePayload, accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
 
         List<String> assignedRoleIds = UserDataSource.findAllRoleIdsById(userId);
         List<String> expectedRoleIds = List.of(firstRoleId, secondRoleId);
 
-        response.then()
-                .spec(AysResponseSpecs.expectSuccessResponseSpec());
-
-        assertTrue(assignedRoleIds.containsAll(expectedRoleIds), "Assigned roles do not match expected roles.");
-        assertTrue(expectedRoleIds.containsAll(assignedRoleIds), "Unexpected roles are assigned to the user.");
         assertEquals(assignedRoleIds.size(), expectedRoleIds.size(),
                 "Unexpected number of roles assigned to the user.");
+        assertEquals(new HashSet<>(assignedRoleIds), new HashSet<>(expectedRoleIds),
+                "Assigned roles do not match expected roles.");
     }
 
     @Test(groups = {"Regression"})

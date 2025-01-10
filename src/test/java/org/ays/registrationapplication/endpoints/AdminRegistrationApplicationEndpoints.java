@@ -2,12 +2,12 @@ package org.ays.registrationapplication.endpoints;
 
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
-import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
-import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.common.model.payload.AysRestAssuredPayload;
 import org.ays.common.util.AysRestAssured;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationListPayload;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationRejectPayload;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.util.Map;

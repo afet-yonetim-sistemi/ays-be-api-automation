@@ -2,8 +2,6 @@ package org.ays.registrationapplication.tests;
 
 import io.restassured.response.Response;
 import org.ays.auth.endpoints.AuthEndpoints;
-import org.ays.auth.payload.AdminRegistrationApplicationCompletePayload;
-import org.ays.auth.payload.AdminRegistrationApplicationRejectPayload;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.model.payload.AysPhoneNumber;
@@ -13,7 +11,9 @@ import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.ays.registrationapplication.datasource.AdminRegistrationApplicationDataSource;
 import org.ays.registrationapplication.endpoints.AdminRegistrationApplicationEndpoints;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCompletePayload;
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationCreatePayload;
+import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationRejectPayload;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.containsString;
