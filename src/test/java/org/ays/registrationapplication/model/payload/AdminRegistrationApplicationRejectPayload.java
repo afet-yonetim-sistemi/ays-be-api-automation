@@ -1,4 +1,4 @@
-package org.ays.auth.payload;
+package org.ays.registrationapplication.model.payload;
 
 import lombok.Getter;
 import lombok.Setter;

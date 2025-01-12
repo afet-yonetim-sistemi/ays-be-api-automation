@@ -87,13 +87,13 @@ public class UserCreateTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidRoleIdListData", dataProviderClass = AysDataProvider.class)
-    public void createUserWithInvalidRoleId(String id, AysErrorMessage errorMessage, String field, String type) {
+    public void createUserWithInvalidRoles(List<String> roleIds, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generate();
-        userCreatePayload.setRoleIds(List.of(id));
+        userCreatePayload.setRoleIds(roleIds);
         Response response = UserEndpoints.create(userCreatePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
