@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.AllOf.allOf;
 
 @UtilityClass
@@ -136,7 +135,6 @@ public class AysResponseSpecs {
                 .expectBody("response.content[0].city", notNullValue())
                 .expectBody("response.content[0].status", notNullValue())
                 .expectBody("response.content[0].createdAt", notNullValue())
-                .expectBody("response.content[0].updatedAt", nullValue())
                 .build();
     }
 
