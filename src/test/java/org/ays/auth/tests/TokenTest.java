@@ -50,7 +50,7 @@ public class TokenTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidPassword", dataProviderClass = AysDataProvider.class)
-    public void getTokenWithInvalidPassword(String password, AysErrorMessage errorMessage, String field, String type) {
+    public void getTokenWithInvalidPasswordData(String password, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setPassword(password);
         Response response = AuthEndpoints.token(loginPayload);
