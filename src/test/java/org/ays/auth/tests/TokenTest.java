@@ -42,6 +42,7 @@ public class TokenTest {
 
     @Test(groups = {"Regression"})
     public void getTokenWithInvalidPassword() {
+
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setPassword(AysRandomUtil.generatePassword());
 
@@ -52,6 +53,7 @@ public class TokenTest {
 
     @Test(groups = {"Regression"}, dataProvider = "invalidPassword", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidPasswordData(String password, AysErrorMessage errorMessage, String field, String type) {
+
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setPassword(password);
 
