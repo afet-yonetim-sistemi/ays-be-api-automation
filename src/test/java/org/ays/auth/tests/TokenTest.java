@@ -44,6 +44,7 @@ public class TokenTest {
     public void getTokenWithInvalidPassword() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setPassword(AysRandomUtil.generatePassword());
+
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
@@ -53,6 +54,7 @@ public class TokenTest {
     public void getTokenWithInvalidPasswordData(String password, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setPassword(password);
+
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
