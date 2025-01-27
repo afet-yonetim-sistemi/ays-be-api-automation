@@ -97,7 +97,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("subErrors[0].type", equalTo("String"));
     }
 
-    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
