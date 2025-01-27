@@ -29,6 +29,20 @@ public class AysRandomUtil {
         return FAKER.internet().password();
     }
 
+    public static String generatePassword(int minLength, int maxLength) {
+
+        if (minLength < 1 || maxLength < minLength) {
+            throw new IllegalArgumentException("Invalid password length range." +
+                    " Ensure minLength >= 1 and maxLength >= minLength.");
+        }
+
+        if (minLength == maxLength) {
+            return FAKER.internet().password(minLength, minLength + 1).substring(0, minLength);
+        }
+
+        return FAKER.internet().password(minLength, maxLength);
+    }
+
     public static String generateReasonString() {
         int length = 40 + FAKER.number().numberBetween(0, 472);
         return FAKER.lorem().characters(length);

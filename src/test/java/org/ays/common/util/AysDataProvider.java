@@ -237,6 +237,16 @@ public class AysDataProvider {
         };
     }
 
+    @org.testng.annotations.DataProvider(name = "invalidPassword")
+    public Object[][] invalidPassword() {
+        return new Object[][]{
+                {"", AysErrorMessage.MUST_NOT_BE_BLANK, "password", "String"},
+                {null, AysErrorMessage.MUST_NOT_BE_BLANK, "password", "String"},
+                {AysRandomUtil.generatePassword(1, 7), AysErrorMessage.SIZE_BETWEEN_8_128, "password", "String"},
+                {AysRandomUtil.generatePassword(129, 135), AysErrorMessage.SIZE_BETWEEN_8_128, "password", "String"}
+        };
+    }
+
     @org.testng.annotations.DataProvider(name = "invalidPhoneNumberDataForRegistrationComplete")
     public static Object[][] invalidPhoneNumberDataForRegistrationComplete() {
         return new Object[][]{

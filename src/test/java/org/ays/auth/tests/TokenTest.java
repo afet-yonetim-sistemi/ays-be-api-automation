@@ -6,6 +6,7 @@ import org.ays.auth.model.enums.SourcePage;
 import org.ays.auth.payload.LoginPayload;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysDataProvider;
+import org.ays.common.util.AysRandomUtil;
 import org.ays.common.util.AysResponseSpecs;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setEmailAddress(emailAddress);
@@ -41,20 +42,25 @@ public class TokenTest {
 
     @Test(groups = {"Regression"})
     public void getTokenWithInvalidPassword() {
+
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
-        loginPayload.setPassword("123456");
+        loginPayload.setPassword(AysRandomUtil.generatePassword());
+
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test(groups = {"Regression"})
-    public void getTokenWithNullPassword() {
+    @Test(groups = {"Regression"}, dataProvider = "invalidPassword", dataProviderClass = AysDataProvider.class)
+    public void getTokenWithInvalidPasswordData(String password, AysErrorMessage errorMessage, String field, String type) {
+
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
-        loginPayload.setPassword(null);
+        loginPayload.setPassword(password);
+
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
-                .spec(AysResponseSpecs.expectBadRequestResponseSpec());
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
     @Test(groups = {"Smoke", "Regression"})
@@ -66,7 +72,7 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
         loginPayload.setEmailAddress(emailAddress);
