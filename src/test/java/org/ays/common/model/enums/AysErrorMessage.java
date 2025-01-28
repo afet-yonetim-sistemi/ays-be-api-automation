@@ -17,6 +17,7 @@ public enum AysErrorMessage {
     SIZE_BETWEEN_1_10("size must be between 1 and 10"),
     SIZE_BETWEEN_40_512("size must be between 40 and 512"),
     SIZE_BETWEEN_8_128("size must be between 8 and 128 characters."),
+    SIZE_BETWEEN_6_254("size must be between 6 and 254"),
     CONTAINS_INVALID_CHARACTERS("contains invalid characters"),
     MUST_BE_ACCEPTED_VALUE("must be accepted value"),
     MUST_NOT_BE_NULL("must not be null"),

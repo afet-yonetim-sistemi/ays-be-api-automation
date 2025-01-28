@@ -226,14 +226,20 @@ public class AysDataProvider {
         return new Object[][]{
                 {"", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"abc", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"abcdefg", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"a@b.c", AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
+                {"bekeleandreaevelynirenealexandrascottmirasoniamustafahuivladimirmarcoyolandaraymondakhtermichaeldenn" +
+                        "istatianayuliyagangmargaretthomassumanjeanamymostafasaidrubenchenedithjumasitimeilucasgaryghu" +
+                        "lamminaxiaohongmarcosrafaelamyantoniamohamadfatmaahmed@aystest.org",
+                        AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
                 {"abcgmail.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"abc@gmail", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  user@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"user@-example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"-user@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
-                {"user us@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
+                {"user us@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"username@gmail..co.uk", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
         };
     }
 
