@@ -14,6 +14,7 @@ public enum AysErrorMessage {
     ALL_APPLICANT_FIELDS_FILLED("all applicant fields must be filled"),
     SIZE_BETWEEN_2_100("size must be between 2 and 100"),
     SIZE_BETWEEN_2_255("size must be between 2 and 255"),
+    SIZE_BETWEEN_1_254("size must be between 1 and 254"),
     SIZE_BETWEEN_1_10("size must be between 1 and 10"),
     SIZE_BETWEEN_40_512("size must be between 40 and 512"),
     SIZE_BETWEEN_8_128("size must be between 8 and 128 characters."),

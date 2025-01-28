@@ -228,10 +228,7 @@ public class AysDataProvider {
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"abcdefg", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"a@b.c", AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
-                {"bekeleandreaevelynirenealexandrascottmirasoniamustafahuivladimirmarcoyolandaraymondakhtermichaeldenn" +
-                        "istatianayuliyagangmargaretthomassumanjeanamymostafasaidrubenchenedithjumasitimeilucasgaryghu" +
-                        "lamminaxiaohongmarcosrafaelamyantoniamohamadfatmaahmed@aystest.org",
-                        AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
+                {"E".repeat(243) + "@aystest.org", AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
                 {"abcgmail.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {"abc@gmail", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
@@ -360,9 +357,8 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidEmailAddressForUsersList")
     public static Object[][] invalidEmailAddressDataForUsersList() {
         return new Object[][]{
-                {"", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
-                {"E", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
-                {"E".repeat(256), AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"", AysErrorMessage.SIZE_BETWEEN_1_254, "emailAddress", "String"},
+                {"E".repeat(255), AysErrorMessage.SIZE_BETWEEN_1_254, "emailAddress", "String"},
         };
     }
 
