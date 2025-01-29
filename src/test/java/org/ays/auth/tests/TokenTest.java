@@ -21,7 +21,7 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void getTokenWithInvalidEmailAddress(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
         loginPayload.setEmailAddress(emailAddress);
@@ -72,7 +72,7 @@ public class TokenTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void getUserTokenWithInvalidUsername(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
         loginPayload.setEmailAddress(emailAddress);

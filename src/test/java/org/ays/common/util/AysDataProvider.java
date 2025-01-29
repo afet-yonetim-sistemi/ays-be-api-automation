@@ -226,14 +226,17 @@ public class AysDataProvider {
         return new Object[][]{
                 {"", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
                 {"  ", AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"abc", AysErrorMessage.EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER, "emailAddress", "String"},
-                {"abcgmail.com", AysErrorMessage.EMAIL_CONTAIN_EXACTLY_ONE_AT_CHARACTER, "emailAddress", "String"},
-                {"abc@gmail", AysErrorMessage.EMAIL_IS_NOT_IN_A_VALID_FORMAT, "emailAddress", "String"},
+                {"abcdefg", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"a@b.c", AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
+                {"E".repeat(243) + "@aystest.org", AysErrorMessage.SIZE_BETWEEN_6_254, "emailAddress", "String"},
+                {"abcgmail.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"abc@gmail", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
                 {null, AysErrorMessage.MUST_NOT_BE_BLANK, "emailAddress", "String"},
-                {"  user@example.com", AysErrorMessage.EMAIL_MUST_NOT_START_OR_END_WITH_WHITESPACE, "emailAddress", "String"},
-                {"user@-example.com", AysErrorMessage.DOMAIN_MUST_NOT_START_OR_END_WITH_A_HYPHEN, "emailAddress", "String"},
-                {"-user@example.com", AysErrorMessage.EMAIL_LOCAL_PART_MUST_START_WITH_A_LETTER_OR_NUMBER, "emailAddress", "String"},
-                {"user us@example.com", AysErrorMessage.EMAIL_CONTAINS_INVALID_SPECIAL_CHARACTERS, "emailAddress", "String"}
+                {"  user@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"user@-example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"-user@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"user us@example.com", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"},
+                {"username@gmail..co.uk", AysErrorMessage.MUST_BE_VALID, "emailAddress", "String"}
         };
     }
 
@@ -354,9 +357,8 @@ public class AysDataProvider {
     @org.testng.annotations.DataProvider(name = "invalidEmailAddressForUsersList")
     public static Object[][] invalidEmailAddressDataForUsersList() {
         return new Object[][]{
-                {"", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
-                {"E", AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
-                {"E".repeat(256), AysErrorMessage.SIZE_BETWEEN_2_255, "emailAddress", "String"},
+                {"", AysErrorMessage.SIZE_BETWEEN_1_254, "emailAddress", "String"},
+                {"E".repeat(255), AysErrorMessage.SIZE_BETWEEN_1_254, "emailAddress", "String"},
         };
     }
 

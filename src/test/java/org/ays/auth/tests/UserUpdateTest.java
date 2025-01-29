@@ -149,7 +149,7 @@ public class UserUpdateTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression"}, enabled = false, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
     public void updateUserWithInvalidEmail(String emailAddress, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationAdmin();
