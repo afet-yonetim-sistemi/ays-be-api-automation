@@ -35,7 +35,8 @@ public enum AysErrorMessage {
     MUST_BE_10("must be 10"),
     ADMIN_REGISTRATION_APPLICATION_ALREADY_APPROVED_OR_REJECTED("admin registration application was already approved or rejected!"),
     ADMIN_REGISTRATION_APPLICATION_ALREADY_REJECTED("admin registration application was already rejected!"),
-    ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETE("admin registration application is not complete!");
+    ADMIN_REGISTRATION_APPLICATION_IS_NOT_COMPLETE("admin registration application is not complete!"),
+    SOURCE_CITY_DISTRICT_AND_TARGET_CITY_DISTRICT_MUST_BE_DIFFERENT("source city/district and target city/district must be different");
 
     private final String message;
 

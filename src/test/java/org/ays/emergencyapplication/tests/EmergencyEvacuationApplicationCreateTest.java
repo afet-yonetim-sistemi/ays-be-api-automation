@@ -180,5 +180,38 @@ public class EmergencyEvacuationApplicationCreateTest {
                 .body("subErrors[0].type", equalTo(fieldType));
     }
 
+    @Test(groups = "Regression")
+    public void testSameSourceAndTargetLocationForMe() {
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForMe();
+        emergencyEvacuationApplicationPayload.setSourceCity("Ankara");
+        emergencyEvacuationApplicationPayload.setSourceDistrict("Çankaya");
+        emergencyEvacuationApplicationPayload.setTargetCity("Ankara");
+        emergencyEvacuationApplicationPayload.setTargetDistrict("Çankaya");
+
+        Response response = EmergencyEvacuationApplicationEndpoints.create(emergencyEvacuationApplicationPayload);
+
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .body("subErrors[0].message", equalTo(
+                        AysErrorMessage.SOURCE_CITY_DISTRICT_AND_TARGET_CITY_DISTRICT_MUST_BE_DIFFERENT.getMessage()))
+                .body("subErrors[0].field", equalTo("sourceCityAndDistrictDifferentFromTargetCityAndDistrict"));
+    }
+
+    @Test(groups = "Regression")
+    public void testSameSourceAndTargetLocationForOtherPerson() {
+        EmergencyEvacuationApplicationPayload emergencyEvacuationApplicationPayload = EmergencyEvacuationApplicationPayload.generateForOtherPerson();
+        emergencyEvacuationApplicationPayload.setSourceCity("İstanbul");
+        emergencyEvacuationApplicationPayload.setSourceDistrict("Kadıköy");
+        emergencyEvacuationApplicationPayload.setTargetCity("İstanbul");
+        emergencyEvacuationApplicationPayload.setTargetDistrict("Kadıköy");
+
+        Response response = EmergencyEvacuationApplicationEndpoints.create(emergencyEvacuationApplicationPayload);
+
+        response.then()
+                .spec(AysResponseSpecs.expectBadRequestResponseSpec())
+                .body("subErrors[0].message", equalTo(
+                        AysErrorMessage.SOURCE_CITY_DISTRICT_AND_TARGET_CITY_DISTRICT_MUST_BE_DIFFERENT.getMessage()))
+                .body("subErrors[0].field", equalTo("sourceCityAndDistrictDifferentFromTargetCityAndDistrict"));
+    }
 
 }
