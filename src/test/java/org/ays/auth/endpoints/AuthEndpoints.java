@@ -3,6 +3,7 @@ package org.ays.auth.endpoints;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.ays.auth.payload.LoginPayload;
+import org.ays.auth.payload.PasswordCreatePayload;
 import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.auth.payload.TokenInvalidatePayload;
 import org.ays.auth.payload.TokenRefreshPayload;
@@ -54,6 +55,19 @@ public class AuthEndpoints {
                 .httpMethod(HttpMethod.POST)
                 .url("/api/v1/authentication/password/forgot")
                 .body(passwordForgotPayload)
+                .build();
+
+        return AysRestAssured.perform(restAssuredRequest);
+
+    }
+
+    public static Response createPassword(String id, PasswordCreatePayload passwordCreatePayload) {
+
+        AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
+                .httpMethod(HttpMethod.POST)
+                .url("/api/v1/authentication/password/{id}")
+                .pathParameter(Map.of("id", id))
+                .body(passwordCreatePayload)
                 .build();
 
         return AysRestAssured.perform(restAssuredRequest);

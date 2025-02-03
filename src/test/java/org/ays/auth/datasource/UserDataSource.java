@@ -174,4 +174,25 @@ public class UserDataSource {
         }
     }
 
+    public static String findPasswordIdByInstitutionId(String institutionId) {
+        String userId = findLastCreatedUserIdByInstitutionId(institutionId);
+
+        String query = "SELECT ID FROM AYS_USER_PASSWORD WHERE USER_ID = ?";
+
+        try (Connection connection = AysDataSource.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("ID");
+                }
+            }
+
+            throw new RuntimeException("No password id found for the given institution ID");
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
 }
