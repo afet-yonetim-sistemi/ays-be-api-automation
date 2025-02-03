@@ -43,9 +43,10 @@ public class PasswordCreateTest {
 
         UserCreatePayload userCreatePayload = UserCreatePayload.generateUserWithARole(roleId);
         UserEndpoints.create(userCreatePayload, accessToken);
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
+        String passwordId = UserDataSource.findPasswordIdByUserId(userId);
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
-        String passwordId = UserDataSource.findPasswordIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
         Response response = AuthEndpoints.createPassword(passwordId, passwordCreatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -82,8 +83,10 @@ public class PasswordCreateTest {
 
         AysDataSource.refreshDatabase();
 
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        String passwordId = UserDataSource.findPasswordIdByUserId(userId);
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
-        String passwordId = UserDataSource.findPasswordIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
         Response response = AuthEndpoints.createPassword(passwordId, passwordCreatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
@@ -112,19 +115,23 @@ public class PasswordCreateTest {
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
         passwordCreatePayload.setPassword(password);
 
-        String passwordId = UserDataSource.findPasswordIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        String passwordId = UserDataSource.findPasswordIdByUserId(userId);
         Response response = AuthEndpoints.createPassword(passwordId, passwordCreatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidPassword", dataProviderClass = AysDataProvider.class)
+    @Test(groups = {"Regression"}, dataProvider = "invalidPasswordRepeat", dataProviderClass = AysDataProvider.class)
     public void createPasswordWithInvalidPasswordRepeatData(String password, AysErrorMessage errorMessage, String field, String type) {
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
         passwordCreatePayload.setPasswordRepeat(password);
 
-        String passwordId = UserDataSource.findPasswordIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        String passwordId = UserDataSource.findPasswordIdByUserId(userId);
         Response response = AuthEndpoints.createPassword(passwordId, passwordCreatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
@@ -136,7 +143,9 @@ public class PasswordCreateTest {
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
         passwordCreatePayload.setPasswordRepeat(AysRandomUtil.generatePassword());
 
-        String passwordId = UserDataSource.findPasswordIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+        String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
+
+        String passwordId = UserDataSource.findPasswordIdByUserId(userId);
         Response response = AuthEndpoints.createPassword(passwordId, passwordCreatePayload);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())

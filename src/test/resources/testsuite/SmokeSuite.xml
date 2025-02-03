@@ -12,6 +12,7 @@
             <class name="org.ays.auth.tests.TokenRefreshTest"/>
             <class name="org.ays.auth.tests.TokenTest"/>
             <class name="org.ays.auth.tests.InvalidTokensTest"/>
+            <class name="org.ays.auth.tests.PasswordCreateTest"/>
             <class name="org.ays.auth.tests.PasswordForgotTest"/>
             <class name="org.ays.auth.tests.PermissionsListTest"/>
             <class name="org.ays.auth.tests.RoleActivateTest"/>

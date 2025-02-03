@@ -174,9 +174,7 @@ public class UserDataSource {
         }
     }
 
-    public static String findPasswordIdByInstitutionId(String institutionId) {
-        String userId = findLastCreatedUserIdByInstitutionId(institutionId);
-
+    public static String findPasswordIdByUserId(String userId) {
         String query = "SELECT ID FROM AYS_USER_PASSWORD WHERE USER_ID = ?";
 
         try (Connection connection = AysDataSource.createConnection();
@@ -189,7 +187,7 @@ public class UserDataSource {
                 }
             }
 
-            throw new RuntimeException("No password id found for the given institution ID");
+            throw new RuntimeException("No password id found for the given userId: " + userId);
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
