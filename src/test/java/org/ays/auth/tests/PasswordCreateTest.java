@@ -14,7 +14,6 @@ import org.ays.auth.payload.PasswordCreatePayload;
 import org.ays.auth.payload.PasswordForgotPayload;
 import org.ays.auth.payload.RoleCreatePayload;
 import org.ays.auth.payload.UserCreatePayload;
-import org.ays.common.datasource.AysDataSource;
 import org.ays.common.model.enums.AysErrorMessage;
 import org.ays.common.util.AysConfigurationProperty;
 import org.ays.common.util.AysDataProvider;
@@ -81,8 +80,6 @@ public class PasswordCreateTest {
         passwordForgotPayload.setEmailAddress(emailAddress);
         AuthEndpoints.forgotPassword(passwordForgotPayload);
 
-        AysDataSource.refreshDatabase();
-
         String userId = UserDataSource.findLastCreatedUserIdByInstitutionId(AysConfigurationProperty.TestDisasterFoundation.ID);
 
         String passwordId = UserDataSource.findPasswordIdByUserId(userId);
@@ -139,7 +136,7 @@ public class PasswordCreateTest {
     }
 
     @Test(groups = {"Regression"})
-    public void createPasswordUsingDifferentPasswordAndPasswordRepeatData() {
+    public void createPasswordWithMismatchedPasswordAndPasswordRepeatData() {
         PasswordCreatePayload passwordCreatePayload = PasswordCreatePayload.generate();
         passwordCreatePayload.setPasswordRepeat(AysRandomUtil.generatePassword());
 
