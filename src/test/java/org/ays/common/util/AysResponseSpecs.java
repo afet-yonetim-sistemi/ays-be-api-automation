@@ -51,7 +51,7 @@ public class AysResponseSpecs {
                 .expectBody("time", notNullValue())
                 .expectBody("time", matchesPattern(TIME_FORMAT_REGEX))
                 .expectBody("code", matchesPattern(UUID_REGEX))
-                .expectBody("header", equalTo("NOT EXIST ERROR"))
+                .expectBody("header", equalTo("NOT EXIST"))
                 .expectBody("isSuccess", equalTo(false))
                 .build();
     }
