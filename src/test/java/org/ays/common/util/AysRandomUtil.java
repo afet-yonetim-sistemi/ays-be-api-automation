@@ -22,7 +22,9 @@ public class AysRandomUtil {
     public String generateEmailAddress() {
         final String firstName = FAKER.name().firstName().toLowerCase();
         final String lastName = FAKER.name().lastName().toLowerCase();
-        return firstName + "." + lastName + "@afetyonetimsistemi.test";
+        final String prefix = "test";
+        final String emailAddress = (prefix + firstName + "." + lastName + "@afetyonetimsistemi.test");
+        return emailAddress.replaceAll("[^a-z]", "");
     }
 
     public static String generatePassword() {
