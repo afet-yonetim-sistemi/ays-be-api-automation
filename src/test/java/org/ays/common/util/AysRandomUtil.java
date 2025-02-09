@@ -20,11 +20,10 @@ public class AysRandomUtil {
     }
 
     public String generateEmailAddress() {
-        final String firstName = FAKER.name().firstName().toLowerCase();
-        final String lastName = FAKER.name().lastName().toLowerCase();
+        final String firstName = FAKER.name().firstName().toLowerCase().replaceAll("[^a-z]", "");
+        final String lastName = FAKER.name().lastName().toLowerCase().replaceAll("[^a-z]", "");
         final String prefix = "test";
-        final String emailAddress = (prefix + firstName + "." + lastName + "@afetyonetimsistemi.test");
-        return emailAddress.replaceAll("[^a-z]", "");
+        return (prefix + firstName + "." + lastName + "@afetyonetimsistemi.test");
     }
 
     public static String generatePassword() {
