@@ -71,24 +71,6 @@ public class UserDataSource {
         }
     }
 
-    public static String findAnyEmailAddress() {
-
-        String query = "SELECT EMAIL_ADDRESS FROM AYS_USER LIMIT 1";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            if (resultSet.next()) {
-                return resultSet.getString("EMAIL_ADDRESS");
-            }
-
-            return null;
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     public static int findUserCountByInstitutionId(String institutionId) {
         String query = "SELECT COUNT(*) AS USER_COUNT " +
                 "FROM AYS_USER USER " +

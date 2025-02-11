@@ -245,7 +245,7 @@ public class UsersListTest {
         userListPayload.setPageable(AysPageable.generate(1, 10));
 
         UserListPayload.Filter filter = new UserListPayload.Filter();
-        filter.setEmailAddress("@gmail.com");
+        filter.setEmailAddress("@afetyonetimsistemi.test");
 
         userListPayload.setFilter(filter);
 
