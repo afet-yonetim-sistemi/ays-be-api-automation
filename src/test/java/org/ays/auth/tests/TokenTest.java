@@ -34,7 +34,7 @@ public class TokenTest {
     @Test(groups = {"Regression"})
     public void getTokenWithUnAuthUserEmailAddress() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationAdmin();
-        loginPayload.setEmailAddress("email@gmail.com");
+        loginPayload.setEmailAddress("email@afetyonetimsistemi.test");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
@@ -85,7 +85,7 @@ public class TokenTest {
     @Test(groups = {"Regression"})
     public void getUserTokenWithUnAuthUserEmailAddress() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
-        loginPayload.setEmailAddress("email@gmail.com");
+        loginPayload.setEmailAddress("email@afetyonetimsistemi.test");
         Response response = AuthEndpoints.token(loginPayload);
         response.then()
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
