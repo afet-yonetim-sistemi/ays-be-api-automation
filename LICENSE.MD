@@ -17,5 +17,5 @@ Redistributions of any form whatsoever must retain the following acknowledgment:
 
 Redistributions of any form whatsoever must also include a copy of this license document in the distribution.
 
-If you have any questions or concerns regarding the licensing of this software, please contact the project team at iletisim@afetyonetimsistemi.com.
+If you have any questions or concerns regarding the licensing of this software, please contact the project team at iletisim@afetyonetimsistemi.org.
 
