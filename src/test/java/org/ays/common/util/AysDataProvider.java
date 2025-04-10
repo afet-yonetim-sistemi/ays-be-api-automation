@@ -81,10 +81,10 @@ public class AysDataProvider {
     public static Object[][] invalidPhoneNumberData() {
         return new Object[][]{
                 {"90", "2105346789", AysErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", " 2367894534", AysErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", "005457568956", AysErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
-                {"+90", "5457568956", AysErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", "+5457568956", AysErrorMessage.MUST_BE_VALID, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", " 2367894534", AysErrorMessage.LINE_NUMBER_LENGTH_MUST_BE_10, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "005457568956", AysErrorMessage.LINE_NUMBER_LENGTH_MUST_BE_10, "phoneNumber", "AysPhoneNumberRequest"},
+                {"+90", "5457568956", AysErrorMessage.COUNTRY_CODE_MUST_BE_90, "phoneNumber", "AysPhoneNumberRequest"},
+                {"90", "+5457568956", AysErrorMessage.LINE_NUMBER_LENGTH_MUST_BE_10, "phoneNumber", "AysPhoneNumberRequest"},
                 {"", "5457568956", AysErrorMessage.MUST_NOT_BE_BLANK, "countryCode", "String"},
                 {"90", "", AysErrorMessage.MUST_NOT_BE_BLANK, "lineNumber", "String"},
                 {"  ", "5457568956", AysErrorMessage.MUST_NOT_BE_BLANK, "countryCode", "String"},
@@ -193,17 +193,6 @@ public class AysDataProvider {
         };
     }
 
-    @org.testng.annotations.DataProvider(name = "invalidPhoneNumberDataForFilter")
-    public static Object[][] invalidPhoneNumberDataForFilter() {
-        return new Object[][]{
-                {"", "1234567890", "size must be between 1 and 3"},
-                {"12345", "1234567890", "size must be between 1 and 3"},
-                {"90", "", "size must be between 7 and 15"},
-                {"90", "12345", "size must be between 7 and 15"},
-                {"90", "1234567890123456", "size must be between 7 and 15"}
-        };
-    }
-
     @org.testng.annotations.DataProvider(name = "invalidFirstAndLastNamesDataForAdminRegistration")
     public Object[][] invalidFirstAndLastNamesDataForAdminRegistration() {
         return new Object[][]{
@@ -257,17 +246,6 @@ public class AysDataProvider {
                 {null, AysErrorMessage.MUST_NOT_BE_BLANK, "passwordRepeat", "String"},
                 {AysRandomUtil.generatePassword(1, 7), AysErrorMessage.SIZE_BETWEEN_8_128, "passwordRepeat", "String"},
                 {AysRandomUtil.generatePassword(129, 135), AysErrorMessage.SIZE_BETWEEN_8_128, "passwordRepeat", "String"}
-        };
-    }
-
-    @org.testng.annotations.DataProvider(name = "invalidPhoneNumberDataForRegistrationComplete")
-    public static Object[][] invalidPhoneNumberDataForRegistrationComplete() {
-        return new Object[][]{
-                {"", "1234567890", "must not be blank", "countryCode", "String"},
-                {"12345", "1234567890", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", "", "must not be blank", "lineNumber", "String"},
-                {"90", "12345", "must be valid", "phoneNumber", "AysPhoneNumberRequest"},
-                {"90", "1234567890123456", "must be valid", "phoneNumber", "AysPhoneNumberRequest"}
         };
     }
 

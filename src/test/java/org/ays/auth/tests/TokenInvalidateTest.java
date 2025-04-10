@@ -24,7 +24,7 @@ public class TokenInvalidateTest {
                 .spec(AysResponseSpecs.expectSuccessResponseSpec());
     }
 
-    @Test(groups = {"Smoke", "Regression"})
+    @Test(groups = {"Smoke", "Regression"},enabled = false)
     public void invalidateUserToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();

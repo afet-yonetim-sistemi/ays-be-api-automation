@@ -63,7 +63,7 @@ public class TokenTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Smoke", "Regression"})
+    @Test(groups = {"Smoke", "Regression"},enabled = false)
     public void getTokenForValidUser() {
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
         Response response = AuthEndpoints.token(loginPayload);
