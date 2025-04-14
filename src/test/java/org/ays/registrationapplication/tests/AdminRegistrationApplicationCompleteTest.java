@@ -16,10 +16,7 @@ import org.ays.registrationapplication.model.payload.AdminRegistrationApplicatio
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationRejectPayload;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 
 
 public class AdminRegistrationApplicationCompleteTest {
@@ -217,8 +214,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("message", containsString("user already exist! emailAddress:" + completePayload.getEmailAddress()));
     }
 
-    // TODO: Re-enable this test with issue AYS-785
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void completeRegistrationApplicationWithExistPhoneNumber() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -244,7 +240,11 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(latestId, latestCompletePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString("user already exist! countryCode:" + completePayload.getPhoneNumber().getCountryCode() + " , lineNumber:" + completePayload.getPhoneNumber().getLineNumber()));
+                .body("message", allOf(
+                        containsString("user already exists!"),
+                        containsString("countryCode: " + completePayload.getPhoneNumber().getCountryCode()),
+                        endsWith(completePayload.getPhoneNumber().getLineNumber().substring(6))
+                ));
     }
 
     @Test(groups = "Regression")
