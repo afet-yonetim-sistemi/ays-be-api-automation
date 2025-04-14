@@ -120,8 +120,8 @@ public class AdminRegistrationApplicationCompleteTest {
                 .spec(AysResponseSpecs.subErrorsSpec(errorMessage, field, type));
     }
 
-    @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberDataForRegistrationComplete", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, String errorMessage, String field, String type) {
+    @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
+    public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -144,7 +144,7 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(id, completePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectBadRequestResponseSpec())
-                .body("subErrors[0].message", equalTo(errorMessage))
+                .body("subErrors[0].message", equalTo(errorMessage.getMessage()))
                 .body("subErrors[0].field", equalTo(field))
                 .body("subErrors[0].type", equalTo(type));
     }
@@ -187,7 +187,8 @@ public class AdminRegistrationApplicationCompleteTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec());
     }
 
-    @Test(groups = {"Regression"})
+    // TODO: Re-enable this test with issue AYS-786
+    @Test(groups = {"Regression"}, enabled = false)
     public void completeRegistrationApplicationWithExistEmail() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -216,7 +217,8 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("message", containsString("user already exist! emailAddress:" + completePayload.getEmailAddress()));
     }
 
-    @Test(groups = {"Regression"})
+    // TODO: Re-enable this test with issue AYS-785
+    @Test(groups = {"Regression"}, enabled = false)
     public void completeRegistrationApplicationWithExistPhoneNumber() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();

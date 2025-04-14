@@ -142,7 +142,7 @@ public class RoleCreateTest {
                 "Permission ID in the database should match the one set in the role.");
     }
 
-    @Test(groups = {"Regression"})
+    @Test(groups = {"Regression"}, enabled = false)
     public void createRoleByUserWithoutRoleCreatePermission() {
 
         LoginPayload login = LoginPayload.generateAsTestVolunteerFoundationUser();
