@@ -16,8 +16,12 @@ import org.ays.registrationapplication.model.payload.AdminRegistrationApplicatio
 import org.ays.registrationapplication.model.payload.AdminRegistrationApplicationRejectPayload;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.*;
-
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasItem;
 
 public class AdminRegistrationApplicationCompleteTest {
 
@@ -43,7 +47,7 @@ public class AdminRegistrationApplicationCompleteTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidFirstName(String invalidFirstName, AysErrorMessage errorMessage) {
+    public void completeApplicationRegistrationWithInvalidFirstName(String invalidFirstName, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -69,7 +73,7 @@ public class AdminRegistrationApplicationCompleteTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidFirstAndLastNamesDataForAdminRegistration", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidLastName(String invalidFLastName, AysErrorMessage errorMessage) {
+    public void completeApplicationRegistrationWithInvalidLastName(String invalidFLastName, AysErrorMessage errorMessage) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -95,7 +99,7 @@ public class AdminRegistrationApplicationCompleteTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidEmailAddress", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidEmail(String invalidEmail, AysErrorMessage errorMessage, String field, String type) {
+    public void completeApplicationRegistrationWithInvalidEmail(String invalidEmail, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -118,7 +122,7 @@ public class AdminRegistrationApplicationCompleteTest {
     }
 
     @Test(groups = {"Regression"}, dataProvider = "invalidPhoneNumberData", dataProviderClass = AysDataProvider.class)
-    public void completeApplicationRegistrationWitInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
+    public void completeApplicationRegistrationWithInvalidPhoneNumber(String countryCode, String lineNumber, AysErrorMessage errorMessage, String field, String type) {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
         String accessToken = this.loginAndGetAccessToken(loginPayload);
@@ -243,6 +247,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .body("message", allOf(
                         containsString("user already exists!"),
                         containsString("countryCode: " + completePayload.getPhoneNumber().getCountryCode()),
+                        containsString("lineNumber: "),
                         endsWith(completePayload.getPhoneNumber().getLineNumber().substring(6))
                 ));
     }
