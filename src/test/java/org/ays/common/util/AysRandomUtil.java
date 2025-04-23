@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
 
 import java.util.Random;
-import java.util.UUID;
 
 @UtilityClass
 public class AysRandomUtil {
@@ -23,9 +22,8 @@ public class AysRandomUtil {
     public String generateEmailAddress() {
         final String firstName = FAKER.name().firstName().toLowerCase().replaceAll("[^a-z]", "");
         final String lastName = FAKER.name().lastName().toLowerCase().replaceAll("[^a-z]", "");
-        final String uuid = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "").substring(0, 10).toLowerCase();
         final String prefix = "test";
-        return prefix + firstName + "." + lastName + "_" + uuid + "@afetyonetimsistemi.test";
+        return (prefix + firstName + "." + lastName + "@afetyonetimsistemi.test");
     }
 
     public static String generatePassword() {
