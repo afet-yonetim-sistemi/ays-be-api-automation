@@ -45,7 +45,7 @@ public class TokenRefreshTest {
                 .spec(AysResponseSpecs.expectUnauthorizedResponseSpec());
     }
 
-    @Test(groups = {"Smoke", "Regression"}, enabled = false)
+    @Test(groups = {"Smoke", "Regression"})
     public void refreshUserToken() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();
@@ -60,7 +60,7 @@ public class TokenRefreshTest {
                 .spec(AysResponseSpecs.expectGetTokenResponseSpec());
     }
 
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void refreshUserAccessTokenAfterTokenInvalidation() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestDisasterFoundationUser();

@@ -188,8 +188,7 @@ public class AdminRegistrationApplicationCompleteTest {
                 .spec(AysResponseSpecs.expectConflictResponseSpec());
     }
 
-    // TODO: Re-enable this test with issue AYS-786
-    @Test(groups = {"Regression"}, enabled = false)
+    @Test(groups = {"Regression"})
     public void completeRegistrationApplicationWithExistEmail() {
 
         LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
@@ -215,7 +214,11 @@ public class AdminRegistrationApplicationCompleteTest {
         Response response = AdminRegistrationApplicationEndpoints.complete(latestId, completePayload, accessToken);
         response.then()
                 .spec(AysResponseSpecs.expectConflictResponseSpec())
-                .body("message", containsString("user already exist! emailAddress:" + completePayload.getEmailAddress()));
+                .body("message", containsString("user already exists! emailAddress:"))
+                .body("message", containsString("*"))
+                .body("message", containsString(completePayload.getEmailAddress().substring(0, 2)))
+                .body("message", endsWith(completePayload.getEmailAddress().substring(
+                        completePayload.getEmailAddress().length() - 3)));
     }
 
     @Test(groups = {"Regression"})
