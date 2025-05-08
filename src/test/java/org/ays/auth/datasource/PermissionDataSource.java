@@ -56,7 +56,9 @@ public class PermissionDataSource {
             List<String> permissions = new ArrayList<>();
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
-                permissions.add(name);
+                if (!"landing:page".equals(name)) {
+                    permissions.add(name);
+                }
             }
             return permissions;
 
@@ -99,7 +101,9 @@ public class PermissionDataSource {
                 List<String> permissions = new ArrayList<>();
                 while (resultSet.next()) {
                     String name = resultSet.getString("NAME");
-                    permissions.add(name);
+                    if (!"landing:page".equals(name)) {
+                        permissions.add(name);
+                    }
                 }
                 return permissions;
             }
