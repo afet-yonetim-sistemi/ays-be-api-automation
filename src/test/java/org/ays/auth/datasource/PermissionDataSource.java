@@ -46,22 +46,18 @@ public class PermissionDataSource {
     }
 
     public static List<String> findAllPermissionNames() {
+        String query = "SELECT NAME FROM AYS_PERMISSION WHERE NAME != 'landing:page'";
 
-        String query = "SELECT NAME FROM AYS_PERMISSION";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
+        try (
+                Connection connection = AysDataSource.createConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()
+        ) {
             List<String> permissions = new ArrayList<>();
             while (resultSet.next()) {
-                String name = resultSet.getString("NAME");
-                if (!"landing:page".equals(name)) {
-                    permissions.add(name);
-                }
+                permissions.add(resultSet.getString("NAME"));
             }
             return permissions;
-
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
@@ -88,22 +84,18 @@ public class PermissionDataSource {
     }
 
     public static List<String> findAllPermissionNamesByIsSuper(boolean isSuper) {
+        String query = "SELECT NAME FROM AYS_PERMISSION WHERE IS_SUPER = ? AND NAME != 'landing:page'";
 
-        String query = "SELECT NAME FROM AYS_PERMISSION WHERE IS_SUPER = ?";
-
-        try (Connection connection = AysDataSource.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-
+        try (
+                Connection connection = AysDataSource.createConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setBoolean(1, isSuper);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<String> permissions = new ArrayList<>();
                 while (resultSet.next()) {
-                    String name = resultSet.getString("NAME");
-                    if (!"landing:page".equals(name)) {
-                        permissions.add(name);
-                    }
+                    permissions.add(resultSet.getString("NAME"));
                 }
                 return permissions;
             }
