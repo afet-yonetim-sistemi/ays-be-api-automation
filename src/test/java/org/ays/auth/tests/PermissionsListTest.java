@@ -73,6 +73,24 @@ public class PermissionsListTest {
         }
     }
 
+    @Test(groups = {"Smoke", "Regression"})
+    public void landingPagePermissionShouldNotBeListed() {
+
+        LoginPayload loginPayload = LoginPayload.generateAsTestVolunteerFoundationSuperAdmin();
+        String accessToken = this.loginAndGetAccessToken(loginPayload);
+
+        Response response = PermissionEndpoints.findAll(accessToken);
+        response.then()
+                .spec(AysResponseSpecs.expectSuccessResponseSpec());
+
+        List<String> permissionsFromResponse = response.jsonPath().getList("response.name");
+
+        Assert.assertFalse(
+                permissionsFromResponse.contains("landing:page"),
+                "'landing:page' permission should not be listed in the response!"
+        );
+    }
+
     private String loginAndGetAccessToken(LoginPayload loginPayload) {
         return AuthEndpoints.token(loginPayload).jsonPath().getString("response.accessToken");
     }
