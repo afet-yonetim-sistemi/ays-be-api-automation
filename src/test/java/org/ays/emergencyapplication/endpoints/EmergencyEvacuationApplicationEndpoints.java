@@ -12,7 +12,7 @@ public class EmergencyEvacuationApplicationEndpoints {
     public static Response findAll(EmergencyEvacuationApplicationListPayload listPayload, String token) {
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/emergency-evacuation-applications")
+                .url("/api/institution/v1/emergency-evacuation-applications")
                 .body(listPayload)
                 .token(token)
                 .build();

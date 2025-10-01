@@ -19,7 +19,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-applications")
+                .url("/api/institution/v1/admin-registration-applications")
                 .body(listPayload)
                 .token(accessToken)
                 .build();
@@ -31,7 +31,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
-                .url("/api/v1/admin-registration-application/{id}")
+                .url("/api/institution/v1/admin-registration-application/{id}")
                 .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
@@ -43,7 +43,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application")
+                .url("/api/institution/v1/admin-registration-application")
                 .body(createPayload)
                 .token(accessToken)
                 .build();
@@ -56,7 +56,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application/{id}/approve")
+                .url("/api/institution/v1/admin-registration-application/{id}/approve")
                 .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
@@ -68,7 +68,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application/{id}/reject")
+                .url("/api/institution/v1/admin-registration-application/{id}/reject")
                 .pathParameter(Map.of("id", id))
                 .body(rejectPayload)
                 .token(accessToken)
@@ -81,7 +81,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
-                .url("/api/v1/admin-registration-application/{id}/summary")
+                .url("/api/institution/v1/admin-registration-application/{id}/summary")
                 .pathParameter(Map.of("id", id))
                 .token(accessToken)
                 .build();
@@ -93,7 +93,7 @@ public class AdminRegistrationApplicationEndpoints {
 
         AysRestAssuredPayload restAssuredRequest = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/admin-registration-application/{id}/complete")
+                .url("/api/institution/v1/admin-registration-application/{id}/complete")
                 .pathParameter(Map.of("id", id))
                 .body(completePayload)
                 .token(accessToken)
