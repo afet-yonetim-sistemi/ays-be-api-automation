@@ -13,7 +13,7 @@ public class PermissionEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
-                .url("/api/v1/permissions")
+                .url("/api/institution/v1/permissions")
                 .token(token)
                 .build();
 

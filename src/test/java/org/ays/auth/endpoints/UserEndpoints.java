@@ -18,7 +18,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/users")
+                .url("/api/institution/v1/users")
                 .body(userListPayload)
                 .token(token)
                 .build();
@@ -30,7 +30,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
-                .url("/api/v1/user/{id}")
+                .url("/api/institution/v1/user/{id}")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
@@ -42,7 +42,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/user")
+                .url("/api/institution/v1/user")
                 .body(userCreatePayloadPayload)
                 .token(token)
                 .build();
@@ -54,7 +54,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
-                .url("/api/v1/user/{id}")
+                .url("/api/institution/v1/user/{id}")
                 .pathParameter(Map.of("id", id))
                 .body(updatePayload)
                 .token(token)
@@ -67,7 +67,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/user/{id}/passivate")
+                .url("/api/institution/v1/user/{id}/passivate")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
@@ -79,7 +79,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/user/{id}/activate")
+                .url("/api/institution/v1/user/{id}/activate")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
@@ -91,7 +91,7 @@ public class UserEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
-                .url("/api/v1/user/{id}")
+                .url("/api/institution/v1/user/{id}")
                 .pathParameter(Map.of("id", userId))
                 .token(token)
                 .build();

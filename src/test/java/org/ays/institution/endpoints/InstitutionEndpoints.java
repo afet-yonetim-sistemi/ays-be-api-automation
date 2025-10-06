@@ -12,7 +12,7 @@ public class InstitutionEndpoints {
     public static Response findAllSummary(String accessToken) {
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.GET)
-                .url("/api/v1/institutions/summary")
+                .url("/api/institution/v1/institutions/summary")
                 .token(accessToken)
                 .build();
 

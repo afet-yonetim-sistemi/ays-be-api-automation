@@ -18,7 +18,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/roles")
+                .url("/api/institution/v1/roles")
                 .body(roleListPayload)
                 .token(token)
                 .build();
@@ -30,7 +30,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.POST)
-                .url("/api/v1/role")
+                .url("/api/institution/v1/role")
                 .body(roleCreatePayload)
                 .token(token)
                 .build();
@@ -42,7 +42,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PUT)
-                .url("/api/v1/role/{id}")
+                .url("/api/institution/v1/role/{id}")
                 .pathParameter(Map.of("id", id))
                 .body(roleUpdatePayload)
                 .token(token)
@@ -55,7 +55,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/role/{id}/activate")
+                .url("/api/institution/v1/role/{id}/activate")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
@@ -67,7 +67,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.PATCH)
-                .url("/api/v1/role/{id}/passivate")
+                .url("/api/institution/v1/role/{id}/passivate")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
@@ -79,7 +79,7 @@ public class RoleEndpoints {
 
         AysRestAssuredPayload restAssuredPayload = AysRestAssuredPayload.builder()
                 .httpMethod(HttpMethod.DELETE)
-                .url("/api/v1/role/{id}")
+                .url("/api/institution/v1/role/{id}")
                 .pathParameter(Map.of("id", id))
                 .token(token)
                 .build();
