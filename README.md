@@ -85,6 +85,62 @@ By following these steps, you can securely manage sensitive information and easi
 
 ---
 
+## Connecting to Test Environments over SSH
+
+### Why SSH?
+
+The databases of the test environments are **not exposed to the public internet**; only the application APIs are
+publicly accessible. Since the automation framework validates test results directly against the database, it needs a
+secure way to reach it. For this reason, the framework connects to the database through an **SSH tunnel**: it opens an
+SSH session to the environment's server and forwards a local port to the database. This way the database port stays
+closed to the outside world, all traffic is encrypted, and access is limited to people who have a personal SSH user.
+
+When `ssh.enabled=true`, the framework opens the tunnel automatically before the test suite starts and closes it after
+the suite finishes. No manual tunnel setup is needed.
+
+### Getting an SSH User
+
+If you need to run the automation against a test environment, you must have a personal SSH user on that environment's
+server. To get one:
+
+1. **Generate an SSH key pair** on your machine by following the
+   [Key Pair Creation Guide](https://afetyonetimsistemi.atlassian.net/wiki/spaces/AYS/pages/152567810/Sunucu+ya+SSH+le+Ba+lanmak#Key-Pair-Olu%C5%9Fturma).
+   You can skip this step if you already have an SSH key.
+
+2. **Send your public key (`.pub` file) to the DevOps team** and ask them to create an SSH user for you on the related
+   test environment. Never share your private key with anyone.
+
+3. The DevOps team will share the **SSH host** and your **SSH username** with you.
+
+### Reflecting SSH Information to the Configuration File
+
+After receiving your SSH user, update your `configuration.properties` file as follows:
+
+```properties
+database.url=jdbc:mysql://localhost:3306/ays
+ssh.enabled=true
+ssh.host={SSH_HOST_FROM_DEVOPS}
+ssh.username={YOUR_SSH_USERNAME}
+ssh.private_key_pem=
+ssh.private_key_path=
+```
+
+- `database.url` must point to the database **as it is reachable from the SSH server** (typically
+  `localhost:3306`). The framework rewrites the port to the locally forwarded one automatically.
+- `ssh.enabled` turns the tunnel on or off. Keep it `false` when running against a local environment.
+
+The private key is resolved in the following order:
+
+1. `ssh.private_key_pem`: the content of the private key in PEM format. Mostly useful for CI/CD pipelines where the
+   key is injected as a secret.
+2. `ssh.private_key_path`: the path of your private key file (e.g. `/Users/yourname/.ssh/my_ays_key`). Use this if
+   your key is not in the default location.
+3. If both are left empty, the framework automatically looks for a default key under your home directory:
+   `~/.ssh/id_rsa` or `~/.ssh/id_ed25519` (on Windows, `C:\Users\<you>\.ssh\...`). If you created your key with the
+   command above, you can leave both properties empty.
+
+---
+
 ## Running Specific Test Suites
 
 You can run specific test suites by modifying the testng.xml file under the runners package. Add or remove <suite>
