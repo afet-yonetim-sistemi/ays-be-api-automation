@@ -22,6 +22,7 @@
         <maven-surfire.version>3.5.2</maven-surfire.version>
 
         <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
+        <jsch.version>0.2.25</jsch.version>
 
         <testng.version>7.10.2</testng.version>
         <java-client.version>9.4.0</java-client.version>
@@ -195,6 +196,13 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql-connector-j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.mwiede</groupId>
+            <artifactId>jsch</artifactId>
+            <version>${jsch.version}</version>
             <scope>test</scope>
         </dependency>
 
