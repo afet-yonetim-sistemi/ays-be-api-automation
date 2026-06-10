@@ -9,75 +9,67 @@ on:
       - main  # Trigger the workflow when a push event occurs on the main branch
 
 jobs:
-  build: # Define the "build" job
+  initialize: # Define the "initialize" job
     runs-on: ubuntu-latest # Run the job on the latest version of Ubuntu
     steps: # List of steps to execute within the job
-      - name: Update package cache # Step to update the package cache
-        run: sudo apt-get update
-
       - name: Checkout code # Step to check out the code from the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
-      - name: Set up Java # Step to set up the Java environment
-        uses: actions/setup-java@v3
+      - name: Initialize environment
+        uses: ./.github/actions/initialize-environment
         with:
-          java-version: 17 # Specify Java 17 as the version
-          distribution: 'zulu' # Use the 'zulu' distribution of Java
+          SSH_ENABLED: ${{ vars.SSH_ENABLED }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ vars.SSH_USERMAME }}
+          SSH_PRIVATE_KEY_PEM: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
+          AYS_API_URL: ${{ secrets.AYS_API_URL }}
+          AYS_DATABASE_URL: ${{ secrets.AYS_DATABASE_URL }}
+          AYS_DATABASE_USERNAME: ${{ vars.AYS_DATABASE_USERNAME }}
+          AYS_DATABASE_PASSWORD: ${{ secrets.AYS_DATABASE_PASSWORD }}
+          AYS_TEST_DISASTER_FOUNDATION_ID: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_ID }}
+          AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD }}
+          AYS_TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS }}
+          AYS_TEST_DISASTER_FOUNDATION_USER_PASSWORD: ${{ secrets.AYS_TEST_DISASTER_FOUNDATION_USER_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ID: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_ID }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD }}
 
-      - name: Install Maven # Step to install Maven
-        run: sudo apt-get install -y maven
+  test:
+    runs-on: ubuntu-latest
+    needs: initialize
 
+    steps:
+      - name: Checkout code # Step to check out the code from the repository
+        uses: actions/checkout@v6
 
-      - name: Copy configuration.properties file from template # Step to create a new 'configuration.properties' file by copying the 'template-configuration.properties'
-        run: cp sample_configuration.properties configuration.properties
+      - name: Initialize environment
+        uses: ./.github/actions/initialize-environment
+        with:
+          SSH_ENABLED: ${{ vars.SSH_ENABLED }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ vars.SSH_USERMAME }}
+          SSH_PRIVATE_KEY_PEM: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
+          AYS_API_URL: ${{ secrets.AYS_API_URL }}
+          AYS_DATABASE_URL: ${{ secrets.AYS_DATABASE_URL }}
+          AYS_DATABASE_USERNAME: ${{ vars.AYS_DATABASE_USERNAME }}
+          AYS_DATABASE_PASSWORD: ${{ secrets.AYS_DATABASE_PASSWORD }}
+          AYS_TEST_DISASTER_FOUNDATION_ID: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_ID }}
+          AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD }}
+          AYS_TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS: ${{ vars.AYS_TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS }}
+          AYS_TEST_DISASTER_FOUNDATION_USER_PASSWORD: ${{ secrets.AYS_TEST_DISASTER_FOUNDATION_USER_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ID: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_ID }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS: ${{ vars.AYS_TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS }}
+          AYS_TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD: ${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD }}
 
-      - name: Replace api.url in configuration.properties # Step to replace the placeholder api.url in configuration.properties
-        run: sed 's|'{API_URL}'|'${{ secrets.AYS_API_URL }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace database.url in configuration.properties # Step to replace the placeholder database.url in configuration.properties
-        run: sed 's|'{DATABASE_URL}'|'${{ secrets.AYS_DATABASE_URL }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace database.username in configuration.properties # Step to replace the placeholder database.username in configuration.properties
-        run: sed 's|'{DATABASE_USERNAME}'|'${{ secrets.AYS_DATABASE_USERNAME }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace database.password in configuration.properties # Step to replace the placeholder database.password in configuration.properties
-        run: sed 's|'{DATABASE_PASSWORD}'|'${{ secrets.AYS_DATABASE_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_disaster_foundation.id in configuration.properties # Step to replace the placeholder test_disaster_foundation.id in configuration.properties
-        run: sed 's|'{TEST_DISASTER_FOUNDATION_ID}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_disaster_foundation.admin.email_address in configuration.properties # Step to replace the placeholder test_disaster_foundation.admin.email_address in configuration.properties
-        run: sed 's|'{TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_disaster_foundation.admin.password in configuration.properties # Step to replace the placeholder test_disaster_foundation.admin.password in configuration.properties
-        run: sed 's|'{TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_ADMIN_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_disaster_foundation.user.email_address in configuration.properties # Step to replace the placeholder test_disaster_foundation.user.email_address in configuration.properties
-        run: sed 's|'{TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_USER_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_disaster_foundation.user.password in configuration.properties # Step to replace the placeholder test_disaster_foundation.user.password in configuration.properties
-        run: sed 's|'{TEST_DISASTER_FOUNDATION_USER_PASSWORD}'|'${{ secrets.AYS_TEST_DISASTER_FOUNDATION_USER_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.id in configuration.properties # Step to replace the placeholder test_volunteer_foundation.id in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_ID}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_ID }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.super_admin.email_address in configuration.properties # Step to replace the placeholder test_volunteer_foundation.super_admin.email_address in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.super_admin.password in configuration.properties # Step to replace the placeholder test_volunteer_foundation.super_admin.password in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_SUPER_ADMIN_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.admin.email_address in configuration.properties # Step to replace the placeholder test_volunteer_foundation.admin.email_address in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.admin.password in configuration.properties # Step to replace the placeholder test_volunteer_foundation.admin.password in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_ADMIN_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.user.email_address in configuration.properties # Step to replace the placeholder test_volunteer_foundation.user.email_address in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_USER_EMAIL_ADDRESS }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Replace test_volunteer_foundation.user.password in configuration.properties # Step to replace the placeholder test_volunteer_foundation.user.password in configuration.properties
-        run: sed 's|'{TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD}'|'${{ secrets.AYS_TEST_VOLUNTEER_FOUNDATION_USER_PASSWORD }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
-
-      - name: Build with Maven # Step to build the project with Maven
+      - name: Test with Maven # Step to start to test the project with Maven
         run: mvn clean test -P weekly
