@@ -20,7 +20,7 @@ jobs:
         with:
           SSH_ENABLED: ${{ vars.SSH_ENABLED }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USERNAME: ${{ vars.SSH_USERMAME }}
+          SSH_USERNAME: ${{ vars.SSH_USERNAME }}
           SSH_PRIVATE_KEY_PEM: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
           AYS_API_URL: ${{ secrets.AYS_API_URL }}
           AYS_DATABASE_URL: ${{ secrets.AYS_DATABASE_URL }}
@@ -52,7 +52,7 @@ jobs:
         with:
           SSH_ENABLED: ${{ vars.SSH_ENABLED }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USERNAME: ${{ vars.SSH_USERMAME }}
+          SSH_USERNAME: ${{ vars.SSH_USERNAME }}
           SSH_PRIVATE_KEY_PEM: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
           AYS_API_URL: ${{ secrets.AYS_API_URL }}
           AYS_DATABASE_URL: ${{ secrets.AYS_DATABASE_URL }}
