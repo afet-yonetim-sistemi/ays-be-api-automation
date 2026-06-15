@@ -102,7 +102,12 @@ runs:
       shell: bash
 
     - name: Replace ssh.private_key_pem in configuration.properties # Step to replace the placeholder ssh.private_key_pem in configuration.properties
-      run: sed 's|'{SSH_PRIVATE_KEY_PEM}'|'${{ inputs.SSH_PRIVATE_KEY_PEM }}'|g' configuration.properties >> temp_configuration.properties ; rm configuration.properties ; mv temp_configuration.properties configuration.properties
+      env:
+        SSH_PRIVATE_KEY_PEM: ${{ inputs.SSH_PRIVATE_KEY_PEM }}
+      run: |
+        content=$(cat configuration.properties)
+        content=${content//\{SSH_PRIVATE_KEY_PEM\}/$SSH_PRIVATE_KEY_PEM}
+        printf '%s\n' "$content" > configuration.properties
       shell: bash
 
     - name: Replace api.url in configuration.properties # Step to replace the placeholder api.url in configuration.properties
