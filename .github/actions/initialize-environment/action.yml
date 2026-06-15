@@ -103,10 +103,10 @@ runs:
 
     - name: Replace ssh.private_key_pem in configuration.properties # Step to replace the placeholder ssh.private_key_pem in configuration.properties
       env:
-        SSH_PRIVATE_KEY_PEM: ${{ inputs.SSH_PRIVATE_KEY_PEM }}
+        VALUE: ${{ inputs.SSH_PRIVATE_KEY_PEM }}
       run: |
         content=$(cat configuration.properties)
-        content=${content//\{SSH_PRIVATE_KEY_PEM\}/$SSH_PRIVATE_KEY_PEM}
+        content=${content//\{SSH_PRIVATE_KEY_PEM\}/$VALUE}
         printf '%s\n' "$content" > configuration.properties
       shell: bash
 
