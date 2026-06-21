@@ -36,6 +36,14 @@ public class AysConfigurationProperty {
         public static final String PASSWORD = PROPERTIES.getProperty("database.password");
     }
 
+    public static class Ssh {
+        public static final boolean ENABLED = Boolean.parseBoolean(PROPERTIES.getProperty("ssh.enabled", "false"));
+        public static final String HOST = PROPERTIES.getProperty("ssh.host");
+        public static final String USERNAME = PROPERTIES.getProperty("ssh.username");
+        public static final String PRIVATE_KEY_PEM = PROPERTIES.getProperty("ssh.private_key_pem");
+        public static final String PRIVATE_KEY_PATH = PROPERTIES.getProperty("ssh.private_key_path");
+    }
+
     public static class TestVolunteerFoundation {
 
         public static final String ID = PROPERTIES.getProperty("test_volunteer_foundation.id");

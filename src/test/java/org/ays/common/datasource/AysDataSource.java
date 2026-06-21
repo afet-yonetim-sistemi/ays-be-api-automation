@@ -12,6 +12,16 @@ public class AysDataSource {
     }
 
     public static Connection createConnection() throws SQLException {
+
+        if (AysConfigurationProperty.Ssh.ENABLED) {
+            AysSshTunnel.open();
+            return DriverManager.getConnection(
+                    AysSshTunnel.getTunneledDatabaseUrl(),
+                    AysConfigurationProperty.Database.USERNAME,
+                    AysConfigurationProperty.Database.PASSWORD
+            );
+        }
+
         return DriverManager.getConnection(
                 AysConfigurationProperty.Database.URL,
                 AysConfigurationProperty.Database.USERNAME,
